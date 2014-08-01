@@ -1,0 +1,113 @@
+ // Bourbon & Neat
+@import '../../bower_components/bourbon/dist/bourbon';
+@import '../../bower_components/neat/app/assets/stylesheets/neat';
+
+@import url(http://fonts.googleapis.com/css?family=Francois+One:400,300italic,500);
+@import url(http://fonts.googleapis.com/css?family=Gruppo:400,300italic,500);
+
+$primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
+// Custom Styles
+body {
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  width:100%;
+}
+
+.hero-unit {
+  @include outer-container;
+  font-family: $primary-font;
+  width: 960px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px;
+  h1 {
+    font-size: 90px;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+}
+
+
+section#flickrMontage {
+  @include span-columns(12);
+  div.flickrPicContainer {
+    @include span-columns(3 of 12);
+    img.montageSquare {
+    transition: opacity 1.0s linear;
+    width:220px;
+    height:220px;
+    opacity: 0.3;
+    }
+  }
+  @media screen and (max-width: 480px) {
+  max-width: 480px;
+  max-height:480px;
+  position: fixed;
+  top: 172px;
+  }
+}
+
+section#flickrMontage div{
+width:100%;
+
+}
+
+/* The first div is the portrait-style image grabbed from a static grouping*/
+section#flickrMontage div:nth-child(1)
+{ left: 240px; top: 0;
+@media screen and (max-width: 480px) {
+display:none;
+}}
+
+/* The first square image is the only one displayed with screen lte 480px and will keep 100% opacity */
+section#flickrMontage div:nth-child(2)
+{ left: 0; top: 0;
+@media all and (max-width: 480px) {
+width:480px;
+height:300px;
+}}
+
+section#flickrMontage div:nth-child(3)
+{ left: 480px; top: 0;
+  @media screen and (max-width: 719px) {
+  display:none;
+}}
+
+section#flickrMontage div:nth-child(4)
+{ left: 720px; top: 0;
+@media screen and (max-width: 959px) {
+display:none;
+}}
+
+section#flickrMontage div:nth-child(5)
+{ left: 0; top: 240px;
+@media screen and (max-width: 480px) {
+display:none;
+}}
+
+section#flickrMontage div:nth-child(6)
+{ left: 480px; top: 240px;
+@media screen and (max-width: 719px) {
+display:none;
+}}
+
+section#flickrMontage div:nth-child(7)
+{ left: 720px; top: 240px;
+@media screen and (max-width: 959px) {
+display:none;
+}}
+
+
+
+
+
+section#flickrMontage div:nth-child(2) img.montageSquare {
+@media screen and (max-width: 480px) {
+width:480px;
+height:384px;
+opacity:1.0;
+}}
