@@ -1,3 +1,2 @@
-## Yo, I'm a Readme
+## Petz-link : It's a link, for your pets. 
 
-You should probably update me so people looking at your code have an idea what it is being used for :)
