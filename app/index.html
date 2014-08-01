@@ -28,6 +28,9 @@
       <div id="flickrMontage">
       </div>
 
+      <div id="vineMontage">
+      </div>
+
     </div>
 
 
@@ -44,9 +47,15 @@
 </body>
 
 <script type="text/template" id="flickr-template">
-          <div class='flickrPicContainer'>
-            <img class='montageSquare' src='<%-flickrImg %>'></div>
+    <div class='flickrPicContainer'>
+      <img class='montageSquare' src='<%-flickrImg %>'>
+    </div>
 </script>
 
-
+<script type="text/template" id='vine-template'>
+      <div class='result' id='<%-postId %>'>
+        <iframe class="vine-embed-small" src="<%-permalinkUrl %>/embed/simple" frameborder="0"></iframe>
+        <a href="#/<%-tag %>/<%-postId %>">
+          <div class='result-overlay' id='<%-postId %>'> </div></a>
+      </div
 </html>
