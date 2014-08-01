@@ -37,11 +37,28 @@ $.getJSON(flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoDat
         serverId = photoData.photos.photo[i].server;
         secret = photoData.photos.photo[i].secret;
         flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '.jpg';
-            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
-        /*return photoData;*/
+        $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
       }
 
 
+  });
+
+/// VINE
+
+/// VINE VARIABLES
+var tag = 'mokshadog';
+var vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + tag;
+
+
+$.getJSON(vineApiUrl).done(function(vineData, tag){
+  var vineView = $('#vine-template').html();
+  console.log = vineData.data.records;
+  for (var i = 0; i < 12 ; i++) {
+      permalinkUrl = vineData.data.records[i].permalinkUrl;
+      console.log = vineData.data.records[i];
+      postId = vineData.data.records[i].postId;
+      $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
+    }
   });
 
 
