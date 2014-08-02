@@ -123,10 +123,19 @@ $.getJSON(flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoDat
         secret = photoData.photos.photo[i].secret;
         flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '.jpg';
         $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+
+
+
       }
 
 
-  });
+  }).done( function () {
+    for (var i = 0; i < 12 ; i++) {
+    var h = $('.montageSquare')[i].height;
+      var w = $('.montageSquare')[i].width;
+      console.log('image ' + i + ' width x height: ' + w+ ' x ' + h);
+    }
+      console.log ('Done');});
 
 /// VINE
 
@@ -147,7 +156,7 @@ $.getJSON(vineApiUrl).done(function(vineData, tag){
   });
 
 
-
-(function() {
-  var timeoutID = window.setInterval(startAnimation(),10500);
-})();
+//
+// (function() {
+//   var timeoutID = window.setInterval(startAnimation(),10500);
+// })();
