@@ -103,21 +103,6 @@ console.log("API call to ", flickrApiUrl);
 // LOAD FLICKR COLLAGE
 
 
- function startAnimation(k) {
-     console.log(k);
-     $('.montageSquare:eq(1)').css({opacity: 1.0});
-     $('.montageSquare:eq('+k+')').css({opacity: 1.0});
-    //  var random = Math.round(Math.random()*12);
-    // $('.montageSquare:eq('+random+')').css({opacity: 1.0});
-    //  var random2 = Math.round(Math.random()*12);
-    // $('.montageSquare:eq('+random2+')').css({opacity: 0.4});
-    if (k > 1) {
-    $('.montageSquare:eq('+(k-1)+')').css({opacity: 0.4});
-  }
-  k += 1;
-  return k;
-  }
-
 
 
 
@@ -164,6 +149,5 @@ $.getJSON(vineApiUrl).done(function(vineData, tag){
 
 
 (function() {
-  var k = 1;
-  var timeoutID = window.setInterval(startAnimation(k),1500);
+  var timeoutID = window.setInterval(startAnimation(),10500);
 })();
