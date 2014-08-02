@@ -14,21 +14,30 @@
     <script src="scripts/vendor/modernizr.js"></script>
   </head>
   <body>
+    <div class="main-container">
 
-    <div class="hero-unit">
-      <h1>Moksha</h1>
-      <div id="flickrMontage">
+      <div class="content">
       </div>
 
-      <div id="vineMontage">
-      </div>
+      <div class="hero-unit">
+        <button class"log-out">Log Out</button>
+        <div id="flickrMontage">
+          <h1>Moksha</h1>
+        </div>
 
+        <div id="vineMontage">
+        </div>
+
+      </div>
     </div>
-
 
     <script src="scripts/vendor.js"></script>
 
-        <script src="scripts/main.js"></script>
+    <!-- parse.js -->
+    <script src="//www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+
+    <script src="scripts/main.js"></script>
+
 </body>
 
 <script type="text/template" id="flickr-template">
@@ -42,5 +51,28 @@
         <iframe class="vine-embed-small" src="<%-permalinkUrl %>/embed/simple" frameborder="0"></iframe>
         <a href="#/<%-tag %>/<%-postId %>">
           <div class='result-overlay' id='<%-postId %>'> </div></a>
-      </div
+      </div>
+</script>
+
+  <script type="text/template" id="login-template">
+
+      <div class="login">
+        <form class="login-form">
+          <h2>Log In</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="login-username" placeholder="Username" />
+          <input type="password" id="login-password" placeholder="Password" />
+          <button>Log In</button>
+        </form>
+
+        <form class="signup-form">
+          <h2>Sign Up</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="signup-username" placeholder="Username" />
+          <input type="password" id="signup-password" placeholder="Create a Password" />
+          <button>Sign Up</button>
+        </form>
+      </div>
+    </script>
+
 </html>
