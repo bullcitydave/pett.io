@@ -15,7 +15,7 @@ $(function() {
     render: function() {
       if (Parse.User.current()) {
         console.log(Parse.User.current());
-        new FlickrPicListView();
+        new LinkView();
       } else {
         console.log('login view needed...');
         new LogInView();
