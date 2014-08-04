@@ -6,6 +6,8 @@
 @import url(http://fonts.googleapis.com/css?family=Gruppo:400,300italic,500);
 
 $primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
+
+
 // Custom Styles
 body {
   background: #fafafa;
@@ -15,7 +17,6 @@ body {
 }
 
 .hero-unit {
-  @include outer-container;
   font-family: $primary-font;
   width: 960px;
   font-size: 18px;
@@ -32,82 +33,15 @@ body {
 }
 
 
-section#flickrMontage {
-  @include span-columns(12);
+div#flickrMontage {
+  @include outer-container;
   div.flickrPicContainer {
-    @include span-columns(3 of 12);
-    img.montageSquare {
-    transition: opacity 1.0s linear;
-    width:220px;
-    height:220px;
-    opacity: 0.35;
+    @include span-columns(4);
+    @include omega(3n);
+    .montageSquare {
+      transition: opacity 1.0s easing;
+      opacity: 1;
+      @include size(250px 250px);
     }
   }
-  @media screen and (max-width: 480px) {
-  max-width: 480px;
-  max-height:480px;
-  position: fixed;
-  top: 172px;
-  }
 }
-
-section#flickrMontage div{
-width:100%;
-
-}
-
-/* The first div is the portrait-style image grabbed from a static grouping*/
-section#flickrMontage div:nth-child(1)
-{ left: 240px; top: 0;
-@media screen and (max-width: 480px) {
-display:none;
-}}
-
-/* The first square image is the only one displayed with screen lte 480px and will keep 100% opacity */
-section#flickrMontage div:nth-child(2)
-{ left: 0; top: 0;
-@media all and (max-width: 480px) {
-width:480px;
-height:300px;
-}}
-
-section#flickrMontage div:nth-child(3)
-{ left: 480px; top: 0;
-  @media screen and (max-width: 719px) {
-  display:none;
-}}
-
-section#flickrMontage div:nth-child(4)
-{ left: 720px; top: 0;
-@media screen and (max-width: 959px) {
-display:none;
-}}
-
-section#flickrMontage div:nth-child(5)
-{ left: 0; top: 240px;
-@media screen and (max-width: 480px) {
-display:none;
-}}
-
-section#flickrMontage div:nth-child(6)
-{ left: 480px; top: 240px;
-@media screen and (max-width: 719px) {
-display:none;
-}}
-
-section#flickrMontage div:nth-child(7)
-{ left: 720px; top: 240px;
-@media screen and (max-width: 959px) {
-display:none;
-}}
-
-
-
-
-
-section#flickrMontage div:nth-child(2) img.montageSquare {
-@media screen and (max-width: 480px) {
-width:480px;
-height:384px;
-opacity:1.0;
-}}
