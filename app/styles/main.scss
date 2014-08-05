@@ -22,21 +22,14 @@ body {
   width:100%;
 }
 
-.hero-unit {
-  font-family: $primary-font;
-  width: 960px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-  h1 {
-    font-size: 90px;
-    line-height: 1;
-    letter-spacing: 1px;
+
+h1 {
+    font-size: 6.5em;
+    font-family: $primary-font;
+    letter-spacing: .15em;
+    margin: 0 0 0 35px;
   }
-}
+
 
 
 div#flickrMontage {
@@ -54,15 +47,19 @@ div#flickrMontage {
       // @include size(250px 250px);
       width: 100%;
       border: solid 2px black;
-      transition: all .3s ease;
+      transition: margin .6s easein;
+      transition: width .2s linear;
+      transition-delay: margin .2s;
 
     }
     .montageSquare:hover {
 
       @include if-brightness(1.1);
       // @include size(250px 250px);
-      width: 130%;
-      border: solid 2px black;
+      width: 125%;
+      margin-left:-12.5%;
+      border: solid 4px black;
+
 
     }
   }

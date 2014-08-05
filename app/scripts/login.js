@@ -19,7 +19,7 @@ var LogInView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new FlickrPicListView();
+          new LinkView();
           self.undelegateEvents();
           delete self;
         },
