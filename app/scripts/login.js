@@ -19,7 +19,7 @@ var LogInView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new FlickrPicListView();
+          new LinkView();
           self.undelegateEvents();
           delete self;
         },
@@ -29,21 +29,20 @@ var LogInView = Parse.View.extend({
           self.$(".login-form button").removeAttr("disabled");
         }
         });
+        this.$(".login-form button").attr("disabled", "disabled");
 
-          this.$(".login-form button").attr("disabled", "disabled");
-
-          return false;
+        return false;
       },
 
-      signUp: function(e) {
-        var self = this;
-        var username = this.$("#signup-username").val();
-        var password = this.$("#signup-password").val();
-
+  signUp: function(e) {
+    var self = this;
+    var username = this.$("#signup-username").val();
+    var password = this.$("#signup-password").val();
 
     Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
           success: function(user) {
             new LinkView();
+            console.log(self);
             self.undelegateEvents();
             delete self;
           },

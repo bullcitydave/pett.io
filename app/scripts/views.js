@@ -1,9 +1,14 @@
 var LinkView = Parse.View.extend({
+
+  el: ".content",
+
   initialize: function() {
     new FlickrPicListView();
-    new VineListView();
+    // new VineListView();
 
   },
+
+
 
   events: {
     "click .log-out": "logOut"
@@ -43,12 +48,12 @@ var FlickrPicListView = Parse.View.extend({
 
         var container = $('#flickrMontage');
 
-        container.masonry({
-            columnWidth: 40,
-            itemSelector: '.flickrPicContainer'
-          });
-          var msnry = container.data('masonry');
-          console.log(msnry);
+        // container.masonry({
+        //     columnWidth: 40,
+        //     itemSelector: '.flickrPicContainer'
+        //   });
+        //   var msnry = container.data('masonry');
+        //   console.log(msnry);
 
       var dims=[];
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
@@ -69,48 +74,43 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
-              dimsPromises.push(flickrImg);
 
-              $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+              // dimsPromises.push(flickrImg);
+
+            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+
+              //  console.log(dimsPromises);
 
 
-              // dims[i].done(function(dims) {
-              //
-
-            console.log(dimsPromises);
                console.log('height: ', $('.montageSquare')[i].clientHeight);
                console.log('width: ', $('.montageSquare')[i].clientWidth);
-               if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-                 {
-                   console.log('Vertical!');
-                   $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-                   $(".flickrPicContainer").eq(i).addClass("w2");
-                 }
-              //
-              //   })
-
-          }
-
+            }
+            for (var i = 0; i < 15 ; i++) {
+                if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+                  {
+                    console.log('Vertical!');
+                    $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+                    $(".flickrPicContainer").eq(i).addClass("w2");
+                  }
+                }
 
 
 
+      });
 
+
+
+
+      // getDims : function() {
+      //   for (var i = 0; i < 9 ; i++) {
+      //     console.log($('.montageSquare'));
+      //     x = $('.montageSquare');
+      //     console.log(x.clientWidth);
+      //   };
+      // }
+
+  }
 });
-
-
-
-
-},
-      getDims : function() {
-        for (var i = 0; i < 9 ; i++) {
-          console.log($('.montageSquare'));
-          x = $('.montageSquare');
-          console.log(x.clientWidth);
-        };
-      }
-
-});
-
 
 
 
