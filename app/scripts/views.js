@@ -5,7 +5,7 @@ var LinkView = Parse.View.extend({
   initialize: function() {
     new FlickrPicListView();
     // new VineListView();
-    // new UploadPicView();
+    new UploadPicListView();
 
   },
 
@@ -147,3 +147,86 @@ var VineListView = Parse.View.extend({
 // (function() {
 //   var timeoutID = window.setInterval(startAnimation(),10500);
 // })();
+
+
+
+
+
+var UploadPicListView = Parse.View.extend({
+
+    initialize: function() {
+      this.UploadPicList = new UploadPicList;
+      // this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=aremid&per_page=16&page=1&format=json&nojsoncallback=1";
+      this.render();
+
+    },
+
+
+
+    render: function () {
+
+        var container = $('#parseMontage');
+
+        // container.masonry({
+        //     columnWidth: 40,
+        //     itemSelector: '.flickrPicContainer'
+        //   });
+        //   var msnry = container.data('masonry');
+        //   console.log(msnry);
+
+      var dims=[];
+      $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
+          var flickrView = $('#flickr-template').html();
+          var flickrImg = '';
+          var photoId = '';
+          var farmId='';
+          var serverId ='';
+          var secret='';
+
+          var dimsPromises=[];
+          for (var i = 0; i < 15 ; i++) {
+            if (!photoData.photos.photo[i]) {
+              continue;
+            }
+              photoId = photoData.photos.photo[i].id;
+              farmId = photoData.photos.photo[i].farm;
+              serverId = photoData.photos.photo[i].server;
+              secret = photoData.photos.photo[i].secret;
+              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+
+              // dimsPromises.push(flickrImg);
+
+            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+
+              //  console.log(dimsPromises);
+
+
+               console.log('height: ', $('.montageSquare')[i].clientHeight);
+               console.log('width: ', $('.montageSquare')[i].clientWidth);
+            }
+            for (var i = 0; i < 15 ; i++) {
+                if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+                  {
+                    console.log('Vertical!');
+                    $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+                    $(".flickrPicContainer").eq(i).addClass("w2");
+                  }
+                }
+
+
+
+      });
+
+
+
+
+      // getDims : function() {
+      //   for (var i = 0; i < 9 ; i++) {
+      //     console.log($('.montageSquare'));
+      //     x = $('.montageSquare');
+      //     console.log(x.clientWidth);
+      //   };
+      // }
+
+  }
+});

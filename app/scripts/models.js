@@ -30,6 +30,21 @@
 
       });
 
+
+    var UploadPicList = Parse.Collection.extend({
+        model: ParsePic,
+
+        nextOrder: function() {
+          if (!this.length) return 1;
+          return this.last().get('order') + 1;
+        },
+
+        comparator: function(parsepic) {
+          return parsepic.get('order');
+        }
+
+      });
+
       var Vine = Parse.Object.extend("Vine", {
 
         defaults:{
