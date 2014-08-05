@@ -5,6 +5,7 @@ var LinkView = Parse.View.extend({
   initialize: function() {
     new FlickrPicListView();
     // new VineListView();
+    // new UploadPicView();
 
   },
 

@@ -22,14 +22,27 @@
     <!-- endbuild -->
   </head>
   <body>
-    <header><h1>Aremid</h1></header>
+    <header>
+      <h1>Aremid</h1>
+    </header>
+    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+    <fieldset>
+      <input type="file" name="fileselect" id="fileselect"></input>
+      <input id="uploadbutton" type="button" value="Upload an image"/>
+    </fieldset>
+    <p class="display-message"></p>
+    </form>
     <div class="main-container">
 
       <div class="content">
 
       </div>
 
+
+<!-- // from https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api -->
 <div id="flickrMontage">
+
+
 </div>
 
 

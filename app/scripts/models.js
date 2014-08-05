@@ -1,3 +1,12 @@
+    var ParsePic = Parse.Object.extend("ParsePic", {
+
+      url: ''
+
+
+
+    });
+
+
     var FlickrPic = Parse.Object.extend("FlickrPic", {
 
       defaults:{
@@ -21,7 +30,7 @@
 
       });
 
-      var Vine = Parse.Object.extend("FlickrPic", {
+      var Vine = Parse.Object.extend("Vine", {
 
         defaults:{
 
