@@ -26,13 +26,23 @@ var FlickrPicListView = Parse.View.extend({
     initialize: function() {
       this.flickrPicList = new FlickrPicList;
       this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=moksha&per_page=16&page=1&format=json&nojsoncallback=1";
-      this.render();
+      this.render().done(function () {this.getDims(); });
 
     },
 
 
 
     render: function () {
+        // var container = $('#flickrMontage');
+        // console.log(container);
+        // container.masonry({
+        //     columnWidth: 300,
+        //     itemSelector: '.flickrPicContainer'
+        //   });
+        //   var msnry = container.data('masonry');
+        //   console.log(msnry);
+
+      var dims=[];
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
@@ -40,6 +50,8 @@ var FlickrPicListView = Parse.View.extend({
           var farmId='';
           var serverId ='';
           var secret='';
+
+          var dimsPromises=[];
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
@@ -49,20 +61,36 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '.jpg';
+              dims[i];
               $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
-            }
-        }).done( function () {
-          for (var i = 0; i < 12 ; i++) {
-          var h = $('.montageSquare')[i].height;
-            var w = $('.montageSquare')[i].width;
-            console.log('image ' + i + ' width x height: ' + w+ ' x ' + h);
+              dims[i] = getDims(flickrImg);
+              // dims[i].done(function(dims) {
+              //
+              //   console.log(dims);
+              //
+              //   })
+
           }
-            console.log ('Done');});
-    }
 
 
 });
+
+
+
+
+},
+      getDims : function() {
+        for (var i = 0; i < 9 ; i++) {
+          console.log($('.montageSquare'));
+          x = $('.montageSquare');
+          console.log(x.clientWidth);
+        };
+      }
+
+});
+
+
 
 
 var VineListView = Parse.View.extend({

@@ -34,14 +34,16 @@ body {
 
 
 div#flickrMontage {
-  @include outer-container;
+  // @include outer-container;
   div.flickrPicContainer {
-    @include span-columns(4);
-    @include omega(3n);
+    
+    // @include span-columns(4);
+    // @include omega(3n);
     .montageSquare {
-      transition: opacity 1.0s easing;
-      opacity: 1;
-      @include size(250px 250px);
+      // transition: opacity 1.0s easing;
+      // opacity: 1;
+      // @include size(250px 250px);
+      width:100%;
     }
   }
 }
