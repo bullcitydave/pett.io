@@ -1,11 +1,14 @@
-// Supporting functions
+// Initialize parse and support functions
+
+
+  Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
+
 
 
 function getDims(image) {
   dimsPromise = Promise.resolve(function(image){
-  var dimsPromise = Promise.resolve($("<img/>").attr("src", url).load());
-
-  return dimsPromise.then(function(image) {
+    var dimsPromise = Promise.resolve($("<img/>").attr("src", url).load());
+    return dimsPromise.then(function(image) {
         dims = {w:this.width, h:this.height};
         console.log(dims);
         return dims;
@@ -16,72 +19,54 @@ function getDims(image) {
 var flickrApiKey = "806745a8a5db2aff0b0cdb591b633726";
 var flickrUserId = 'toastie97';
 
-var LogInView = Parse.View.extend({
-  events: {
-    "submit form.login-form": "logIn",
-    "submit form.signup-form": "signUp"
-  },
-
-  el: ".content",
-
-  initialize: function() {
-    _.bindAll(this, "logIn", "signUp");
-    this.render();
-  },
-
-  logIn: function(e) {
-    var self = this;
-    var username = this.$("#login-username").val();
-    var password = this.$("#login-password").val();
+var AppRouter = Parse.Router.extend({
+    routes: {
 
 
-    Parse.User.logIn(username, password, {
-        success: function(user) {
-          new FlickrPicListView();
-          self.undelegateEvents();
-          delete self;
-        },
+             'login'           :     'goLogin',
+             'home'            :     'goLanding',
+             'aremid'          :     'goPetzPage',
+             'a*'               :     'goLanding'
 
-        error: function(user, error) {
-          self.$(".login-form .error").html("Invalid username or password. Please try again.").show();
-          self.$(".login-form button").removeAttr("disabled");
+
+
+
         }
-        });
+    });
 
-          this.$(".login-form button").attr("disabled", "disabled");
+    // Initiate the router
+    var app_router = new AppRouter;
 
-          return false;
-      },
+    app_router.on('route:goLogin', function() {
+        loginView = new LoginView();
+        console.log('Loading login page');
+      });
 
-      signUp: function(e) {
-        var self = this;
-        var username = this.$("#signup-username").val();
-        var password = this.$("#signup-password").val();
+    app_router.on('route:goPetzPage', function() {
+        linkView = new LinkView({tag: 'aremid'});
+        console.log('Loading petz page for ',linkView.tag);
+      });
+
+    app_router.on('route:goLanding', function() {
+        console.log('Going home...');
+        $('.container').load("home.html");
+    })
+
+    app_router.on('route:defaultRoute', function() {
+        alert('Sorry, that function is not yet available.')
+    });
 
 
-    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
-          success: function(user) {
-            new LinkView();
-            self.undelegateEvents();
-            delete self;
-          },
+    Parse.history.start();
 
-          error: function(user, error) {
-            self.$(".signup-form .error").html(error.message).show();
-            self.$(".signup-form button").removeAttr("disabled");
-          }
-        });
+    var ParsePic = Parse.Object.extend("ParsePic", {
 
-    this.$(".signup-form button").attr("disabled", "disabled");
+      url: ''
 
-    return false;
-  },
 
-  render: function() {
-      this.$el.html(_.template($("#login-template").html()));
-      this.delegateEvents();
-  }
-});
+
+    });
+
 
     var FlickrPic = Parse.Object.extend("FlickrPic", {
 
@@ -106,7 +91,7 @@ var LogInView = Parse.View.extend({
 
       });
 
-      var Vine = Parse.Object.extend("FlickrPic", {
+      var Vine = Parse.Object.extend("Vine", {
 
         defaults:{
 
@@ -130,11 +115,17 @@ var LogInView = Parse.View.extend({
         });
 
 var LinkView = Parse.View.extend({
+
+  el: ".content",
+
   initialize: function() {
     new FlickrPicListView();
-    new VineListView();
+    // new VineListView();
+    // new UploadPicView();
 
   },
+
+
 
   events: {
     "click .log-out": "logOut"
@@ -174,12 +165,12 @@ var FlickrPicListView = Parse.View.extend({
 
         var container = $('#flickrMontage');
 
-        container.masonry({
-            columnWidth: 40,
-            itemSelector: '.flickrPicContainer'
-          });
-          var msnry = container.data('masonry');
-          console.log(msnry);
+        // container.masonry({
+        //     columnWidth: 40,
+        //     itemSelector: '.flickrPicContainer'
+        //   });
+        //   var msnry = container.data('masonry');
+        //   console.log(msnry);
 
       var dims=[];
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
@@ -200,48 +191,43 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
-              dimsPromises.push(flickrImg);
 
-              $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+              // dimsPromises.push(flickrImg);
+
+            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+
+              //  console.log(dimsPromises);
 
 
-              // dims[i].done(function(dims) {
-              //
-
-            console.log(dimsPromises);
                console.log('height: ', $('.montageSquare')[i].clientHeight);
                console.log('width: ', $('.montageSquare')[i].clientWidth);
-               if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-                 {
-                   console.log('Vertical!');
-                   $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-                   $(".flickrPicContainer").eq(i).addClass("w2");
-                 }
-              //
-              //   })
-
-          }
-
+            }
+            for (var i = 0; i < 15 ; i++) {
+                if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+                  {
+                    console.log('Vertical!');
+                    $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+                    $(".flickrPicContainer").eq(i).addClass("w2");
+                  }
+                }
 
 
 
+      });
 
+
+
+
+      // getDims : function() {
+      //   for (var i = 0; i < 9 ; i++) {
+      //     console.log($('.montageSquare'));
+      //     x = $('.montageSquare');
+      //     console.log(x.clientWidth);
+      //   };
+      // }
+
+  }
 });
-
-
-
-
-},
-      getDims : function() {
-        for (var i = 0; i < 9 ; i++) {
-          console.log($('.montageSquare'));
-          x = $('.montageSquare');
-          console.log(x.clientWidth);
-        };
-      }
-
-});
-
 
 
 
@@ -278,9 +264,75 @@ var VineListView = Parse.View.extend({
 //   var timeoutID = window.setInterval(startAnimation(),10500);
 // })();
 
+var LogInView = Parse.View.extend({
+  events: {
+    "submit form.login-form": "logIn",
+    "submit form.signup-form": "signUp"
+  },
+
+  el: ".content",
+
+  initialize: function() {
+    _.bindAll(this, "logIn", "signUp");
+    this.render();
+  },
+
+  logIn: function(e) {
+    var self = this;
+    var username = this.$("#login-username").val();
+    var password = this.$("#login-password").val();
+
+
+    Parse.User.logIn(username, password, {
+        success: function(user) {
+          new LinkView();
+          self.undelegateEvents();
+          delete self;
+        },
+
+        error: function(user, error) {
+          self.$(".login-form .error").html("Invalid username or password. Please try again.").show();
+          self.$(".login-form button").removeAttr("disabled");
+        }
+        });
+        this.$(".login-form button").attr("disabled", "disabled");
+
+        return false;
+      },
+
+  signUp: function(e) {
+    var self = this;
+    var username = this.$("#signup-username").val();
+    var password = this.$("#signup-password").val();
+
+    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+          success: function(user) {
+            new LinkView();
+            console.log(self);
+            self.undelegateEvents();
+            delete self;
+          },
+
+          error: function(user, error) {
+            self.$(".signup-form .error").html(error.message).show();
+            self.$(".signup-form button").removeAttr("disabled");
+          }
+        });
+
+    this.$(".signup-form button").attr("disabled", "disabled");
+
+    return false;
+  },
+
+  render: function() {
+      this.$el.html(_.template($("#login-template").html()));
+      this.delegateEvents();
+  }
+});
+
 $(function() {
 
-  Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
+
 
 
 
@@ -300,16 +352,67 @@ $(function() {
         console.log('login view needed...');
         new LogInView();
       }
+    },
+
+
+    displayMessage: function(txt) {
+      $('.display-message').show.html(txt);
+
     }
 });
 
     new AppView;
 
+
   // Parse.history.start();   throwing error - Parse.history is undefined
 
-  $('.montageSquare').bind('load', function() {
-  console.log('height ', $('.montageSquare').clientHeight);
-  console.log('width ',  $('.montageSquare').clientWidth);
+ /// image upload
+
+
+ $(function() {
+    var file;
+
+    // Set an event listener on the Choose File field.
+    $('#fileselect').bind("change", function(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      // Our file var now holds the selected file
+      file = files[0];
+    });
+
+    // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
+    $('#uploadbutton').click(function() {
+      var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+      $.ajax({
+        type: "POST",
+        beforeSend: function(request) {
+          request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
+          request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
+          request.setRequestHeader("Content-Type", file.type);
+        },
+        url: serverUrl,
+        data: file,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          console.log("File available at: " + data.url);
+          var newPic = new ParsePic ({
+            url: data.url,
+            username: Parse.User.current().getUsername(),
+            petname: $('h1').html(),
+            source: 'parse'
+          });
+          newPic.save();
+            alert('Photo has been successfully uploaded');
+        },
+        error: function(data) {
+          var obj = jQuery.parseJSON(data);
+          alert(obj.error);
+        }
+      });
+    });
+
+
   });
 
 });

@@ -4,7 +4,8 @@ var AppRouter = Parse.Router.extend({
 
              'login'           :     'goLogin',
              'home'            :     'goLanding',
-             'aremid'          :     'goPetzPage'
+             'aremid'          :     'goPetzPage',
+             'a*'               :     'goLanding'
 
 
 
@@ -32,7 +33,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:defaultRoute', function() {
         alert('Sorry, that function is not yet available.')
-    })
+    });
 
 
     Parse.history.start();
