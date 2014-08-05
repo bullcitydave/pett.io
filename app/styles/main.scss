@@ -7,6 +7,12 @@
 
 $primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
 
+@mixin if-brightness($amt: 1.1) {
+  -o-filter: brightness($amt);
+  -ms-filter: brightness($amt);
+  -moz-filter: brightness($amt);
+  -webkit-filter: brightness($amt);
+}
 
 // Custom Styles
 body {
@@ -36,14 +42,40 @@ body {
 div#flickrMontage {
   // @include outer-container;
   div.flickrPicContainer {
-    
+
+    float: left;
+    margin: 75px 0 0 0;
+
     // @include span-columns(4);
     // @include omega(3n);
     .montageSquare {
       // transition: opacity 1.0s easing;
       // opacity: 1;
       // @include size(250px 250px);
-      width:100%;
+      width: 100%;
+      border: solid 2px black;
+      transition: all .3s ease;
+
+    }
+    .montageSquare:hover {
+
+      @include if-brightness(1.1);
+      // @include size(250px 250px);
+      width: 130%;
+      border: solid 2px black;
+
     }
   }
+  div.flickrPicContainer.w2 { width:  120px; }
+  div.flickrPicContainer:nth-child(1n) {width:100%}
+  div.flickrPicContainer:nth-child(3n) {
+    width: 70%;
+    float:left;
+    padding-left:10%;}
+    div.flickrPicContainer:nth-child(2n) {
+    width: 70%;
+    float:right;
+    padding-right:10%;}
+
+
 }

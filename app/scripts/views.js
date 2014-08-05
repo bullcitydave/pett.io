@@ -2,6 +2,7 @@ var LinkView = Parse.View.extend({
   initialize: function() {
     new FlickrPicListView();
     new VineListView();
+
   },
 
   events: {
@@ -25,22 +26,29 @@ var FlickrPicListView = Parse.View.extend({
 
     initialize: function() {
       this.flickrPicList = new FlickrPicList;
-      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=moksha&per_page=16&page=1&format=json&nojsoncallback=1";
-      this.render().done(function () {this.getDims(); });
+      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=aremid&per_page=16&page=1&format=json&nojsoncallback=1";
+      this.render();
 
     },
 
 
 
     render: function () {
-        // var container = $('#flickrMontage');
-        // console.log(container);
-        // container.masonry({
-        //     columnWidth: 300,
-        //     itemSelector: '.flickrPicContainer'
-        //   });
-        //   var msnry = container.data('masonry');
-        //   console.log(msnry);
+      //
+      // $('.montageSquare').bind('load', function() {
+      // console.log('height ', $('.montageSquare').clientHeight);
+      // console.log('width ',  $('.montageSquare').clientWidth);
+      // });
+
+
+        var container = $('#flickrMontage');
+
+        container.masonry({
+            columnWidth: 40,
+            itemSelector: '.flickrPicContainer'
+          });
+          var msnry = container.data('masonry');
+          console.log(msnry);
 
       var dims=[];
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
@@ -52,7 +60,7 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           var dimsPromises=[];
-          for (var i = 0; i < 9 ; i++) {
+          for (var i = 0; i < 15 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
             }
@@ -60,18 +68,31 @@ var FlickrPicListView = Parse.View.extend({
               farmId = photoData.photos.photo[i].farm;
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
-              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '.jpg';
-              dims[i];
+              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+              dimsPromises.push(flickrImg);
+
               $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
-              dims[i] = getDims(flickrImg);
+
               // dims[i].done(function(dims) {
               //
-              //   console.log(dims);
+
+            console.log(dimsPromises);
+               console.log('height: ', $('.montageSquare')[i].clientHeight);
+               console.log('width: ', $('.montageSquare')[i].clientWidth);
+               if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+                 {
+                   console.log('Vertical!');
+                   $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+                   $(".flickrPicContainer").eq(i).addClass("w2");
+                 }
               //
               //   })
 
           }
+
+
+
 
 
 });
@@ -94,30 +115,30 @@ var FlickrPicListView = Parse.View.extend({
 
 
 var VineListView = Parse.View.extend({
-
-    initialize: function() {
-      this.vineList = new VineList;
-      this.tag = 'mokshadog';
-      this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
-      this.render();
-
-    },
-
-
-
-    render: function () {
-      tag = this.tag;
-      $.getJSON(this.vineApiUrl).done(function(vineData, tag){
-        var vineView = $('#vine-template').html();
-        console.log = vineData.data.records;
-        for (var i = 0; i < 9 ; i++) {
-            permalinkUrl = vineData.data.records[i].permalinkUrl;
-            console.log = vineData.data.records[i];
-            postId = vineData.data.records[i].postId;
-            $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
-          }
-        })
-      }
+    //
+    // initialize: function() {
+    //   this.vineList = new VineList;
+    //   this.tag = 'mokshadog';
+    //   this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
+    //   this.render();
+    //
+    // },
+    //
+    //
+    //
+    // render: function () {
+    //   tag = this.tag;
+    //   $.getJSON(this.vineApiUrl).done(function(vineData, tag){
+    //     var vineView = $('#vine-template').html();
+    //     console.log = vineData.data.records;
+    //     for (var i = 0; i < 9 ; i++) {
+    //         permalinkUrl = vineData.data.records[i].permalinkUrl;
+    //         console.log = vineData.data.records[i];
+    //         postId = vineData.data.records[i].postId;
+    //         $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
+    //       }
+    //     })
+    //   }
     });
 
 

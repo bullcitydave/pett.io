@@ -27,4 +27,9 @@ $(function() {
 
   // Parse.history.start();   throwing error - Parse.history is undefined
 
+  $('.montageSquare').bind('load', function() {
+  console.log('height ', $('.montageSquare').clientHeight);
+  console.log('width ',  $('.montageSquare').clientWidth);
+  });
+
 });
