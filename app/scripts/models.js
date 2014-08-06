@@ -1,6 +1,6 @@
     var ParsePic = Parse.Object.extend("ParsePic", {
 
-      url: ''
+
 
 
 
@@ -18,6 +18,7 @@
 
     var FlickrPicList = Parse.Collection.extend({
         model: FlickrPic,
+        url: 'https://api.parse.com/1/classes/',
 
         nextOrder: function() {
           if (!this.length) return 1;
@@ -31,7 +32,7 @@
       });
 
 
-    var UploadPicList = Parse.Collection.extend({
+    var ParsePicList = Parse.Collection.extend({
         model: ParsePic,
 
         nextOrder: function() {
