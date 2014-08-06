@@ -19,6 +19,14 @@ function getDims(image) {
 var flickrApiKey = "806745a8a5db2aff0b0cdb591b633726";
 var flickrUserId = 'toastie97';
 
+    var Pet = Parse.Object.extend("Pet", {
+
+
+
+
+
+    });
+
     var ParsePic = Parse.Object.extend("ParsePic", {
 
 
@@ -69,7 +77,7 @@ var flickrUserId = 'toastie97';
 
       var Vine = Parse.Object.extend("Vine", {
 
-        defaults:{
+        defaults:{ "source" : "vine"
 
         }
 
@@ -90,11 +98,44 @@ var flickrUserId = 'toastie97';
 
         });
 
+var ProfileView = Parse.View.extend ({
+  className : 'pet-profile',
+
+  initialize: function() {
+    this.pet = 'aremid';
+    self = this;
+    console.log('Getting profile for ', this.pet);
+
+
+
+
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", this.pet);
+    query.find({
+      success: function(results) {
+        alert("Successfully retrieved " + this.pet + ". Attempting to render...");
+        self.render(results[0].attributes);
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
+},
+
+    render: function(data){
+        var profileView = $('#profile-template').html();
+        $('#parseMontage').append(_.template(profileView,data));
+        this.$el.html(rendered);
+        return this;
+      }
+});
+
 var LinkView = Parse.View.extend({
 
   el: ".content",
 
   initialize: function() {
+    new ProfileView();
     new FlickrPicListView();
     // new VineListView();
     new ParsePicListView();
@@ -178,32 +219,18 @@ var FlickrPicListView = Parse.View.extend({
                console.log('height: ', $('.montageSquare')[i].clientHeight);
                console.log('width: ', $('.montageSquare')[i].clientWidth);
             }
+
             for (var i = 0; i < 15 ; i++) {
                 if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-                  {
-                    console.log('Vertical!');
-                    $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-                    $(".flickrPicContainer").eq(i).addClass("w2");
-                  }
+                {
+                  console.log('Vertical!');
+                  $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+                  $(".flickrPicContainer").eq(i).addClass("w2");
                 }
-
-
-
-      });
-
-
-
-
-      // getDims : function() {
-      //   for (var i = 0; i < 9 ; i++) {
-      //     console.log($('.montageSquare'));
-      //     x = $('.montageSquare');
-      //     console.log(x.clientWidth);
-      //   };
-      // }
-
-  }
-});
+            }
+        });
+      }
+    });
 
 
 
@@ -233,12 +260,6 @@ var VineListView = Parse.View.extend({
     //     })
     //   }
     });
-
-
-//
-// (function() {
-//   var timeoutID = window.setInterval(startAnimation(),10500);
-// })();
 
 
 

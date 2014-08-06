@@ -14,6 +14,8 @@
     <script src="scripts/vendor/modernizr.js"></script>
   </head>
   <body>
+    <button class="log-out">Log Out</button>
+    <a href="#/">Show Profile</a>
     <header>
       <h1>Aremid</h1>
     </header>
@@ -55,6 +57,20 @@
     <script src="scripts/main.js"></script>
 
 </body>
+
+
+<script type="text/template" id="profile-template">
+
+    <section class='profile' >
+      <%-type%>
+      <%-dateBirth%>
+      <%-dateDeath%>
+      <%-dateAdopted%>
+      <%-bio%>
+    </section>
+
+</script>
+
 
 <script type="text/template" id="flickr-template">
 
