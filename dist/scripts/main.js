@@ -19,49 +19,9 @@ function getDims(image) {
 var flickrApiKey = "806745a8a5db2aff0b0cdb591b633726";
 var flickrUserId = 'toastie97';
 
-var AppRouter = Parse.Router.extend({
-    routes: {
-
-
-             'login'           :     'goLogin',
-             'home'            :     'goLanding',
-             'aremid'          :     'goPetzPage',
-             'a*'               :     'goLanding'
-
-
-
-
-        }
-    });
-
-    // Initiate the router
-    var app_router = new AppRouter;
-
-    app_router.on('route:goLogin', function() {
-        loginView = new LoginView();
-        console.log('Loading login page');
-      });
-
-    app_router.on('route:goPetzPage', function() {
-        linkView = new LinkView({tag: 'aremid'});
-        console.log('Loading petz page for ',linkView.tag);
-      });
-
-    app_router.on('route:goLanding', function() {
-        console.log('Going home...');
-        $('.container').load("home.html");
-    })
-
-    app_router.on('route:defaultRoute', function() {
-        alert('Sorry, that function is not yet available.')
-    });
-
-
-    Parse.history.start();
-
     var ParsePic = Parse.Object.extend("ParsePic", {
 
-      url: ''
+
 
 
 
@@ -79,6 +39,7 @@ var AppRouter = Parse.Router.extend({
 
     var FlickrPicList = Parse.Collection.extend({
         model: FlickrPic,
+        url: 'https://api.parse.com/1/classes/',
 
         nextOrder: function() {
           if (!this.length) return 1;
@@ -87,6 +48,21 @@ var AppRouter = Parse.Router.extend({
 
         comparator: function(flickrpic) {
           return flickrpic.get('order');
+        }
+
+      });
+
+
+    var ParsePicList = Parse.Collection.extend({
+        model: ParsePic,
+
+        nextOrder: function() {
+          if (!this.length) return 1;
+          return this.last().get('order') + 1;
+        },
+
+        comparator: function(parsepic) {
+          return parsepic.get('order');
         }
 
       });
@@ -121,7 +97,7 @@ var LinkView = Parse.View.extend({
   initialize: function() {
     new FlickrPicListView();
     // new VineListView();
-    // new UploadPicView();
+    new ParsePicListView();
 
   },
 
@@ -264,6 +240,86 @@ var VineListView = Parse.View.extend({
 //   var timeoutID = window.setInterval(startAnimation(),10500);
 // })();
 
+
+
+
+
+var ParsePicListView = Parse.View.extend({
+
+    collection: ParsePicList,
+
+    initialize: function() {
+      this.render();
+
+    },
+
+
+
+    //
+  render: function () {
+      this.collection = new ParsePicList;
+      this.container = $('#parseMontage');
+
+      this.collection.query = new Parse.Query(ParsePic);
+
+      this.collection.query.find({
+        success: function(results) {
+            showPics(results);
+        },
+
+        error: function(error) {
+            alert('Error!');
+          }
+        });
+
+
+
+    function showPics(results) {
+       this.parseView = $('#parse-pic-template').html();
+       for (var i = 0; i < results.length ; i++) {
+           console.log(results[i]);
+      //         serverId = photoData.photos.photo[i].server;
+      //         secret = photoData.photos.photo[i].secret;
+      //         flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+console.log(results[i].attributes.url);
+console.log(this.parseView);  $('#parseMontage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+      //
+      //         //  console.log(dimsPromises);
+      //
+      //
+      //          console.log('height: ', $('.montageSquare')[i].clientHeight);
+      //          console.log('width: ', $('.montageSquare')[i].clientWidth);
+            // ----
+      //       for (var i = 0; i < 15 ; i++) {
+      //           if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+      //             {
+      //               console.log('Vertical!');
+      //               $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+      //               $(".flickrPicContainer").eq(i).addClass("w2");
+      //             }
+      //           }
+      //
+      //
+      //
+    };
+  };
+
+
+
+
+
+      // getDims : function() {
+      //   for (var i = 0; i < 9 ; i++) {
+      //     console.log($('.montageSquare'));
+      //     x = $('.montageSquare');
+      //     console.log(x.clientWidth);
+      //   };
+      // }
+
+
+}
+});
+
 var LogInView = Parse.View.extend({
   events: {
     "submit form.login-form": "logIn",
@@ -329,6 +385,52 @@ var LogInView = Parse.View.extend({
       this.delegateEvents();
   }
 });
+
+var AppRouter = Parse.Router.extend({
+    routes: {
+
+
+             'login'           :     'goLogin',
+             'home'            :     'goLanding',
+             'aremid'          :     'goPetzPage',
+             'zellouisa'       :     'goPetzPagez',
+             'a*'               :     'goLanding'
+
+
+
+
+        }
+    });
+
+    // Initiate the router
+    var app_router = new AppRouter;
+
+    app_router.on('route:goLogin', function() {
+        loginView = new LoginView();
+        console.log('Loading login page');
+      });
+
+    app_router.on('route:goPetzPage', function() {
+        linkView = new LinkView({tag: 'aremid'});
+        console.log('Loading petz page for ',linkView.tag);
+      });
+
+    app_router.on('route:goPetzPagez', function() {
+        linkView = new LinkView({tag: 'zellouisa'});
+        console.log('Loading petz page for ',linkView.tag);
+      });
+
+    app_router.on('route:goLanding', function() {
+        console.log('Going home...');
+        $('.container').load("home.html");
+    })
+
+    app_router.on('route:defaultRoute', function() {
+        alert('Sorry, that function is not yet available.')
+    });
+
+
+    Parse.history.start();
 
 $(function() {
 

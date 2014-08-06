@@ -5,7 +5,7 @@ var LinkView = Parse.View.extend({
   initialize: function() {
     new FlickrPicListView();
     // new VineListView();
-    // new UploadPicView();
+    new ParsePicListView();
 
   },
 
@@ -147,3 +147,83 @@ var VineListView = Parse.View.extend({
 // (function() {
 //   var timeoutID = window.setInterval(startAnimation(),10500);
 // })();
+
+
+
+
+
+var ParsePicListView = Parse.View.extend({
+
+    collection: ParsePicList,
+
+    initialize: function() {
+      this.render();
+
+    },
+
+
+
+    //
+  render: function () {
+      this.collection = new ParsePicList;
+      this.container = $('#parseMontage');
+
+      this.collection.query = new Parse.Query(ParsePic);
+
+      this.collection.query.find({
+        success: function(results) {
+            showPics(results);
+        },
+
+        error: function(error) {
+            alert('Error!');
+          }
+        });
+
+
+
+    function showPics(results) {
+       this.parseView = $('#parse-pic-template').html();
+       for (var i = 0; i < results.length ; i++) {
+           console.log(results[i]);
+      //         serverId = photoData.photos.photo[i].server;
+      //         secret = photoData.photos.photo[i].secret;
+      //         flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+console.log(results[i].attributes.url);
+console.log(this.parseView);  $('#parseMontage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+      //
+      //         //  console.log(dimsPromises);
+      //
+      //
+      //          console.log('height: ', $('.montageSquare')[i].clientHeight);
+      //          console.log('width: ', $('.montageSquare')[i].clientWidth);
+            // ----
+      //       for (var i = 0; i < 15 ; i++) {
+      //           if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+      //             {
+      //               console.log('Vertical!');
+      //               $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+      //               $(".flickrPicContainer").eq(i).addClass("w2");
+      //             }
+      //           }
+      //
+      //
+      //
+    };
+  };
+
+
+
+
+
+      // getDims : function() {
+      //   for (var i = 0; i < 9 ; i++) {
+      //     console.log($('.montageSquare'));
+      //     x = $('.montageSquare');
+      //     console.log(x.clientWidth);
+      //   };
+      // }
+
+
+}
+});
