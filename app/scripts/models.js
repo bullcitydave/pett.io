@@ -1,3 +1,11 @@
+    var Pet = Parse.Object.extend("Pet", {
+
+
+
+
+
+    });
+
     var ParsePic = Parse.Object.extend("ParsePic", {
 
 
@@ -48,7 +56,7 @@
 
       var Vine = Parse.Object.extend("Vine", {
 
-        defaults:{
+        defaults:{ "source" : "vine"
 
         }
 

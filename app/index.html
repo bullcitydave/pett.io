@@ -22,6 +22,8 @@
     <!-- endbuild -->
   </head>
   <body>
+    <button class="log-out">Log Out</button>
+    <a href="#/">Show Profile</a>
     <header>
       <h1>Aremid</h1>
     </header>
@@ -70,6 +72,7 @@
     <script src="scripts/functions.js"></script>
     <script src="scripts/apis.js"></script>
     <script src="scripts/models.js"></script>
+    <script src="scripts/profile.js"></script>
     <script src="scripts/views.js"></script>
     <script src="scripts/login.js"></script>
     <script src="scripts/router.js"></script>
@@ -77,6 +80,20 @@
     <!-- endbuild -->
 
 </body>
+
+
+<script type="text/template" id="profile-template">
+
+    <section class='profile' >
+      <%-type%>
+      <%-dateBirth%>
+      <%-dateDeath%>
+      <%-dateAdopted%>
+      <%-bio%>
+    </section>
+
+</script>
+
 
 <script type="text/template" id="flickr-template">
 
