@@ -20,18 +20,19 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        console.log(Parse.User.current());
+        console.log(Parse.User.current().getUsername());
+        $('#login-section').hide();
         new LinkView();
       } else {
         console.log('login view needed...');
-        new LogInView();
+        new LoginView();
       }
     },
 
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      new LogInView();
+      new LoginView();
       this.undelegateEvents();
       delete this;
     },

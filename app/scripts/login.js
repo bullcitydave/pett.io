@@ -1,12 +1,13 @@
-var LogInView = Parse.View.extend({
+var LoginView = Parse.View.extend({
   events: {
     "submit form.login-form": "logIn",
     "submit form.signup-form": "signUp"
   },
 
-  el: ".content",
+  el: "#login-section",
 
   initialize: function() {
+    console.log("LoginView initialized")
     _.bindAll(this, "logIn", "signUp");
     this.render();
   },
@@ -19,9 +20,10 @@ var LogInView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView('aremid'); // need function to render first pet of user
+          new LinkView('zellouisa'); // need function to render first pet of user
           self.undelegateEvents();
           delete self;
+
         },
 
         error: function(user, error) {
@@ -59,6 +61,8 @@ var LogInView = Parse.View.extend({
   },
 
   render: function() {
+    console.log(this.$el);
+    console.log($("#login-template").html());
       this.$el.html(_.template($("#login-template").html()));
       this.delegateEvents();
   }
