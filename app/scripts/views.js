@@ -6,6 +6,7 @@ var LinkView = Parse.View.extend({
 
   initialize: function(tag) {
     console.log(tag);
+    if (!(tag)) {tag = 'aremid'};
     new FlickrPicListView(tag);
     // new VineListView();
     new ParsePicListView(tag);
