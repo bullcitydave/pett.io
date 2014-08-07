@@ -17,35 +17,58 @@ $primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
 
 body {
   background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: $primary-font;
   color: #333;
   width:100%;
+
+  header#main-header{
+    position: fixed;
+  }
+
+  .main-container{
+    position: absolute;
+    top: 80px;
+    width:100%;
+  }
 }
 
-header {
+header#pet-header {
   position: fixed;
-  height: 200px;
   z-index: 50;
   margin: 0 0 30px 0;
   width: 100%;
   opacity: .7;
+
+    h1 {
+      font-size: 6.5em;
+      font-family: $primary-font;
+      font-weight: 300;
+      letter-spacing: .05em;
+      margin: 0 0 0 35px;
+      background: #aaa;
+      opacity: 1;
+      z-index: 100;
+      text-transform: capitalize;
+      @media screen and (max-width: 480px){
+        font-size: 4.5em;
+        letter-spacing: .075em;
+        margin: 0;
+      }
+    }
+
+    #about {
+      position: absolute;
+      top: 0;
+      left: 50%;
+    }
 }
 
-
-h1 {
-    font-size: 6.5em;
-    font-family: $primary-font;
-    letter-spacing: .15em;
-    margin: 0 0 0 35px;
+section.profile-wrapper {
+    width: 400px;
     background: #aaa;
-    opacity: 1;
-    z-index: 100;
-    @media screen and (max-width: 480px){
-      font-size: 4.5em;
-      letter-spacing: .075em;
-      margin: 0;
-    }
-  }
+    display: none;
+    position:fixed;
+}
 
 
 
@@ -99,10 +122,8 @@ div#flickrMontage {
 
 // form file upload
 form#fileupload {
-  margin: 140px;
   clear:both;
   z-index:3000;
-  padding-top:200px;
 }
 
 .display-message {

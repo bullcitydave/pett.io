@@ -4,15 +4,13 @@ var AppRouter = Parse.Router.extend({
 
              'login'           :     'goLogin',
              'home'            :     'goLanding',
-             'aremid'          :     'goPetzPage',
-             'zellouisa'       :     'goPetzPagez',
-             'a*'               :     'goLanding'
-
-
-
+              ''               : 'goLogin',
+              'pet/:petName':   'getPet'
 
         }
-    });
+
+
+  });
 
     // Initiate the router
     var app_router = new AppRouter;
@@ -21,6 +19,11 @@ var AppRouter = Parse.Router.extend({
         loginView = new LoginView();
         console.log('Loading login page');
       });
+
+    app_router.on('route:getPet', function(petName) {
+      console.log('Getting page for ',petName);
+      linkView = new LinkView(petName);
+    });
 
     app_router.on('route:goPetzPage', function() {
         linkView = new LinkView({tag: 'aremid'});

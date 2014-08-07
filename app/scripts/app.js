@@ -6,11 +6,17 @@ $(function() {
 
   var AppView = Parse.View.extend({
 
-    el: $("#main-container"),
+    el: $("#main-header"),
+
+    events: {
+
+      "click #log-out"    : "logOut"
+    },
 
     initialize: function() {
       this.render();
     },
+
 
     render: function() {
       if (Parse.User.current()) {
@@ -22,6 +28,13 @@ $(function() {
       }
     },
 
+    logOut: function(e) {
+      Parse.User.logOut();
+      console.log('Logging out and back to main login');
+      new LogInView();
+      this.undelegateEvents();
+      delete this;
+    },
 
     displayMessage: function(txt) {
       $('.display-message').show.html(txt);

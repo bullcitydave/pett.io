@@ -13,7 +13,7 @@ var ProfileView = Parse.View.extend ({
     query.equalTo("uniqueName", this.pet);
     query.find({
       success: function(results) {
-        alert("Successfully retrieved " + this.pet + ". Attempting to render...");
+        console.log("Successfully retrieved " + this.pet + ". Attempting to render...");
         self.render(results[0].attributes);
       },
       error: function(error) {
@@ -24,8 +24,7 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         var profileView = $('#profile-template').html();
-        $('#parseMontage').append(_.template(profileView,data));
-        this.$el.html(rendered);
-        return this;
+        $('.profile-wrapper').show();
+        $('.profile-wrapper').html(_.template(profileView,data));
       }
 });
