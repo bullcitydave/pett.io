@@ -19,7 +19,7 @@ var LogInView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView();
+          new LinkView('aremid'); // need function to render first pet of user
           self.undelegateEvents();
           delete self;
         },

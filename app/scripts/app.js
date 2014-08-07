@@ -58,6 +58,7 @@ $(function() {
       var files = e.target.files || e.dataTransfer.files;
       // Our file var now holds the selected file
       file = files[0];
+      console.log(files[0]);
     });
 
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
