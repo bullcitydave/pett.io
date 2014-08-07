@@ -1,11 +1,14 @@
 var AppRouter = Parse.Router.extend({
     routes: {
+              ':petName':   'getPet',
+
 
 
              'login'           :     'goLogin',
              'home'            :     'goLanding',
-              ''               : 'goLogin',
-              'pet/:petName':   'getPet'
+             ''               :     'goLogin'
+
+
 
         }
 
@@ -21,7 +24,8 @@ var AppRouter = Parse.Router.extend({
       });
 
     app_router.on('route:getPet', function(petName) {
-      console.log('Getting page for ',petName);
+
+        console.log('Getting page for ',petName);
       linkView = new LinkView(petName);
     });
 
@@ -45,4 +49,4 @@ var AppRouter = Parse.Router.extend({
     });
 
 
-    Parse.history.start();
+    Parse.history.start
