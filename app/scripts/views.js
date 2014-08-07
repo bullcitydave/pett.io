@@ -80,10 +80,11 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+              console.log('Rendering Flickr image: ',flickrImg);
 
               // dimsPromises.push(flickrImg);
 
-            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+            $('#flickr-montage').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
               //  console.log(dimsPromises);
 
@@ -105,9 +106,10 @@ var FlickrPicListView = Parse.View.extend({
 var ParsePicListView = Parse.View.extend({
 
     initialize: function(tag) {
+      self=this;
       console.log('Initializing parse pic view. Tag: ',tag);
       this.render(tag);
-      self=this;
+
     },
 
     render: function(tag) {
@@ -117,6 +119,8 @@ var ParsePicListView = Parse.View.extend({
       var ppQuery = new Parse.Query(ParsePic);
       ppQuery.equalTo("username", Parse.User.current().getUsername());
       ppQuery.equalTo("petname", tag);
+
+      console.log('ppQuery: ',ppQuery);
 
       ppQuery.find({
         success: function(results) {
