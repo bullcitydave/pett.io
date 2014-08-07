@@ -14,36 +14,52 @@
     <script src="scripts/vendor/modernizr.js"></script>
   </head>
   <body>
-    <button class="log-out">Log Out</button>
-    <a href="#/">Show Profile</a>
-    <header>
-      <h1>Aremid</h1>
+    <header id="main-header">
+        <button id="log-out">Log Out</button>
+        <a href="#/">Edit Profile</a>
+
+        <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+        <fieldset>
+          <input type="file" name="fileselect" id="fileselect"></input>
+          <input id="uploadbutton" type="button" value="Upload an image"/>
+        </fieldset>
+        <p class="display-message"></p>
+        </form>
     </header>
-    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
-    <fieldset>
-      <input type="file" name="fileselect" id="fileselect"></input>
-      <input id="uploadbutton" type="button" value="Upload an image"/>
-    </fieldset>
-    <p class="display-message"></p>
-    </form>
     <div class="main-container">
 
       <div class="content">
+
+
+        <section class="profile-wrapper">
+
+        </section>
+
+
+
+        <div id="parseMontage">
+          <header id="pet-header">
+            <h1></h1>
+            <div id="about">About</div>
+            <button id="log-out">Log Out</button>
+          </header>
+
+        </div>
+
+        <div id="flickrMontage">
+
+
+        </div>
 
       </div>
 
 
 <!-- // from https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api -->
-<div id="flickrMontage">
 
 
-</div>
 
 
-<div id="parseMontage">
 
-
-</div>
 
 
 
@@ -61,13 +77,15 @@
 
 <script type="text/template" id="profile-template">
 
-    <section class='profile' >
-      <%-type%>
-      <%-dateBirth%>
-      <%-dateDeath%>
-      <%-dateAdopted%>
-      <%-bio%>
-    </section>
+    <div class='profile' >
+      <p><%-type%></p>
+      <p><%-dateBirth%></p>
+      <p><%-dateDeath%></p>
+      <p><%-dateAdopted%></p>
+      <p><%-bio%></p>
+      <p><%-favoriteTreats%></p>
+      <p><%-colors%></p>
+    </div>
 
 </script>
 

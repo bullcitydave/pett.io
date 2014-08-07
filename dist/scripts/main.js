@@ -113,7 +113,7 @@ var ProfileView = Parse.View.extend ({
     query.equalTo("uniqueName", this.pet);
     query.find({
       success: function(results) {
-        alert("Successfully retrieved " + this.pet + ". Attempting to render...");
+        console.log("Successfully retrieved " + this.pet + ". Attempting to render...");
         self.render(results[0].attributes);
       },
       error: function(error) {
@@ -124,9 +124,8 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         var profileView = $('#profile-template').html();
-        $('#parseMontage').append(_.template(profileView,data));
-        this.$el.html(rendered);
-        return this;
+        $('.profile-wrapper').show();
+        $('.profile-wrapper').html(_.template(profileView,data));
       }
 });
 
@@ -134,38 +133,37 @@ var LinkView = Parse.View.extend({
 
   el: ".content",
 
-  initialize: function() {
-    new ProfileView();
-    new FlickrPicListView();
+
+
+  initialize: function(tag) {
+    console.log(tag);
+    new FlickrPicListView(tag);
     // new VineListView();
-    new ParsePicListView();
+    new ParsePicListView(tag);
 
   },
 
 
 
   events: {
-    "click .log-out": "logOut"
+
+    "click #about"    : "showProfile"
   },
 
-
-
-  logOut: function(e) {
-    Parse.User.logOut();
-    console.log('Logging out and back to main login');
-    new LogInView();
-    this.undelegateEvents();
-    delete this;
+  showProfile: function(e) {
+    new ProfileView();
   }
+
+
 });
 
 
 
 var FlickrPicListView = Parse.View.extend({
 
-    initialize: function() {
+    initialize: function(tag) {
       this.flickrPicList = new FlickrPicList;
-      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=aremid&per_page=16&page=1&format=json&nojsoncallback=1";
+      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=" + tag +"&per_page=16&page=1&format=json&nojsoncallback=1";
       this.render();
 
     },
@@ -199,7 +197,7 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           var dimsPromises=[];
-          for (var i = 0; i < 15 ; i++) {
+          for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
             }
@@ -220,7 +218,7 @@ var FlickrPicListView = Parse.View.extend({
                console.log('width: ', $('.montageSquare')[i].clientWidth);
             }
 
-            for (var i = 0; i < 15 ; i++) {
+            for (var i = 0; i < 9 ; i++) {
                 if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
                 {
                   console.log('Vertical!');
@@ -269,21 +267,24 @@ var ParsePicListView = Parse.View.extend({
 
     collection: ParsePicList,
 
-    initialize: function() {
-      this.render();
+    initialize: function(tag) {
+      this.render(tag);
 
     },
 
 
 
     //
-  render: function () {
+  render: function (tag) {
+      $('#pet-header h1').html(tag);
       this.collection = new ParsePicList;
       this.container = $('#parseMontage');
 
-      this.collection.query = new Parse.Query(ParsePic);
+      var ppQuery = new Parse.Query(ParsePic);
+      ppQuery.equalTo("username", Parse.User.current().getUsername());
+      ppQuery.equalTo("petname", tag);
 
-      this.collection.query.find({
+      ppQuery.find({
         success: function(results) {
             showPics(results);
         },
@@ -413,15 +414,13 @@ var AppRouter = Parse.Router.extend({
 
              'login'           :     'goLogin',
              'home'            :     'goLanding',
-             'aremid'          :     'goPetzPage',
-             'zellouisa'       :     'goPetzPagez',
-             'a*'               :     'goLanding'
-
-
-
+              ''               : 'goLogin',
+              'pet/:petName':   'getPet'
 
         }
-    });
+
+
+  });
 
     // Initiate the router
     var app_router = new AppRouter;
@@ -430,6 +429,11 @@ var AppRouter = Parse.Router.extend({
         loginView = new LoginView();
         console.log('Loading login page');
       });
+
+    app_router.on('route:getPet', function(petName) {
+      console.log('Getting page for ',petName);
+      linkView = new LinkView(petName);
+    });
 
     app_router.on('route:goPetzPage', function() {
         linkView = new LinkView({tag: 'aremid'});
@@ -461,11 +465,17 @@ $(function() {
 
   var AppView = Parse.View.extend({
 
-    el: $("#main-container"),
+    el: $("#main-header"),
+
+    events: {
+
+      "click #log-out"    : "logOut"
+    },
 
     initialize: function() {
       this.render();
     },
+
 
     render: function() {
       if (Parse.User.current()) {
@@ -477,6 +487,13 @@ $(function() {
       }
     },
 
+    logOut: function(e) {
+      Parse.User.logOut();
+      console.log('Logging out and back to main login');
+      new LogInView();
+      this.undelegateEvents();
+      delete this;
+    },
 
     displayMessage: function(txt) {
       $('.display-message').show.html(txt);

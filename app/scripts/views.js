@@ -2,38 +2,37 @@ var LinkView = Parse.View.extend({
 
   el: ".content",
 
-  initialize: function() {
-    new ProfileView();
-    new FlickrPicListView();
+
+
+  initialize: function(tag) {
+    console.log(tag);
+    new FlickrPicListView(tag);
     // new VineListView();
-    new ParsePicListView();
+    new ParsePicListView(tag);
 
   },
 
 
 
   events: {
-    "click .log-out": "logOut"
+
+    "click #about"    : "showProfile"
   },
 
-
-
-  logOut: function(e) {
-    Parse.User.logOut();
-    console.log('Logging out and back to main login');
-    new LogInView();
-    this.undelegateEvents();
-    delete this;
+  showProfile: function(e) {
+    new ProfileView();
   }
+
+
 });
 
 
 
 var FlickrPicListView = Parse.View.extend({
 
-    initialize: function() {
+    initialize: function(tag) {
       this.flickrPicList = new FlickrPicList;
-      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=aremid&per_page=16&page=1&format=json&nojsoncallback=1";
+      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=" + tag +"&per_page=16&page=1&format=json&nojsoncallback=1";
       this.render();
 
     },
@@ -67,7 +66,7 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           var dimsPromises=[];
-          for (var i = 0; i < 15 ; i++) {
+          for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
             }
@@ -88,7 +87,7 @@ var FlickrPicListView = Parse.View.extend({
                console.log('width: ', $('.montageSquare')[i].clientWidth);
             }
 
-            for (var i = 0; i < 15 ; i++) {
+            for (var i = 0; i < 9 ; i++) {
                 if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
                 {
                   console.log('Vertical!');
@@ -137,21 +136,24 @@ var ParsePicListView = Parse.View.extend({
 
     collection: ParsePicList,
 
-    initialize: function() {
-      this.render();
+    initialize: function(tag) {
+      this.render(tag);
 
     },
 
 
 
     //
-  render: function () {
+  render: function (tag) {
+      $('#pet-header h1').html(tag);
       this.collection = new ParsePicList;
       this.container = $('#parseMontage');
 
-      this.collection.query = new Parse.Query(ParsePic);
+      var ppQuery = new Parse.Query(ParsePic);
+      ppQuery.equalTo("username", Parse.User.current().getUsername());
+      ppQuery.equalTo("petname", tag);
 
-      this.collection.query.find({
+      ppQuery.find({
         success: function(results) {
             showPics(results);
         },
