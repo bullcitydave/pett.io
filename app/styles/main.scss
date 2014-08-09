@@ -48,20 +48,27 @@ body {
 
     div#logo-container{
       background: #eaeaea;
-      border-radius: 160px;
-      width: 320px;
+      border-radius: 100px;
+      width: 200px;
       margin: auto;
-      padding: 25px 0px 15px 15px;
-      height: 320px;
+      padding: 5px 0px 15px 15px;
+      height: 200px;
+
+      #logo{
+        width: 160px;
+      }
     }
     h1 {
-      font-size: 7em;
+      font-size: 3.8em;
       font-weight: 300;
-      margin: 10px 0 -25px 0;
+      margin: 5px 0 -20px 0;
     }
   }
 
   #main-container{
+    position: absolute;
+    top: 50%;
+
     div#splash-img-container{
       position: relative;
 
@@ -86,12 +93,12 @@ body {
     nav#main-nav{
       @include media($mobile);
         position: absolute;
-        top: 92%;
+        bottom: 0%;
         z-index: 500;
         color: #000;
-        font-size: 1.6em;
+        font-size: 1.1em;
         width: 100%;
-        padding: 15px 0 15px 0;
+        padding: 5px 0 5px 0;
         background: $orange;
         ul {
           li {
