@@ -8,6 +8,7 @@ var LinkView = Parse.View.extend({
     self=this;
     console.log('Initializing LinkView. Tag:',tag);
     $(this.el).html('');
+    $('body').addClass('whitebg');
     if (!(tag)) {tag = 'zellouisa'};
     $('#pet-header h1').html(tag);
     new ParsePicListView(tag);

@@ -4,10 +4,11 @@
 
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400,300);
 
-$primary-font: 'Pusekatt', 'Times New Roman',serif;
+$primary-font:   'Pusekatt', 'Times New Roman',serif;
 $secondary-font: 'Roboto Condensed','Helvetica Neue',Arial,sans-serif;
 
-$orange: darkorange;
+$orange:   darkorange;
+$offwhite: #eaeaea;
 
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
@@ -185,8 +186,7 @@ section.profile-wrapper {
 
 
 
-div#flickr-montage {
-  // @include outer-container;
+
   div.flickrPicContainer {
 
     float: left;
@@ -229,7 +229,6 @@ div#flickr-montage {
     }
 
 
-}
 
 
 
@@ -241,4 +240,8 @@ form#fileupload {
 
 .display-message {
   display: none;
+}
+
+.whitebg {
+  background: $offwhite;
 }

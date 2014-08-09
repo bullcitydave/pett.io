@@ -5,8 +5,11 @@ var LoginView = Parse.View.extend({
 
   el: "#main-container",
 
+  pet: "zellouisa", // default pet until function available to render first pet of user
+
   initialize: function() {
-    console.log("LoginView initialized")
+    console.log("LoginView initialized");
+    self = this;
     this.render();
   },
 
@@ -18,10 +21,7 @@ var LoginView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView('zellouisa'); // need function to render first pet of user
-          self.undelegateEvents();
-          delete self;
-
+          app_router.navigate('//'+self.pet);
         },
 
         error: function(user, error) {
