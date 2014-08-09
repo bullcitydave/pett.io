@@ -1,12 +1,10 @@
 var AppRouter = Parse.Router.extend({
     routes: {
-              ':petName':   'getPet',
 
-
-
-             'login'           :     'goLogin',
-             'home'            :     'goLanding',
-             ''               :     'goLogin'
+       'login'           :     'goLogin',
+       'home'            :     'goLanding',
+       ''                :     'goLogin',
+       ':petName'        :     'getPet'
 
 
 
@@ -29,24 +27,14 @@ var AppRouter = Parse.Router.extend({
       linkView = new LinkView(petName);
     });
 
-    app_router.on('route:goPetzPage', function() {
-        linkView = new LinkView({tag: 'aremid'});
-        console.log('Loading petz page for ',linkView.tag);
-      });
-
-    app_router.on('route:goPetzPagez', function() {
-        linkView = new LinkView({tag: 'zellouisa'});
-        console.log('Loading petz page for ',linkView.tag);
-      });
-
     app_router.on('route:goLanding', function() {
         console.log('Going home...');
         $('.container').load("home.html");
     })
 
-    app_router.on('route:defaultRoute', function() {
-        alert('Sorry, that function is not yet available.')
+
+
+
+    Parse.history.start({
+      // pushState: true
     });
-
-
-    Parse.history.start

@@ -20,18 +20,19 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        console.log(Parse.User.current());
+        console.log(Parse.User.current().getUsername());
+        $('#login-section').hide();
         new LinkView();
       } else {
         console.log('login view needed...');
-        new LogInView();
+        new LoginView();
       }
     },
 
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      new LogInView();
+      new LoginView();
       this.undelegateEvents();
       delete this;
     },
@@ -58,6 +59,7 @@ $(function() {
       var files = e.target.files || e.dataTransfer.files;
       // Our file var now holds the selected file
       file = files[0];
+      console.log(files[0]);
     });
 
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
