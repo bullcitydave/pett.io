@@ -2,10 +2,12 @@
 @import '../../bower_components/bourbon/dist/bourbon';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 
-@import url(http://fonts.googleapis.com/css?family=Francois+One:400,300italic,500);
-@import url(http://fonts.googleapis.com/css?family=Gruppo:400,300italic,500);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400,300);
 
-$primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
+$primary-font: 'Pusekatt', 'Times New Roman',serif;
+$secondary-font: 'Roboto Condensed','Helvetica Neue',Arial,sans-serif;
+
+$orange: darkorange;
 
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
@@ -14,21 +16,95 @@ $primary-font: 'Gruppo','Helvetica Neue',Arial,sans-serif;
   -webkit-filter: brightness($amt);
 }
 
+/// Reset
+
+li,ul {
+-webkit-margin-before: 0em;
+-webkit-margin-after: 0em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 0px;
+}
+
+h1 {
+-webkit-margin-before: 0.67em;
+-webkit-margin-after: 0.67em;
+}
+
+
+
+///
 
 body {
-  background: #fafafa;
+  background: $orange;
   font-family: $primary-font;
-  color: #333;
   width:100%;
 
   header#main-header{
-    position: fixed;
+    // position: fixed;
+    background: $orange;
+    text-align:center;
+    margin: auto;
+
+    div#logo-container{
+      background: #eaeaea;
+      border-radius: 160px;
+      width: 320px;
+      margin: auto;
+      padding: 25px 0px 15px 15px;
+      height: 320px;
+    }
+    h1 {
+      font-size: 7em;
+      font-weight: 300;
+      margin: 10px 0 -25px 0;
+    }
   }
 
-  .main-container{
-    position: absolute;
-    top: 80px;
-    width:100%;
+  #main-container{
+    div#splash-img-container{
+      position: relative;
+
+      #splash-img {
+        width: 100%;
+        position: relative;
+      }
+      p#splash-pet-name {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-family: $secondary-font;
+      }
+
+    }
+    @include outer-container;
+    $mobile: new-breakpoint(min-width 320px 5);
+    $desktop: new-breakpoint(min-width 960px 12);
+
+
+
+    nav#main-nav{
+      @include media($mobile);
+        position: absolute;
+        top: 92%;
+        z-index: 500;
+        color: #000;
+        font-size: 1.6em;
+        width: 100%;
+        padding: 15px 0 15px 0;
+        background: $orange;
+        ul {
+          li {
+            list-style: none;
+            float:left;
+            text-align: center;
+            width: 33.33%;
+          }
+        }
+      }
+    // position: absolute;
+    // top: 80px;
+    // width:100%;
   }
 }
 

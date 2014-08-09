@@ -136,11 +136,13 @@ var LinkView = Parse.View.extend({
 
 
   initialize: function(tag) {
-    console.log(tag);
-    if (!(tag)) {tag = 'aremid'};
+    console.log('Initializing LinkView. Tag:',tag);
+    if (!(tag)) {tag = 'zellouisa'};
+    $('#pet-header h1').html(tag);
+    new ParsePicListView(tag);
     new FlickrPicListView(tag);
     // new VineListView();
-    new ParsePicListView(tag);
+
 
   },
 
@@ -163,8 +165,10 @@ var LinkView = Parse.View.extend({
 var FlickrPicListView = Parse.View.extend({
 
     initialize: function(tag) {
+      console.log("Initializing FlickrPicListView. Tag: ", tag);
       this.flickrPicList = new FlickrPicList;
       this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=" + tag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+      console.log("Flickr URL is ", this.flickrApiUrl);
       this.render();
 
     },
@@ -179,7 +183,7 @@ var FlickrPicListView = Parse.View.extend({
       // });
 
 
-        var container = $('#flickrMontage');
+        var container = $('#flickr-montage');
 
         // container.masonry({
         //     columnWidth: 40,
@@ -207,33 +211,74 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+              console.log('Rendering Flickr image: ',flickrImg);
 
               // dimsPromises.push(flickrImg);
 
-            $('#flickrMontage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+            $('#flickr-montage').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
               //  console.log(dimsPromises);
 
-
-               console.log('height: ', $('.montageSquare')[i].clientHeight);
-               console.log('width: ', $('.montageSquare')[i].clientWidth);
             }
 
-            for (var i = 0; i < 9 ; i++) {
-                if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-                {
-                  console.log('Vertical!');
-                  $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-                  $(".flickrPicContainer").eq(i).addClass("w2");
-                }
-            }
+            // for (var i = 0; i < 9 ; i++) {
+            //     if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
+            //     {
+            //       console.log('Vertical!');
+            //       $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
+            //       $(".flickrPicContainer").eq(i).addClass("w2");
+            //     }
+            // }
         });
       }
     });
 
 
+var ParsePicListView = Parse.View.extend({
 
-var VineListView = Parse.View.extend({
+    initialize: function(tag) {
+      self=this;
+      console.log('Initializing parse pic view. Tag: ',tag);
+      this.render(tag);
+
+    },
+
+    render: function(tag) {
+
+      this.container = $('#parseMontage');
+
+      var ppQuery = new Parse.Query(ParsePic);
+      ppQuery.equalTo("username", Parse.User.current().getUsername());
+      ppQuery.equalTo("petname", tag);
+
+      console.log('ppQuery: ',ppQuery);
+
+      ppQuery.find({
+        success: function(results) {
+            self.showPics(results);
+        },
+
+        error: function(error) {
+            alert('Error!');
+          }
+        });
+      },
+
+    showPics: function(results) {
+       this.parseView = $('#parse-pic-template').html();
+       for (var i = 0; i < results.length ; i++) {
+          console.log(results[i]);
+          console.log(results[i].attributes.url);
+          console.log(this.parseView);
+         $('#parse-montage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+       }
+     }
+
+
+});
+
+
+// var VineListView = Parse.View.extend({
     //
     // initialize: function() {
     //   this.vineList = new VineList;
@@ -258,100 +303,18 @@ var VineListView = Parse.View.extend({
     //       }
     //     })
     //   }
-    });
+    // });
 
-
-
-
-
-var ParsePicListView = Parse.View.extend({
-
-    collection: ParsePicList,
-
-    initialize: function(tag) {
-      this.render(tag);
-
-    },
-
-
-
-    //
-  render: function (tag) {
-      $('#pet-header h1').html(tag);
-      this.collection = new ParsePicList;
-      this.container = $('#parseMontage');
-
-      var ppQuery = new Parse.Query(ParsePic);
-      ppQuery.equalTo("username", Parse.User.current().getUsername());
-      ppQuery.equalTo("petname", tag);
-
-      ppQuery.find({
-        success: function(results) {
-            showPics(results);
-        },
-
-        error: function(error) {
-            alert('Error!');
-          }
-        });
-
-
-
-    function showPics(results) {
-       this.parseView = $('#parse-pic-template').html();
-       for (var i = 0; i < results.length ; i++) {
-           console.log(results[i]);
-      //         serverId = photoData.photos.photo[i].server;
-      //         secret = photoData.photos.photo[i].secret;
-      //         flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
-console.log(results[i].attributes.url);
-console.log(this.parseView);  $('#parseMontage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
-      //
-      //         //  console.log(dimsPromises);
-      //
-      //
-      //          console.log('height: ', $('.montageSquare')[i].clientHeight);
-      //          console.log('width: ', $('.montageSquare')[i].clientWidth);
-            // ----
-      //       for (var i = 0; i < 15 ; i++) {
-      //           if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-      //             {
-      //               console.log('Vertical!');
-      //               $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-      //               $(".flickrPicContainer").eq(i).addClass("w2");
-      //             }
-      //           }
-      //
-      //
-      //
-    };
-  };
-
-
-
-
-
-      // getDims : function() {
-      //   for (var i = 0; i < 9 ; i++) {
-      //     console.log($('.montageSquare'));
-      //     x = $('.montageSquare');
-      //     console.log(x.clientWidth);
-      //   };
-      // }
-
-
-}
-});
-
-var LogInView = Parse.View.extend({
+var LoginView = Parse.View.extend({
   events: {
     "submit form.login-form": "logIn",
     "submit form.signup-form": "signUp"
   },
 
-  el: ".content",
+  el: "#login-section",
 
   initialize: function() {
+    console.log("LoginView initialized")
     _.bindAll(this, "logIn", "signUp");
     this.render();
   },
@@ -364,9 +327,10 @@ var LogInView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView();
+          new LinkView('zellouisa'); // need function to render first pet of user
           self.undelegateEvents();
           delete self;
+
         },
 
         error: function(user, error) {
@@ -404,6 +368,8 @@ var LogInView = Parse.View.extend({
   },
 
   render: function() {
+    console.log(this.$el);
+    console.log($("#login-template").html());
       this.$el.html(_.template($("#login-template").html()));
       this.delegateEvents();
   }
@@ -411,13 +377,11 @@ var LogInView = Parse.View.extend({
 
 var AppRouter = Parse.Router.extend({
     routes: {
-              ':petName':   'getPet',
 
-
-
-             'login'           :     'goLogin',
-             'home'            :     'goLanding',
-             ''               :     'goLogin'
+       'login'           :     'goLogin',
+       'home'            :     'goLanding',
+       ''                :     'goLogin',
+       ':petName'        :     'getPet'
 
 
 
@@ -440,27 +404,17 @@ var AppRouter = Parse.Router.extend({
       linkView = new LinkView(petName);
     });
 
-    app_router.on('route:goPetzPage', function() {
-        linkView = new LinkView({tag: 'aremid'});
-        console.log('Loading petz page for ',linkView.tag);
-      });
-
-    app_router.on('route:goPetzPagez', function() {
-        linkView = new LinkView({tag: 'zellouisa'});
-        console.log('Loading petz page for ',linkView.tag);
-      });
-
     app_router.on('route:goLanding', function() {
         console.log('Going home...');
         $('.container').load("home.html");
     })
 
-    app_router.on('route:defaultRoute', function() {
-        alert('Sorry, that function is not yet available.')
+
+
+
+    Parse.history.start({
+      // pushState: true
     });
-
-
-    Parse.history.start
 
 $(function() {
 
@@ -484,18 +438,19 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        console.log(Parse.User.current());
+        console.log(Parse.User.current().getUsername());
+        $('#login-section').hide();
         new LinkView();
       } else {
         console.log('login view needed...');
-        new LogInView();
+        new LoginView();
       }
     },
 
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      new LogInView();
+      new LoginView();
       this.undelegateEvents();
       delete this;
     },
@@ -522,6 +477,7 @@ $(function() {
       var files = e.target.files || e.dataTransfer.files;
       // Our file var now holds the selected file
       file = files[0];
+      console.log(files[0]);
     });
 
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
