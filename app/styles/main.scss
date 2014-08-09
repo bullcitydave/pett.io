@@ -150,8 +150,7 @@ header#pet-header {
   position: fixed;
   z-index: 50;
   margin: 0 0 30px 0;
-  width: 100%;
-  opacity: .7;
+  top: 0;
 
     h1 {
       font-size: 6.5em;
@@ -172,7 +171,7 @@ header#pet-header {
 
     #about {
       position: absolute;
-      top: 0;
+      bottom: 0;
       left: 50%;
     }
 }

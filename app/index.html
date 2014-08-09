@@ -53,10 +53,7 @@
         </section>
 
         <div id="parse-montage">
-          <header id="pet-header">
-            <h1></h1>
-            <div id="about">About</div>
-          </header>
+
 
         </div>
 
@@ -119,14 +116,17 @@
 
 
 <script type="text/template" id="flickr-template">
-
     <div class='flickrPicContainer' >
-
       <img class='montageSquare' src='<%-flickrImg %>'>
-
-  </div>
+    </div>
 </script>
 
+<script type="text/template" id="pet-header-template">
+    <header id="pet-header">
+      <h1><%-petName %></h1>
+      <div id="about">About</div>
+    </header>
+</script>
 
 <script type="text/template" id="parse-pic-template">
     <div class='parsePicContainer' >

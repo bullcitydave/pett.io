@@ -9,7 +9,7 @@ $(function() {
     render: function() {
       if (Parse.User.current()) {
         console.log(Parse.User.current().getUsername());
-        new SplashView();
+        new LinkView();
       } else {
         console.log('No user signed in. Proceeding to splash screen.');
         new SplashView();
