@@ -1,14 +1,15 @@
 var LoginView = Parse.View.extend({
   events: {
-    "submit form.login-form": "logIn",
-    "submit form.signup-form": "signUp"
+    "submit form.login-form": "logIn"
   },
 
-  el: "#login-section",
+  el: "#main-container",
+
+  pet: "zellouisa", // default pet until function available to render first pet of user
 
   initialize: function() {
-    console.log("LoginView initialized")
-    _.bindAll(this, "logIn", "signUp");
+    console.log("LoginView initialized");
+    self = this;
     this.render();
   },
 
@@ -20,10 +21,7 @@ var LoginView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView('zellouisa'); // need function to render first pet of user
-          self.undelegateEvents();
-          delete self;
-
+          app_router.navigate('//'+self.pet);
         },
 
         error: function(user, error) {
@@ -36,34 +34,9 @@ var LoginView = Parse.View.extend({
         return false;
       },
 
-  signUp: function(e) {
-    var self = this;
-    var username = this.$("#signup-username").val();
-    var password = this.$("#signup-password").val();
-
-    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
-          success: function(user) {
-            new LinkView();
-            console.log(self);
-            self.undelegateEvents();
-            delete self;
-          },
-
-          error: function(user, error) {
-            self.$(".signup-form .error").html(error.message).show();
-            self.$(".signup-form button").removeAttr("disabled");
-          }
-        });
-
-    this.$(".signup-form button").attr("disabled", "disabled");
-
-    return false;
-  },
-
   render: function() {
     console.log(this.$el);
     console.log($("#login-template").html());
-      this.$el.html(_.template($("#login-template").html()));
-      this.delegateEvents();
+      this.$el.append(_.template($("#login-template").html()));
   }
 });

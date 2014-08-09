@@ -1,11 +1,14 @@
 var LinkView = Parse.View.extend({
 
-  el: ".content",
+  el: "#main-container",
 
 
 
   initialize: function(tag) {
+    self=this;
     console.log('Initializing LinkView. Tag:',tag);
+    $(this.el).html('');
+    $('body').addClass('whitebg');
     if (!(tag)) {tag = 'zellouisa'};
     $('#pet-header h1').html(tag);
     new ParsePicListView(tag);
@@ -32,6 +35,7 @@ var LinkView = Parse.View.extend({
 
 
 var FlickrPicListView = Parse.View.extend({
+    el: "#content",
 
     initialize: function(tag) {
       console.log("Initializing FlickrPicListView. Tag: ", tag);
@@ -51,9 +55,6 @@ var FlickrPicListView = Parse.View.extend({
       // console.log('width ',  $('.montageSquare').clientWidth);
       // });
 
-
-        var container = $('#flickr-montage');
-
         // container.masonry({
         //     columnWidth: 40,
         //     itemSelector: '.flickrPicContainer'
@@ -61,7 +62,7 @@ var FlickrPicListView = Parse.View.extend({
         //   var msnry = container.data('masonry');
         //   console.log(msnry);
 
-      var dims=[];
+
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
@@ -70,7 +71,6 @@ var FlickrPicListView = Parse.View.extend({
           var serverId ='';
           var secret='';
 
-          var dimsPromises=[];
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
@@ -84,11 +84,13 @@ var FlickrPicListView = Parse.View.extend({
 
               // dimsPromises.push(flickrImg);
 
-            $('#flickr-montage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+            $('#content').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
               //  console.log(dimsPromises);
 
             }
+
+
 
             // for (var i = 0; i < 9 ; i++) {
             //     if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
