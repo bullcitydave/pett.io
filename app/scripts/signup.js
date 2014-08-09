@@ -1,12 +1,14 @@
 var LoginView = Parse.View.extend({
   events: {
-    "submit form.login-form": "logIn"
+    "submit form.login-form": "logIn",
+    "submit form.signup-form": "signUp"
   },
 
   el: "#main-container",
 
   initialize: function() {
     console.log("LoginView initialized")
+    _.bindAll(this, "logIn", "signUp");
     this.render();
   },
 
@@ -33,6 +35,30 @@ var LoginView = Parse.View.extend({
 
         return false;
       },
+
+  signUp: function(e) {
+    var self = this;
+    var username = this.$("#signup-username").val();
+    var password = this.$("#signup-password").val();
+
+    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+          success: function(user) {
+            new LinkView();
+            console.log(self);
+            self.undelegateEvents();
+            delete self;
+          },
+
+          error: function(user, error) {
+            self.$(".signup-form .error").html(error.message).show();
+            self.$(".signup-form button").removeAttr("disabled");
+          }
+        });
+
+    this.$(".signup-form button").attr("disabled", "disabled");
+
+    return false;
+  },
 
   render: function() {
     console.log(this.$el);

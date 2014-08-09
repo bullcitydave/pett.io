@@ -66,8 +66,42 @@ body {
   }
 
   #main-container{
+    @include outer-container;
+    $mobile: new-breakpoint(min-width 320px 5);
+    $desktop: new-breakpoint(min-width 960px 12);
+
     position: absolute;
     top: 50%;
+
+    div#login{
+      @include media($mobile) {
+        @include span-columns(5);
+      }
+      position: absolute;
+      top: 20%;
+      opacity: .8;
+
+      .login-form {
+        @include media($mobile) {
+          @include span-columns(3);
+          @include shift(1);
+        }
+        input {
+          display: block;
+          clear: both;
+          margin-bottom: 10px;
+          width: 100%;
+          font-family: 'Roboto Condensed';
+          opacity: .8;
+          padding: 5px;
+          letter-spacing: .8px;
+        }
+        button {
+          @include button(shiny, $orange);
+          color: #000;
+        }
+      }
+    }
 
     div#splash-img-container{
       position: relative;
@@ -81,14 +115,10 @@ body {
         top: 0;
         right: 10px;
         font-family: $secondary-font;
+        opacity: .7;
+        letter-spacing: .5px;
       }
-
     }
-    @include outer-container;
-    $mobile: new-breakpoint(min-width 320px 5);
-    $desktop: new-breakpoint(min-width 960px 12);
-
-
 
     nav#main-nav{
       @include media($mobile);
