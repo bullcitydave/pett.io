@@ -2,9 +2,9 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <meta name="Petz.link" content="">
+    <meta name="pett.io" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>Petz Link</title>
+    <title>pett.io</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css styles/vendor.css -->
@@ -36,23 +36,9 @@
         </form>
     </header> -->
     <header id="main-header">
-      <div id="logo-container">
-        <img id="logo" src="images/2q15fVj.gif">
-      </div>
-      <h1>pett.io</h1>
     </header>
     <div id="main-container">
-      <div id="splash-img-container">
-        <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
-        <p id="splash-pet-name">Zellouisa</p>
-      </div>
-      <nav id="main-nav">
-        <ul>
-          <li>Sign Up</li>
-          <li>Log In</li>
-          <li>Browse</li>
-        </ul>
-      </nav>
+
     </div>
       <div class="content">
 
@@ -96,6 +82,26 @@
 
 </body>
 
+<script type="text/template" id="splash-header-template">
+    <div id="logo-container">
+      <img id="logo" src="images/2q15fVj.gif">
+    </div>
+    <h1>pett.io</h1>
+</script>
+
+<script type="text/template" id="splash-template">
+    <div id="splash-img-container">
+      <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
+      <p id="splash-pet-name">Zellouisa</p>
+    </div>
+    <nav id="main-nav">
+      <ul>
+        <li id="signup">Sign Up</li>
+        <li id="login">Log In</li>
+        <li id="browse">Browse</li>
+      </ul>
+    </nav>
+</script>
 
 <script type="text/template" id="profile-template">
 
@@ -185,6 +191,7 @@
 <script src="scripts/views.js"></script>
 <script src="scripts/login.js"></script>
 <script src="scripts/router.js"></script>
+<script src="scripts/splash.js"></script>
 <script src="scripts/app.js"></script>
 <!-- endbuild -->
 

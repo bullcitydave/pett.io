@@ -6,11 +6,9 @@ $(function() {
 
   var AppView = Parse.View.extend({
 
-    el: $("#main-header"),
-
     events: {
 
-      "click #log-out"    : "logOut"
+      // "click #log-out"    : "logOut"
     },
 
     initialize: function() {
@@ -21,11 +19,10 @@ $(function() {
     render: function() {
       if (Parse.User.current()) {
         console.log(Parse.User.current().getUsername());
-        $('#login-section').hide();
-        new LinkView();
+        new SplashView();
       } else {
-        console.log('login view needed...');
-        new LoginView();
+        console.log('No user signed in. Proceeding to splash screen.');
+        new SplashView();
       }
     },
 

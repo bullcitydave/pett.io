@@ -3,7 +3,7 @@ var AppRouter = Parse.Router.extend({
 
        'login'           :     'goLogin',
        'home'            :     'goLanding',
-       ''                :     'goLogin',
+       ''                :     'splash',
        ':petName'        :     'getPet'
 
 
@@ -16,6 +16,10 @@ var AppRouter = Parse.Router.extend({
     // Initiate the router
     var app_router = new AppRouter;
 
+    app_router.on('route:goSplash', function() {
+        loginView = new SplashView();
+        console.log('Loading splash page');
+      });
     app_router.on('route:goLogin', function() {
         loginView = new LoginView();
         console.log('Loading login page');
