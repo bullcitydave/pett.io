@@ -44,6 +44,7 @@ body {
     margin: auto;
     position: fixed;
     width: 100%;
+    z-index: 500;
 
     div#logo-container{
       background: #eaeaea;
@@ -179,11 +180,18 @@ header#pet-header {
 
     #profile-container
       {
+        position: absolute;
+        left: 50%;
+        width: 80%;
+        max-width: 600px;
         .profile {
-          width: 400px;
+          width: 100%;
           background: #aaa;
           position:fixed;
           font-family:$secondary-font;
+          width: 80%;
+          max-width: 600px;
+          margin-left: -20%;
         }
       }
 }
@@ -216,7 +224,7 @@ header#pet-header {
       @include if-brightness(1.2);
       // @include size(250px 250px);
       width: 100%;
-      margin-left:-12.5%;
+      margin:0 6.25% 0 -6.25%;
       border: solid 4px $orange;
 
 
