@@ -19,7 +19,7 @@ $offwhite: #eaeaea;
 
 /// Reset
 
-li,ul {
+li,ul,h1 {
 -webkit-margin-before: 0em;
 -webkit-margin-after: 0em;
 -webkit-margin-start: 0px;
@@ -27,10 +27,6 @@ li,ul {
 -webkit-padding-start: 0px;
 }
 
-h1 {
--webkit-margin-before: 0.67em;
--webkit-margin-after: 0.67em;
-}
 
 
 
@@ -38,7 +34,7 @@ h1 {
 
 body {
   background: $orange;
-  font-family: $primary-font;
+  font-family: $secondary-font;
   width:100%;
 
   header#main-header{
@@ -46,6 +42,8 @@ body {
     background: $orange;
     text-align:center;
     margin: auto;
+    position: fixed;
+    width: 100%;
 
     div#logo-container{
       background: #eaeaea;
@@ -63,6 +61,7 @@ body {
       font-size: 3.8em;
       font-weight: 300;
       margin: 5px 0 -20px 0;
+      font-family: $primary-font;
     }
   }
 
@@ -92,7 +91,6 @@ body {
           clear: both;
           margin-bottom: 10px;
           width: 100%;
-          font-family: 'Roboto Condensed';
           opacity: .8;
           padding: 5px;
           letter-spacing: .8px;
@@ -100,6 +98,7 @@ body {
         button {
           @include button(shiny, $orange);
           color: #000;
+          font-family:$primary-font;
         }
       }
     }
@@ -149,21 +148,24 @@ body {
 header#pet-header {
   position: fixed;
   z-index: 50;
-  margin: 0 0 30px 0;
-  top: 0;
+  margin: 0;
+  background: transparent;
 
-    h1 {
-      font-size: 6.5em;
-      font-family: $primary-font;
+    h2 {
+      font-size: 2.5em;
+      font-family: "Pusekatt","Times New Roman",serif;
       font-weight: 300;
       letter-spacing: .05em;
       margin: 0 0 0 35px;
-      background: #aaa;
+      background: #333;
+      width: 100%;
+      text-align: center;
       opacity: 1;
       z-index: 100;
       text-transform: capitalize;
+      color: #eaeaea;
       @media screen and (max-width: 480px){
-        font-size: 4.5em;
+        font-size: 2.0em;
         letter-spacing: .075em;
         margin: 0;
       }
@@ -171,8 +173,8 @@ header#pet-header {
 
     #about {
       position: absolute;
-      bottom: 0;
-      left: 50%;
+      top: 100%;
+      background: $orange;
     }
 
     #profile-container
@@ -191,7 +193,7 @@ header#pet-header {
 
 
 
-  div.flickrPicContainer {
+  div.picContainer {
 
     float: left;
     margin: 75px 0 0 0;
@@ -215,19 +217,19 @@ header#pet-header {
       // @include size(250px 250px);
       width: 100%;
       margin-left:-12.5%;
-      border: solid 4px black;
+      border: solid 4px $orange;
 
 
     }
   }
-  div.flickrPicContainer.w2 { width:  120px; }
+  div.picContainer.w2 { width:  120px; }
 
-  div.flickrPicContainer:nth-child(1n) {
+  div.picContainer:nth-child(1n) {
     width: 50%;
     float:left;
     padding-left:10%;
     }
-  div.flickrPicContainer:nth-child(2n) {
+  div.picContainer:nth-child(2n) {
     width: 50%;
     float:right;
     padding-right:10%;

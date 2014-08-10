@@ -8,7 +8,8 @@ var LinkView = Parse.View.extend({
     pet=tag;
     if (!(tag)) {tag = 'zellouisa'};
     console.log('Initializing LinkView. Tag:',tag);
-    $(this.el).html(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('#main-header').html(_.template($('#splash-header-template').html()));
+    $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
@@ -56,7 +57,7 @@ var FlickrPicListView = Parse.View.extend({
 
         // container.masonry({
         //     columnWidth: 40,
-        //     itemSelector: '.flickrPicContainer'
+        //     itemSelector: '.picContainer'
         //   });
         //   var msnry = container.data('masonry');
         //   console.log(msnry);
@@ -96,7 +97,7 @@ var FlickrPicListView = Parse.View.extend({
             //     {
             //       console.log('Vertical!');
             //       $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-            //       $(".flickrPicContainer").eq(i).addClass("w2");
+            //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
         });
@@ -107,7 +108,7 @@ var FlickrPicListView = Parse.View.extend({
 var ParsePicListView = Parse.View.extend({
 
     initialize: function(tag) {
-      self=this;
+      parseSelf=this;
       console.log('Initializing parse pic view. Tag: ',tag);
       this.render(tag);
 
@@ -115,7 +116,7 @@ var ParsePicListView = Parse.View.extend({
 
     render: function(tag) {
 
-      this.container = $('#parseMontage');
+      this.container = $('#content');
 
       var ppQuery = new Parse.Query(ParsePic);
       ppQuery.equalTo("username", Parse.User.current().getUsername());
@@ -125,7 +126,7 @@ var ParsePicListView = Parse.View.extend({
 
       ppQuery.find({
         success: function(results) {
-            self.showPics(results);
+            parseSelf.showPics(results);
         },
 
         error: function(error) {
@@ -140,7 +141,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('#parse-montage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+         $('#content').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        }
      }
 
