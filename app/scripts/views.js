@@ -8,6 +8,8 @@ var LinkView = Parse.View.extend({
     if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
     console.log('Initializing LinkView. Tag:',tag);
+    $('#main-header').addClass('standard');
+    $('#main-container').addClass('standard-main');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');

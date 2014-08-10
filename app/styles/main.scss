@@ -66,6 +66,34 @@ body {
     }
   }
 
+  header.standard#main-header{
+    height: 80px;
+    margin: 0;
+    text-align: none;
+
+    div#logo-container{
+      background: #eaeaea;
+      border-radius: 55px;
+      height: 110px;
+      width: 110px;
+      padding: 0px 0px 0px 9px;
+      margin: 5px;
+      float: left;
+
+      #logo{
+        width: 90px;
+      }
+    }
+    h1 {
+      font-size: 3.8em;
+      font-weight: 300;
+      float: left;
+      font-family: $primary-font;
+      margin: 5px;
+    }
+
+  }
+
   #main-container{
     @include outer-container;
     $mobile: new-breakpoint(min-width 320px 5);
@@ -144,6 +172,10 @@ body {
     // top: 80px;
     // width:100%;
   }
+
+  .standard-main#main-container {
+    top: 25%;
+  }
 }
 
 header#pet-header {
@@ -151,6 +183,7 @@ header#pet-header {
   z-index: 50;
   margin: 0;
   background: transparent;
+  top: 100px;
 
     h2 {
       font-size: 2.5em;
