@@ -197,18 +197,18 @@ section.profile-wrapper {
       // transition: opacity 1.0s easing;
       // opacity: 1;
       // @include size(250px 250px);
-      width: 100%;
+      width: 80%;
       border: solid 2px black;
       transition: margin .2s linear;
-      transition: width .2s linear;
-      transition-delay: margin .2s;
+      transition: width .6s linear;
+      transition-delay: margin 0s;
 
     }
     .montageSquare:hover {
 
       @include if-brightness(1.2);
       // @include size(250px 250px);
-      width: 125%;
+      width: 100%;
       margin-left:-12.5%;
       border: solid 4px black;
 
@@ -216,13 +216,14 @@ section.profile-wrapper {
     }
   }
   div.flickrPicContainer.w2 { width:  120px; }
-  div.flickrPicContainer:nth-child(1n) {width:100%}
-  div.flickrPicContainer:nth-child(3n) {
-    width: 70%;
+
+  div.flickrPicContainer:nth-child(1n) {
+    width: 50%;
     float:left;
-    padding-left:10%;}
-    div.flickrPicContainer:nth-child(2n) {
-    width: 70%;
+    padding-left:10%;
+    }
+  div.flickrPicContainer:nth-child(2n) {
+    width: 50%;
     float:right;
     padding-right:10%;
     }
