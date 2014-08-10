@@ -1,20 +1,20 @@
 var ProfileView = Parse.View.extend ({
-  className : 'pet-profile',
 
-  initialize: function() {
-    this.pet = 'aremid';
-    self = this;
+
+  initialize: function(tag) {
+    this.pet = tag;
+
     console.log('Getting profile for ', this.pet);
 
-
+    profile = this;
 
 
     var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", this.pet);
+    query.equalTo("uniqueName", profile.pet);
     query.find({
       success: function(results) {
-        console.log("Successfully retrieved " + this.pet + ". Attempting to render...");
-        self.render(results[0].attributes);
+        console.log("Successfully retrieved " + profile.pet + ". Attempting to render...");
+        profile.render(results[0].attributes);
       },
       error: function(error) {
         alert("Error: " + error.code + " " + error.message);
@@ -24,7 +24,7 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         var profileView = $('#profile-template').html();
-        $('.profile-wrapper').show();
-        $('.profile-wrapper').html(_.template(profileView,data));
+
+        $('#profile-container').html(_.template(profileView,data));
       }
 });

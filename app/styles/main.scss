@@ -174,14 +174,19 @@ header#pet-header {
       bottom: 0;
       left: 50%;
     }
+
+    #profile-container
+      {
+        .profile {
+          width: 400px;
+          background: #aaa;
+          position:fixed;
+          font-family:$secondary-font;
+        }
+      }
 }
 
-section.profile-wrapper {
-    width: 400px;
-    background: #aaa;
-    display: none;
-    position:fixed;
-}
+
 
 
 

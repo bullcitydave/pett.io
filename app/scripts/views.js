@@ -5,12 +5,11 @@ var LinkView = Parse.View.extend({
 
 
   initialize: function(tag) {
-    self=this;
+    pet=tag;
     if (!(tag)) {tag = 'zellouisa'};
     console.log('Initializing LinkView. Tag:',tag);
     $(this.el).html(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
-    $('#pet-header h1').html(tag);
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
     // new VineListView();
@@ -26,7 +25,7 @@ var LinkView = Parse.View.extend({
   },
 
   showProfile: function(e) {
-    new ProfileView();
+    new ProfileView(pet);
   }
 
 
