@@ -1,6 +1,6 @@
 var LinkView = Parse.View.extend({
 
-  el: "#main-container",
+  el: "#main-header",
 
 
 
@@ -13,16 +13,13 @@ var LinkView = Parse.View.extend({
     $('body').addClass('whitebg');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
-    // new VineListView();
-
-
   },
 
 
-
   events: {
-
+"click img"    : "showProfile",
     "click #about"    : "showProfile"
+
   },
 
   showProfile: function(e) {
