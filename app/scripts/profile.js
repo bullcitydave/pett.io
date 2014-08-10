@@ -23,8 +23,8 @@ var ProfileView = Parse.View.extend ({
 },
 
     render: function(data){
+        _.defaults(data, {dateDeath: "null"});
         var profileView = $('#profile-template').html();
-
         $('#profile-container').html(_.template(profileView,data));
       }
 });
