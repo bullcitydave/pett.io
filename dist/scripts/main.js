@@ -129,6 +129,66 @@ var ProfileView = Parse.View.extend ({
       }
 });
 
+var ImageUploadView = Parse.View.extend ({
+
+
+  initialize: function(tag) {
+    this.pet = tag;
+
+    console.log('Loading upload form for', this.pet);
+
+    this.render();
+  },
+
+    render: function(){
+        $('#upload-container').html($('#image-upload-template').html());
+
+// from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
+
+    var file;
+
+    // Set an event listener on the Choose File field.
+    $('#fileselect').bind("change", function(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      // Our file var now holds the selected file
+      file = files[0];
+    });
+
+    // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
+    $('#uploadbutton').click(function() {
+      var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+      $.ajax({
+        type: "POST",
+        beforeSend: function(request) {
+          request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
+          request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
+          request.setRequestHeader("Content-Type", file.type);
+        },
+        url: serverUrl,
+        data: file,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          console.log("File available at: " + data.url);
+          var newPic = new ParsePic ({
+            url: data.url,
+            username: Parse.User.current().getUsername(),
+            petname: $('h2').html(),
+            source: 'parse'
+          });
+          newPic.save();
+            alert('Photo has been successfully uploaded. Refresh the page to view the image in the gallery.');
+        },
+        error: function(data) {
+          var obj = jQuery.parseJSON(data);
+          alert(obj.error);
+        }
+      });
+    });
+  }
+});
+
 var LinkView = Parse.View.extend({
 
   el: "#main-header",
@@ -151,11 +211,16 @@ var LinkView = Parse.View.extend({
 
 
   events: {
-    "click #about"    : "showProfile"
+    "click #about"    : "showProfile",
+    "click #upload"   : "imageUploadForm"
   },
 
   showProfile: function(e) {
     new ProfileView(pet);
+  },
+
+  imageUploadForm: function(e) {
+    new ImageUploadView(pet);
   }
 
 
@@ -341,10 +406,106 @@ var LoginView = Parse.View.extend({
   }
 });
 
+var SignUpView = Parse.View.extend({
+  events: {
+    "submit form.signup-form": "signUp"
+  },
+
+  el: "#main-container",
+
+  initialize: function() {
+    console.log("SignUpView initialized")
+    _.bindAll(this, "signUp");
+    this.render();
+  },
+
+  signUp: function(e) {
+    var self = this;
+    var username = this.$("#signup-username").val();
+    var password = this.$("#signup-password").val();
+
+    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+          success: function(user) {
+            console.log('Account created for', username);
+            app_router.navigate('//account/'+username);
+          },
+
+          error: function(user, error) {
+            self.$(".signup-form .error").html(error.message).show();
+            // self.$(".signup-form button").removeAttr("disabled");
+          }
+        });
+
+    // this.$(".signup-form button").attr("disabled", "disabled");
+
+    return false;
+  },
+
+  render: function() {
+    this.$el.append(_.template($("#signup-template").html()));
+  }
+});
+
+var AccountView = Parse.View.extend({
+  events: {
+
+  },
+
+  el: "#main-container",
+
+  initialize: function() {
+    console.log("Account view initialized");
+    x=this;
+    _.bindAll(this, "createPet");
+    this.render();
+  },
+
+  createPet: function(e) {
+
+
+    return false;
+  },
+
+  render: function() {
+    this.$el.html(_.template($("#account-template").html(), ({"userName": Parse.User.current().getUsername()})));
+
+    var ppQuery = new Parse.Query(Pet);
+    // ppQuery.equalTo("person", Parse.User.current().getUsername());
+
+    ppQuery.equalTo("person", {
+        __type: "Pointer",
+        className: "_User",
+        objectId: Parse.User.current().getUsername()
+    });
+
+    console.log('ppQuery: ',ppQuery);
+
+    ppQuery.find({
+      success: function(results) {
+          x.listPets(results);
+      },
+
+      error: function(error) {
+          alert('Error!');
+        }
+      });
+    },
+
+  listPets: function(results) {
+     for (var i = 0; i < results.length ; i++) {
+        console.log(results[i].attributes.name);
+
+       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p>'));
+     }
+  }
+});
+
 var AppRouter = Parse.Router.extend({
     routes: {
 
        'login'           :     'goLogin',
+       'signup'          :     'goSignUp',
+       'account/:user'    :     'updateAccount',
        'home'            :     'goLanding',
        ''                :     'splash',
        ':petName'        :     'getPet'
@@ -360,12 +521,23 @@ var AppRouter = Parse.Router.extend({
     var app_router = new AppRouter;
 
     app_router.on('route:goSplash', function() {
-        loginView = new SplashView();
         console.log('Loading splash page');
+        loginView = new SplashView();
       });
+
     app_router.on('route:goLogin', function() {
-        loginView = new LoginView();
         console.log('Loading login page');
+        loginView = new LoginView();
+      });
+
+    app_router.on('route:goSignUp', function() {
+        console.log('Loading signup page');
+        signUpView = new SignUpView();
+      });
+
+    app_router.on('route:updateAccount', function(user) {
+        console.log('Loading account page');
+        signUpView = new AccountView(user);
       });
 
     app_router.on('route:getPet', function(petName) {
@@ -422,7 +594,10 @@ $(function() {
 
     initialize: function() {
       self = this;
-      this.render();
+      $('.templates').load('templates.html', function()
+      {
+        self.render();
+      })
     },
 
     render: function() {
