@@ -99,22 +99,22 @@ var flickrUserId = 'toastie97';
         });
 
 var ProfileView = Parse.View.extend ({
-  className : 'pet-profile',
 
-  initialize: function() {
-    this.pet = 'aremid';
-    self = this;
+
+  initialize: function(tag) {
+    this.pet = tag;
+
     console.log('Getting profile for ', this.pet);
 
-
+    profile = this;
 
 
     var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", this.pet);
+    query.equalTo("uniqueName", profile.pet);
     query.find({
       success: function(results) {
-        console.log("Successfully retrieved " + this.pet + ". Attempting to render...");
-        self.render(results[0].attributes);
+        console.log("Successfully retrieved " + profile.pet + ". Attempting to render...");
+        profile.render(results[0].attributes);
       },
       error: function(error) {
         alert("Error: " + error.code + " " + error.message);
@@ -123,38 +123,40 @@ var ProfileView = Parse.View.extend ({
 },
 
     render: function(data){
+        _.defaults(data, {dateDeath: "null"});
         var profileView = $('#profile-template').html();
-        $('.profile-wrapper').show();
-        $('.profile-wrapper').html(_.template(profileView,data));
+        $('#profile-container').html(_.template(profileView,data));
       }
 });
 
 var LinkView = Parse.View.extend({
 
-  el: ".content",
+  el: "#main-header",
 
 
 
   initialize: function(tag) {
-    console.log('Initializing LinkView. Tag:',tag);
     if (!(tag)) {tag = 'zellouisa'};
-    $('#pet-header h1').html(tag);
+    pet=tag;
+    console.log('Initializing LinkView. Tag:',tag);
+    $('#main-header').addClass('standard');
+    $('#main-container').removeClass('splash-main');
+    $('#main-container').addClass('standard-main');
+    $('#main-header').html(_.template($('#splash-header-template').html()));
+    $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('body').addClass('whitebg');
+    $('#content').html('');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
-    // new VineListView();
-
-
   },
 
 
-
   events: {
-
     "click #about"    : "showProfile"
   },
 
   showProfile: function(e) {
-    new ProfileView();
+    new ProfileView(pet);
   }
 
 
@@ -163,6 +165,7 @@ var LinkView = Parse.View.extend({
 
 
 var FlickrPicListView = Parse.View.extend({
+    el: "#content",
 
     initialize: function(tag) {
       console.log("Initializing FlickrPicListView. Tag: ", tag);
@@ -182,17 +185,14 @@ var FlickrPicListView = Parse.View.extend({
       // console.log('width ',  $('.montageSquare').clientWidth);
       // });
 
-
-        var container = $('#flickr-montage');
-
         // container.masonry({
         //     columnWidth: 40,
-        //     itemSelector: '.flickrPicContainer'
+        //     itemSelector: '.picContainer'
         //   });
         //   var msnry = container.data('masonry');
         //   console.log(msnry);
 
-      var dims=[];
+
       $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
@@ -201,7 +201,6 @@ var FlickrPicListView = Parse.View.extend({
           var serverId ='';
           var secret='';
 
-          var dimsPromises=[];
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
@@ -215,18 +214,20 @@ var FlickrPicListView = Parse.View.extend({
 
               // dimsPromises.push(flickrImg);
 
-            $('#flickr-montage').append(_.template(flickrView,({"flickrImg":flickrImg})));
+            $('#content').append(_.template(flickrView,({"flickrImg":flickrImg})));
 
               //  console.log(dimsPromises);
 
             }
+
+
 
             // for (var i = 0; i < 9 ; i++) {
             //     if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
             //     {
             //       console.log('Vertical!');
             //       $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
-            //       $(".flickrPicContainer").eq(i).addClass("w2");
+            //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
         });
@@ -237,7 +238,7 @@ var FlickrPicListView = Parse.View.extend({
 var ParsePicListView = Parse.View.extend({
 
     initialize: function(tag) {
-      self=this;
+      parseSelf=this;
       console.log('Initializing parse pic view. Tag: ',tag);
       this.render(tag);
 
@@ -245,7 +246,7 @@ var ParsePicListView = Parse.View.extend({
 
     render: function(tag) {
 
-      this.container = $('#parseMontage');
+      this.container = $('#content');
 
       var ppQuery = new Parse.Query(ParsePic);
       ppQuery.equalTo("username", Parse.User.current().getUsername());
@@ -255,7 +256,7 @@ var ParsePicListView = Parse.View.extend({
 
       ppQuery.find({
         success: function(results) {
-            self.showPics(results);
+            parseSelf.showPics(results);
         },
 
         error: function(error) {
@@ -270,7 +271,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('#parse-montage').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+         $('#content').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        }
      }
 
@@ -307,15 +308,16 @@ var ParsePicListView = Parse.View.extend({
 
 var LoginView = Parse.View.extend({
   events: {
-    "submit form.login-form": "logIn",
-    "submit form.signup-form": "signUp"
+    "submit form.login-form": "logIn"
   },
 
-  el: "#login-section",
+  el: "#main-container",
+
+  pet: "zellouisa", // default pet until function available to render first pet of user
 
   initialize: function() {
-    console.log("LoginView initialized")
-    _.bindAll(this, "logIn", "signUp");
+    console.log("LoginView initialized");
+    self = this;
     this.render();
   },
 
@@ -327,10 +329,8 @@ var LoginView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          new LinkView('zellouisa'); // need function to render first pet of user
-          self.undelegateEvents();
-          delete self;
-
+          self.$el.html('');
+          app_router.navigate('//'+self.pet);
         },
 
         error: function(user, error) {
@@ -343,35 +343,10 @@ var LoginView = Parse.View.extend({
         return false;
       },
 
-  signUp: function(e) {
-    var self = this;
-    var username = this.$("#signup-username").val();
-    var password = this.$("#signup-password").val();
-
-    Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
-          success: function(user) {
-            new LinkView();
-            console.log(self);
-            self.undelegateEvents();
-            delete self;
-          },
-
-          error: function(user, error) {
-            self.$(".signup-form .error").html(error.message).show();
-            self.$(".signup-form button").removeAttr("disabled");
-          }
-        });
-
-    this.$(".signup-form button").attr("disabled", "disabled");
-
-    return false;
-  },
-
   render: function() {
-    console.log(this.$el);
-    console.log($("#login-template").html());
-      this.$el.html(_.template($("#login-template").html()));
-      this.delegateEvents();
+      console.log(this.$el);
+      console.log($("#login-template").html());
+      this.$el.append(_.template($("#login-template").html()));
   }
 });
 
@@ -380,7 +355,7 @@ var AppRouter = Parse.Router.extend({
 
        'login'           :     'goLogin',
        'home'            :     'goLanding',
-       ''                :     'goLogin',
+       ''                :     'splash',
        ':petName'        :     'getPet'
 
 
@@ -393,15 +368,18 @@ var AppRouter = Parse.Router.extend({
     // Initiate the router
     var app_router = new AppRouter;
 
+    app_router.on('route:goSplash', function() {
+        loginView = new SplashView();
+        console.log('Loading splash page');
+      });
     app_router.on('route:goLogin', function() {
         loginView = new LoginView();
         console.log('Loading login page');
       });
 
     app_router.on('route:getPet', function(petName) {
-
         console.log('Getting page for ',petName);
-      linkView = new LinkView(petName);
+        linkView = new LinkView(petName);
     });
 
     app_router.on('route:goLanding', function() {
@@ -416,11 +394,28 @@ var AppRouter = Parse.Router.extend({
       // pushState: true
     });
 
+var SplashView = Parse.View.extend({
+
+  el: "#main-container",
+
+  splashHead: "#main-header",
+
+  initialize: function() {
+    console.log("Splash view initialized");
+    this.render();
+  },
+
+  render: function() {
+    console.log('Main el: ', this.$el);
+    console.log('Head el: ', $(this.splashHead));
+    $(this.splashHead).html(_.template($("#splash-header-template").html()));
+    this.$el.html(_.template($("#splash-template").html()));
+    this.$el.addClass('splash');
+    $('.log-out').hide();
+  }
+});
+
 $(function() {
-
-
-
-
 
   var AppView = Parse.View.extend({
 
@@ -428,92 +423,39 @@ $(function() {
 
     events: {
 
-      "click #log-out"    : "logOut"
+      "click .log-out"    : "logOut"
     },
+
+
+    pet: "zellouisa", // default pet until function available to render first pet of user
 
     initialize: function() {
+      self = this;
       this.render();
     },
-
 
     render: function() {
       if (Parse.User.current()) {
         console.log(Parse.User.current().getUsername());
-        $('#login-section').hide();
-        new LinkView();
+        app_router.navigate('//'+self.pet);
       } else {
-        console.log('login view needed...');
-        new LoginView();
+        console.log('No user signed in. Proceeding to splash screen.');
+        new SplashView();
       }
     },
 
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      new LoginView();
-      this.undelegateEvents();
-      delete this;
+      $('#main-container').removeClass('splash-main');
+      $('#main-container').addClass('standard-main');
+      app_router.navigate('');
+      $('#main-header').removeClass('standard');
+      new SplashView();
     },
 
-    displayMessage: function(txt) {
-      $('.display-message').show.html(txt);
-
-    }
-});
-
-    new AppView;
-
-
-  // Parse.history.start();   throwing error - Parse.history is undefined
-
- /// image upload
-
-
- $(function() {
-    var file;
-
-    // Set an event listener on the Choose File field.
-    $('#fileselect').bind("change", function(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      file = files[0];
-      console.log(files[0]);
-    });
-
-    // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
-    $('#uploadbutton').click(function() {
-      var serverUrl = 'https://api.parse.com/1/files/' + file.name;
-
-      $.ajax({
-        type: "POST",
-        beforeSend: function(request) {
-          request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
-          request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
-          request.setRequestHeader("Content-Type", file.type);
-        },
-        url: serverUrl,
-        data: file,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-          console.log("File available at: " + data.url);
-          var newPic = new ParsePic ({
-            url: data.url,
-            username: Parse.User.current().getUsername(),
-            petname: $('h1').html(),
-            source: 'parse'
-          });
-          newPic.save();
-            alert('Photo has been successfully uploaded');
-        },
-        error: function(data) {
-          var obj = jQuery.parseJSON(data);
-          alert(obj.error);
-        }
-      });
-    });
-
-
   });
+
+  new AppView;
 
 });

@@ -30,7 +30,11 @@ $(function() {
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      new LoginView();
+      $('#main-container').removeClass('splash-main');
+      $('#main-container').addClass('standard-main');
+      app_router.navigate('');
+      $('#main-header').removeClass('standard');
+      new SplashView();
     },
 
   });

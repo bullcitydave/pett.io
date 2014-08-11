@@ -9,6 +9,7 @@ var LinkView = Parse.View.extend({
     pet=tag;
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
+    $('#main-container').removeClass('splash-main');
     $('#main-container').addClass('standard-main');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
