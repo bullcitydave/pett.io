@@ -19,7 +19,7 @@ var SignUpView = Parse.View.extend({
     Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
           success: function(user) {
             console.log('Account created for', username);
-            new NewAccountView();
+            app_router.navigate('//account/'+username);
           },
 
           error: function(user, error) {
