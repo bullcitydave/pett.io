@@ -55,7 +55,7 @@
     </div>
     <nav id="main-nav">
       <ul>
-        <li id="signup">Sign Up</li>
+        <a href="#/signup"><li id="signup">Sign Up</li></a>
         <a href="#/login"><li id="login">Log In</li></a>
         <li id="browse">Browse</li>
       </ul>
@@ -130,14 +130,18 @@
       <input type="password" id="login-password" placeholder="Password" />
       <button>Log In</button>
     </form>
+  </div>
+</script>
 
-    <!-- <form class="signup-form">
-    //   <h2>Sign Up</h2>
-    //   <div class="error" style="display:none"></div>
-    //   <input type="text" id="signup-username" placeholder="Username" />
-    //   <input type="password" id="signup-password" placeholder="Create a Password" />
-    //   <button>Sign Up</button>
-    // </form> -->
+<script type="text/template" id="signup-template">
+
+  <div id="signup">
+    <form class="signup-form">
+      <div class="error" style="display:none"></div>
+      <input type="text" id="signup-username" placeholder="Create a username" />
+      <input type="password" id="signup-password" placeholder="Create a password" />
+      <button>Sign Up</button>
+    </form>
   </div>
 </script>
 
@@ -161,6 +165,7 @@
 <script src="scripts/upload.js"></script>
 <script src="scripts/views.js"></script>
 <script src="scripts/login.js"></script>
+<script src="scripts/signup.js"></script>
 <script src="scripts/router.js"></script>
 <script src="scripts/splash.js"></script>
 <script src="scripts/app.js"></script>
