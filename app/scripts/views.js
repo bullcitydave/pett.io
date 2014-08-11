@@ -1,27 +1,26 @@
 var LinkView = Parse.View.extend({
 
-  el: "#main-container",
+  el: "#main-header",
 
 
 
   initialize: function(tag) {
-    pet=tag;
     if (!(tag)) {tag = 'zellouisa'};
+    pet=tag;
     console.log('Initializing LinkView. Tag:',tag);
+    $('#main-header').addClass('standard');
+    $('#main-container').removeClass('splash-main');
+    $('#main-container').addClass('standard-main');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
+    $('#content').html('');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
-    // new VineListView();
-
-
   },
 
 
-
   events: {
-
     "click #about"    : "showProfile"
   },
 

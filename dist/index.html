@@ -2,9 +2,9 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <meta name="Petz.link" content="">
+    <meta name="pett.io" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>Petz Link</title>
+    <title>pett.io</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <link rel="stylesheet" href="styles/vendor.css">
@@ -14,7 +14,7 @@
     <script src="scripts/vendor/modernizr.js"></script>
   </head>
   <body>
-    <header id="main-header">
+    <!-- <header id="main-header">
         <button id="log-out">Log Out</button>
         <a href="#/">Edit Profile</a>
 
@@ -25,13 +25,16 @@
         </fieldset>
         <p class="display-message"></p>
         </form>
+    </header> -->
+    <header id="main-header">
     </header>
-    <div class="main-container">
-
-      <div class="content">
+    <div id="main-container">
 
 
-        <section class="profile-wrapper">
+      <div id="content">
+
+
+        <!-- <section class="profile-wrapper">
 
         </section>
 
@@ -41,20 +44,17 @@
         </section>
 
         <div id="parse-montage">
-          <header id="pet-header">
-            <h1></h1>
-            <div id="about">About</div>
-          </header>
+
 
         </div>
 
         <div id="flickr-montage">
 
 
-        </div>
+        </div> -->
 
       </div>
-
+</div>
 
 <!-- // from https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api -->
 
@@ -70,6 +70,33 @@
 
 </body>
 
+<script type="text/template" id="splash-header-template">
+
+    <div id="logo-container">
+      <img id="logo" src="images/2q15fVj.gif">
+    </div>
+
+    <h1>pett.io</h1>
+    <nav id="splash-header-nav">
+      <button class="log-out">Log Out</button>
+    </nav>
+
+
+</script>
+
+<script type="text/template" id="splash-template">
+    <div id="splash-img-container">
+      <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
+      <p id="splash-pet-name">Zellouisa</p>
+    </div>
+    <nav id="main-nav">
+      <ul>
+        <li id="signup">Sign Up</li>
+        <a href="#/login"><li id="login">Log In</li></a>
+        <li id="browse">Browse</li>
+      </ul>
+    </nav>
+</script>
 
 <script type="text/template" id="profile-template">
 
@@ -87,17 +114,21 @@
 
 
 <script type="text/template" id="flickr-template">
-
-    <div class='flickrPicContainer' >
-
+    <div class='picContainer' >
       <img class='montageSquare' src='<%-flickrImg %>'>
-
-  </div>
+    </div>
 </script>
 
+<script type="text/template" id="pet-header-template">
+    <header id="pet-header">
+      <h2><%-petName %></h2>
+      <div id="about">About</div>
+      <div id="profile-container"></div>
+    </header>
+</script>
 
 <script type="text/template" id="parse-pic-template">
-    <div class='parsePicContainer' >
+    <div class='picContainer' >
       <img class='montageSquare' src='<%-parseImg %>'>
     </div>
 </script>
@@ -116,29 +147,24 @@
 
 <script type="text/template" id="login-template">
 
-  <div class="login">
+  <div id="login">
     <form class="login-form">
-      <h2>Log In</h2>
       <div class="error" style="display:none"></div>
       <input type="text" id="login-username" placeholder="Username" />
       <input type="password" id="login-password" placeholder="Password" />
       <button>Log In</button>
     </form>
 
-    <form class="signup-form">
-      <h2>Sign Up</h2>
-      <div class="error" style="display:none"></div>
-      <input type="text" id="signup-username" placeholder="Username" />
-      <input type="password" id="signup-password" placeholder="Create a Password" />
-      <button>Sign Up</button>
-    </form>
+    <!-- <form class="signup-form">
+    //   <h2>Sign Up</h2>
+    //   <div class="error" style="display:none"></div>
+    //   <input type="text" id="signup-username" placeholder="Username" />
+    //   <input type="password" id="signup-password" placeholder="Create a Password" />
+    //   <button>Sign Up</button>
+    // </form> -->
   </div>
 </script>
 
-<script type="text/template" id="subheader">
-      <button class"log-out">Log Out</button>
-      <h1>Aremid</h1>
-</script>
 
 <script src="scripts/vendor.js"></script>
 

@@ -21,6 +21,7 @@ var LoginView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
+          self.$el.html('');
           app_router.navigate('//'+self.pet);
         },
 
@@ -35,8 +36,8 @@ var LoginView = Parse.View.extend({
       },
 
   render: function() {
-    console.log(this.$el);
-    console.log($("#login-template").html());
+      console.log(this.$el);
+      console.log($("#login-template").html());
       this.$el.append(_.template($("#login-template").html()));
   }
 });

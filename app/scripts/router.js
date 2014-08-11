@@ -26,9 +26,8 @@ var AppRouter = Parse.Router.extend({
       });
 
     app_router.on('route:getPet', function(petName) {
-
         console.log('Getting page for ',petName);
-      linkView = new LinkView(petName);
+        linkView = new LinkView(petName);
     });
 
     app_router.on('route:goLanding', function() {

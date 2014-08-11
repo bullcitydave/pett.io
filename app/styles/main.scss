@@ -10,6 +10,11 @@ $secondary-font: 'Roboto Condensed','Helvetica Neue',Arial,sans-serif;
 $orange:   darkorange;
 $offwhite: #eaeaea;
 
+$mobile-s: new-breakpoint(min-width 320px 5);
+$mobile-m: new-breakpoint(min-width 480px 5);
+$mobile-l: new-breakpoint(min-width 768px 12);
+$desktop: new-breakpoint(min-width 960px 12);
+
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
   -ms-filter: brightness($amt);
@@ -19,7 +24,7 @@ $offwhite: #eaeaea;
 
 /// Reset
 
-li,ul,h1 {
+li,ul,h1,h2 {
 -webkit-margin-before: 0em;
 -webkit-margin-after: 0em;
 -webkit-margin-start: 0px;
@@ -31,6 +36,11 @@ li,ul,h1 {
 
 
 ///
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 body {
   background: $orange;
@@ -44,6 +54,7 @@ body {
     margin: auto;
     position: fixed;
     width: 100%;
+    z-index: 500;
 
     div#logo-container{
       background: #eaeaea;
@@ -65,16 +76,48 @@ body {
     }
   }
 
-  #main-container{
+  header.standard#main-header{
+    height: 80px;
+    margin: 0;
+    text-align: none;
+
+    div#logo-container{
+      background: #eaeaea;
+      border-radius: 55px;
+      height: 110px;
+      width: 110px;
+      padding: 0px 0px 0px 9px;
+      margin: 5px;
+      float: left;
+
+      #logo{
+        width: 90px;
+      }
+    }
+    h1 {
+      font-size: 3.8em;
+      font-weight: 300;
+      float: left;
+      font-family: $primary-font;
+      margin: 5px;
+    }
+
+  }
+
+  div#main-container.splash{
     @include outer-container;
-    $mobile: new-breakpoint(min-width 320px 5);
-    $desktop: new-breakpoint(min-width 960px 12);
+    max-width:none;
+
 
     position: absolute;
-    top: 50%;
+    @include media($mobile-s) { top: 50%; }
+    @include media($mobile-m) { top: 40%; }
+    @include media($mobile-l) { top: 25%; }
+    @include media($desktop)  { top: 15%; }
+
 
     div#login{
-      @include media($mobile) {
+      @include media($mobile-s) {
         @include span-columns(5);
       }
       position: absolute;
@@ -82,9 +125,18 @@ body {
       opacity: .8;
 
       .login-form {
-        @include media($mobile) {
-          @include span-columns(3);
-          @include shift(1);
+        @include media($mobile-s) {
+          @include span-columns(3); @include shift(1);
+        }
+        @include media($mobile-m) {
+          @include span-columns(3); @include shift(1);
+        }
+        @include media($mobile-l) {
+          @include span-columns(6); @include shift(3);
+        }
+        @include media($desktop) {
+          @include span-columns(4); @include shift(4);
+          margin-top: 20%;
         }
         input {
           display: block;
@@ -100,6 +152,9 @@ body {
           color: #000;
           font-family:$primary-font;
         }
+        .error {
+          opacity: .8;
+        }
       }
     }
 
@@ -109,6 +164,7 @@ body {
       #splash-img {
         width: 100%;
         position: relative;
+        background-size:cover;
       }
       p#splash-pet-name {
         position: absolute;
@@ -121,7 +177,7 @@ body {
     }
 
     nav#main-nav{
-      @include media($mobile);
+      @include media($mobile-s);
         position: absolute;
         bottom: 0%;
         z-index: 500;
@@ -139,10 +195,12 @@ body {
           }
         }
       }
-    // position: absolute;
-    // top: 80px;
-    // width:100%;
-  }
+    }
+
+
+    div#main-container.standard-main {
+      top: 25%;
+    }
 }
 
 header#pet-header {
@@ -150,13 +208,16 @@ header#pet-header {
   z-index: 50;
   margin: 0;
   background: transparent;
+  top: 100px;
+  left: 50%;
+  width: 40%;
+  margin-left: -20%;
 
     h2 {
       font-size: 2.5em;
-      font-family: "Pusekatt","Times New Roman",serif;
+      font-family: $secondary-font;
       font-weight: 300;
       letter-spacing: .05em;
-      margin: 0 0 0 35px;
       background: #333;
       width: 100%;
       text-align: center;
@@ -175,17 +236,23 @@ header#pet-header {
       position: absolute;
       top: 100%;
       background: $orange;
+      width:100%;
     }
 
-    #profile-container
-      {
+    #profile-container {
+        position: absolute;
+        left: 50%;
+        width: 80%;
+        max-width: 600px;
         .profile {
-          width: 400px;
+          width: 100%;
           background: #aaa;
           position:fixed;
           font-family:$secondary-font;
+          width: 80%;
+          margin-left: -40%;
         }
-      }
+    }
 }
 
 
@@ -216,7 +283,7 @@ header#pet-header {
       @include if-brightness(1.2);
       // @include size(250px 250px);
       width: 100%;
-      margin-left:-12.5%;
+      margin:0 6.25% 0 -6.25%;
       border: solid 4px $orange;
 
 
