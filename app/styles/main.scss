@@ -74,7 +74,7 @@ body {
     }
   }
 
-  header.standard#main-header{
+  header#main-header.standard{
     height: 80px;
     margin: 0;
     text-align: none;
@@ -196,7 +196,7 @@ body {
     }
 
 
-    div#main-container.standard-main {
+    div#main-container.standard {
       top: 25%;
     }
 }
