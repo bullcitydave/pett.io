@@ -26,18 +26,6 @@
     <!-- endbuild -->
   </head>
   <body>
-    <!-- <header id="main-header">
-        <button id="log-out">Log Out</button>
-        <a href="#/">Edit Profile</a>
-
-        <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
-        <fieldset>
-          <input type="file" name="fileselect" id="fileselect"></input>
-          <input id="uploadbutton" type="button" value="Upload an image"/>
-        </fieldset>
-        <p class="display-message"></p>
-        </form>
-    </header> -->
     <header id="main-header">
     </header>
     <div id="main-container">
@@ -74,6 +62,16 @@
     </nav>
 </script>
 
+<script type="text/template" id="image-upload-template">
+  <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+  <fieldset>
+    <input type="file" name="fileselect" id="fileselect"></input>
+    <input id="uploadbutton" type="button" value="Upload an image"/>
+  </fieldset>
+  <p class="display-message"></p>
+  </form>
+</script>
+
 <script type="text/template" id="profile-template">
 
     <div class='profile' >
@@ -99,7 +97,9 @@
     <header id="pet-header">
       <h2><%-petName %></h2>
       <div id="about">About</div>
+      <div id="upload">Upload Images</div>
       <div id="profile-container"></div>
+      <div id="upload-container"></div>
     </header>
 </script>
 
@@ -158,6 +158,7 @@
 <script src="scripts/apis.js"></script>
 <script src="scripts/models.js"></script>
 <script src="scripts/profile.js"></script>
+<script src="scripts/upload.js"></script>
 <script src="scripts/views.js"></script>
 <script src="scripts/login.js"></script>
 <script src="scripts/router.js"></script>
