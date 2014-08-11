@@ -114,7 +114,7 @@ body {
     @include media($desktop)  { top: 15%; }
 
 
-    div#login{
+    div#login, div#signup, div#user-profile{
       @include media($mobile-s) {
         @include span-columns(5);
       }
@@ -122,7 +122,7 @@ body {
       top: 20%;
       opacity: .8;
 
-      .login-form {
+      .login-form, .signup-form,  {
         @include media($mobile-s) {
           @include span-columns(3); @include shift(1);
         }
@@ -237,6 +237,13 @@ header#pet-header {
       width:100%;
     }
 
+    #upload {
+      position: absolute;
+      top: 135%;
+      background: $offwhite;
+      width:100%;
+    }
+
     #profile-container {
         position: absolute;
         left: 50%;
@@ -250,6 +257,14 @@ header#pet-header {
           width: 80%;
           margin-left: -40%;
         }
+    }
+
+    #upload-container {
+      position: absolute;
+      left: 10%;
+      width: 80%;
+      max-width: 600px;
+      margin-top:40px;
     }
 }
 

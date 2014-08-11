@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 var prompt = require('gulp-prompt');
 
 gulp.task('styles', function () {
-  return gulp.src('app/styles/main.scss')
+  return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
     .pipe($.rubySass({
       style: 'compressed',

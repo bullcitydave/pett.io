@@ -2,6 +2,8 @@ var AppRouter = Parse.Router.extend({
     routes: {
 
        'login'           :     'goLogin',
+       'signup'          :     'goSignUp',
+       'account/:user'    :     'updateAccount',
        'home'            :     'goLanding',
        ''                :     'splash',
        ':petName'        :     'getPet'
@@ -17,12 +19,23 @@ var AppRouter = Parse.Router.extend({
     var app_router = new AppRouter;
 
     app_router.on('route:goSplash', function() {
-        loginView = new SplashView();
         console.log('Loading splash page');
+        loginView = new SplashView();
       });
+
     app_router.on('route:goLogin', function() {
-        loginView = new LoginView();
         console.log('Loading login page');
+        loginView = new LoginView();
+      });
+
+    app_router.on('route:goSignUp', function() {
+        console.log('Loading signup page');
+        signUpView = new SignUpView();
+      });
+
+    app_router.on('route:updateAccount', function(user) {
+        console.log('Loading account page');
+        signUpView = new AccountView(user);
       });
 
     app_router.on('route:getPet', function(petName) {

@@ -14,7 +14,10 @@ $(function() {
 
     initialize: function() {
       self = this;
-      this.render();
+      $('.templates').load('templates.html', function()
+      {
+        self.render();
+      })
     },
 
     render: function() {
