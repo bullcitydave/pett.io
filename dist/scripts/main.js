@@ -140,12 +140,11 @@ var LinkView = Parse.View.extend({
     pet=tag;
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash-main');
-    $('#main-container').addClass('standard-main');
+    $('#main-container').removeClass('splash');
+    $('#main-container').addClass('standard');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
-    $('#content').html('');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
   },
@@ -165,7 +164,7 @@ var LinkView = Parse.View.extend({
 
 
 var FlickrPicListView = Parse.View.extend({
-    el: "#content",
+     el: "#main-container",
 
     initialize: function(tag) {
       console.log("Initializing FlickrPicListView. Tag: ", tag);
@@ -211,13 +210,7 @@ var FlickrPicListView = Parse.View.extend({
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
               console.log('Rendering Flickr image: ',flickrImg);
-
-              // dimsPromises.push(flickrImg);
-
-            $('#content').append(_.template(flickrView,({"flickrImg":flickrImg})));
-
-              //  console.log(dimsPromises);
-
+              $('#main-container').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
 
 
@@ -246,8 +239,6 @@ var ParsePicListView = Parse.View.extend({
 
     render: function(tag) {
 
-      this.container = $('#content');
-
       var ppQuery = new Parse.Query(ParsePic);
       ppQuery.equalTo("username", Parse.User.current().getUsername());
       ppQuery.equalTo("petname", tag);
@@ -271,7 +262,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('#content').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+         $('#main-container').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        }
      }
 
@@ -329,7 +320,7 @@ var LoginView = Parse.View.extend({
 
     Parse.User.logIn(username, password, {
         success: function(user) {
-          self.$el.html('');
+          self.$el.html(''); 
           app_router.navigate('//'+self.pet);
         },
 
@@ -448,7 +439,7 @@ $(function() {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
       $('#main-container').removeClass('splash-main');
-      $('#main-container').addClass('standard-main');
+      $('#main-container').addClass('standard');
       app_router.navigate('');
       $('#main-header').removeClass('standard');
       new SplashView();
