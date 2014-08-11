@@ -35,8 +35,8 @@ var LoginView = Parse.View.extend({
       },
 
   render: function() {
-    console.log(this.$el);
-    console.log($("#login-template").html());
-      this.$el.append(_.template($("#login-template").html()));
+      console.log(this.$el);
+      console.log($("#login-template").html());
+      this.$el.html(_.template($("#login-template").html()));
   }
 });

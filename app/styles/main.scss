@@ -10,6 +10,11 @@ $secondary-font: 'Roboto Condensed','Helvetica Neue',Arial,sans-serif;
 $orange:   darkorange;
 $offwhite: #eaeaea;
 
+$mobile-s: new-breakpoint(min-width 320px 5);
+$mobile-m: new-breakpoint(min-width 480px 5);
+$mobile-l: new-breakpoint(min-width 768px 12);
+$desktop: new-breakpoint(min-width 960px 12);
+
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
   -ms-filter: brightness($amt);
@@ -19,7 +24,7 @@ $offwhite: #eaeaea;
 
 /// Reset
 
-li,ul,h1 {
+li,ul,h1,h2 {
 -webkit-margin-before: 0em;
 -webkit-margin-after: 0em;
 -webkit-margin-start: 0px;
@@ -94,16 +99,19 @@ body {
 
   }
 
-  #main-container{
+  div#main-container.splash{
     @include outer-container;
-    $mobile: new-breakpoint(min-width 320px 5);
-    $desktop: new-breakpoint(min-width 960px 12);
+
 
     position: absolute;
-    top: 50%;
+    @include media($mobile-s) { top: 50%; }
+    @include media($mobile-m) { top: 40%; }
+    @include media($mobile-l) { top: 25%; }
+    @include media($desktop)  { top: 15%; }
+
 
     div#login{
-      @include media($mobile) {
+      @include media($mobile-s) {
         @include span-columns(5);
       }
       position: absolute;
@@ -111,7 +119,7 @@ body {
       opacity: .8;
 
       .login-form {
-        @include media($mobile) {
+        @include media($mobile-s) {
           @include span-columns(3);
           @include shift(1);
         }
@@ -150,7 +158,7 @@ body {
     }
 
     nav#main-nav{
-      @include media($mobile);
+      @include media($mobile-s);
         position: absolute;
         bottom: 0%;
         z-index: 500;
@@ -168,14 +176,12 @@ body {
           }
         }
       }
-    // position: absolute;
-    // top: 80px;
-    // width:100%;
-  }
+    }
 
-  .standard-main#main-container {
-    top: 25%;
-  }
+
+    div#main-container.standard-main {
+      top: 25%;
+    }
 }
 
 header#pet-header {
@@ -184,13 +190,15 @@ header#pet-header {
   margin: 0;
   background: transparent;
   top: 100px;
+  left: 50%;
+  width: 40%;
+  margin-left: -20%;
 
     h2 {
       font-size: 2.5em;
-      font-family: "Pusekatt","Times New Roman",serif;
+      font-family: $secondary-font;
       font-weight: 300;
       letter-spacing: .05em;
-      margin: 0 0 0 35px;
       background: #333;
       width: 100%;
       text-align: center;
@@ -209,10 +217,10 @@ header#pet-header {
       position: absolute;
       top: 100%;
       background: $orange;
+      width:100%;
     }
 
-    #profile-container
-      {
+    #profile-container {
         position: absolute;
         left: 50%;
         width: 80%;
@@ -223,10 +231,9 @@ header#pet-header {
           position:fixed;
           font-family:$secondary-font;
           width: 80%;
-          max-width: 600px;
-          margin-left: -20%;
+          margin-left: -40%;
         }
-      }
+    }
 }
 
 

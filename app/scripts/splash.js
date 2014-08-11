@@ -1,5 +1,5 @@
 var SplashView = Parse.View.extend({
-  
+
   el: "#main-container",
 
   splashHead: "#main-header",
@@ -14,5 +14,7 @@ var SplashView = Parse.View.extend({
     console.log('Head el: ', $(this.splashHead));
     $(this.splashHead).html(_.template($("#splash-header-template").html()));
     this.$el.html(_.template($("#splash-template").html()));
+    this.$el.addClass('splash');
+    $('.log-out').hide();
   }
 });

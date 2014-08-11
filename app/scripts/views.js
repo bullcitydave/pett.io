@@ -20,9 +20,7 @@ var LinkView = Parse.View.extend({
 
 
   events: {
-"click img"    : "showProfile",
     "click #about"    : "showProfile"
-
   },
 
   showProfile: function(e) {
