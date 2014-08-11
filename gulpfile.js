@@ -43,6 +43,17 @@ gulp.task('extras', function () {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('webfonts', function () {
+  return gulp.src(['app/styles/webfonts/*.*'], {dot: true})
+    .pipe(gulp.dest('dist/styles/webfonts'));
+});
+
+gulp.task('styles_', function () {
+  return gulp.src(['app/styles/*.css'], {dot: true})
+    .pipe(gulp.dest('dist/styles/'));
+});
+
+
 gulp.task('clean', function (cb) {
   rimraf('.tmp', function () {
     rimraf('dist', cb);
@@ -101,7 +112,7 @@ gulp.task('watch', ['connect', 'serve'], function () {
   gulp.watch('bower.json', ['wiredep']);
 });
 
-gulp.task('build', ['html', 'images', 'extras'], function () {
+gulp.task('build', ['html', 'images', 'extras', 'webfonts', 'styles_'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
