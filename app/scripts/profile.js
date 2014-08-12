@@ -4,6 +4,8 @@ var ProfileView = Parse.View.extend ({
   initialize: function(tag) {
     this.pet = tag;
 
+    el: $("#main-container"),
+
     console.log('Getting profile for ', this.pet);
 
     profile = this;
@@ -20,7 +22,17 @@ var ProfileView = Parse.View.extend ({
         alert("Error: " + error.code + " " + error.message);
       }
     });
-},
+  },
+
+    events: {
+
+      'click #close-profile'    : 'closeProfile'
+
+    },
+
+    closeProfile: function(e) {
+      $('#profile-container').html('').hide();
+    },
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});

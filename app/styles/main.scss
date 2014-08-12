@@ -72,6 +72,9 @@ body {
       margin: 5px 0 -20px 0;
       font-family: $primary-font;
     }
+    #splash-header-nav {
+      display:none;
+    }
   }
 
   header#main-header.standard{
@@ -100,6 +103,8 @@ body {
       margin: 5px;
     }
 
+
+
   }
 
   div#main-container.splash{
@@ -114,7 +119,7 @@ body {
     @include media($desktop)  { top: 15%; }
 
 
-    div#login, div#signup, div#user-profile{
+    div#login, div#signup {
       @include media($mobile-s) {
         @include span-columns(5);
       }
@@ -198,82 +203,78 @@ body {
 
     div#main-container.standard {
       top: 25%;
-    }
-}
 
-header#pet-header {
-  position: fixed;
-  z-index: 50;
-  margin: 0;
-  background: transparent;
-  top: 100px;
-  left: 50%;
-  width: 40%;
-  margin-left: -20%;
-
-    h2 {
-      font-size: 2.5em;
-      font-family: $secondary-font;
-      font-weight: 300;
-      letter-spacing: .05em;
-      background: #333;
-      width: 100%;
-      text-align: center;
-      opacity: 1;
-      z-index: 100;
-      text-transform: capitalize;
-      color: #eaeaea;
-      @media screen and (max-width: 480px){
-        font-size: 2.0em;
-        letter-spacing: .075em;
+      header#pet-header {
+        position: fixed;
+        z-index: 50;
         margin: 0;
+        background: transparent;
+        left: 50%;
+        width: 40%;
+        margin-left: -20%;
+        top: 80px;
+
+          h2 {
+            font-size: 2.5em;
+            font-family: $secondary-font;
+            font-weight: 300;
+            letter-spacing: .05em;
+            background: #333;
+            width: 100%;
+            text-align: center;
+            opacity: 1;
+            z-index: 100;
+            text-transform: capitalize;
+            color: #eaeaea;
+            @media screen and (max-width: 480px){
+              font-size: 2.0em;
+              letter-spacing: .075em;
+              margin: 0;
+            }
+          }
+
+          #about {
+            position: absolute;
+            top: 100%;
+            background: $orange;
+            width:100%;
+          }
+
+          #upload {
+            position: absolute;
+            top: 135%;
+            background: $offwhite;
+            width:100%;
+          }
+
+          #account {
+            position: absolute;
+            top: 170%;
+            background: #aaa;
+            width:100%;
+          }
+
+          #profile-container {
+              position: absolute;
+              left: 50%;
+              width: 80%;
+              max-width: 600px;
+              .profile {
+                width: 100%;
+                background: #aaa;
+                position:fixed;
+                font-family:$secondary-font;
+                width: 80%;
+                margin-left: -40%;
+              }
+          }
+
+
       }
     }
-
-    #about {
-      position: absolute;
-      top: 100%;
-      background: $orange;
-      width:100%;
-    }
-
-    #upload {
-      position: absolute;
-      top: 135%;
-      background: $offwhite;
-      width:100%;
-    }
-
-    #account {
-      position: absolute;
-      top: 170%;
-      background: #aaa;
-      width:100%;
-    }
-
-    #profile-container {
-        position: absolute;
-        left: 50%;
-        width: 80%;
-        max-width: 600px;
-        .profile {
-          width: 100%;
-          background: #aaa;
-          position:fixed;
-          font-family:$secondary-font;
-          width: 80%;
-          margin-left: -40%;
-        }
-    }
-
-    #upload-container {
-      position: absolute;
-      left: 10%;
-      width: 80%;
-      max-width: 600px;
-      margin-top:40px;
-    }
 }
+
+
 
 
 
@@ -321,9 +322,6 @@ header#pet-header {
     float:right;
     padding-right:10%;
     }
-
-
-
 
 
 // form file upload

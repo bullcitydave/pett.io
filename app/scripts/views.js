@@ -1,6 +1,6 @@
 var LinkView = Parse.View.extend({
 
-  el: "#main-header",
+  el: "body",
 
 
 
@@ -12,8 +12,9 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').html('');
-    $('#main-header').html(_.template($('#splash-header-template').html()));
-    $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $("#splash-header-nav").show();
+    $('#main-header').html(($('#splash-header-template').html()));
+    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);

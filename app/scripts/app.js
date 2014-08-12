@@ -14,7 +14,8 @@ $(function() {
 
     initialize: function() {
       self = this;
-      $('.templates').load('templates.html', function() {
+      // Need to ensure that templates load
+      // $('.templates').load('templates.html', function() {
         if (Parse.User.current()) {
           self.user = Parse.User.current().getUsername();
           console.log(self.user);
@@ -24,7 +25,7 @@ $(function() {
           console.log('No user signed in. Proceeding to splash screen.');
           new SplashView();
         }
-      })
+      // })
     },
 
     render: function() {

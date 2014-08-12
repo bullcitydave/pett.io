@@ -1,17 +1,3 @@
-<script type="text/template" id="splash-header-template">
-
-    <div id="logo-container">
-      <img id="logo" src="http://i.imgur.com/2q15fVJ.gif">
-    </div>
-
-    <h1>pett.io</h1>
-    <nav id="splash-header-nav">
-      <button class="log-out">Log Out</button>
-    </nav>
-
-
-</script>
-
 <script type="text/template" id="splash-template">
     <div id="splash-img-container">
       <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
@@ -26,6 +12,20 @@
     </nav>
 </script>
 
+<script type="text/template" id="splash-header-template">
+
+    <div id="logo-container">
+      <img id="logo" src="http://i.imgur.com/2q15fVJ.gif">
+    </div>
+
+    <h1>pett.io</h1>
+
+    <!-- <nav id="splash-header-nav">
+    //
+    // </nav> -->
+
+</script>
+
 <script type="text/template" id="image-upload-template">
   <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
   <fieldset>
@@ -38,14 +38,21 @@
 
 <script type="text/template" id="account-template">
 
-    <div class='user-profile' >
-      <p><h2><%-userName%></h2></p>
-      <p><h3>Your Pets</h3></p>
+    <div class='user-profile'>
+      <h2><%-userName%></h2>
+      <h3>Your Pets</h3>
       <div id="my-pet-list">
       </div>
       <button id="add-pet">Add a pet</button>
     </div>
 
+</script>
+
+<script type="text/template" id="pet-list-template">
+    <p class="pet-list-name"><%-name %></p>
+    <button class="your-pet-option" id="upload-image">View page</button>
+    <button class="your-pet-option" id="upload-image">Edit profile</button>
+    <button class="your-pet-option" id="upload-image">Upload image</button>
 </script>
 
 <script type="text/template" id="profile-template">
@@ -58,6 +65,7 @@
       <p><%-bio%></p>
       <p><%-favoriteTreats%></p>
       <p><%-colors%></p>
+      <button id="close-profile">Close</button>
     </div>
 
 </script>
@@ -88,8 +96,6 @@
     <header id="pet-header">
       <h2><%-petName %></h2>
       <div id="about">About</div>
-      <div id="upload">Upload Images</div>
-      <div id="account">Update Account</div>
       <div id="profile-container"></div>
       <div id="upload-container"></div>
     </header>
