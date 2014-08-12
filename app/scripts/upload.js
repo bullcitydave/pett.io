@@ -1,15 +1,15 @@
 var ImageUploadView = Parse.View.extend ({
 
 
-  initialize: function(tag) {
-    this.pet = tag;
+  initialize: function(pet) {
+    this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
 
-    this.render();
+    this.render(pet);
   },
 
-    render: function(){
+    render: function(pet){
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -43,7 +43,7 @@ var ImageUploadView = Parse.View.extend ({
           var newPic = new ParsePic ({
             url: data.url,
             username: Parse.User.current().getUsername(),
-            petname: $('h2').html(),
+            petname: pet,
             source: 'parse'
           });
           newPic.save();
