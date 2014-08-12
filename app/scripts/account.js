@@ -35,8 +35,13 @@ var AccountView = Parse.View.extend({
       objectId: Parse.User.current().getUsername()
       }
      });
-     newPet.save();
-  },
+     newPet.save().then(function(refreshList) {
+      console.log(newPet.name, ' added to database');
+      x.render();
+      }, function(error) {
+      console.log('Error adding pet to database');
+      });
+    },
 
   imageUploadForm: function(e) {
     console.log($(e.toElement).prev().html());
@@ -73,8 +78,6 @@ var AccountView = Parse.View.extend({
      for (var i = 0; i < results.length ; i++) {
         console.log(results[i].attributes.name);
   $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"name":results[i].attributes.name})));
-
-      //  $('#main-container').append(_.template($('#my-pet-list').html(),({"petName":tag})));
-     }
+    }
   }
 });

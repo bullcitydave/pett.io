@@ -1,35 +1,55 @@
 @import '../../bower_components/bourbon/dist/bourbon';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 
-$mobile-s: new-breakpoint(min-width 320px 5);
-$mobile-m: new-breakpoint(min-width 480px 5);
-$mobile-l: new-breakpoint(min-width 768px 12);
-$desktop: new-breakpoint(min-width 960px 12);
+
+  $mobile-s: new-breakpoint(min-width 320px 5);
+  $mobile-m: new-breakpoint(min-width 480px 5);
+  $mobile-l: new-breakpoint(min-width 768px 12);
+  $desktop: new-breakpoint(min-width 960px 12);
+
 
 div.user-profile {
 
   position: absolute;
-  top: 20%;
+  top: 10%;
   opacity: .8;
   @include outer-container;
+  width: 100%;
+  max-width: 500px;
 
+
+  h2 {
     @include media($mobile-s) {
       @include span-columns(3); @include shift(1);
     }
-    @include media($mobile-m) {
+  }
+  h3 {
+    @include media($mobile-s) {
       @include span-columns(3); @include shift(1);
     }
-    @include media($mobile-l) {
-      @include span-columns(6); @include shift(3);
-    }
-    @include media($desktop) {
-      @include span-columns(4); @include shift(4);
-      margin-top: 20%;
-    }
-  h2 {}
-  h3 {}
+  }
+
   div#my-pet-list {
-}
+    clear:both;
+
+    p.pet-list-name {
+      @include media($mobile-s) {
+        @include span-columns(2); @include shift(1);
+      }
+    }
+    button#upload-image {
+      @include media($mobile-s) {
+        @include span-columns(1);
+      }
+    }
+  }
+
+
+  button#add-pet {
+    @include media($mobile-s) {
+      @include span-columns(1.5); @include shift(1.75);
+    }
+  }
 }
 
 #tools {

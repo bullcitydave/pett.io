@@ -119,7 +119,7 @@ body {
     @include media($desktop)  { top: 15%; }
 
 
-    div#login, div#signup, div#user-profile{
+    div#login, div#signup {
       @include media($mobile-s) {
         @include span-columns(5);
       }

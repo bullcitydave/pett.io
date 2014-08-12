@@ -38,16 +38,19 @@
 
 <script type="text/template" id="account-template">
 
-    <div class='user-profile' >
-      <p><h2><%-userName%></h2></p>
-      <p><h3>Your Pets</h3></p>
+    <div class='user-profile'>
+      <h2><%-userName%></h2>
+      <h3>Your Pets</h3>
       <div id="my-pet-list">
-      <p><%-name %></p>
-      <button id="upload-image">Upload image</button>
       </div>
       <button id="add-pet">Add a pet</button>
     </div>
 
+</script>
+
+<script type="text/template" id="pet-list-template">
+    <p class="pet-list-name"><%-name %></p>
+    <button id="upload-image">Upload image</button>
 </script>
 
 <script type="text/template" id="profile-template">
