@@ -1,21 +1,40 @@
 var AccountView = Parse.View.extend({
-  events: {
-
-  },
 
   el: "#main-container",
 
+  events: {
+    "click #add-pet" : "createPet",
+    "submit"         : "submitPet"
+
+  },
+
   initialize: function() {
     console.log("Account view initialized");
+    $(this.el).removeClass('splash');
+    $(this.el).addClass('standard');
+    $('#main-header').addClass('standard');
+    $('body').addClass('whitebg');
     x=this;
     _.bindAll(this, "createPet");
     this.render();
   },
 
   createPet: function(e) {
+    $('#add-pet').hide();
+    $('.user-profile').append(_.template($("#add-pet-template").html()));
+  },
 
-
-    return false;
+  submitPet: function(e) {
+     e.preventDefault();
+     var newPet = new Pet ({
+      name: $('input#pet-name').val(),
+      bio: $('input#bio').val(),
+      person: {__type: "Pointer",
+      className: "_User",
+      objectId: Parse.User.current().getUsername()
+      }
+     });
+     newPet.save();
   },
 
   render: function() {

@@ -14,19 +14,25 @@ $(function() {
 
     initialize: function() {
       self = this;
-      $('.templates').load('templates.html', function()
-      {
-        self.render();
+      $('.templates').load('templates.html', function() {
+        if (Parse.User.current()) {
+          self.user = Parse.User.current().getUsername();
+          console.log(self.user);
+          self.render();
+        }
+        else {
+          console.log('No user signed in. Proceeding to splash screen.');
+          new SplashView();
+        }
       })
     },
 
     render: function() {
-      if (Parse.User.current()) {
-        console.log(Parse.User.current().getUsername());
-        app_router.navigate('//'+self.pet);
-      } else {
-        console.log('No user signed in. Proceeding to splash screen.');
-        new SplashView();
+      if (self.user === 'bullcitydave') {
+        app_router.navigate('//' + self.pet);
+      }
+      else {
+        app_router.navigate('//account/'+self.user);
       }
     },
 

@@ -43,6 +43,7 @@
       <p><h3>Your Pets</h3></p>
       <div id="my-pet-list">
       </div>
+      <button id="add-pet">Add a pet</button>
     </div>
 
 </script>
@@ -58,6 +59,21 @@
       <p><%-favoriteTreats%></p>
       <p><%-colors%></p>
     </div>
+
+</script>
+
+<script type="text/template" id="add-pet-template">
+
+    <form id="add-pet-form">
+      <p><span>Name</span>
+      <input type="text" id="pet-name"></p>
+      <!-- <p><span>Type</span>
+      // <input type="radio" id="type" value="cat">Cat
+      // <input type="radio" id="type" value="dog">Dog -->
+      <p><span>Bio</span>
+      <input type="textarea" id="bio" placeholder="Tell the world about your pet here!">
+      <input type="submit" value="Add">
+    </form>
 
 </script>
 
