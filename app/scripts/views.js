@@ -21,7 +21,8 @@ var LinkView = Parse.View.extend({
 
   events: {
     "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm"
+    "click #upload"   : "imageUploadForm",
+    "click #account"  : "viewAccount"
   },
 
   showProfile: function(e) {
@@ -30,6 +31,10 @@ var LinkView = Parse.View.extend({
 
   imageUploadForm: function(e) {
     new ImageUploadView(pet);
+  },
+
+  viewAccount: function(e) {
+    app_router.navigate('//account/'+Parse.User.current().getUsername());
   }
 
 
