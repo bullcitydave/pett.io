@@ -5,7 +5,7 @@ var AccountView = Parse.View.extend({
   events: {
     "click #add-pet"  : "createPet",
     "submit"          : "submitPet",
-    "click #upload"   : "imageUploadForm"
+    "click #upload-image"   : "imageUploadForm"
   },
 
   initialize: function() {

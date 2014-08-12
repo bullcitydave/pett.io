@@ -31,3 +31,13 @@ div.user-profile {
   div#my-pet-list {
 }
 }
+
+#tools {
+  #upload-container {
+    position: absolute;
+    top: 50%;
+    width: 320px;
+    left: 20%;
+    z-index: 2000;
+  }
+}
