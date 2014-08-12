@@ -72,8 +72,9 @@ var AccountView = Parse.View.extend({
   listPets: function(results) {
      for (var i = 0; i < results.length ; i++) {
         console.log(results[i].attributes.name);
+  $('.user-profile').append(_.template($('#pet-list').html(),({"name":results[i].attributes.name})));
 
-       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p><button id="upload">'));
+       $('#main-container').append(_.template($('#my-pet-list').html(),({"petName":tag})));
      }
   }
 });

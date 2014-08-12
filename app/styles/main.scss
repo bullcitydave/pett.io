@@ -72,6 +72,9 @@ body {
       margin: 5px 0 -20px 0;
       font-family: $primary-font;
     }
+    #splash-header-nav {
+      display:none;
+    }
   }
 
   header#main-header.standard{
