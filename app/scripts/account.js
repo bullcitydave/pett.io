@@ -3,9 +3,9 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet" : "createPet",
-    "submit"         : "submitPet"
-
+    "click #add-pet"  : "createPet",
+    "submit"          : "submitPet",
+    "click #upload"   : "imageUploadForm"
   },
 
   initialize: function() {
@@ -28,6 +28,7 @@ var AccountView = Parse.View.extend({
      e.preventDefault();
      var newPet = new Pet ({
       name: $('input#pet-name').val(),
+      uniqueName: $('input#pet-name').val().toLowerCase(),
       bio: $('input#bio').val(),
       person: {__type: "Pointer",
       className: "_User",
@@ -35,6 +36,12 @@ var AccountView = Parse.View.extend({
       }
      });
      newPet.save();
+  },
+
+  imageUploadForm: function(e) {
+    console.log($(e.toElement).prev().html());
+    pet = $(e.toElement).prev().html().toLowerCase();
+    new ImageUploadView(pet);
   },
 
   render: function() {
@@ -66,7 +73,7 @@ var AccountView = Parse.View.extend({
      for (var i = 0; i < results.length ; i++) {
         console.log(results[i].attributes.name);
 
-       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p>'));
+       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p><button id="upload">'));
      }
   }
 });

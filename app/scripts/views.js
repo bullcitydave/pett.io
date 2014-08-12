@@ -11,6 +11,7 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').html('');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');

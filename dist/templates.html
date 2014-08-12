@@ -43,6 +43,7 @@
       <p><h3>Your Pets</h3></p>
       <div id="my-pet-list">
       </div>
+      <button id="add-pet">Add a pet</button>
     </div>
 
 </script>
@@ -61,6 +62,21 @@
 
 </script>
 
+<script type="text/template" id="add-pet-template">
+
+    <form id="add-pet-form">
+      <p><span>Name</span>
+      <input type="text" id="pet-name"></p>
+      <!-- <p><span>Type</span>
+      // <input type="radio" id="type" value="cat">Cat
+      // <input type="radio" id="type" value="dog">Dog -->
+      <p><span>Bio</span>
+      <input type="textarea" id="bio" placeholder="Tell the world about your pet here!">
+      <input type="submit" value="Add">
+    </form>
+
+</script>
+
 
 <script type="text/template" id="flickr-template">
     <div class='picContainer' >
@@ -73,6 +89,7 @@
       <h2><%-petName %></h2>
       <div id="about">About</div>
       <div id="upload">Upload Images</div>
+      <div id="account">Update Account</div>
       <div id="profile-container"></div>
       <div id="upload-container"></div>
     </header>

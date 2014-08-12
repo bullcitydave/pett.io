@@ -123,7 +123,7 @@ var ProfileView = Parse.View.extend ({
 },
 
     render: function(data){
-        _.defaults(data, {dateDeath: "null"});
+        _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         var profileView = $('#profile-template').html();
         $('#profile-container').html(_.template(profileView,data));
       }
@@ -132,15 +132,15 @@ var ProfileView = Parse.View.extend ({
 var ImageUploadView = Parse.View.extend ({
 
 
-  initialize: function(tag) {
-    this.pet = tag;
+  initialize: function(pet) {
+    this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
 
-    this.render();
+    this.render(pet);
   },
 
-    render: function(){
+    render: function(pet){
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -174,7 +174,7 @@ var ImageUploadView = Parse.View.extend ({
           var newPic = new ParsePic ({
             url: data.url,
             username: Parse.User.current().getUsername(),
-            petname: $('h2').html(),
+            petname: pet,
             source: 'parse'
           });
           newPic.save();
@@ -202,6 +202,7 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').html('');
     $('#main-header').html(_.template($('#splash-header-template').html()));
     $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
@@ -212,7 +213,8 @@ var LinkView = Parse.View.extend({
 
   events: {
     "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm"
+    "click #upload"   : "imageUploadForm",
+    "click #account"  : "viewAccount"
   },
 
   showProfile: function(e) {
@@ -221,6 +223,10 @@ var LinkView = Parse.View.extend({
 
   imageUploadForm: function(e) {
     new ImageUploadView(pet);
+  },
+
+  viewAccount: function(e) {
+    app_router.navigate('//account/'+Parse.User.current().getUsername());
   }
 
 
@@ -447,23 +453,49 @@ var SignUpView = Parse.View.extend({
 });
 
 var AccountView = Parse.View.extend({
-  events: {
-
-  },
 
   el: "#main-container",
 
+  events: {
+    "click #add-pet"  : "createPet",
+    "submit"          : "submitPet",
+    "click #upload"   : "imageUploadForm"
+  },
+
   initialize: function() {
     console.log("Account view initialized");
+    $(this.el).removeClass('splash');
+    $(this.el).addClass('standard');
+    $('#main-header').addClass('standard');
+    $('body').addClass('whitebg');
     x=this;
     _.bindAll(this, "createPet");
     this.render();
   },
 
   createPet: function(e) {
+    $('#add-pet').hide();
+    $('.user-profile').append(_.template($("#add-pet-template").html()));
+  },
 
+  submitPet: function(e) {
+     e.preventDefault();
+     var newPet = new Pet ({
+      name: $('input#pet-name').val(),
+      uniqueName: $('input#pet-name').val().toLowerCase(),
+      bio: $('input#bio').val(),
+      person: {__type: "Pointer",
+      className: "_User",
+      objectId: Parse.User.current().getUsername()
+      }
+     });
+     newPet.save();
+  },
 
-    return false;
+  imageUploadForm: function(e) {
+    console.log($(e.toElement).prev().html());
+    pet = $(e.toElement).prev().html().toLowerCase();
+    new ImageUploadView(pet);
   },
 
   render: function() {
@@ -495,7 +527,7 @@ var AccountView = Parse.View.extend({
      for (var i = 0; i < results.length ; i++) {
         console.log(results[i].attributes.name);
 
-       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p>'));
+       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p><button id="upload">'));
      }
   }
 });
@@ -594,19 +626,25 @@ $(function() {
 
     initialize: function() {
       self = this;
-      $('.templates').load('templates.html', function()
-      {
-        self.render();
+      $('.templates').load('templates.html', function() {
+        if (Parse.User.current()) {
+          self.user = Parse.User.current().getUsername();
+          console.log(self.user);
+          self.render();
+        }
+        else {
+          console.log('No user signed in. Proceeding to splash screen.');
+          new SplashView();
+        }
       })
     },
 
     render: function() {
-      if (Parse.User.current()) {
-        console.log(Parse.User.current().getUsername());
-        app_router.navigate('//'+self.pet);
-      } else {
-        console.log('No user signed in. Proceeding to splash screen.');
-        new SplashView();
+      if (self.user === 'bullcitydave') {
+        app_router.navigate('//' + self.pet);
+      }
+      else {
+        app_router.navigate('//account/'+self.user);
       }
     },
 
