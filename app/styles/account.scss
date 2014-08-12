@@ -19,27 +19,25 @@ div.user-profile {
 
 
   h2 {
-    @include media($mobile-s) {
-      @include span-columns(3); @include shift(1);
+      text-align:center;
     }
-  }
+
   h3 {
-    @include media($mobile-s) {
-      @include span-columns(3); @include shift(1);
+      text-align:center;
     }
-  }
+
 
   div#my-pet-list {
-    clear:both;
-
     p.pet-list-name {
       @include media($mobile-s) {
-        @include span-columns(2); @include shift(1);
+        @include span-columns(2);
+        clear:left;
       }
     }
-    button#upload-image {
+    button.your-pet-option   {
       @include media($mobile-s) {
         @include span-columns(1);
+        @include omega(4n);
       }
     }
   }
