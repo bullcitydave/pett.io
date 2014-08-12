@@ -3,9 +3,10 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet"  : "createPet",
-    "submit"          : "submitPet",
-    "click #upload-image"   : "imageUploadForm"
+    "click #add-pet"        : "createPet",
+    "submit"                : "submitPet",
+    "click #upload-image"   : "imageUploadForm",
+    "click #view-page"      : "viewPet"
   },
 
   initialize: function() {
@@ -44,16 +45,20 @@ var AccountView = Parse.View.extend({
     },
 
   imageUploadForm: function(e) {
-    console.log($(e.toElement).prev().html());
-    pet = $(e.toElement).prev().html().toLowerCase();
+    console.log($(e.toElement).prev().prev().prev().html());
+    pet = $(e.toElement).prev().prev().prev().html().toLowerCase();
     new ImageUploadView(pet);
+  },
+
+  viewPet: function(e) {
+    pet = $(e.toElement).prev().html().toLowerCase();
+    app_router.navigate('//' + pet);
   },
 
   render: function() {
     this.$el.html(_.template($("#account-template").html(), ({"userName": Parse.User.current().getUsername()})));
 
     var ppQuery = new Parse.Query(Pet);
-    // ppQuery.equalTo("person", Parse.User.current().getUsername());
 
     ppQuery.equalTo("person", {
         __type: "Pointer",

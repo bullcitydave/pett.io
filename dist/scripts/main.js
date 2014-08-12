@@ -104,6 +104,8 @@ var ProfileView = Parse.View.extend ({
   initialize: function(tag) {
     this.pet = tag;
 
+    el: $("#main-container"),
+
     console.log('Getting profile for ', this.pet);
 
     profile = this;
@@ -120,7 +122,17 @@ var ProfileView = Parse.View.extend ({
         alert("Error: " + error.code + " " + error.message);
       }
     });
-},
+  },
+
+    events: {
+
+      'click #close-profile'    : 'closeProfile'
+
+    },
+
+    closeProfile: function(e) {
+      $('#profile-container').html('').hide();
+    },
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
@@ -191,7 +203,7 @@ var ImageUploadView = Parse.View.extend ({
 
 var LinkView = Parse.View.extend({
 
-  el: "#main-header",
+  el: "body",
 
 
 
@@ -203,8 +215,9 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').html('');
-    $('#main-header').html(_.template($('#splash-header-template').html()));
-    $('#main-header').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $("#splash-header-nav").show();
+    $('#main-header').html(($('#splash-header-template').html()));
+    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('body').addClass('whitebg');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
@@ -457,9 +470,10 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet"  : "createPet",
-    "submit"          : "submitPet",
-    "click #upload"   : "imageUploadForm"
+    "click #add-pet"        : "createPet",
+    "submit"                : "submitPet",
+    "click #upload-image"   : "imageUploadForm",
+    "click #view-page"      : "viewPet"
   },
 
   initialize: function() {
@@ -489,20 +503,29 @@ var AccountView = Parse.View.extend({
       objectId: Parse.User.current().getUsername()
       }
      });
-     newPet.save();
-  },
+     newPet.save().then(function(refreshList) {
+      console.log(newPet.name, ' added to database');
+      x.render();
+      }, function(error) {
+      console.log('Error adding pet to database');
+      });
+    },
 
   imageUploadForm: function(e) {
-    console.log($(e.toElement).prev().html());
-    pet = $(e.toElement).prev().html().toLowerCase();
+    console.log($(e.toElement).prev().prev().prev().html());
+    pet = $(e.toElement).prev().prev().prev().html().toLowerCase();
     new ImageUploadView(pet);
+  },
+
+  viewPet: function(e) {
+    pet = $(e.toElement).prev().html().toLowerCase();
+    app_router.navigate('//' + pet);
   },
 
   render: function() {
     this.$el.html(_.template($("#account-template").html(), ({"userName": Parse.User.current().getUsername()})));
 
     var ppQuery = new Parse.Query(Pet);
-    // ppQuery.equalTo("person", Parse.User.current().getUsername());
 
     ppQuery.equalTo("person", {
         __type: "Pointer",
@@ -526,9 +549,8 @@ var AccountView = Parse.View.extend({
   listPets: function(results) {
      for (var i = 0; i < results.length ; i++) {
         console.log(results[i].attributes.name);
-
-       $('.user-profile').append(_.template('<p>' + results[i].attributes.name + '</p><button id="upload">'));
-     }
+  $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"name":results[i].attributes.name})));
+    }
   }
 });
 
@@ -626,7 +648,8 @@ $(function() {
 
     initialize: function() {
       self = this;
-      $('.templates').load('templates.html', function() {
+      // Need to ensure that templates load
+      // $('.templates').load('templates.html', function() {
         if (Parse.User.current()) {
           self.user = Parse.User.current().getUsername();
           console.log(self.user);
@@ -636,7 +659,7 @@ $(function() {
           console.log('No user signed in. Proceeding to splash screen.');
           new SplashView();
         }
-      })
+      // })
     },
 
     render: function() {
