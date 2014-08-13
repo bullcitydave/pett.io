@@ -1,10 +1,9 @@
 var ProfileView = Parse.View.extend ({
 
+  el: "#pet-header",
 
   initialize: function(tag) {
     this.pet = tag;
-
-    el: $("#main-container"),
 
     console.log('Getting profile for ', this.pet);
 
@@ -31,12 +30,15 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').html('').hide();
+      $('#profile-container').html('');
+      $('#profile-container').hide();
+      return false;
     },
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         var profileView = $('#profile-template').html();
+        $('#profile-container').show();
         $('#profile-container').html(_.template(profileView,data));
       }
 });

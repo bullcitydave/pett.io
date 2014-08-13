@@ -100,11 +100,10 @@ var flickrUserId = 'toastie97';
 
 var ProfileView = Parse.View.extend ({
 
+  el: "#pet-header",
 
   initialize: function(tag) {
     this.pet = tag;
-
-    el: $("#main-container"),
 
     console.log('Getting profile for ', this.pet);
 
@@ -131,12 +130,15 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').html('').hide();
+      $('#profile-container').html('');
+      $('#profile-container').hide();
+      return false;
     },
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         var profileView = $('#profile-template').html();
+        $('#profile-container').show();
         $('#profile-container').html(_.template(profileView,data));
       }
 });
@@ -212,7 +214,9 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').html('');
     $('.pic-showcase').html('');
+    $('#tools').html('');
     $('#main-header').html(($('#header-template').html()));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
