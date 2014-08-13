@@ -122,7 +122,7 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery = new Parse.Query(ParsePic);
       // ppQuery.equalTo("username", Parse.User.current().getUsername());
-      ppQuery.equalTo("uniqueName", tag);
+      ppQuery.equalTo("petname", tag);
 
       console.log('ppQuery: ',ppQuery);
 
