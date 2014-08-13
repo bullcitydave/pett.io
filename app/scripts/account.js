@@ -71,11 +71,12 @@ var AccountView = Parse.View.extend({
 
     ppQuery.find({
       success: function(results) {
+          console.log('Returning pets:', results);
           x.listPets(results);
       },
 
       error: function(error) {
-          alert('Error!');
+          console.log('No pets found');
         }
       });
     },

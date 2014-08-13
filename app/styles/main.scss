@@ -93,25 +93,43 @@ body {
       }
     }
     h1 {
-      font-size: 3.8em;
-      font-weight: 300;
-      float: left;
-      font-family: $primary-font;
-      margin: 5px;
+      @include media($mobile-s) {
+        font-size: 3.2em;
+        font-weight: 300;
+        float: left;
+        font-family: $primary-font;
+        margin: 5px;
+      }
+      @include media($mobile-l) {
+        font-size: 3.8em;
+      }
     }
     nav#header-nav {
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background: #aaa;
-      font-size: 0.8em;
-      font-weight: 500;
-      text-align: right;
+      @include media($mobile-s) {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        font-size: 0.8em;
+        font-weight: 500;
+        text-align: right;
 
-      ul {
-        list-style-type: none;
-        li {
-          display: inherit;
+        ul {
+          list-style-type: none;
+          li {
+            display: inherit;
+            padding: 0 5px 0 0;
+          }
+        }
+      }
+
+      @include media($mobile-m) {
+        top: 55px;
+        ul {
+          li {
+            padding: 4px 8px 0 8px;
+            float: right;
+            font-size:1.2em;
+          }
         }
       }
     }
