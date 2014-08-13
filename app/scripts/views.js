@@ -5,6 +5,7 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
+    user=Parse.User.current().getUsername();
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -12,7 +13,7 @@ var LinkView = Parse.View.extend({
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
-    $('#main-header').html(($('#header-template').html()));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
