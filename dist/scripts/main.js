@@ -205,8 +205,6 @@ var LinkView = Parse.View.extend({
 
   el: "body",
 
-
-
   initialize: function(tag) {
     if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
@@ -214,11 +212,12 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
-    $('#main-container').html('');
-    $("#splash-header-nav").show();
-    $('#main-header').html(($('#splash-header-template').html()));
+    $('.pic-showcase').html('');
+    $('#main-header').html(($('#header-template').html()));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('#log-out').show();
     $('body').addClass('whitebg');
+    $('#main-container').append("<div class='pic-showcase'></div>");
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
   },
@@ -240,6 +239,7 @@ var LinkView = Parse.View.extend({
 
   viewAccount: function(e) {
     app_router.navigate('//account/'+Parse.User.current().getUsername());
+    return false;
   }
 
 
@@ -294,9 +294,8 @@ var FlickrPicListView = Parse.View.extend({
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
               console.log('Rendering Flickr image: ',flickrImg);
-              $('#main-container').append(_.template(flickrView,({"flickrImg":flickrImg})));
+              $('.pic-showcase').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
-
 
 
             // for (var i = 0; i < 9 ; i++) {
@@ -313,6 +312,7 @@ var FlickrPicListView = Parse.View.extend({
 
 
 var ParsePicListView = Parse.View.extend({
+    el: "#main-container",
 
     initialize: function(tag) {
       parseSelf=this;
@@ -324,7 +324,7 @@ var ParsePicListView = Parse.View.extend({
     render: function(tag) {
 
       var ppQuery = new Parse.Query(ParsePic);
-      ppQuery.equalTo("username", Parse.User.current().getUsername());
+      // ppQuery.equalTo("username", Parse.User.current().getUsername());
       ppQuery.equalTo("petname", tag);
 
       console.log('ppQuery: ',ppQuery);
@@ -346,8 +346,8 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('#main-container').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
-       }
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+       };
      }
 
 
@@ -480,6 +480,7 @@ var AccountView = Parse.View.extend({
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
+    $('#main-header').html(($('#header-template').html()));
     $('#main-header').addClass('standard');
     $('body').addClass('whitebg');
     x=this;
@@ -537,11 +538,12 @@ var AccountView = Parse.View.extend({
 
     ppQuery.find({
       success: function(results) {
+          console.log('Returning pets:', results);
           x.listPets(results);
       },
 
       error: function(error) {
-          alert('Error!');
+          console.log('No pets found');
         }
       });
     },
@@ -591,7 +593,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:updateAccount', function(user) {
         console.log('Loading account page');
-        signUpView = new AccountView(user);
+        accountView = new AccountView(user);
       });
 
     app_router.on('route:getPet', function(petName) {
@@ -625,10 +627,10 @@ var SplashView = Parse.View.extend({
   render: function() {
     console.log('Main el: ', this.$el);
     console.log('Head el: ', $(this.splashHead));
-    $(this.splashHead).html(_.template($("#splash-header-template").html()));
+    $(this.splashHead).html(_.template($("#header-template").html()));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
-    $('.log-out').hide();
+    $('#header-nav').hide();
   }
 });
 
@@ -639,8 +641,7 @@ $(function() {
     el: $("#main-header"),
 
     events: {
-
-      "click .log-out"    : "logOut"
+      "click #log-out"    : "logOut"
     },
 
 
@@ -679,10 +680,10 @@ $(function() {
       app_router.navigate('');
       $('#main-header').removeClass('standard');
       new SplashView();
-    },
+    }
 
   });
 
-  new AppView;
+  APP = new AppView;
 
 });
