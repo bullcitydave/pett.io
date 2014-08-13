@@ -28,12 +28,30 @@ $(function() {
     },
 
     render: function() {
-      if (self.user === 'bullcitydave') {
-        app_router.navigate('//' + self.pet);
-      }
-      else {
-        app_router.navigate('//account/'+self.user);
-      }
+      self.getDefaultPet(self.user);
+
+    },
+
+    getDefaultPet: function() {
+
+      var dpQuery = new Parse.Query(Parse.User);
+      dpQuery.equalTo("username", self.user);
+
+      console.log('dpQuery: ',dpQuery);
+
+      dpQuery.find({
+        success: function(results) {
+          console.log(results[0].attributes.defaultPet.id.toLowerCase());
+          dp = (results[0].attributes.defaultPet.id.toLowerCase());
+          app_router.navigate('//' + dp);
+        },
+
+        error: function(error) {
+            alert('Error retrieving default pet');
+            app_router.navigate('//account/'+self.user);
+          }
+        });
+
     },
 
     logOut: function(e) {
