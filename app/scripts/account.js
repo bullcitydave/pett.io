@@ -13,7 +13,7 @@ var AccountView = Parse.View.extend({
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
-    $('#main-header').html(($('#header-template').html()));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-header').addClass('standard');
     $('body').addClass('whitebg');
     x=this;
@@ -54,6 +54,7 @@ var AccountView = Parse.View.extend({
   viewPet: function(e) {
     pet = $(e.toElement).prev().html().toLowerCase();
     app_router.navigate('//' + pet);
+    return false;
   },
 
   render: function() {
