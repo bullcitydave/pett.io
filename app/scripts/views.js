@@ -9,7 +9,9 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').html('');
     $('.pic-showcase').html('');
+    $('#tools').html('');
     $('#main-header').html(($('#header-template').html()));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
