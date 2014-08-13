@@ -13,6 +13,7 @@ var AccountView = Parse.View.extend({
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
+    $('#main-header').html(($('#header-template').html()));
     $('#main-header').addClass('standard');
     $('body').addClass('whitebg');
     x=this;
@@ -70,11 +71,12 @@ var AccountView = Parse.View.extend({
 
     ppQuery.find({
       success: function(results) {
+          console.log('Returning pets:', results);
           x.listPets(results);
       },
 
       error: function(error) {
-          alert('Error!');
+          console.log('No pets found');
         }
       });
     },

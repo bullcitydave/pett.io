@@ -72,9 +72,6 @@ body {
       margin: 5px 0 -20px 0;
       font-family: $primary-font;
     }
-    #splash-header-nav {
-      display:none;
-    }
   }
 
   header#main-header.standard{
@@ -96,15 +93,46 @@ body {
       }
     }
     h1 {
-      font-size: 3.8em;
-      font-weight: 300;
-      float: left;
-      font-family: $primary-font;
-      margin: 5px;
+      @include media($mobile-s) {
+        font-size: 3.2em;
+        font-weight: 300;
+        float: left;
+        font-family: $primary-font;
+        margin: 5px;
+      }
+      @include media($mobile-l) {
+        font-size: 3.8em;
+      }
     }
+    nav#header-nav {
+      @include media($mobile-s) {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        font-size: 0.8em;
+        font-weight: 500;
+        text-align: right;
 
+        ul {
+          list-style-type: none;
+          li {
+            display: inherit;
+            padding: 0 5px 0 0;
+          }
+        }
+      }
 
-
+      @include media($mobile-m) {
+        top: 55px;
+        ul {
+          li {
+            padding: 4px 8px 0 8px;
+            float: right;
+            font-size:1.2em;
+          }
+        }
+      }
+    }
   }
 
   div#main-container.splash{
@@ -237,20 +265,6 @@ body {
             position: absolute;
             top: 100%;
             background: $orange;
-            width:100%;
-          }
-
-          #upload {
-            position: absolute;
-            top: 135%;
-            background: $offwhite;
-            width:100%;
-          }
-
-          #account {
-            position: absolute;
-            top: 170%;
-            background: #aaa;
             width:100%;
           }
 

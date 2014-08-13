@@ -2,8 +2,6 @@ var LinkView = Parse.View.extend({
 
   el: "body",
 
-
-
   initialize: function(tag) {
     if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
@@ -12,9 +10,9 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').html('');
-    $("#splash-header-nav").show();
-    $('#main-header').html(($('#splash-header-template').html()));
+    $('#main-header').html(($('#header-template').html()));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('#log-out').show();
     $('body').addClass('whitebg');
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
