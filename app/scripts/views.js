@@ -35,6 +35,7 @@ var LinkView = Parse.View.extend({
 
   viewAccount: function(e) {
     app_router.navigate('//account/'+Parse.User.current().getUsername());
+    return false;
   }
 
 
