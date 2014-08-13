@@ -35,7 +35,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:updateAccount', function(user) {
         console.log('Loading account page');
-        signUpView = new AccountView(user);
+        accountView = new AccountView(user);
       });
 
     app_router.on('route:getPet', function(petName) {

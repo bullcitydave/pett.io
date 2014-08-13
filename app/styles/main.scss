@@ -72,9 +72,6 @@ body {
       margin: 5px 0 -20px 0;
       font-family: $primary-font;
     }
-    #splash-header-nav {
-      display:none;
-    }
   }
 
   header#main-header.standard{
@@ -102,9 +99,22 @@ body {
       font-family: $primary-font;
       margin: 5px;
     }
+    nav#header-nav {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: #aaa;
+      font-size: 0.8em;
+      font-weight: 500;
+      text-align: right;
 
-
-
+      ul {
+        list-style-type: none;
+        li {
+          display: inherit;
+        }
+      }
+    }
   }
 
   div#main-container.splash{
@@ -237,20 +247,6 @@ body {
             position: absolute;
             top: 100%;
             background: $orange;
-            width:100%;
-          }
-
-          #upload {
-            position: absolute;
-            top: 135%;
-            background: $offwhite;
-            width:100%;
-          }
-
-          #account {
-            position: absolute;
-            top: 170%;
-            background: #aaa;
             width:100%;
           }
 

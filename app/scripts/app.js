@@ -5,8 +5,7 @@ $(function() {
     el: $("#main-header"),
 
     events: {
-
-      "click .log-out"    : "logOut"
+      "click #log-out"    : "logOut"
     },
 
 
@@ -45,10 +44,10 @@ $(function() {
       app_router.navigate('');
       $('#main-header').removeClass('standard');
       new SplashView();
-    },
+    }
 
   });
 
-  new AppView;
+  APP = new AppView;
 
 });
