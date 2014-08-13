@@ -9,11 +9,12 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
-    $('#main-container').html('');
+    $('.pic-showcase').html('');
     $('#main-header').html(($('#header-template').html()));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
+    $('#main-container').append("<div class='pic-showcase'></div>");
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
   },
@@ -90,9 +91,8 @@ var FlickrPicListView = Parse.View.extend({
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
               console.log('Rendering Flickr image: ',flickrImg);
-              $('#main-container').append(_.template(flickrView,({"flickrImg":flickrImg})));
+              $('.pic-showcase').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
-
 
 
             // for (var i = 0; i < 9 ; i++) {
@@ -109,6 +109,7 @@ var FlickrPicListView = Parse.View.extend({
 
 
 var ParsePicListView = Parse.View.extend({
+    el: "#main-container",
 
     initialize: function(tag) {
       parseSelf=this;
@@ -120,8 +121,8 @@ var ParsePicListView = Parse.View.extend({
     render: function(tag) {
 
       var ppQuery = new Parse.Query(ParsePic);
-      ppQuery.equalTo("username", Parse.User.current().getUsername());
-      ppQuery.equalTo("petname", tag);
+      // ppQuery.equalTo("username", Parse.User.current().getUsername());
+      ppQuery.equalTo("uniqueName", tag);
 
       console.log('ppQuery: ',ppQuery);
 
@@ -142,8 +143,8 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('#main-container').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
-       }
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+       };
      }
 
 
