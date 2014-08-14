@@ -57,6 +57,7 @@
               <li id="account"><a href>Update Account</a></li>
               <li id="upload"><a href>Upload Images</a></li>
             </ul>
+            <p id="header-username"><a href="/#/account/<%-userName %>"><%-userName %></a></p>
           </nav>
 
       </script>
@@ -84,10 +85,11 @@
       </script>
 
       <script type="text/template" id="pet-list-template">
-          <p class="pet-list-name"><%-name %></p>
+          <p id="<%-name %>" class="pet-list-name"><%-name %></p>
           <button class="your-pet-option" id="view-page">View page</button>
           <button class="your-pet-option" id="edit-profile">Edit profile</button>
           <button class="your-pet-option" id="upload-image">Upload image</button>
+          <button class="your-pet-option" id="set-default">Set as default</button>
       </script>
 
       <script type="text/template" id="profile-template">

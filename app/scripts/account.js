@@ -67,6 +67,7 @@ var AccountView = Parse.View.extend({
 
   setDefault: function(e) {
     pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
+
     console.log('Pet: ', pet);
 
 
@@ -95,6 +96,10 @@ var AccountView = Parse.View.extend({
 
             results.save();
             console.log('Results: ',results);
+            $(e.toElement).siblings('#set-default').css("background-color","inherit");
+            $(e.toElement).siblings('#set-default').html("Set as default");
+            $(e.toElement).css("background-color","darkorange");
+            $(e.toElement).html("Default Pet");
             },
 
           error: function(myUser) {
@@ -144,9 +149,13 @@ var AccountView = Parse.View.extend({
            console.log(results[i].attributes.name);
 
     //  $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"petId":results[i].id},{"name":results[i].attributes.name})));
-     $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"name":results[i].attributes.name})));
+     $('#my-pet-list').append(_.template($('#pet-list-template').html(),
+     ({name:results[i].attributes.name})));
+    //  ({name:results[i].attributes.name},{pId:'12345'})));
              if (results[i].id === defaultPetId) {
                console.log('Default is ',results[i].attributes.name);
+               $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
+               $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
              }
          }
       },
