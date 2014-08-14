@@ -2,8 +2,6 @@ var AccountView = Parse.View.extend({
 
   el: "#main-container",
 
-  user: Parse.User.current().getUsername(),
-
   events: {
     "click #add-pet"        : "createPet",
     "submit"                : "submitPet",
@@ -13,13 +11,7 @@ var AccountView = Parse.View.extend({
   },
 
   initialize: function() {
-
-
-
-
-
-
-
+    this.user = Parse.User.current().getUsername();
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
