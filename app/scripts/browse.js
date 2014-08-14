@@ -3,7 +3,7 @@ var BrowseView = Parse.View.extend({
   el: "#main-container",
 
   initialize: function(tag) {
-    user=Parse.User.current().getUsername();
+    user=Parse.User.current() || null;
 
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
