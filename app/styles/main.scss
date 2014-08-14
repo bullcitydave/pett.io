@@ -52,7 +52,8 @@ body {
     margin: auto;
     position: fixed;
     width: 100%;
-    z-index: 500;
+    z-index: 5000;
+    opacity: 1;
 
     div#logo-container{
       background: #eaeaea;
@@ -66,11 +67,33 @@ body {
         width: 160px;
       }
     }
-    h1 {
-      font-size: 3.8em;
-      font-weight: 300;
-      margin: 5px 0 -20px 0;
-      font-family: $primary-font;
+    #header-box {
+      opacity: .7;
+      width: 80%;
+      left: 10%;
+      position: absolute;
+      h1 {
+        @include media($mobile-s) {
+          font-size: 6.5em;
+        }
+        @include media($mobile-l) {
+          font-size: 9.0em;
+        }
+        font-weight: 300;
+        margin: 5px 0 -20px 0;
+        font-family: $primary-font;
+      }
+      h2 {
+        font-family: $secondary-font;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        margin-top: -45px;
+      }
+      button {
+        @include button(shiny, $orange);
+        color: #eaeaea;
+        margin-top: 10px;
+      }
     }
   }
 
@@ -94,14 +117,14 @@ body {
     }
     h1 {
       @include media($mobile-s) {
-        font-size: 3.2em;
+        font-size: 6.5em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
         margin: 5px;
       }
       @include media($mobile-l) {
-        font-size: 3.8em;
+        font-size: 9.0em;
       }
     }
     nav#header-nav {
@@ -155,13 +178,14 @@ body {
   div#main-container.splash{
     @include outer-container;
     max-width:none;
+    width:100%;
 
 
     position: absolute;
-    @include media($mobile-s) { top: 50%; }
-    @include media($mobile-m) { top: 40%; }
-    @include media($mobile-l) { top: 25%; }
-    @include media($desktop)  { top: 15%; }
+    @include media($mobile-s) { top: 0%; }
+    @include media($mobile-m) { top: 0%; }
+    @include media($mobile-l) { top: 0%; }
+    @include media($desktop)  { top: 0%; }
 
 
     div#login, div#signup {
@@ -208,20 +232,21 @@ body {
 
     div#splash-img-container{
       position: relative;
+    }
 
       #splash-img {
         width: 100%;
         position: relative;
         background-size:cover;
       }
-      p#splash-pet-name {
-        position: absolute;
-        top: 0;
-        right: 10px;
-        font-family: $secondary-font;
-        opacity: .7;
-        letter-spacing: .5px;
-      }
+      // p#splash-pet-name {
+      //   position: absolute;
+      //   top: 0;
+      //   right: 10px;
+      //   font-family: $secondary-font;
+      //   opacity: .7;
+      //   letter-spacing: .5px;
+      // }
     }
 
     nav#main-nav{
@@ -241,9 +266,13 @@ body {
             text-align: center;
             width: 33.33%;
           }
+          button {
+            @include button(shiny, $orange);
+            color: #eaeaea;
+          }
         }
       }
-    }
+
 
 
     div#main-container.standard {
