@@ -14,14 +14,6 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
 
-    var qyert = new Parse.Query(Parse.User);
-    qyert.equalTo("username","bullcitydave");
-
-    qyert.find({success: function(results) { console.log(results.length);
-for (var i = 0 ; i < results.length; i++)
-{ var obj = results[i];
-console.log(obj.id); } }
-});
 
 
 
@@ -79,26 +71,46 @@ console.log(obj.id); } }
     pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
     console.log('Pet: ', pet);
 
+
+
+//     var qyert = new Parse.Query(Parse.User);
+//     qyert.equalTo("username","bullcitydave");
+//
+//     qyert.find({success: function(results) { console.log(results.length);
+// for (var i = 0 ; i < results.length; i++)
+// { var obj = results[i];
+// console.log(obj.id); } }
+// });
+
+
+
     var pQuery = new Parse.Query(Pet);
     pQuery.equalTo("uniqueName", pet);
     pQuery.find({
       success:function(results) {
         console.log(results[0].id);
         x.petId = results[0].id;
+
         user = Parse.User.current();
         console.log('User: ', user);
-        query = new Parse.Query(Parse.User);
+
+
+        var query2 = new Parse.Query(Parse.User);
         console.log('User id: ', user.id);
-        query.get(user.id, {
-          success: function(myUser) {
-            myUser.set("defaultPet",
+        query2.get(user.id, {
+          success: function(results) {
+
+          // this hasn't worked; I've tried lots of things
+          results.set("defaultPet",
               {
                 __type: "Pointer",
                 className: "Pet",
                 objectId: x.petId
               });
-              console.log('Success!');
-              console.log(myUser);
+
+
+              results.save();
+              console.log('Results: ',results);
             },
           error: function(myUser) {
             console.log('Could not determine default pet of ', myUser);

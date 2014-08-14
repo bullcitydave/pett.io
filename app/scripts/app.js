@@ -28,9 +28,21 @@ $(function() {
     },
 
     render: function() {
+      // NEW CODE ATTEMPT
       self.getDefaultPet(self.user);
 
+      // WHAT WILL DO FOR NOW
+      // app_router.navigate('//account/'+self.user);
+
+      // OLD CODE
+      // if (self.user === 'bullcitydave') {
+      //   app_router.navigate('//' + self.pet);
+      // }
+      // else {
+      //   app_router.navigate('//account/'+self.user);
+      // }
     },
+
 
     getDefaultPet: function() {
 
@@ -41,10 +53,27 @@ $(function() {
 
       dpQuery.find({
         success: function(results) {
-          console.log(results[0].attributes.defaultPet.id.toLowerCase());
-          dp = (results[0].attributes.defaultPet.id.toLowerCase());
-          app_router.navigate('//' + dp);
-        },
+          // console.log(results[0].attributes.defaultPet.id.toLowerCase());
+          // dp = (results[0].attributes.defaultPet.id.toLowerCase());
+          dpId = results[0].attributes.defaultPet.id;
+          dpQuery2 = new Parse.Query(Pet);
+          dpQuery2.get(dpId, {
+            success: function(results) {
+
+            // this hasn't worked; I've tried lots of things
+            self.dp = results.attributes.uniqueName;
+
+
+                console.log('Default pet: ',self.dp);
+                app_router.navigate('//' + self.dp);
+              },
+            error: function(myUser) {
+              console.log('Could not determine default pet value');
+            }
+
+        });
+
+      },
 
         error: function(error) {
             alert('Error retrieving default pet');
