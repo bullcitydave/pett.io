@@ -2,8 +2,8 @@
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 
 
-  $mobile-s: new-breakpoint(min-width 320px 5);
-  $mobile-m: new-breakpoint(min-width 480px 5);
+  $mobile-s: new-breakpoint(min-width 320px 6);
+  $mobile-m: new-breakpoint(min-width 480px 6);
   $mobile-l: new-breakpoint(min-width 768px 12);
   $desktop: new-breakpoint(min-width 960px 12);
 
@@ -30,14 +30,14 @@ div.user-profile {
   div#my-pet-list {
     p.pet-list-name {
       @include media($mobile-s) {
-        @include span-columns(2);
+        @include span-columns(1.5);
         clear:left;
       }
     }
     button.your-pet-option   {
       @include media($mobile-s) {
-        @include span-columns(1);
-        @include omega(4n);
+        @include span-columns(1.125);
+        @include omega(5n);
       }
     }
   }
@@ -45,7 +45,7 @@ div.user-profile {
 
   button#add-pet {
     @include media($mobile-s) {
-      @include span-columns(1.5); @include shift(1.75);
+      @include span-columns(2); @include shift(1);
     }
   }
 }
