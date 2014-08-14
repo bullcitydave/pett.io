@@ -210,6 +210,7 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
+    user=Parse.User.current().getUsername();
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -217,7 +218,7 @@ var LinkView = Parse.View.extend({
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
-    $('#main-header').html(($('#header-template').html()));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
@@ -392,8 +393,6 @@ var LoginView = Parse.View.extend({
 
   el: "#main-container",
 
-  pet: "zellouisa", // default pet until function available to render first pet of user
-
   initialize: function() {
     console.log("LoginView initialized");
     self = this;
@@ -405,11 +404,11 @@ var LoginView = Parse.View.extend({
     var username = this.$("#login-username").val();
     var password = this.$("#login-password").val();
 
-
     Parse.User.logIn(username, password, {
         success: function(user) {
-          self.$el.html(''); 
-          app_router.navigate('//'+self.pet);
+          self.$el.html('');
+          APP.initialize();
+          // app_router.navigate('//'+self.pet);
         },
 
         error: function(user, error) {
@@ -477,14 +476,17 @@ var AccountView = Parse.View.extend({
     "click #add-pet"        : "createPet",
     "submit"                : "submitPet",
     "click #upload-image"   : "imageUploadForm",
-    "click #view-page"      : "viewPet"
+    "click #view-page"      : "viewPet",
+    "click #set-default"    : "setDefault"
   },
 
+
   initialize: function() {
+    this.user = Parse.User.current().getUsername();
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
-    $('#main-header').html(($('#header-template').html()));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
     $('#main-header').addClass('standard');
     $('body').addClass('whitebg');
     x=this;
@@ -492,10 +494,12 @@ var AccountView = Parse.View.extend({
     this.render();
   },
 
+
   createPet: function(e) {
     $('#add-pet').hide();
     $('.user-profile').append(_.template($("#add-pet-template").html()));
   },
+
 
   submitPet: function(e) {
      e.preventDefault();
@@ -516,16 +520,65 @@ var AccountView = Parse.View.extend({
       });
     },
 
+
   imageUploadForm: function(e) {
     console.log($(e.toElement).prev().prev().prev().html());
     pet = $(e.toElement).prev().prev().prev().html().toLowerCase();
     new ImageUploadView(pet);
   },
 
+
   viewPet: function(e) {
     pet = $(e.toElement).prev().html().toLowerCase();
     app_router.navigate('//' + pet);
+    return false;
   },
+
+
+  setDefault: function(e) {
+    pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
+
+    console.log('Pet: ', pet);
+
+
+    var pQuery = new Parse.Query(Pet);
+    pQuery.equalTo("uniqueName", pet);
+    pQuery.find({
+      success:function(results) {
+        console.log(results[0].id);
+        x.petId = results[0].id;
+
+        user = Parse.User.current();
+        console.log('User: ', user);
+
+
+        var uQuery = new Parse.Query(Parse.User);
+        console.log('User id: ', user.id);
+        uQuery.get(user.id, {
+          success: function(results) {
+
+            results.set("defaultPet",
+                {
+                  __type: "Pointer",
+                  className: "Pet",
+                  objectId: x.petId
+                });
+
+            results.save();
+            console.log('Results: ',results);
+            $(e.toElement).siblings('#set-default').css("background-color","inherit");
+            $(e.toElement).siblings('#set-default').html("Set as default");
+            $(e.toElement).css("background-color","darkorange");
+            $(e.toElement).html("Default Pet");
+            },
+
+          error: function(myUser) {
+            console.log('Could not determine default pet of ', myUser);
+          }
+        });
+    } });
+  },
+
 
   render: function() {
     this.$el.html(_.template($("#account-template").html(), ({"userName": Parse.User.current().getUsername()})));
@@ -552,11 +605,35 @@ var AccountView = Parse.View.extend({
       });
     },
 
+
   listPets: function(results) {
-     for (var i = 0; i < results.length ; i++) {
-        console.log(results[i].attributes.name);
-  $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"name":results[i].attributes.name})));
-    }
+
+    var defaultPetId = '';
+    var dQuery = new Parse.Query(Parse.User);
+    dQuery.equalTo("username", Parse.User.current().getUsername());
+    dQuery.find({
+      success:function(uResults) {
+        console.log(uResults[0].attributes.defaultPet.id);
+        defaultPetId = uResults[0].attributes.defaultPet.id;
+        for (var i = 0; i < results.length ; i++) {
+           console.log(results[i].attributes.name);
+
+    //  $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"petId":results[i].id},{"name":results[i].attributes.name})));
+     $('#my-pet-list').append(_.template($('#pet-list-template').html(),
+     ({name:results[i].attributes.name})));
+    //  ({name:results[i].attributes.name},{pId:'12345'})));
+             if (results[i].id === defaultPetId) {
+               console.log('Default is ',results[i].attributes.name);
+               $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
+               $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
+             }
+         }
+      },
+      error:function(error) {
+        console.log('No default pet found');
+      }
+    });
+
   }
 });
 
@@ -631,7 +708,7 @@ var SplashView = Parse.View.extend({
   render: function() {
     console.log('Main el: ', this.$el);
     console.log('Head el: ', $(this.splashHead));
-    $(this.splashHead).html(_.template($("#header-template").html()));
+    $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
     $('#header-nav').hide();
@@ -648,32 +725,55 @@ $(function() {
       "click #log-out"    : "logOut"
     },
 
-
-    pet: "zellouisa", // default pet until function available to render first pet of user
-
     initialize: function() {
       self = this;
       // Need to ensure that templates load
       // $('.templates').load('templates.html', function() {
         if (Parse.User.current()) {
           self.user = Parse.User.current().getUsername();
-          console.log(self.user);
+          console.log(self.user + " is logged in");
           self.render();
         }
         else {
           console.log('No user signed in. Proceeding to splash screen.');
           new SplashView();
         }
-      // })
     },
 
     render: function() {
-      if (self.user === 'bullcitydave') {
-        app_router.navigate('//' + self.pet);
-      }
-      else {
-        app_router.navigate('//account/'+self.user);
-      }
+
+      self.getDefaultPet(self.user);
+
+    },
+
+
+    getDefaultPet: function() {
+
+      var userQuery = new Parse.Query(Parse.User);
+      userQuery.equalTo("username", self.user);
+      userQuery.find({
+
+        success: function(results) {
+          defaultPetId = results[0].attributes.defaultPet.id;
+          defaultPetQuery = new Parse.Query(Pet);
+          defaultPetQuery.get(defaultPetId, {
+            success: function(results) {
+              self.dp = results.attributes.uniqueName;
+              console.log('Default pet: ',self.dp);
+              app_router.navigate('//' + self.dp);
+              },
+            error: function(myUser) {
+              console.log('Could not determine default pet value');
+              app_router.navigate('//account/'+self.user);
+            }
+          });
+        },
+
+        error: function(error) {
+            alert('Could not determine default pet value');
+            app_router.navigate('//account/'+self.user);
+          }
+        });
     },
 
     logOut: function(e) {
