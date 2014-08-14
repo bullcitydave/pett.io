@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="styles/pusekatt.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/account.css">
+    <link rel="stylesheet" href="styles/browse.css">
     <!-- endbuild -->
 
     <!-- google fonts -->
@@ -48,7 +49,7 @@
             <ul>
               <a href="#/signup"><li id="signup">Sign Up</li></a>
               <a href="#/login"><li id="login">Log In</li></a>
-              <li id="browse">Browse</li>
+              <a href="#/browse"><li id="browse">Browse</li></a>
             </ul>
           </nav>
       </script>
@@ -139,6 +140,14 @@
           </div>
       </script>
 
+      <script type="text/template" id="browse-template">
+          <div class='pet-box'>
+            <img class='pet-pic' src='<%-parseImg %>'>
+            <div class='pet-name'><%=petName %></div>
+            <div class='pet-person'><%=personUsername %></div>
+          </div>
+      </script>
+
       <script type="text/template" id="pet-header-template">
           <header id="pet-header">
             <h2><%-petName %></h2>
@@ -215,6 +224,7 @@
 <script src="scripts/models.js"></script>
 <script src="scripts/profile.js"></script>
 <script src="scripts/upload.js"></script>
+<script src="scripts/browse.js"></script>
 <script src="scripts/views.js"></script>
 <script src="scripts/login.js"></script>
 <script src="scripts/signup.js"></script>

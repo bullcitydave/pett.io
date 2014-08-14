@@ -3,12 +3,11 @@ var AppRouter = Parse.Router.extend({
 
        'login'           :     'goLogin',
        'signup'          :     'goSignUp',
-       'account/:user'    :     'updateAccount',
+       'account/:user'   :     'updateAccount',
        'home'            :     'goLanding',
        ''                :     'splash',
-       ':petName'        :     'getPet'
-
-
+       ':petName'        :     'getPet',
+       'browse'          :     'goBrowse'
 
         }
 
@@ -43,9 +42,9 @@ var AppRouter = Parse.Router.extend({
         linkView = new LinkView(petName);
     });
 
-    app_router.on('route:goLanding', function() {
-        console.log('Going home...');
-        $('.container').load("home.html");
+    app_router.on('route:goBrowse', function() {
+        console.log('Loading browse view');
+        browseView = new BrowseView();
     })
 
 
