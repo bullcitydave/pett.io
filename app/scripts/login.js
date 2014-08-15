@@ -7,6 +7,7 @@ var LoginView = Parse.View.extend({
 
   initialize: function() {
     console.log("LoginView initialized");
+    $('#browse').hide();
     self = this;
     this.render();
   },
