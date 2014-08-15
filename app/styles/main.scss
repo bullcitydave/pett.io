@@ -54,22 +54,10 @@ body {
     width: 100%;
     z-index: 500;
 
-    div#logo-container{
-      background: #eaeaea;
-      border-radius: 100px;
-      width: 200px;
-      margin: auto;
-      padding: 5px 0px 15px 15px;
-      height: 200px;
-
-      #logo{
-        width: 160px;
-      }
-    }
     h1 {
       font-size: 3.8em;
       font-weight: 300;
-      margin: 5px 0 -20px 0;
+      margin: 5px 0 -20px 20px;
       font-family: $primary-font;
     }
   }
@@ -79,29 +67,17 @@ body {
     margin: -120px 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
     text-align: none;
 
-    div#logo-container{
-      background: #eaeaea;
-      border-radius: 55px;
-      height: 110px;
-      width: 110px;
-      padding: 0px 0px 0px 9px;
-      margin: 5px;
-      float: left;
-
-      #logo{
-        width: 90px;
-      }
-    }
     h1 {
       @include media($mobile-s) {
         font-size: 3.2em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
-        margin: 5px;
+        margin: 5px 0 0 10px;
       }
       @include media($mobile-l) {
         font-size: 3.8em;
+        margin: 5px 0 0 15px;
       }
     }
     nav#header-nav {
@@ -318,7 +294,6 @@ div.pic-showcase {
 
     margin: 0 0 0 0;
     width: 200px;
-    border-radius: 20%;
     float:left;
 
     .montageSquare {
@@ -326,7 +301,6 @@ div.pic-showcase {
       // opacity: 1;
       // @include size(250px 250px);
       width:100%;
-      border-radius: 8%;
       @include if-brightness(0.9);
 
       // border: solid 2px black;
