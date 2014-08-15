@@ -6,7 +6,8 @@ $primary-font:   'Pusekatt', 'Times New Roman',serif;
 $secondary-font: 'Roboto Condensed','Helvetica Neue',Arial,sans-serif;
 
 $orange:   darkorange;
-$offwhite: #eaeaea;
+$white:    #eaeaea;
+$black:    #333;
 
 $mobile-s: new-breakpoint(min-width 320px 5);
 $mobile-m: new-breakpoint(min-width 480px 5);
@@ -18,6 +19,18 @@ $desktop: new-breakpoint(min-width 960px 12);
   -ms-filter: brightness($amt);
   -moz-filter: brightness($amt);
   -webkit-filter: brightness($amt);
+}
+
+@mixin not-as-shiny {
+  color:$white;
+  width:120px;
+  margin: 10% 0 0 0;
+  border: none;
+  text-decoration: none;
+  border-radius: 0;
+  text-shadow: none;
+  box-shadow: none;
+  font-size: 0.9em;
 }
 
 /// Reset
@@ -41,7 +54,7 @@ a {
 }
 
 body {
-  background: $orange;
+  background: $black;
   font-family: $secondary-font;
 
   background-image:url('http://i.imgur.com/cotiNn3.jpg');
@@ -53,7 +66,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 
-
+  //
   header#main-header{
     // position: fixed;
     background: $orange;
@@ -69,18 +82,8 @@ body {
       font-weight: 300;
       margin: 5px 0 -20px 20px;
       font-family: $primary-font;
-    div#logo-container{
-      background: #eaeaea;
-      border-radius: 100px;
-      width: 200px;
-      margin: auto;
-      padding: 5px 0px 15px 15px;
-      height: 200px;
-
-      #logo{
-        width: 160px;
-      }
     }
+
     #header-box, #header-box-overlay {
       width: 80%;
       @include media($mobile-s) {
@@ -91,9 +94,9 @@ body {
       }
 
       left: 10%;
-      opacity: .4;
+      opacity: 1;
       z-index: 5000;
-      background: $orange;
+      background: transparent;
       margin: 15% 0 15% 0;
       position: absolute;
       padding: 0 0 10px 0;
@@ -103,9 +106,9 @@ body {
       z-index: 5001;
       background: transparent;
       h1 {
-        color: #000;
+        color: $orange;
         @include media($mobile-s) {
-          font-size: 4.5em;
+          font-size: 5.0em;
         }
         @include media($mobile-l) {
           font-size: 9.0em;
@@ -115,11 +118,12 @@ body {
         font-family: $primary-font;
       }
       h2 {
+        color: #eaeaea;
         @include media($mobile-s) {
-          font-size: 1.0em;
+          font-size: 0.8em;
         }
         @include media($mobile-l) {
-          font-size: 2.5em;
+          font-size: 1.5em;
         }
         font-family: $secondary-font;
         font-weight: 300;
@@ -127,10 +131,8 @@ body {
         margin-top: -35px;
       }
       button {
-        background: $orange;
-        color: #eaeaea;
-        margin-top: 10px;
-        width:120px;
+        @include button(shiny, $orange);
+        @include not-as-shiny;
       }
     }
   }
@@ -140,6 +142,11 @@ body {
     margin: -120px 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
     text-align: none;
 
+    #header-box, #header-box-overlay {
+      display: none;
+    }
+
+    
     h1 {
       @include media($mobile-s) {
         font-size: 6.5em;
@@ -150,6 +157,7 @@ body {
       }
       @include media($mobile-l) {
         font-size: 9.0em;
+
       }
     }
     nav#header-nav {
@@ -175,8 +183,8 @@ body {
           right: 0;
           top: 70px;
           padding: 0px 5px 0px 5px;
-          background: #333;
-          color: #fff;
+          background: $black;
+          color: $white;
         }
       }
 
@@ -222,6 +230,7 @@ body {
       position: absolute;
       top: 20%;
       opacity: .8;
+      z-index: 6000;
 
       .login-form, .signup-form,  {
         @include media($mobile-s) {
@@ -248,15 +257,16 @@ body {
         }
         button {
           @include button(shiny, $orange);
+          @include not-as-shiny;
           color: #000;
-          font-family:$primary-font;
         }
-        button#login {
-          @include button(shiny, $orange);
-          position: absolute;
-          top: 5px;
-          right: 5px
-        }
+        // button#login {
+        //   @include button(shiny, $orange);
+        //   @include not-as-shiny;
+        //   position: absolute;
+        //   top: 5px;
+        //   right: 5px
+        // }
         .error {
           opacity: .8;
         }
@@ -275,10 +285,11 @@ body {
 
       button#login {
         @include button(shiny, $orange);
+        @include not-as-shiny;
         position: absolute;
         top: 5px;
         right: 5px;
-        color:$offwhite;
+        color:$white;
         width:120px;
 
       }
@@ -295,33 +306,24 @@ body {
     nav#main-nav{
       @include media($mobile-s) {
         position: absolute;
-        bottom: 5%;
-        z-index: 500;
-        color: #000;
-        font-size: 1.1em;
-        width: 100%;
-        padding: 5px 0 5px 0;
-        margin: 20px 0 0 0;
-        ul {
+        top: 0;
+        right: 5%;
+        margin: 0;
+        padding: 0;
+
           a {
-            color: inherit;
             text-decoration: none;
-            width: 100px;
             display: inline-block;
-            left: 50%;
-            bottom: 10%;
-            position:absolute;
             button {
               @include button(shiny, $orange);
+              @include not-as-shiny;
               color: #eaeaea;
-              margin-left: -60px;
               float: left;
               width:120px;
-              position: absolute;
-              bottom: 20px;
+              margin: 5px 20px 0 0;
             }
           }
-        }
+
       }
     }
 
@@ -345,7 +347,7 @@ body {
             font-family: $secondary-font;
             font-weight: 300;
             letter-spacing: .05em;
-            background: #333;
+            background: $black;
             width: 100%;
             text-align: center;
             opacity: 1;
@@ -476,5 +478,5 @@ form#fileupload {
 }
 
 .whitebg {
-  background: #333;
+  background: $black;
 }
