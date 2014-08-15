@@ -10,17 +10,15 @@ $(function() {
 
     initialize: function() {
       self = this;
-      // Need to ensure that templates load
-      // $('.templates').load('templates.html', function() {
-        if (Parse.User.current()) {
-          self.user = Parse.User.current().getUsername();
-          console.log(self.user + " is logged in");
-          self.render();
-        }
-        else {
-          console.log('No user signed in. Proceeding to splash screen.');
-          new SplashView();
-        }
+      if (Parse.User.current()) {
+        self.user = Parse.User.current().getUsername();
+        console.log(self.user + " is logged in");
+        self.render();
+      }
+      else {
+        console.log('No user signed in. Proceeding to splash screen.');
+        new SplashView();
+      }
     },
 
     render: function() {
@@ -76,6 +74,6 @@ $(function() {
 
   });
 
-  APP = new AppView;
+  window.APP = new AppView;
 
 });
