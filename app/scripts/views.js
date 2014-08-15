@@ -19,12 +19,29 @@ var LinkView = Parse.View.extend({
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
 
-    var container = $('.pic-showcase');
-      // initialize Masonry after all images have loaded
-    container.imagesLoaded( function() {
-      container.masonry({
-        columnWidth: 400,
-        itemSelector: '.pic-container'
+    var mContainer = $('.pic-showcase');
+
+
+    // //   // initialize Masonry after all images have loaded
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //
+    //     itemSelector: '.pic-container'
+    //   });
+    // });
+
+  // mContainer.masonry({
+  //   columnWidth: 200,
+  //   itemSelector: '.pic-container'
+  // });
+
+    // var mContainer = $('.pic-showcase');
+    //   // initialize Masonry after all images have loaded
+    mContainer.imagesLoaded(function() {
+      mContainer.masonry({
+          
+            itemSelector: '.pic-container'
+
       });
     });
 
@@ -121,9 +138,9 @@ var FlickrPicListView = Parse.View.extend({
         fQuery.find({
           success:function(uResults) {
             if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-              APP.flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
-              APP.flickrTag = uResults[0].attributes.flickrTag;
-              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + APP.flickrUser + "&tags=" + APP.flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
+              flickrTag = uResults[0].attributes.flickrTag;
+              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
               console.log("Flickr URL is ", z.flickrApiUrl);
               z.render();
             }
@@ -148,6 +165,8 @@ var ParsePicListView = Parse.View.extend({
     },
 
     render: function(tag) {
+
+
 
       var ppQuery = new Parse.Query(ParsePic);
       // ppQuery.equalTo("username", Parse.User.current().getUsername());
