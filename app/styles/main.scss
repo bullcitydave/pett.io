@@ -43,7 +43,16 @@ a {
 body {
   background: $orange;
   font-family: $secondary-font;
-  width:100%;
+
+  background-image:url('http://i.imgur.com/cotiNn3.jpg');
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+
 
   header#main-header{
     // position: fixed;
@@ -52,13 +61,77 @@ body {
     margin: auto;
     position: fixed;
     width: 100%;
-    z-index: 500;
+    z-index: 5000;
+    opacity: 1;
 
     h1 {
       font-size: 3.8em;
       font-weight: 300;
       margin: 5px 0 -20px 20px;
       font-family: $primary-font;
+    div#logo-container{
+      background: #eaeaea;
+      border-radius: 100px;
+      width: 200px;
+      margin: auto;
+      padding: 5px 0px 15px 15px;
+      height: 200px;
+
+      #logo{
+        width: 160px;
+      }
+    }
+    #header-box, #header-box-overlay {
+      width: 80%;
+      @include media($mobile-s) {
+        height: 175px;
+      }
+      @include media($mobile-l) {
+        height: 350px;
+      }
+
+      left: 10%;
+      opacity: .4;
+      z-index: 5000;
+      background: $orange;
+      margin: 15% 0 15% 0;
+      position: absolute;
+      padding: 0 0 10px 0;
+    }
+    #header-box-overlay {
+      opacity: 1;
+      z-index: 5001;
+      background: transparent;
+      h1 {
+        color: #000;
+        @include media($mobile-s) {
+          font-size: 4.5em;
+        }
+        @include media($mobile-l) {
+          font-size: 9.0em;
+        }
+        font-weight: 300;
+        margin: 5px 0 -20px 0;
+        font-family: $primary-font;
+      }
+      h2 {
+        @include media($mobile-s) {
+          font-size: 1.0em;
+        }
+        @include media($mobile-l) {
+          font-size: 2.5em;
+        }
+        font-family: $secondary-font;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        margin-top: -35px;
+      }
+      button {
+        background: $orange;
+        color: #eaeaea;
+        margin-top: 10px;
+        width:120px;
+      }
     }
   }
 
@@ -69,15 +142,14 @@ body {
 
     h1 {
       @include media($mobile-s) {
-        font-size: 3.2em;
+        font-size: 6.5em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
         margin: 5px 0 0 10px;
       }
       @include media($mobile-l) {
-        font-size: 3.8em;
-        margin: 5px 0 0 15px;
+        font-size: 9.0em;
       }
     }
     nav#header-nav {
@@ -131,13 +203,16 @@ body {
   div#main-container.splash{
     @include outer-container;
     max-width:none;
+    width:100%;
+    height: 100%;
+    opacity: 1;
 
 
     position: absolute;
-    @include media($mobile-s) { top: 50%; }
-    @include media($mobile-m) { top: 40%; }
-    @include media($mobile-l) { top: 25%; }
-    @include media($desktop)  { top: 15%; }
+    @include media($mobile-s) { top: 0%; }
+    @include media($mobile-m) { top: 0%; }
+    @include media($mobile-l) { top: 0%; }
+    @include media($desktop)  { top: 0%; }
 
 
     div#login, div#signup {
@@ -176,6 +251,12 @@ body {
           color: #000;
           font-family:$primary-font;
         }
+        button#login {
+          @include button(shiny, $orange);
+          position: absolute;
+          top: 5px;
+          right: 5px
+        }
         .error {
           opacity: .8;
         }
@@ -184,42 +265,66 @@ body {
 
     div#splash-img-container{
       position: relative;
+    }
 
       #splash-img {
         width: 100%;
         position: relative;
         background-size:cover;
       }
-      p#splash-pet-name {
+
+      button#login {
+        @include button(shiny, $orange);
         position: absolute;
-        top: 0;
-        right: 10px;
-        font-family: $secondary-font;
-        opacity: .7;
-        letter-spacing: .5px;
+        top: 5px;
+        right: 5px;
+        color:$offwhite;
+        width:120px;
+
       }
+       p#splash-pet-name {
+         position: absolute;
+       top: 0;
+         right: 10px;
+        font-family: $secondary-font;
+         opacity: .7;
+       letter-spacing: .5px;
+       }
     }
 
     nav#main-nav{
-      @include media($mobile-s);
+      @include media($mobile-s) {
         position: absolute;
-        bottom: 0%;
+        bottom: 5%;
         z-index: 500;
         color: #000;
         font-size: 1.1em;
         width: 100%;
         padding: 5px 0 5px 0;
-        background: $orange;
+        margin: 20px 0 0 0;
         ul {
-          li {
-            list-style: none;
-            float:left;
-            text-align: center;
-            width: 33.33%;
+          a {
+            color: inherit;
+            text-decoration: none;
+            width: 100px;
+            display: inline-block;
+            left: 50%;
+            bottom: 10%;
+            position:absolute;
+            button {
+              @include button(shiny, $orange);
+              color: #eaeaea;
+              margin-left: -60px;
+              float: left;
+              width:120px;
+              position: absolute;
+              bottom: 20px;
+            }
           }
         }
       }
     }
+
 
 
     div#main-container.standard {
@@ -284,6 +389,10 @@ body {
       }
     }
 }
+
+
+
+
 
 div.pic-showcase {
   margin: 120px 0 0 0;
