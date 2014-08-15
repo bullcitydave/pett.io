@@ -18,8 +18,37 @@ var LinkView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
+
+    var mContainer = $('.pic-showcase');
+
+
+    // //   // initialize Masonry after all images have loaded
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //
+    //     itemSelector: '.pic-container'
+    //   });
+    // });
+
+  // mContainer.masonry({
+  //   columnWidth: 200,
+  //   itemSelector: '.pic-container'
+  // });
+
+    // var mContainer = $('.pic-showcase');
+    //   // initialize Masonry after all images have loaded
+    mContainer.imagesLoaded(function() {
+      mContainer.masonry({
+            columnwidth: 50,
+            gutter: 50,
+            itemSelector: '.pic-container'
+
+
+      });
+    });
+
     new ParsePicListView(tag);
-    new FlickrPicListView(tag);
+    new FlickrPicListView();
   },
 
 
@@ -50,12 +79,12 @@ var LinkView = Parse.View.extend({
 var FlickrPicListView = Parse.View.extend({
      el: "#main-container",
 
-    initialize: function(tag) {
-      console.log("Initializing FlickrPicListView. Tag: ", tag);
-      this.flickrPicList = new FlickrPicList;
-      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=" + tag +"&per_page=16&page=1&format=json&nojsoncallback=1";
-      console.log("Flickr URL is ", this.flickrApiUrl);
-      this.render();
+    initialize: function() {
+      z = this;
+      console.log("Initializing FlickrPicListView.");
+      // this.flickrPicList = new FlickrPicList;
+      this.getFlickr();
+
 
     },
 
@@ -68,15 +97,9 @@ var FlickrPicListView = Parse.View.extend({
       // console.log('width ',  $('.montageSquare').clientWidth);
       // });
 
-        // container.masonry({
-        //     columnWidth: 40,
-        //     itemSelector: '.picContainer'
-        //   });
-        //   var msnry = container.data('masonry');
-        //   console.log(msnry);
 
 
-      $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
+      $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
           var photoId = '';
@@ -107,7 +130,29 @@ var FlickrPicListView = Parse.View.extend({
             //     }
             // }
         });
+      },
+
+      getFlickr: function() {
+
+        var flickrUser = '';
+        var fQuery = new Parse.Query(Parse.User);
+        fQuery.equalTo("username", Parse.User.current().getUsername());
+        fQuery.find({
+          success:function(uResults) {
+            if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
+              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
+              flickrTag = uResults[0].attributes.flickrTag;
+              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+              console.log("Flickr URL is ", z.flickrApiUrl);
+              z.render();
+            }
+          },
+          error:function(error) {
+            console.log('No flickr user found');
+          }
+        });
       }
+
     });
 
 
@@ -122,6 +167,8 @@ var ParsePicListView = Parse.View.extend({
     },
 
     render: function(tag) {
+
+
 
       var ppQuery = new Parse.Query(ParsePic);
       // ppQuery.equalTo("username", Parse.User.current().getUsername());

@@ -55,10 +55,6 @@
 
       <script type="text/template" id="header-template">
 
-          <div id="logo-container">
-            <img id="logo" src="http://i.imgur.com/2q15fVJ.gif">
-          </div>
-
           <h1>pett.io</h1>
 
           <nav id="header-nav">
@@ -90,6 +86,14 @@
             <div id="my-pet-list">
             </div>
             <button id="add-pet">Add a pet</button>
+            <h3>Add a Flickr account</h3>
+            <p>In this initial version of pett.io, Flickr integration is provided by simply using an account name provided by you and a tag name you have used to indicate photos of your pet. There is no validation of your account, and only publicly available photos will be fetched. The last 12 photos you have tagged of your pet will be included in your pet's showcase page.</p>
+            <input type="text" id="flickr-account" placeholder="account name"></input>
+            <input type="text" id="flickr-tag" placeholder="tag used for pet photos"></input>
+            <button id="add-flickr">Add Flickr username to my account</button>
+
+
+
           </div>
 
       </script>
@@ -203,6 +207,7 @@
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../bower_components/underscore/underscore.js"></script>
 <script src="../bower_components/masonry/dist/masonry.pkgd.js"></script>
+<script src="../bower_components/imagesloaded/imagesloaded.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
