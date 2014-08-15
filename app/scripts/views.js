@@ -18,6 +18,16 @@ var LinkView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
+
+    var container = $('.pic-showcase');
+      // initialize Masonry after all images have loaded
+    container.imagesLoaded( function() {
+      container.masonry({
+        columnWidth: 400,
+        itemSelector: '.pic-container'
+      });
+    });
+
     new ParsePicListView(tag);
     new FlickrPicListView();
   },
@@ -68,12 +78,6 @@ var FlickrPicListView = Parse.View.extend({
       // console.log('width ',  $('.montageSquare').clientWidth);
       // });
 
-        // container.masonry({
-        //     columnWidth: 40,
-        //     itemSelector: '.picContainer'
-        //   });
-        //   var msnry = container.data('masonry');
-        //   console.log(msnry);
 
 
       $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
