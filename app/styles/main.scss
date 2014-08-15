@@ -78,10 +78,11 @@ body {
     opacity: 1;
 
     h1 {
-      font-size: 3.8em;
-      font-weight: 300;
-      margin: 5px 0 -20px 20px;
       font-family: $primary-font;
+    }
+
+    h1.standard {
+      display: none;
     }
 
     #header-box, #header-box-overlay {
@@ -107,6 +108,7 @@ body {
       background: transparent;
       h1 {
         color: $orange;
+
         @include media($mobile-s) {
           font-size: 5.0em;
         }
@@ -117,6 +119,7 @@ body {
         margin: 5px 0 -20px 0;
         font-family: $primary-font;
       }
+
       h2 {
         color: #eaeaea;
         @include media($mobile-s) {
@@ -139,25 +142,27 @@ body {
 
   header#main-header.standard{
     height: 80px;
-    margin: -120px 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
+    margin: 0 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
     text-align: none;
 
-    #header-box, #header-box-overlay {
+    #header-box-overlay, #header-box, h2 {
       display: none;
     }
 
-    
-    h1 {
+
+    h1.standard {
+      display: block;
+
       @include media($mobile-s) {
-        font-size: 6.5em;
+        font-size: 3.2em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
         margin: 5px 0 0 10px;
       }
       @include media($mobile-l) {
-        font-size: 9.0em;
-
+        font-size: 3.8em;
+        margin: 5px 0 0 15px;
       }
     }
     nav#header-nav {
@@ -183,8 +188,8 @@ body {
           right: 0;
           top: 70px;
           padding: 0px 5px 0px 5px;
-          background: $black;
-          color: $white;
+          background: #333;
+          color: #fff;
         }
       }
 
