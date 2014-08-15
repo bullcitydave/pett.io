@@ -127,7 +127,7 @@ body {
           right: 0;
           top: 70px;
           padding: 0px 5px 0px 5px;
-          background: #000;
+          background: #333;
           color: #fff;
         }
       }
@@ -282,7 +282,10 @@ body {
             position: absolute;
             top: 100%;
             background: $orange;
-            width:100%;
+            left: 50%;
+            width: 65px;
+            text-align: center;
+            margin: -5px 0 0 -32.5px;
           }
 
           #profile-container {
@@ -315,14 +318,18 @@ div.pic-showcase {
 
     margin: 0 0 0 0;
     width: 200px;
-    float:left; // I shouldn't need this for Masonry, right?
+    border-radius: 20%;
+    float:left;
+
     .montageSquare {
       // transition: opacity 1.0s easing;
       // opacity: 1;
       // @include size(250px 250px);
-      width:80%;
+      width:100%;
+      border-radius: 8%;
+      @include if-brightness(0.9);
 
-      border: solid 2px black;
+      // border: solid 2px black;
       // transition: margin .2s linear;
       // transition: width .6s linear;
       // transition-delay: margin 0s;
@@ -337,11 +344,11 @@ div.pic-showcase {
 
     .montageSquare:hover {
 
-      @include if-brightness(1.3);
+      @include if-brightness(1.2);
       // // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;
-      border: solid 3px;
+
     }
 
     .flickr:hover {
@@ -350,10 +357,10 @@ div.pic-showcase {
       // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;
-      border-top: solid 4px #0063dc;
-      border-left: solid 4px #0063dc;
-      border-right: solid 4px #ff0084;
-      border-bottom: solid 4px #ff0084;
+      // border-top: solid 4px #0063dc;
+      // border-left: solid 4px #0063dc;
+      // border-right: solid 4px #ff0084;
+      // border-bottom: solid 4px #ff0084;
     }
   }
   // div.pic-container.w2 { width:  120px; }
@@ -386,5 +393,5 @@ form#fileupload {
 }
 
 .whitebg {
-  background: $offwhite;
+  background: #333;
 }

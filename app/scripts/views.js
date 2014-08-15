@@ -39,8 +39,10 @@ var LinkView = Parse.View.extend({
     //   // initialize Masonry after all images have loaded
     mContainer.imagesLoaded(function() {
       mContainer.masonry({
-          
+            columnwidth: 50,
+            gutter: 50,
             itemSelector: '.pic-container'
+
 
       });
     });
