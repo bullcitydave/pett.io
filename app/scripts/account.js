@@ -7,7 +7,8 @@ var AccountView = Parse.View.extend({
     "submit"                : "submitPet",
     "click #upload-image"   : "imageUploadForm",
     "click #view-page"      : "viewPet",
-    "click #set-default"    : "setDefault"
+    "click #set-default"    : "setDefault",
+    "click #add-flickr"     : "setFlickr"
   },
 
 
@@ -126,7 +127,7 @@ var AccountView = Parse.View.extend({
     ppQuery.find({
       success: function(results) {
           console.log('Returning pets:', results);
-          x.listPets(results);
+          if (results.length > 0)  { x.listPets(results); }
       },
 
       error: function(error) {
@@ -143,8 +144,9 @@ var AccountView = Parse.View.extend({
     dQuery.equalTo("username", Parse.User.current().getUsername());
     dQuery.find({
       success:function(uResults) {
-        console.log(uResults[0].attributes.defaultPet.id);
-        defaultPetId = uResults[0].attributes.defaultPet.id;
+        if (uResults[0].attributes.defaultPet) {
+          defaultPetId = uResults[0].attributes.defaultPet.id;
+        }
         for (var i = 0; i < results.length ; i++) {
            console.log(results[i].attributes.name);
 
@@ -164,5 +166,23 @@ var AccountView = Parse.View.extend({
       }
     });
 
-  }
+  },
+
+  setFlickr: function(e) {
+     e.preventDefault();
+     var uQuery = new Parse.Query(Parse.User);
+     user = Parse.User.current();
+     console.log('User id: ', user.id);
+     uQuery.get(user.id, {
+          success: function(results) {
+            results.set("flickrUser", $("input#flickr-account").val());
+            results.save();
+           },
+          error:function(error) {
+            console.log('Could not set Flickr account');
+          }
+        });
+    }
+
+
 });

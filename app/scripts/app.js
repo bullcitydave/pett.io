@@ -37,19 +37,24 @@ $(function() {
       userQuery.find({
 
         success: function(results) {
-          defaultPetId = results[0].attributes.defaultPet.id;
-          defaultPetQuery = new Parse.Query(Pet);
-          defaultPetQuery.get(defaultPetId, {
-            success: function(results) {
-              self.dp = results.attributes.uniqueName;
-              console.log('Default pet: ',self.dp);
-              app_router.navigate('//' + self.dp);
-              },
-            error: function(myUser) {
-              console.log('Could not determine default pet value');
-              app_router.navigate('//account/'+self.user);
-            }
-          });
+          if (results[0].attributes.defaultPet) {
+            defaultPetId = results[0].attributes.defaultPet.id;
+            defaultPetQuery = new Parse.Query(Pet);
+            defaultPetQuery.get(defaultPetId, {
+              success: function(results) {
+                self.dp = results.attributes.uniqueName;
+                console.log('Default pet: ',self.dp);
+                app_router.navigate('//' + self.dp);
+                },
+              error: function(myUser) {
+                console.log('Could not determine default pet value');
+                app_router.navigate('//account/'+self.user);
+              }
+            });
+          }
+          else {
+            app_router.navigate('//account/'+self.user);
+          }
         },
 
         error: function(error) {
