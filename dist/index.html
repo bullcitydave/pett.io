@@ -31,25 +31,25 @@
 
       <script type="text/template" id="splash-template">
           <div id="splash-img-container">
-            <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
-            <p id="splash-pet-name">Zellouisa</p>
+          <!--  <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg"> -->
+
           </div>
           <nav id="main-nav">
-            <ul>
-              <a href="#/signup"><li id="signup">Sign Up</li></a>
-              <a href="#/login"><li id="login">Log In</li></a>
-              <li id="browse">Browse</li>
-            </ul>
+              <a href="#/login"><button id="splash-login">Log In</button></a>
+              <a href="#/signup"><button id="splash-signup">Sign Up</button></a>
           </nav>
+
       </script>
 
       <script type="text/template" id="header-template">
-
-          <div id="logo-container">
-            <img id="logo" src="http://i.imgur.com/2q15fVJ.gif">
+          <h1 class="standard">pett.io</h1>
+          <div id="header-box">
           </div>
-
-          <h1>pett.io</h1>
+          <div id="header-box-overlay">
+            <h1>pett.io</h1>
+            <h2>The only pet showcase you'll ever need</h2>
+            <a href="#/browse"><button id="browse">Browse</button></a>
+          </div>
 
           <nav id="header-nav">
             <ul>
@@ -80,6 +80,14 @@
             <div id="my-pet-list">
             </div>
             <button id="add-pet">Add a pet</button>
+            <h3>Add a Flickr account</h3>
+            <p>In this initial version of pett.io, Flickr integration is provided by simply using an account name provided by you and a tag name you have used to indicate photos of your pet. There is no validation of your account, and only publicly available photos will be fetched. The last 12 photos you have tagged of your pet will be included in your pet's showcase page.</p>
+            <input type="text" id="flickr-account" placeholder="account name"></input>
+            <input type="text" id="flickr-tag" placeholder="tag used for pet photos"></input>
+            <button id="add-flickr">Add Flickr username to my account</button>
+
+
+
           </div>
 
       </script>
@@ -126,6 +134,14 @@
       <script type="text/template" id="flickr-template">
           <div class='pic-container'>
             <img class='montageSquare flickr' src='<%-flickrImg %>'>
+          </div>
+      </script>
+<!-- <img src='<%-browseImg %>' class='pet-pic'> -->
+      <script type="text/template" id="browse-template">
+          <div class='pet-box'>
+
+            <div class='pet-name'><%=petName %></div>
+            <div class='pet-person'><%=personUsername %></div>
           </div>
       </script>
 

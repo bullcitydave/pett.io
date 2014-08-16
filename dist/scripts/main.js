@@ -203,12 +203,96 @@ var ImageUploadView = Parse.View.extend ({
   }
 });
 
+var sampledata = [
+  { "browseImg":"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-9a119094-9aa2-4730-9159-fa6a4c63d90e-hermancanvas.jpg",
+  "petName":"Herman",
+  "personUsername":"bullcitydave"}
+];
+
+
+
+  // parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-03a00789-7d41-4538-8a6a-b3a476eafbd2-2014-03-05%2009.51.12.jpg", petName:"Zellouisa", personUsername:"bullcitydave"},  {parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-f1ee7353-45d3-4253-a7c3-1ceb57e613ff-ar020501_171633538_m.jpg", petName:"Aremid", personUsername:"bullcitydave"}];
+  //
+
+var BrowseView = Parse.View.extend({
+
+  el: "#main-container",
+
+
+
+  initialize: function(tag) {
+    user=Parse.User.current() || null;
+
+    browseSelf=this;
+    console.log('Initializing browse view');
+
+    $('#main-header').addClass('standard');
+    $('#main-container').removeClass('splash');
+    $('#main-container').addClass('standard');
+    $('#main-container').html('');
+    $('.pic-showcase').html('');
+    $('#tools').html('');
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    $('#log-out').show();
+    $('body').addClass('whitebg');
+    $('#main-container').append("<div id='browse-container'></div>");
+    browseSelf.render();
+  },
+
+
+  events: {
+    "click #about"    : "showProfile",
+    "click #upload"   : "imageUploadForm",
+    "click #account"  : "viewAccount"
+  },
+
+  render: function() {
+
+    // var ppQuery = new Parse.Query(ParsePic);
+    // // ppQuery.equalTo("username", Parse.User.current().getUsername());
+    // ppQuery.equalTo("petname", tag);
+    //
+    // console.log('ppQuery: ',ppQuery);
+    //
+    // ppQuery.find({
+    //   success: function(results) {
+          // browseSelf.showPics(results);
+      // },
+
+      browseSelf.showPics(sampledata);
+
+
+      // error: function(error) {
+      //     alert('Error!');
+      //   }
+      // });
+    },
+
+  showPics: function(results) {
+     var browseView = $('#browse-template').html();
+     for (var i = 0; i < results.length ; i++) {
+        console.log(results[i]);
+        console.log(browseView);
+
+       $('#browse-container').append((_.template(browseView),results[i]));
+      //  $('#browse-container').append(_.template(browseView),results[i]);
+
+      //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i]));
+
+     }
+     return false;
+   }
+
+
+
+
+});
+
 var LinkView = Parse.View.extend({
 
   el: "body",
 
   initialize: function(tag) {
-    if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
     user=Parse.User.current().getUsername();
     console.log('Initializing LinkView. Tag:',tag);
@@ -223,8 +307,37 @@ var LinkView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
+
+    var mContainer = $('.pic-showcase');
+
+
+    // //   // initialize Masonry after all images have loaded
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //
+    //     itemSelector: '.pic-container'
+    //   });
+    // });
+
+  // mContainer.masonry({
+  //   columnWidth: 200,
+  //   itemSelector: '.pic-container'
+  // });
+
+    // var mContainer = $('.pic-showcase');
+    //   // initialize Masonry after all images have loaded
+    mContainer.imagesLoaded(function() {
+      mContainer.masonry({
+            columnwidth: 50,
+            gutter: 50,
+            itemSelector: '.pic-container'
+
+
+      });
+    });
+
     new ParsePicListView(tag);
-    new FlickrPicListView(tag);
+    new FlickrPicListView();
   },
 
 
@@ -255,12 +368,12 @@ var LinkView = Parse.View.extend({
 var FlickrPicListView = Parse.View.extend({
      el: "#main-container",
 
-    initialize: function(tag) {
-      console.log("Initializing FlickrPicListView. Tag: ", tag);
-      this.flickrPicList = new FlickrPicList;
-      this.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUserId + "&tags=" + tag +"&per_page=16&page=1&format=json&nojsoncallback=1";
-      console.log("Flickr URL is ", this.flickrApiUrl);
-      this.render();
+    initialize: function() {
+      z = this;
+      console.log("Initializing FlickrPicListView.");
+      // this.flickrPicList = new FlickrPicList;
+      this.getFlickr();
+
 
     },
 
@@ -273,15 +386,9 @@ var FlickrPicListView = Parse.View.extend({
       // console.log('width ',  $('.montageSquare').clientWidth);
       // });
 
-        // container.masonry({
-        //     columnWidth: 40,
-        //     itemSelector: '.picContainer'
-        //   });
-        //   var msnry = container.data('masonry');
-        //   console.log(msnry);
 
 
-      $.getJSON(this.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
+      $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
           var photoId = '';
@@ -312,7 +419,29 @@ var FlickrPicListView = Parse.View.extend({
             //     }
             // }
         });
+      },
+
+      getFlickr: function() {
+
+        var flickrUser = '';
+        var fQuery = new Parse.Query(Parse.User);
+        fQuery.equalTo("username", Parse.User.current().getUsername());
+        fQuery.find({
+          success:function(uResults) {
+            if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
+              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
+              flickrTag = uResults[0].attributes.flickrTag;
+              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+              console.log("Flickr URL is ", z.flickrApiUrl);
+              z.render();
+            }
+          },
+          error:function(error) {
+            console.log('No flickr user found');
+          }
+        });
       }
+
     });
 
 
@@ -327,6 +456,8 @@ var ParsePicListView = Parse.View.extend({
     },
 
     render: function(tag) {
+
+
 
       var ppQuery = new Parse.Query(ParsePic);
       // ppQuery.equalTo("username", Parse.User.current().getUsername());
@@ -395,6 +526,7 @@ var LoginView = Parse.View.extend({
 
   initialize: function() {
     console.log("LoginView initialized");
+    $('#browse').hide();
     self = this;
     this.render();
   },
@@ -436,7 +568,8 @@ var SignUpView = Parse.View.extend({
   el: "#main-container",
 
   initialize: function() {
-    console.log("SignUpView initialized")
+    console.log("SignUpView initialized");
+    $('#browse').hide();
     _.bindAll(this, "signUp");
     this.render();
   },
@@ -477,7 +610,8 @@ var AccountView = Parse.View.extend({
     "submit"                : "submitPet",
     "click #upload-image"   : "imageUploadForm",
     "click #view-page"      : "viewPet",
-    "click #set-default"    : "setDefault"
+    "click #set-default"    : "setDefault",
+    "click #add-flickr"     : "setFlickr"
   },
 
 
@@ -596,13 +730,15 @@ var AccountView = Parse.View.extend({
     ppQuery.find({
       success: function(results) {
           console.log('Returning pets:', results);
-          x.listPets(results);
+          if (results.length > 0)  { x.listPets(results); }
       },
 
       error: function(error) {
           console.log('No pets found');
         }
       });
+
+    x.getFlickr();
     },
 
 
@@ -613,28 +749,65 @@ var AccountView = Parse.View.extend({
     dQuery.equalTo("username", Parse.User.current().getUsername());
     dQuery.find({
       success:function(uResults) {
-        console.log(uResults[0].attributes.defaultPet.id);
-        defaultPetId = uResults[0].attributes.defaultPet.id;
+        if (uResults[0].attributes.defaultPet) {
+          defaultPetId = uResults[0].attributes.defaultPet.id;
+        }
         for (var i = 0; i < results.length ; i++) {
            console.log(results[i].attributes.name);
-
-    //  $('#my-pet-list').append(_.template($('#pet-list-template').html(),({"petId":results[i].id},{"name":results[i].attributes.name})));
-     $('#my-pet-list').append(_.template($('#pet-list-template').html(),
-     ({name:results[i].attributes.name})));
-    //  ({name:results[i].attributes.name},{pId:'12345'})));
-             if (results[i].id === defaultPetId) {
+           $('#my-pet-list').append(_.template($('#pet-list-template').html(),
+           ({name:results[i].attributes.name})));
+           if (results[i].id === defaultPetId) {
                console.log('Default is ',results[i].attributes.name);
                $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
                $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
-             }
+           }
          }
       },
       error:function(error) {
         console.log('No default pet found');
       }
     });
+  },
 
+  setFlickr: function(e) {
+     e.preventDefault();
+     var uQuery = new Parse.Query(Parse.User);
+     user = Parse.User.current();
+     console.log('User id: ', user.id);
+     uQuery.get(user.id, {
+          success: function(results) {
+            results.set("flickrUser", $("input#flickr-account").val());
+            results.set("flickrTag", $("input#flickr-tag").val());
+            results.save();
+           },
+          error:function(error) {
+            console.log('Could not set Flickr account');
+          }
+      });
+  },
+
+  getFlickr: function(e) {
+
+    var flickrUser = '';
+    var fQuery = new Parse.Query(Parse.User);
+    fQuery.equalTo("username", Parse.User.current().getUsername());
+    fQuery.find({
+      success:function(uResults) {
+        if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
+          APP.flickrUser = uResults[0].attributes.flickrUser;
+          APP.flickrTag = uResults[0].attributes.flickrTag;
+          $("input#flickr-account").val(uResults[0].attributes.flickrUser);
+          $("input#flickr-tag").val(uResults[0].attributes.flickrTag);
+        }
+      },
+      error:function(error) {
+        console.log('No flickr user found');
+      }
+    });
   }
+
+
+
 });
 
 var AppRouter = Parse.Router.extend({
@@ -642,11 +815,10 @@ var AppRouter = Parse.Router.extend({
 
        'login'           :     'goLogin',
        'signup'          :     'goSignUp',
-       'account/:user'    :     'updateAccount',
-       'home'            :     'goLanding',
+       'account/:user'   :     'updateAccount',
+       'browse'          :     'goBrowse',
        ''                :     'splash',
        ':petName'        :     'getPet'
-
 
 
         }
@@ -677,15 +849,17 @@ var AppRouter = Parse.Router.extend({
         accountView = new AccountView(user);
       });
 
+    app_router.on('route:goBrowse', function() {
+        console.log('Loading browse view');
+        browseView = new BrowseView();
+    });
+
     app_router.on('route:getPet', function(petName) {
         console.log('Getting page for ',petName);
         linkView = new LinkView(petName);
     });
 
-    app_router.on('route:goLanding', function() {
-        console.log('Going home...');
-        $('.container').load("home.html");
-    })
+
 
 
 
@@ -727,17 +901,15 @@ $(function() {
 
     initialize: function() {
       self = this;
-      // Need to ensure that templates load
-      // $('.templates').load('templates.html', function() {
-        if (Parse.User.current()) {
-          self.user = Parse.User.current().getUsername();
-          console.log(self.user + " is logged in");
-          self.render();
-        }
-        else {
-          console.log('No user signed in. Proceeding to splash screen.');
-          new SplashView();
-        }
+      if (Parse.User.current()) {
+        self.user = Parse.User.current().getUsername();
+        console.log(self.user + " is logged in");
+        self.render();
+      }
+      else {
+        console.log('No user signed in. Proceeding to splash screen.');
+        new SplashView();
+      }
     },
 
     render: function() {
@@ -754,19 +926,24 @@ $(function() {
       userQuery.find({
 
         success: function(results) {
-          defaultPetId = results[0].attributes.defaultPet.id;
-          defaultPetQuery = new Parse.Query(Pet);
-          defaultPetQuery.get(defaultPetId, {
-            success: function(results) {
-              self.dp = results.attributes.uniqueName;
-              console.log('Default pet: ',self.dp);
-              app_router.navigate('//' + self.dp);
-              },
-            error: function(myUser) {
-              console.log('Could not determine default pet value');
-              app_router.navigate('//account/'+self.user);
-            }
-          });
+          if (results[0].attributes.defaultPet) {
+            defaultPetId = results[0].attributes.defaultPet.id;
+            defaultPetQuery = new Parse.Query(Pet);
+            defaultPetQuery.get(defaultPetId, {
+              success: function(results) {
+                self.dp = results.attributes.uniqueName;
+                console.log('Default pet: ',self.dp);
+                app_router.navigate('//' + self.dp);
+                },
+              error: function(myUser) {
+                console.log('Could not determine default pet value');
+                app_router.navigate('//account/'+self.user);
+              }
+            });
+          }
+          else {
+            app_router.navigate('//account/'+self.user);
+          }
         },
 
         error: function(error) {
@@ -788,6 +965,6 @@ $(function() {
 
   });
 
-  APP = new AppView;
+  window.APP = new AppView;
 
 });
