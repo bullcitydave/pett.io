@@ -23,6 +23,14 @@
 
     });
 
+    var PersonPetTags = Parse.Object.extend("PersonPetTags", {
+
+      defaults:{
+
+      }
+
+    });
+
 
     var FlickrPicList = Parse.Collection.extend({
         model: FlickrPic,

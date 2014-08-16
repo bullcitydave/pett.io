@@ -47,7 +47,7 @@ var LinkView = Parse.View.extend({
     });
 
     new ParsePicListView(tag);
-    new FlickrPicListView();
+    new FlickrPicListView(tag);
   },
 
 
@@ -82,7 +82,7 @@ var FlickrPicListView = Parse.View.extend({
       z = this;
       console.log("Initializing FlickrPicListView.");
       // this.flickrPicList = new FlickrPicList;
-      this.getFlickr();
+      this.getFlickr(pet);
 
 
     },
@@ -131,28 +131,30 @@ var FlickrPicListView = Parse.View.extend({
         });
       },
 
-      getFlickr: function() {
 
-        var flickrUser = '';
-        var fQuery = new Parse.Query(Parse.User);
-        fQuery.equalTo("username", Parse.User.current().getUsername());
-        fQuery.find({
-          success:function(uResults) {
-            if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
-              flickrTag = uResults[0].attributes.flickrTag;
-              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
-              console.log("Flickr URL is ", z.flickrApiUrl);
-              z.render();
-            }
-          },
-          error:function(error) {
-            console.log('No flickr user found');
+    getFlickr: function(e) {
+      var flickrUser = '';
+      var fQuery = new Parse.Query(PersonPetTags);
+      console.log('User: ',user);
+      console.log('Pet: ',pet);
+      fQuery.equalTo("username", user);
+      fQuery.equalTo("pet", pet);
+      fQuery.find({
+        success:function(results) {
+          if (results.length > 0) {
+            flickrUser = encodeURIComponent(results[0].attributes.flickrUser.trim());
+            flickrTag = results[0].attributes.flickrTag;
+            z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+            console.log("Flickr URL is ", z.flickrApiUrl);
+            z.render();
           }
-        });
-      }
-
-    });
+        },
+        error:function(error) {
+            console.log('No flickr user and tag combo found');
+        }
+      });
+    }
+});
 
 
 var ParsePicListView = Parse.View.extend({

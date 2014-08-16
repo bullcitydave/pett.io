@@ -14,10 +14,7 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/pusekatt.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/account.css">
-    <link rel="stylesheet" href="styles/browse.css">
     <!-- endbuild -->
 
     <!-- google fonts -->
@@ -87,15 +84,33 @@
 
           <div class='user-profile'>
             <h2><%-userName%></h2>
-            <h3>Your Pets</h3>
-            <div id="my-pet-list">
-            </div>
-            <button id="add-pet">Add a pet</button>
-            <h3>Add a Flickr account</h3>
-            <p>In this initial version of pett.io, Flickr integration is provided by simply using an account name provided by you and a tag name you have used to indicate photos of your pet. There is no validation of your account, and only publicly available photos will be fetched. The last 12 photos you have tagged of your pet will be included in your pet's showcase page.</p>
-            <input type="text" id="flickr-account" placeholder="account name"></input>
-            <input type="text" id="flickr-tag" placeholder="tag used for pet photos"></input>
-            <button id="add-flickr">Add Flickr username to my account</button>
+
+            <section id="your-pets">
+              <h3>Your Pets</h3>
+              <button id="add-pet">Add a pet</button>
+              <div id="my-pet-list">
+              </div>
+            </section>
+
+            <section id="update-pet">
+            </section>
+
+            <section id="add-media">
+              <h3>Add a Flickr account</h3>
+              <p class="help">In this initial version of pett.io, Flickr integration is provided by simply using an account name provided by you and a tag name you have used to indicate photos of your pet. There is no validation of your account, and only publicly available photos will be fetched. The last 12 photos you have tagged of your pet will be included in your pet's showcase page.</p>
+              <input type="text" id="flickr-account" placeholder="account name"></input>
+              <input type="text" id="flickr-tag" placeholder="tag used for pet photos"></input>
+              <button id="add-flickr">Add Flickr username</button>
+              <select id="pet-names">
+              </select>
+
+
+              <h3>Add a Vine account</h3>
+              <p class="help">In this initial version of pett.io, Vine is provided by providing a single tag that should be unique enough to pull only vines that features your pet. To use this feature, an example of a unique tag you might use could be 'davesdogbuster'. There is no validation of this tag. The last 12 vines you have tagged of your pet will be included in your pet's showcase page.</p>
+              <input type="text" id="vine-account" placeholder="account name"></input>
+              <input type="text" id="vine-tag" placeholder="tag used for pet photos"></input>
+              <button id="add-flickr">Add Vine username</button>
+            </section>
 
 
 
@@ -114,13 +129,25 @@
       <script type="text/template" id="profile-template">
 
           <div class='profile' >
-            <p><%-type%></p>
-            <p><%-dateBirth%></p>
-            <p><%-dateDeath%></p>
-            <p><%-dateAdopted%></p>
-            <p><%-bio%></p>
-            <p><%-favoriteTreats%></p>
-            <p><%-colors%></p>
+            <% if (type != "null") { %>
+              <p>Type: <%-type%></p>
+            <% }  %>
+            <% if (!isNaN(dateBirth)) { %>
+              <p>Born: <%-dateBirth%></p>
+            <% }  %>
+            <% if (!isNaN(dateDeath)) { %>
+              <p>Died: <%-dateDeath%></p>
+            <% }  %>
+            <% if (!isNaN(dateAdopted)) { %>
+              <p>Adopted: <%-dateAdopted%></p>
+            <% }  %>
+            <p>Bio: <%-bio%></p>
+            <% if (favoriteTreats != "null") { %>
+              <p>Favorite Treats: <%-favoriteTreats%></p>
+            <% }  %>
+            <% if (colors != "null") { %>
+              <p>Colors: <%-colors%></p>
+            <% }  %>
             <button id="close-profile">Close</button>
           </div>
 
@@ -130,12 +157,14 @@
 
           <form id="add-pet-form">
             <p><span>Name</span>
-            <input type="text" id="pet-name"></p>
-            <!-- <p><span>Type</span>
-            // <input type="radio" id="type" value="cat">Cat
-            // <input type="radio" id="type" value="dog">Dog -->
+            <input type="text" id="new-pet-name"></p>
+            <p><span>Type</span>
+            <select id="new-pet-type">
+              <option label="cat" value="cat">
+              <option label="dog" value="dog">
+            </select>
             <p><span>Bio</span>
-            <input type="textarea" id="bio" placeholder="Tell the world about your pet here!">
+            <input type="textarea" id="new-pet-bio" placeholder="Tell the world about your pet here!">
             <input type="submit" value="Add">
           </form>
 
@@ -221,6 +250,7 @@
 <script src="../bower_components/underscore/underscore.js"></script>
 <script src="../bower_components/masonry/dist/masonry.pkgd.js"></script>
 <script src="../bower_components/imagesloaded/imagesloaded.js"></script>
+<script src="../bower_components/moment/moment.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

@@ -27,17 +27,18 @@ var AccountView = Parse.View.extend({
 
 
   createPet: function(e) {
-    $('#add-pet').hide();
-    $('.user-profile').append(_.template($("#add-pet-template").html()));
+    // $('#add-pet').hide();
+    $('#update-pet').html(_.template($("#add-pet-template").html()));
   },
 
 
   submitPet: function(e) {
      e.preventDefault();
      var newPet = new Pet ({
-      name: $('input#pet-name').val(),
-      uniqueName: $('input#pet-name').val().toLowerCase(),
-      bio: $('input#bio').val(),
+      name: $('input#new-pet-name').val(),
+      uniqueName: $('input#new-pet-name').val().toLowerCase(),
+      type: $('select#new-pet-type').val(),
+      bio: $('input#new-pet-bio').val(),
       person: {__type: "Pointer",
       className: "_User",
       objectId: Parse.User.current().getUsername()
@@ -69,6 +70,8 @@ var AccountView = Parse.View.extend({
   setDefault: function(e) {
     pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
 
+    x.pet = pet;
+
     console.log('Pet: ', pet);
 
 
@@ -97,9 +100,9 @@ var AccountView = Parse.View.extend({
 
             results.save();
             console.log('Results: ',results);
-            $(e.toElement).siblings('#set-default').css("background-color","inherit");
+            $(e.toElement).siblings('#set-default').addClass('not-default');
             $(e.toElement).siblings('#set-default').html("Set as default");
-            $(e.toElement).css("background-color","darkorange");
+            $(e.toElement).addClass('default');
             $(e.toElement).html("Default Pet");
             },
 
@@ -135,7 +138,7 @@ var AccountView = Parse.View.extend({
         }
       });
 
-    x.getFlickr();
+      x.getFlickr();
     },
 
 
@@ -155,9 +158,11 @@ var AccountView = Parse.View.extend({
            ({name:results[i].attributes.name})));
            if (results[i].id === defaultPetId) {
                console.log('Default is ',results[i].attributes.name);
-               $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
+               $('#' + results[i].attributes.name).next().next().next().next().addClass('default');
                $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
            }
+            $('<option>').val(results[i].attributes.name).text(results[i].attributes.name)
+               .appendTo('#pet-names');
          }
       },
       error:function(error) {
@@ -166,35 +171,56 @@ var AccountView = Parse.View.extend({
     });
   },
 
-  setFlickr: function(e) {
-     e.preventDefault();
-     var uQuery = new Parse.Query(Parse.User);
-     user = Parse.User.current();
-     console.log('User id: ', user.id);
-     uQuery.get(user.id, {
-          success: function(results) {
-            results.set("flickrUser", $("input#flickr-account").val());
-            results.set("flickrTag", $("input#flickr-tag").val());
-            results.save();
-           },
-          error:function(error) {
-            console.log('Could not set Flickr account');
-          }
-      });
-  },
+
+    //  e.preventDefault();
+    //  var pptQuery = new Parse.Query(PersonPetTags);
+    //  user = Parse.User.current();
+    //  console.log('user: ', user);
+    //  pptQuery.equalTo("username",user);
+    //  pptQuery.equalTo()
+    //       success: function(results) {
+    //         results.set("flickrUser", $("input#flickr-account").val());
+    //         var tag = $("input#flickr-tag").val();
+    //         var pet = $("select#pet-names").val();
+    //         var flickrPetTag = {pet:tag};
+    //         // flickrPetTag = {$("input#flickr-tag").val():$("selection#pet-names").val()};
+    //         results.set("flickrTag", flickrPetTag);
+    //         results.save();
+    //         alert('Did I save ', flickrPetTag);
+    //        },
+    //       error:function(error) {
+    //         console.log('Could not set Flickr account');
+    //       }
+    //   });
+    setFlickr: function(e) {
+      var newPetPersonTag = new PersonPetTags ({
+       username: Parse.User.current().getUsername(),
+       pet: $("select#pet-names").val().toLowerCase(),
+       flickrUser: $('input#flickr-account').val(),
+       flickrTag: $('input#flickr-tag').val()
+     });
+
+      newPetPersonTag.save().then(function() {
+       console.log('Flickr user ' + $("input#flickr-account").val() + ' and Flickr tag ' + $("input#flickr-tag").val() + ' added to database for pet ' + $("select#pet-names").val());
+       }, function(error) {
+       console.log('Error adding Flickr tag');
+     });
+   },
+
 
   getFlickr: function(e) {
-
+// this is only get first tag listed for now until UI is reconfigured;
     var flickrUser = '';
-    var fQuery = new Parse.Query(Parse.User);
+    var fQuery = new Parse.Query(PersonPetTags);
     fQuery.equalTo("username", Parse.User.current().getUsername());
+    // fQuery.equalTo("pet", x.pet);
     fQuery.find({
-      success:function(uResults) {
-        if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-          APP.flickrUser = uResults[0].attributes.flickrUser;
-          APP.flickrTag = uResults[0].attributes.flickrTag;
-          $("input#flickr-account").val(uResults[0].attributes.flickrUser);
-          $("input#flickr-tag").val(uResults[0].attributes.flickrTag);
+      success:function(results) {
+        if (results[0].attributes.flickrUser && results[0].attributes.flickrTag) {
+          APP.flickrUser = results[0].attributes.flickrUser;
+          APP.flickrTag = results[0].attributes.flickrTag;
+          $("input#flickr-account").val(results[0].attributes.flickrUser);
+          $("input#flickr-tag").val(results[0].attributes.flickrTag);
         }
       },
       error:function(error) {
