@@ -70,6 +70,8 @@ var AccountView = Parse.View.extend({
   setDefault: function(e) {
     pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
 
+    x.pet = pet;
+
     console.log('Pet: ', pet);
 
 
@@ -136,7 +138,7 @@ var AccountView = Parse.View.extend({
         }
       });
 
-    // x.getFlickr();
+      x.getFlickr();
     },
 
 
@@ -205,18 +207,20 @@ var AccountView = Parse.View.extend({
      });
    },
 
-  getFlickr: function(e) {
 
+  getFlickr: function(e) {
+// this is only get first tag listed for now until UI is reconfigured;
     var flickrUser = '';
-    var fQuery = new Parse.Query(Parse.User);
+    var fQuery = new Parse.Query(PersonPetTags);
     fQuery.equalTo("username", Parse.User.current().getUsername());
+    // fQuery.equalTo("pet", x.pet);
     fQuery.find({
-      success:function(uResults) {
-        if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-          APP.flickrUser = uResults[0].attributes.flickrUser;
-          APP.flickrTag = uResults[0].attributes.flickrTag;
-          $("input#flickr-account").val(uResults[0].attributes.flickrUser);
-          $("input#flickr-tag").val(uResults[0].attributes.flickrTag);
+      success:function(results) {
+        if (results[0].attributes.flickrUser && results[0].attributes.flickrTag) {
+          APP.flickrUser = results[0].attributes.flickrUser;
+          APP.flickrTag = results[0].attributes.flickrTag;
+          $("input#flickr-account").val(results[0].attributes.flickrUser);
+          $("input#flickr-tag").val(results[0].attributes.flickrTag);
         }
       },
       error:function(error) {

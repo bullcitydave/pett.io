@@ -44,6 +44,14 @@ var flickrUserId = 'toastie97';
 
     });
 
+    var PersonPetTags = Parse.Object.extend("PersonPetTags", {
+
+      defaults:{
+
+      }
+
+    });
+
 
     var FlickrPicList = Parse.Collection.extend({
         model: FlickrPic,
@@ -135,8 +143,19 @@ var ProfileView = Parse.View.extend ({
       return false;
     },
 
+    getDate: function(parseDate) {
+      var pettioDate = moment(parseDate).year();
+      return pettioDate;
+    },
+
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
+        console.log(data);
+        console.log(data.dateBirth);
+        if (data.dateBirth   !='null') {data.dateBirth   = profile.getDate(data.dateBirth)};
+        if (data.dateDeath   !='null') {data.dateDeath   = profile.getDate(data.dateDeath)};
+        if (data.dateAdopted !='null') {data.dateAdopted = profile.getDate(data.dateAdopted)};
+        console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
         $('#profile-container').show();
         $('#profile-container').html(_.template(profileView,data));
@@ -337,7 +356,7 @@ var LinkView = Parse.View.extend({
     });
 
     new ParsePicListView(tag);
-    new FlickrPicListView();
+    new FlickrPicListView(tag);
   },
 
 
@@ -372,7 +391,7 @@ var FlickrPicListView = Parse.View.extend({
       z = this;
       console.log("Initializing FlickrPicListView.");
       // this.flickrPicList = new FlickrPicList;
-      this.getFlickr();
+      this.getFlickr(pet);
 
 
     },
@@ -421,28 +440,30 @@ var FlickrPicListView = Parse.View.extend({
         });
       },
 
-      getFlickr: function() {
 
-        var flickrUser = '';
-        var fQuery = new Parse.Query(Parse.User);
-        fQuery.equalTo("username", Parse.User.current().getUsername());
-        fQuery.find({
-          success:function(uResults) {
-            if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
-              flickrTag = uResults[0].attributes.flickrTag;
-              z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
-              console.log("Flickr URL is ", z.flickrApiUrl);
-              z.render();
-            }
-          },
-          error:function(error) {
-            console.log('No flickr user found');
+    getFlickr: function(e) {
+      var flickrUser = '';
+      var fQuery = new Parse.Query(PersonPetTags);
+      console.log('User: ',user);
+      console.log('Pet: ',pet);
+      fQuery.equalTo("username", user);
+      fQuery.equalTo("pet", pet);
+      fQuery.find({
+        success:function(results) {
+          if (results.length > 0) {
+            flickrUser = encodeURIComponent(results[0].attributes.flickrUser.trim());
+            flickrTag = results[0].attributes.flickrTag;
+            z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+            console.log("Flickr URL is ", z.flickrApiUrl);
+            z.render();
           }
-        });
-      }
-
-    });
+        },
+        error:function(error) {
+            console.log('No flickr user and tag combo found');
+        }
+      });
+    }
+});
 
 
 var ParsePicListView = Parse.View.extend({
@@ -630,17 +651,18 @@ var AccountView = Parse.View.extend({
 
 
   createPet: function(e) {
-    $('#add-pet').hide();
-    $('.user-profile').append(_.template($("#add-pet-template").html()));
+    // $('#add-pet').hide();
+    $('#update-pet').html(_.template($("#add-pet-template").html()));
   },
 
 
   submitPet: function(e) {
      e.preventDefault();
      var newPet = new Pet ({
-      name: $('input#pet-name').val(),
-      uniqueName: $('input#pet-name').val().toLowerCase(),
-      bio: $('input#bio').val(),
+      name: $('input#new-pet-name').val(),
+      uniqueName: $('input#new-pet-name').val().toLowerCase(),
+      type: $('select#new-pet-type').val(),
+      bio: $('input#new-pet-bio').val(),
       person: {__type: "Pointer",
       className: "_User",
       objectId: Parse.User.current().getUsername()
@@ -672,6 +694,8 @@ var AccountView = Parse.View.extend({
   setDefault: function(e) {
     pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
 
+    x.pet = pet;
+
     console.log('Pet: ', pet);
 
 
@@ -700,9 +724,9 @@ var AccountView = Parse.View.extend({
 
             results.save();
             console.log('Results: ',results);
-            $(e.toElement).siblings('#set-default').css("background-color","inherit");
+            $(e.toElement).siblings('#set-default').addClass('not-default');
             $(e.toElement).siblings('#set-default').html("Set as default");
-            $(e.toElement).css("background-color","darkorange");
+            $(e.toElement).addClass('default');
             $(e.toElement).html("Default Pet");
             },
 
@@ -738,7 +762,7 @@ var AccountView = Parse.View.extend({
         }
       });
 
-    x.getFlickr();
+      x.getFlickr();
     },
 
 
@@ -758,9 +782,11 @@ var AccountView = Parse.View.extend({
            ({name:results[i].attributes.name})));
            if (results[i].id === defaultPetId) {
                console.log('Default is ',results[i].attributes.name);
-               $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
+               $('#' + results[i].attributes.name).next().next().next().next().addClass('default');
                $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
            }
+            $('<option>').val(results[i].attributes.name).text(results[i].attributes.name)
+               .appendTo('#pet-names');
          }
       },
       error:function(error) {
@@ -769,35 +795,56 @@ var AccountView = Parse.View.extend({
     });
   },
 
-  setFlickr: function(e) {
-     e.preventDefault();
-     var uQuery = new Parse.Query(Parse.User);
-     user = Parse.User.current();
-     console.log('User id: ', user.id);
-     uQuery.get(user.id, {
-          success: function(results) {
-            results.set("flickrUser", $("input#flickr-account").val());
-            results.set("flickrTag", $("input#flickr-tag").val());
-            results.save();
-           },
-          error:function(error) {
-            console.log('Could not set Flickr account');
-          }
-      });
-  },
+
+    //  e.preventDefault();
+    //  var pptQuery = new Parse.Query(PersonPetTags);
+    //  user = Parse.User.current();
+    //  console.log('user: ', user);
+    //  pptQuery.equalTo("username",user);
+    //  pptQuery.equalTo()
+    //       success: function(results) {
+    //         results.set("flickrUser", $("input#flickr-account").val());
+    //         var tag = $("input#flickr-tag").val();
+    //         var pet = $("select#pet-names").val();
+    //         var flickrPetTag = {pet:tag};
+    //         // flickrPetTag = {$("input#flickr-tag").val():$("selection#pet-names").val()};
+    //         results.set("flickrTag", flickrPetTag);
+    //         results.save();
+    //         alert('Did I save ', flickrPetTag);
+    //        },
+    //       error:function(error) {
+    //         console.log('Could not set Flickr account');
+    //       }
+    //   });
+    setFlickr: function(e) {
+      var newPetPersonTag = new PersonPetTags ({
+       username: Parse.User.current().getUsername(),
+       pet: $("select#pet-names").val().toLowerCase(),
+       flickrUser: $('input#flickr-account').val(),
+       flickrTag: $('input#flickr-tag').val()
+     });
+
+      newPetPersonTag.save().then(function() {
+       console.log('Flickr user ' + $("input#flickr-account").val() + ' and Flickr tag ' + $("input#flickr-tag").val() + ' added to database for pet ' + $("select#pet-names").val());
+       }, function(error) {
+       console.log('Error adding Flickr tag');
+     });
+   },
+
 
   getFlickr: function(e) {
-
+// this is only get first tag listed for now until UI is reconfigured;
     var flickrUser = '';
-    var fQuery = new Parse.Query(Parse.User);
+    var fQuery = new Parse.Query(PersonPetTags);
     fQuery.equalTo("username", Parse.User.current().getUsername());
+    // fQuery.equalTo("pet", x.pet);
     fQuery.find({
-      success:function(uResults) {
-        if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-          APP.flickrUser = uResults[0].attributes.flickrUser;
-          APP.flickrTag = uResults[0].attributes.flickrTag;
-          $("input#flickr-account").val(uResults[0].attributes.flickrUser);
-          $("input#flickr-tag").val(uResults[0].attributes.flickrTag);
+      success:function(results) {
+        if (results[0].attributes.flickrUser && results[0].attributes.flickrTag) {
+          APP.flickrUser = results[0].attributes.flickrUser;
+          APP.flickrTag = results[0].attributes.flickrTag;
+          $("input#flickr-account").val(results[0].attributes.flickrUser);
+          $("input#flickr-tag").val(results[0].attributes.flickrTag);
         }
       },
       error:function(error) {
