@@ -3,7 +3,6 @@ var LinkView = Parse.View.extend({
   el: "body",
 
   initialize: function(tag) {
-    if (!(tag)) {tag = 'zellouisa'};
     pet=tag;
     user=Parse.User.current().getUsername();
     console.log('Initializing LinkView. Tag:',tag);

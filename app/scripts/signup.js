@@ -6,7 +6,8 @@ var SignUpView = Parse.View.extend({
   el: "#main-container",
 
   initialize: function() {
-    console.log("SignUpView initialized")
+    console.log("SignUpView initialized");
+    $('#browse').hide();
     _.bindAll(this, "signUp");
     this.render();
   },

@@ -31,21 +31,25 @@
 
       <script type="text/template" id="splash-template">
           <div id="splash-img-container">
-            <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg">
-            <p id="splash-pet-name">Zellouisa</p>
+          <!--  <img id="splash-img" src="http://i.imgur.com/cotiNn3.jpg"> -->
+
           </div>
           <nav id="main-nav">
-            <ul>
-              <a href="#/signup"><li id="signup">Sign Up</li></a>
-              <a href="#/login"><li id="login">Log In</li></a>
-              <li id="browse">Browse</li>
-            </ul>
+              <a href="#/login"><button id="splash-login">Log In</button></a>
+              <a href="#/signup"><button id="splash-signup">Sign Up</button></a>
           </nav>
+
       </script>
 
       <script type="text/template" id="header-template">
-
-          <h1>pett.io</h1>
+          <h1 class="standard">pett.io</h1>
+          <div id="header-box">
+          </div>
+          <div id="header-box-overlay">
+            <h1>pett.io</h1>
+            <h2>The only pet showcase you'll ever need</h2>
+            <a href="#/browse"><button id="browse">Browse</button></a>
+          </div>
 
           <nav id="header-nav">
             <ul>
@@ -130,6 +134,14 @@
       <script type="text/template" id="flickr-template">
           <div class='pic-container'>
             <img class='montageSquare flickr' src='<%-flickrImg %>'>
+          </div>
+      </script>
+<!-- <img src='<%-browseImg %>' class='pet-pic'> -->
+      <script type="text/template" id="browse-template">
+          <div class='pet-box'>
+
+            <div class='pet-name'><%=petName %></div>
+            <div class='pet-person'><%=personUsername %></div>
           </div>
       </script>
 
