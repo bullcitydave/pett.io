@@ -35,8 +35,19 @@ var ProfileView = Parse.View.extend ({
       return false;
     },
 
+    getDate: function(parseDate) {
+      var pettioDate = moment(parseDate).year();
+      return pettioDate;
+    },
+
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
+        console.log(data);
+        console.log(data.dateBirth);
+        data.dateBirth   = profile.getDate(data.dateBirth);
+        data.dateDeath   = profile.getDate(data.dateBirth);
+        data.dateAdopted = profile.getDate(data.dateAdopted);
+        console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
         $('#profile-container').show();
         $('#profile-container').html(_.template(profileView,data));
