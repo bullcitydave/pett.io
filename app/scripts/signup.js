@@ -8,6 +8,7 @@ var SignUpView = Parse.View.extend({
   initialize: function() {
     console.log("SignUpView initialized");
     $('#browse').hide();
+    $('h2').hide();
     _.bindAll(this, "signUp");
     this.render();
   },
@@ -35,6 +36,8 @@ var SignUpView = Parse.View.extend({
   },
 
   render: function() {
+    $("#login-username").attr('placeholder','');
+    $("#login-password").attr('placeholder','');
     this.$el.append(_.template($("#signup-template").html()));
   }
 });
