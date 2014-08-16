@@ -47,7 +47,7 @@ var LinkView = Parse.View.extend({
     });
 
     new ParsePicListView(tag);
-    new FlickrPicListView();
+    new FlickrPicListView(tag);
   },
 
 
@@ -82,7 +82,7 @@ var FlickrPicListView = Parse.View.extend({
       z = this;
       console.log("Initializing FlickrPicListView.");
       // this.flickrPicList = new FlickrPicList;
-      this.getFlickr();
+      this.getFlickr(pet);
 
 
     },
@@ -131,16 +131,17 @@ var FlickrPicListView = Parse.View.extend({
         });
       },
 
-      getFlickr: function() {
+      getFlickr: function(pet) {
 
         var flickrUser = '';
-        var fQuery = new Parse.Query(Parse.User);
+        var fQuery = new Parse.Query(PersonPetTags);
         fQuery.equalTo("username", Parse.User.current().getUsername());
+        fQuery.equalTo("pet", "moksha");
         fQuery.find({
-          success:function(uResults) {
-            if (uResults[0].attributes.flickrUser && uResults[0].attributes.flickrTag) {
-              flickrUser = encodeURIComponent(uResults[0].attributes.flickrUser.trim());
-              flickrTag = uResults[0].attributes.flickrTag;
+          success:function(results) {
+            if (results.length > 0) {
+              flickrUser = encodeURIComponent(results[0].attributes.flickrUser.trim());
+              flickrTag = results[0].attributes.flickrTag;
               z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
               console.log("Flickr URL is ", z.flickrApiUrl);
               z.render();

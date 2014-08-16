@@ -158,6 +158,8 @@ var AccountView = Parse.View.extend({
                $('#' + results[i].attributes.name).next().next().next().next().addClass('default');
                $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
            }
+            $('<option>').val(results[i].attributes.name).text(results[i].attributes.name)
+               .appendTo('#pet-names');
          }
       },
       error:function(error) {
@@ -174,8 +176,13 @@ var AccountView = Parse.View.extend({
      uQuery.get(user.id, {
           success: function(results) {
             results.set("flickrUser", $("input#flickr-account").val());
-            results.set("flickrTag", $("input#flickr-tag").val());
+            var tag = $("input#flickr-tag").val();
+            var pet = $("select#pet-names").val();
+            var flickrPetTag = {pet:tag};
+            // flickrPetTag = {$("input#flickr-tag").val():$("selection#pet-names").val()};
+            results.set("flickrTag", flickrPetTag);
             results.save();
+            alert('Did I save ', flickrPetTag);
            },
           error:function(error) {
             console.log('Could not set Flickr account');
