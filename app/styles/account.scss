@@ -16,6 +16,12 @@ div.user-profile {
   width: 100%;
   background: $white;
 
+  section {
+    padding: 10px;
+    border: 2px solid $med-gray;
+    margin: 10px;
+  }
+
 
   h2 {
       text-align:center;
@@ -24,7 +30,13 @@ div.user-profile {
   h3 {
       text-align:center;
       clear:both;
+      font-weight:300;
+     }
+  p.help {
+      font-size: 0.8em;
+      padding: 0 20px 0 20px;
     }
+
 
 
   div#my-pet-list {
@@ -39,12 +51,13 @@ div.user-profile {
       @include media($mobile-s) {
         @include span-columns(1.125);
         @include omega(5n);
+        font-size: 0.8em;
       }
     }
-    button.your-pet-option.default {
+    button.default {
       background: $orange;
     }
-    button.your-pet-option.not-default {
+    button.not-default {
       background: $med-gray;
     }
   }
@@ -52,8 +65,9 @@ div.user-profile {
 
   button#add-pet {
     @include media($mobile-s) {
-      @include span-columns(2); @include shift(1);
+      @include span-columns(2); @include shift(2);
     }
+    margin:0 0 20px 0;
   }
 }
 
