@@ -10,6 +10,9 @@ $(function() {
 
     initialize: function() {
       self = this;
+
+      mContainer = $('.pic-showcase');
+
       if (Parse.User.current()) {
         self.user = Parse.User.current().getUsername();
         console.log(self.user + " is logged in");

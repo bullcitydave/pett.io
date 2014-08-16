@@ -420,22 +420,22 @@ body {
 
 
 div.pic-showcase {
-  margin: 120px 0 0 0;
+  margin: 140px 0 0 0;
   position: absolute;
   top: 30px;
 
-  div.pic-container {
-
-    margin: 0 0 0 0;
-    width: 200px;
-    float:left;
+  // div.pic-container {
+  //   margin: 10px;
+  //   width: 200px;
+  //   float:left;
 
     .montageSquare {
       // transition: opacity 1.0s easing;
       // opacity: 1;
       // @include size(250px 250px);
-      width:100%;
+      width:200px;
       @include if-brightness(0.9);
+      float:left;
 
       // border: solid 2px black;
       // transition: margin .2s linear;
@@ -468,7 +468,7 @@ div.pic-showcase {
       // border-right: solid 4px #ff0084;
       // border-bottom: solid 4px #ff0084;
     }
-  }
+  // }
   // div.pic-container.w2 { width:  120px; }
 
   // div.pic-container:nth-child(1) {
