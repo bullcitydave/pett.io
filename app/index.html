@@ -92,6 +92,9 @@
               </div>
             </section>
 
+            <section id="update-pet">
+            </section>
+
             <section id="add-media">
               <h3>Add a Flickr account</h3>
               <p class="help">In this initial version of pett.io, Flickr integration is provided by simply using an account name provided by you and a tag name you have used to indicate photos of your pet. There is no validation of your account, and only publicly available photos will be fetched. The last 12 photos you have tagged of your pet will be included in your pet's showcase page.</p>
@@ -154,12 +157,14 @@
 
           <form id="add-pet-form">
             <p><span>Name</span>
-            <input type="text" id="pet-name"></p>
-            <!-- <p><span>Type</span>
-            // <input type="radio" id="type" value="cat">Cat
-            // <input type="radio" id="type" value="dog">Dog -->
+            <input type="text" id="new-pet-name"></p>
+            <p><span>Type</span>
+            <select id="new-pet-type">
+              <option label="cat" value="cat">
+              <option label="dog" value="dog">
+            </select>
             <p><span>Bio</span>
-            <input type="textarea" id="bio" placeholder="Tell the world about your pet here!">
+            <input type="textarea" id="new-pet-bio" placeholder="Tell the world about your pet here!">
             <input type="submit" value="Add">
           </form>
 

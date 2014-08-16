@@ -28,16 +28,17 @@ var AccountView = Parse.View.extend({
 
   createPet: function(e) {
     $('#add-pet').hide();
-    $('.user-profile').append(_.template($("#add-pet-template").html()));
+    $('#update-pet').html(_.template($("#add-pet-template").html()));
   },
 
 
   submitPet: function(e) {
      e.preventDefault();
      var newPet = new Pet ({
-      name: $('input#pet-name').val(),
-      uniqueName: $('input#pet-name').val().toLowerCase(),
-      bio: $('input#bio').val(),
+      name: $('input#new-pet-name').val(),
+      uniqueName: $('input#new-pet-name').val().toLowerCase(),
+      type: $('select#new-pet-type').val(),
+      bio: $('input#new-pet-bio').val(),
       person: {__type: "Pointer",
       className: "_User",
       objectId: Parse.User.current().getUsername()
