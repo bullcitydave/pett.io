@@ -57,14 +57,9 @@ body {
   background: $black;
   font-family: $secondary-font;
 
-  background-image:url('http://i.imgur.com/cotiNn3.jpg');
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  background:url('http://i.imgur.com/cotiNn3.jpg') no-repeat center center fixed;
   background-size: cover;
-  background-repeat: no-repeat;
+
 
   //
   header#main-header{
@@ -136,6 +131,9 @@ body {
       button {
         @include button(shiny, $orange);
         @include not-as-shiny;
+        font-size: 1.5em;
+        width: 180px;
+        padding: 10px 24px;
       }
     }
   }
@@ -144,6 +142,7 @@ body {
     height: 80px;
     margin: 0 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
     text-align: none;
+    top: 0;
 
     #header-box-overlay, #header-box, h2 {
       display: none;
