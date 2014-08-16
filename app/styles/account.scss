@@ -1,6 +1,6 @@
 @import '../../bower_components/bourbon/dist/bourbon';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
-
+@import '../../bower_components/bitters/app/assets/stylesheets/_base';
 
   $mobile-s: new-breakpoint(min-width 320px 6);
   $mobile-m: new-breakpoint(min-width 480px 6);
@@ -11,11 +11,10 @@
 div.user-profile {
 
   position: absolute;
-  top: 10%;
-  opacity: .8;
+  top: $std-header-height;
   @include outer-container;
   width: 100%;
-  max-width: 500px;
+  background: $white;
 
 
   h2 {
@@ -31,7 +30,8 @@ div.user-profile {
   div#my-pet-list {
     p.pet-list-name {
       @include media($mobile-s) {
-        @include span-columns(1.5);
+        @include span-columns(1);
+        @include shift(0.25);
         clear:left;
       }
     }
@@ -40,6 +40,12 @@ div.user-profile {
         @include span-columns(1.125);
         @include omega(5n);
       }
+    }
+    button.your-pet-option.default {
+      background: $orange;
+    }
+    button.your-pet-option.not-default {
+      background: $med-gray;
     }
   }
 

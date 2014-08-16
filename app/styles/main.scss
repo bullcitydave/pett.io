@@ -3,6 +3,10 @@
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 @import '../../bower_components/bitters/app/assets/stylesheets/_base';
 
+@import 'http://fonts.googleapis.com/css?family=Roboto+Condensed';
+@import 'Pusekatt.css';
+@import 'browse';
+@import 'account';
 
 
 @mixin if-brightness($amt: 1.1) {
@@ -13,7 +17,7 @@
 }
 
 @mixin not-as-shiny {
-  color:$white;
+  color: $white;
   width:120px;
   margin: 10% 0 0 0;
   border: none;
@@ -113,6 +117,7 @@ body {
         }
         @include media($mobile-l) {
           font-size: 1.5em;
+
         }
         font-family: $secondary-font;
         font-weight: 300;
@@ -130,7 +135,7 @@ body {
   }
 
   header#main-header.standard{
-    height: 80px;
+    height: $std-header-height;
     margin: 0 0 0 0;  //masonry puts something in there that requires this; not needed when masonry fails
     text-align: none;
     top: 0;
@@ -335,7 +340,7 @@ body {
         left: 50%;
         width: 40%;
         margin-left: -20%;
-        top: 80px;
+        top: $std-header-height;
 
           h2 {
             font-size: 2.5em;
@@ -425,10 +430,7 @@ div.pic-showcase {
     .montageSquare:hover {
 
       @include if-brightness(1.2);
-      @include flash(yellow);
-      // // @include size(250px 250px);
-      // width: 100%;
-      // margin:0 6.25% 0 -6.25%;
+
 
     }
 

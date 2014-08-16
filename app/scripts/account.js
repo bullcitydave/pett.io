@@ -97,9 +97,9 @@ var AccountView = Parse.View.extend({
 
             results.save();
             console.log('Results: ',results);
-            $(e.toElement).siblings('#set-default').css("background-color","inherit");
+            $(e.toElement).siblings('#set-default').addClass('not-default');
             $(e.toElement).siblings('#set-default').html("Set as default");
-            $(e.toElement).css("background-color","darkorange");
+            $(e.toElement).addClass('default');
             $(e.toElement).html("Default Pet");
             },
 
@@ -155,7 +155,7 @@ var AccountView = Parse.View.extend({
            ({name:results[i].attributes.name})));
            if (results[i].id === defaultPetId) {
                console.log('Default is ',results[i].attributes.name);
-               $('#' + results[i].attributes.name).next().next().next().next().css("background-color","darkorange");
+               $('#' + results[i].attributes.name).next().next().next().next().addClass('default');
                $('#' + results[i].attributes.name).next().next().next().next().html("Default Pet");
            }
          }
