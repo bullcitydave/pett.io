@@ -227,46 +227,66 @@ body {
       @include media($mobile-s) {
         @include span-columns(5);
       }
+      @include media($mobile-m) {
+        @include span-columns(5);
+      }
+      @include media($mobile-l) {
+        @include span-columns(12);
+      }
+      @include media($desktop) {
+        @include span-columns(12);
+      }
+
+      // @include media($mobile-s) {
+      //   // @include span-columns(3);
+      //   // @include shift(1);
+      // }
       position: absolute;
       top: 20%;
       opacity: .8;
       z-index: 6000;
 
       .login-form, .signup-form,  {
+        position: relative;
+
         @include media($mobile-s) {
-          @include span-columns(3); @include shift(1);
+          @include span-columns(4); @include shift(0.5);
+          margin-top: 25%;
+          font-size: 0.8em;
         }
         @include media($mobile-m) {
-          @include span-columns(3); @include shift(1);
+          @include span-columns(2.5); @include shift(1.25);
+          margin-top: 25%;
+          font-size: 0.8em;
         }
         @include media($mobile-l) {
-          @include span-columns(6); @include shift(3);
+          @include span-columns(5); @include shift(3.5);
+          margin-top: 25%;
+          font-size: 0.9em;
         }
         @include media($desktop) {
-          @include span-columns(4); @include shift(4);
-          margin-top: 20%;
+          @include span-columns(3); @include shift(4.5);
+          margin-top: 25%;
+          font-size: 1.0em;
         }
+
         input {
           display: block;
           clear: both;
           margin-bottom: 10px;
-          width: 100%;
-          opacity: .8;
-          padding: 5px;
+          opacity: .9;
+          padding: 5px 10px 5px 10px;
           letter-spacing: .8px;
+          font-family: $secondary-font;
+
         }
         button {
           @include button(shiny, $orange);
           @include not-as-shiny;
-          color: #000;
+          color: $white;
+          position:absolute;
+          right: calc(50% - 60px)
         }
-        // button#login {
-        //   @include button(shiny, $orange);
-        //   @include not-as-shiny;
-        //   position: absolute;
-        //   top: 5px;
-        //   right: 5px
-        // }
         .error {
           opacity: .8;
         }
@@ -307,23 +327,26 @@ body {
       @include media($mobile-s) {
         position: absolute;
         top: 0;
-        right: 5%;
+        right: calc(50% - 152px);
         margin: 0;
         padding: 0;
-
-          a {
-            text-decoration: none;
-            display: inline-block;
-            button {
-              @include button(shiny, $orange);
-              @include not-as-shiny;
-              color: #eaeaea;
-              float: left;
-              width:120px;
-              margin: 5px 20px 0 0;
-            }
-          }
-
+      }
+      @include media($mobile-l) {
+        position: absolute;
+        top: 0;
+        right: 2%;
+      }
+      a {
+        text-decoration: none;
+        display: inline-block;
+        button {
+          @include button(shiny, $orange);
+          @include not-as-shiny;
+          color: #eaeaea;
+          float: left;
+          width:120px;
+          margin: 5px 20px 0 0;
+        }
       }
     }
 
