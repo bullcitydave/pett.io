@@ -311,7 +311,10 @@ var LinkView = Parse.View.extend({
 
   el: "body",
 
+
+
   initialize: function(tag) {
+    link = this;
     pet=tag;
     user=Parse.User.current().getUsername();
     console.log('Initializing LinkView. Tag:',tag);
@@ -327,7 +330,6 @@ var LinkView = Parse.View.extend({
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
 
-    var mContainer = $('.pic-showcase');
 
 
     // //   // initialize Masonry after all images have loaded
@@ -338,26 +340,26 @@ var LinkView = Parse.View.extend({
     //   });
     // });
 
-  // mContainer.masonry({
-  //   columnWidth: 200,
-  //   itemSelector: '.pic-container'
-  // });
-
-    // var mContainer = $('.pic-showcase');
-    //   // initialize Masonry after all images have loaded
-    mContainer.imagesLoaded(function() {
-      mContainer.masonry({
-            columnwidth: 50,
-            gutter: 50,
-            itemSelector: '.pic-container'
-
-
-      });
-    });
+    mContainer = $('#main-container');
+    //
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //         columnwidth: 300,
+    //         itemSelector: '.montageSquare'
+    //   });
+    // });
 
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
+
   },
+
+
+
+
+  //   // initialize Masonry after all images have loaded
+
+
 
 
   events: {
@@ -382,7 +384,7 @@ var LinkView = Parse.View.extend({
 
 });
 
-
+/////////////////////////
 
 var FlickrPicListView = Parse.View.extend({
      el: "#main-container",
@@ -415,6 +417,14 @@ var FlickrPicListView = Parse.View.extend({
           var serverId ='';
           var secret='';
 
+          // try putting this here
+          mContainer.imagesLoaded(function() {
+            mContainer.masonry({
+                  columnwidth: 300,
+                  itemSelector: '.montageSquare'
+            });
+          });
+          
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
@@ -438,6 +448,9 @@ var FlickrPicListView = Parse.View.extend({
             //     }
             // }
         });
+
+
+
       },
 
 
@@ -465,6 +478,7 @@ var FlickrPicListView = Parse.View.extend({
     }
 });
 
+/////////////////////////
 
 var ParsePicListView = Parse.View.extend({
     el: "#main-container",
@@ -488,7 +502,10 @@ var ParsePicListView = Parse.View.extend({
 
       ppQuery.find({
         success: function(results) {
+
+          //
             parseSelf.showPics(results);
+
         },
 
         error: function(error) {
@@ -505,11 +522,14 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
+
      }
 
 
 });
 
+
+/////////////////////////
 
 // var VineListView = Parse.View.extend({
     //
@@ -548,6 +568,7 @@ var LoginView = Parse.View.extend({
   initialize: function() {
     console.log("LoginView initialized");
     $('#browse').hide();
+    $('h2').hide();
     self = this;
     this.render();
   },
@@ -575,8 +596,8 @@ var LoginView = Parse.View.extend({
       },
 
   render: function() {
-      console.log(this.$el);
-      console.log($("#login-template").html());
+      $("#signup-username").attr('placeholder','');
+      $("#signup-password").attr('placeholder','');
       this.$el.append(_.template($("#login-template").html()));
   }
 });
@@ -591,6 +612,7 @@ var SignUpView = Parse.View.extend({
   initialize: function() {
     console.log("SignUpView initialized");
     $('#browse').hide();
+    $('h2').hide();
     _.bindAll(this, "signUp");
     this.render();
   },
@@ -618,6 +640,8 @@ var SignUpView = Parse.View.extend({
   },
 
   render: function() {
+    $("#login-username").attr('placeholder','');
+    $("#login-password").attr('placeholder','');
     this.$el.append(_.template($("#signup-template").html()));
   }
 });
@@ -948,6 +972,9 @@ $(function() {
 
     initialize: function() {
       self = this;
+
+      mContainer = $('.pic-showcase');
+
       if (Parse.User.current()) {
         self.user = Parse.User.current().getUsername();
         console.log(self.user + " is logged in");
