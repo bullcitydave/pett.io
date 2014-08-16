@@ -126,15 +126,25 @@
       <script type="text/template" id="profile-template">
 
           <div class='profile' >
-            <p><%-type%></p>
-            <p><%-dateBirth%></p>
-            <% if (!isNaN(dateDeath)) { %>
-              <p><%-dateDeath%></p>
+            <% if (type != "null") { %>
+              <p>Type: <%-type%></p>
             <% }  %>
-            <p><%-dateAdopted%></p>
-            <p><%-bio%></p>
-            <p><%-favoriteTreats%></p>
-            <p><%-colors%></p>
+            <% if (!isNaN(dateBirth)) { %>
+              <p>Born: <%-dateBirth%></p>
+            <% }  %>
+            <% if (!isNaN(dateDeath)) { %>
+              <p>Died: <%-dateDeath%></p>
+            <% }  %>
+            <% if (!isNaN(dateAdopted)) { %>
+              <p>Adopted: <%-dateAdopted%></p>
+            <% }  %>
+            <p>Bio: <%-bio%></p>
+            <% if (favoriteTreats != "null") { %>
+              <p>Favorite Treats: <%-favoriteTreats%></p>
+            <% }  %>
+            <% if (colors != "null") { %>
+              <p>Colors: <%-colors%></p>
+            <% }  %>
             <button id="close-profile">Close</button>
           </div>
 

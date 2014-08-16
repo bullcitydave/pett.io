@@ -44,9 +44,9 @@ var ProfileView = Parse.View.extend ({
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         console.log(data);
         console.log(data.dateBirth);
-        data.dateBirth   = profile.getDate(data.dateBirth);
-        data.dateDeath   = profile.getDate(data.dateDeath);
-        data.dateAdopted = profile.getDate(data.dateAdopted);
+        if (data.dateBirth   !='null') {data.dateBirth   = profile.getDate(data.dateBirth)};
+        if (data.dateDeath   !='null') {data.dateDeath   = profile.getDate(data.dateDeath)};
+        if (data.dateAdopted !='null') {data.dateAdopted = profile.getDate(data.dateAdopted)};
         console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
         $('#profile-container').show();
