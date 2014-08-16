@@ -27,7 +27,7 @@ var AccountView = Parse.View.extend({
 
 
   createPet: function(e) {
-    $('#add-pet').hide();
+    // $('#add-pet').hide();
     $('#update-pet').html(_.template($("#add-pet-template").html()));
   },
 
@@ -136,7 +136,7 @@ var AccountView = Parse.View.extend({
         }
       });
 
-    x.getFlickr();
+    // x.getFlickr();
     },
 
 
@@ -169,27 +169,41 @@ var AccountView = Parse.View.extend({
     });
   },
 
-  setFlickr: function(e) {
-     e.preventDefault();
-     var uQuery = new Parse.Query(Parse.User);
-     user = Parse.User.current();
-     console.log('User id: ', user.id);
-     uQuery.get(user.id, {
-          success: function(results) {
-            results.set("flickrUser", $("input#flickr-account").val());
-            var tag = $("input#flickr-tag").val();
-            var pet = $("select#pet-names").val();
-            var flickrPetTag = {pet:tag};
-            // flickrPetTag = {$("input#flickr-tag").val():$("selection#pet-names").val()};
-            results.set("flickrTag", flickrPetTag);
-            results.save();
-            alert('Did I save ', flickrPetTag);
-           },
-          error:function(error) {
-            console.log('Could not set Flickr account');
-          }
-      });
-  },
+
+    //  e.preventDefault();
+    //  var pptQuery = new Parse.Query(PersonPetTags);
+    //  user = Parse.User.current();
+    //  console.log('user: ', user);
+    //  pptQuery.equalTo("username",user);
+    //  pptQuery.equalTo()
+    //       success: function(results) {
+    //         results.set("flickrUser", $("input#flickr-account").val());
+    //         var tag = $("input#flickr-tag").val();
+    //         var pet = $("select#pet-names").val();
+    //         var flickrPetTag = {pet:tag};
+    //         // flickrPetTag = {$("input#flickr-tag").val():$("selection#pet-names").val()};
+    //         results.set("flickrTag", flickrPetTag);
+    //         results.save();
+    //         alert('Did I save ', flickrPetTag);
+    //        },
+    //       error:function(error) {
+    //         console.log('Could not set Flickr account');
+    //       }
+    //   });
+    setFlickr: function(e) {
+      var newPetPersonTag = new PersonPetTags ({
+       username: Parse.User.current().getUsername(),
+       pet: $("select#pet-names").val().toLowerCase(),
+       flickrUser: $('input#flickr-account').val(),
+       flickrTag: $('input#flickr-tag').val()
+     });
+
+      newPetPersonTag.save().then(function() {
+       console.log('Flickr user ' + $("input#flickr-account").val() + ' and Flickr tag ' + $("input#flickr-tag").val() + ' added to database for pet ' + $("select#pet-names").val());
+       }, function(error) {
+       console.log('Error adding Flickr tag');
+     });
+   },
 
   getFlickr: function(e) {
 
