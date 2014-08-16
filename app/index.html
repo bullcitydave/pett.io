@@ -128,7 +128,9 @@
           <div class='profile' >
             <p><%-type%></p>
             <p><%-dateBirth%></p>
-            <p><%-dateDeath%></p>
+            <% if (!isNaN(dateDeath)) { %>
+              <p><%-dateDeath%></p>
+            <% }  %>
             <p><%-dateAdopted%></p>
             <p><%-bio%></p>
             <p><%-favoriteTreats%></p>

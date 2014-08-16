@@ -45,7 +45,7 @@ var ProfileView = Parse.View.extend ({
         console.log(data);
         console.log(data.dateBirth);
         data.dateBirth   = profile.getDate(data.dateBirth);
-        data.dateDeath   = profile.getDate(data.dateBirth);
+        data.dateDeath   = profile.getDate(data.dateDeath);
         data.dateAdopted = profile.getDate(data.dateAdopted);
         console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
