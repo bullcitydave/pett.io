@@ -75,6 +75,7 @@ $(function() {
       new SplashView();
     }
 
+
   });
 
   window.APP = new AppView;

@@ -56,15 +56,19 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click #account"  : "viewAccount"
+    // "click #account"  : "viewAccount"
   },
 
   showProfile: function(e) {
+    e.preventDefault();
     new ProfileView(pet);
+    return false;
   },
 
   imageUploadForm: function(e) {
+    e.preventDefault();
     new ImageUploadView(pet);
+    return false;
   },
 
   viewAccount: function(e) {
