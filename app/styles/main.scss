@@ -10,6 +10,11 @@
 @import 'jqueryui';
 @import 'tools';
 
+$mobile-s: new-breakpoint(min-width 320px 5);
+$mobile-m: new-breakpoint(min-width 480px 5);
+$mobile-l: new-breakpoint(min-width 768px 12);
+$desktop: new-breakpoint(min-width 960px 12);
+
 
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
@@ -249,20 +254,32 @@ body {
       z-index: 6000;
 
       .login-form, .signup-form,  {
+        @include media($mobile-s) {
+          @include span-columns(5);
+        }
+        @include media($mobile-m) {
+          @include span-columns(5);
+        }
+        @include media($mobile-l) {
+          @include span-columns(12);
+        }
+        @include media($desktop) {
+          @include span-columns(12);
+        }
         position: relative;
 
         @include media($mobile-s) {
-          @include span-columns(4); @include shift(0.5);
+          @include span-columns(3); @include shift(1);
           margin-top: 25%;
           font-size: 0.8em;
         }
         @include media($mobile-m) {
-          @include span-columns(2.5); @include shift(1.25);
+          @include span-columns(2); @include shift(1.5);
           margin-top: 25%;
           font-size: 0.8em;
         }
         @include media($mobile-l) {
-          @include span-columns(5); @include shift(3.5);
+          @include span-columns(3); @include shift(4.5);
           margin-top: 25%;
           font-size: 0.9em;
         }
