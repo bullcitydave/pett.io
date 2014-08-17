@@ -27,22 +27,33 @@ var AccountView = Parse.View.extend({
 
 
   createPet: function(e) {
-    // $('#add-pet').hide();
+
     $('#update-pet').html(_.template($("#add-pet-template").html()));
+
+    $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D" });
   },
+
 
 
   submitPet: function(e) {
      e.preventDefault();
      var newPet = new Pet ({
-      name: $('input#new-pet-name').val(),
-      uniqueName: $('input#new-pet-name').val().toLowerCase(),
-      type: $('select#new-pet-type').val(),
-      bio: $('input#new-pet-bio').val(),
-      person: {__type: "Pointer",
-      className: "_User",
-      objectId: Parse.User.current().getUsername()
-      }
+      name: $('input#pet-name').val(),
+      uniqueName: $('input#pet-name').val().toLowerCase(),
+      type: $('select#pet-type').val(),
+      bio: $('input#pet-bio').val(),
+      person: {
+        __type: "Pointer",
+        className: "_User",
+        objectId: Parse.User.current().getUsername()
+      },
+      dateBirth: new Date($('input#pet-dob').val()),
+      dateDeath: new Date($('input#pet-dod').val()),
+      dateAdopted: new Date($('input#pet-doa').val()),
+      favoriteTreats: $('input#pet-treats').val().split(','),
+      gender: $('input#pet-gender').val()
      });
      newPet.save().then(function(refreshList) {
       console.log(newPet.name, ' added to database');

@@ -1,0 +1,15 @@
+#ui-datepicker-div {
+  background: $med-gray;
+  width: 200px;
+  border: $orange solid 5px;
+  padding: 20px;
+  #ui-datepicker-next {
+    float:right;
+    ui-datepicker-title {
+      font-weight:bold;
+    }
+  }
+  td {
+    padding: 0.2em;
+  }
+}
