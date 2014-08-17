@@ -64,7 +64,7 @@
             <ul>
               <li id="log-out"><a href="#">Log Out</a></li>
               <li id="account"><a href="/#/account/<%-userName %>">Update Account</a></li>
-              <li id="upload">Upload Images</li>
+              <li id="upload"><a href="#">Upload Images</a></li>
             </ul>
             <p id="header-username"><a href="/#/account/<%-userName %>"><%-userName %></a></p>
           </nav>
@@ -75,10 +75,12 @@
         <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
         <fieldset>
           <input type="file" name="fileselect" id="fileselect"></input>
-          <input id="uploadbutton" type="button" value="Upload an image"/>
+          <input id="uploadbutton" type="button" value="Upload"/>
         </fieldset>
         <p class="display-message"></p>
+        <button id="close-upload">Close</button>
         </form>
+
       </script>
 
       <script type="text/template" id="account-template">
@@ -200,8 +202,6 @@
             <h2><%-petName %></h2>
             <div id="about">About</div>
             <div id="profile-container"></div>
-            <div id="upload-container"></div>
-          </header>
       </script>
 
       <script type="text/template" id="parse-pic-template">

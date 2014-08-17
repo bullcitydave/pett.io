@@ -14,7 +14,7 @@ var LinkView = Parse.View.extend({
     $('#main-container').addClass('standard');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#tools').html('');
+    // $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
