@@ -52,7 +52,7 @@ var AccountView = Parse.View.extend({
       dateBirth: new Date($('input#pet-dob').val()),
       dateDeath: new Date($('input#pet-dod').val()),
       dateAdopted: new Date($('input#pet-doa').val()),
-      favoriteTreats: $('input#pet-treats').val().split(','),
+      favoriteTreats: $('textarea#pet-treats').val().split(','),
       gender: $('input#pet-gender').val()
      });
      newPet.save().then(function(refreshList) {
@@ -112,8 +112,10 @@ var AccountView = Parse.View.extend({
             results.save();
             console.log('Results: ',results);
             $(e.toElement).siblings('#set-default').addClass('not-default');
+            $(e.toElement).siblings('#set-default').removeClass('default');
             $(e.toElement).siblings('#set-default').html("Set as default");
             $(e.toElement).addClass('default');
+            $(e.toElement).removeClass('not-default');
             $(e.toElement).html("Default Pet");
             },
 

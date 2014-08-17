@@ -22,49 +22,35 @@ div.user-profile {
 
   h2 {
       text-align:center;
+      font-size: 4em;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      width: 100%;
+      background: #aaa;
     }
 
-  h3 {
-      text-align:center;
-      clear:both;
-      font-weight:300;
-     }
-  p.help {
-      font-size: 0.8em;
-      padding: 0 20px 0 20px;
-    }
+  section#yourpets {
 
+    h3 {
+        text-align:center;
+        clear:both;
+        font-weight:300;
+        background: $orange;
+        color: $white;
+        border-radius: 0.1875em;
+       }
 
-
-  div#my-pet-list {
-    p.pet-list-name {
+    button#add-pet {
       @include media($mobile-s) {
-        @include span-columns(2);
-        @include shift(0.5);
-        clear:left;
+        @include span-columns(4); @include shift(4);
       }
+      margin:0 0 20px 0;
+      position: absolute;
+      top: 0;
+      right: 50%;
+      margin-left: calc(50%-50px);
     }
-    button.your-pet-option   {
-      @include media($mobile-s) {
-        @include span-columns(2.25);
-        @include omega(5n);
-        font-size: 0.8em;
-      }
-    }
-    button.default {
-      background: $orange;
-    }
-    button.not-default {
-      background: $med-gray;
-    }
-  }
 
-
-  button#add-pet {
-    @include media($mobile-s) {
-      @include span-columns(4); @include shift(4);
-    }
-    margin:0 0 20px 0;
     input {
       float: left;
     }
@@ -78,14 +64,57 @@ div.user-profile {
       display: inline-block;
       float: left;
     }
-  }
+
+    p.help {
+        font-size: 0.8em;
+        padding: 0 20px 0 20px;
+      }
+
+
+
+    div#my-pet-list {
+      p.pet-list-name {
+        @include media($mobile-s) {
+          @include span-columns(2);
+          @include shift(0.5);
+          clear:left;
+        }
+      }
+      button.your-pet-option   {
+        @include media($mobile-s) {
+          @include span-columns(2.25);
+          @include omega(5n);
+          font-size: 0.8em;
+        }
+      }
+      button.default {
+        background: $orange;
+      }
+      button.not-default {
+        background: $med-gray;
+      }
+    }
+
+
+
+}
+
+
+section#update-pet {
+  overflow-y: auto;
+}
 
   form#add-pet-form {
-    @include span-columns(10);
-    @include shift(1);
+    @include span-columns(12);
+    
+
+    span{
+      float:left;
+      padding: 0px 10px 0 10px;
+    }
 
     #pet-name {
-      @include span-columns(3);
+      @include span-columns(2.5);
       float:left;
     }
 
@@ -100,7 +129,7 @@ div.user-profile {
     }
 
     #pet-treats {
-      @include span-columns(4);
+      @include span-columns(2.5);
       float:left;
     }
 
