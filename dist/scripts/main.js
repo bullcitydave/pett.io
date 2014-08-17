@@ -164,16 +164,24 @@ var ProfileView = Parse.View.extend ({
 
 var ImageUploadView = Parse.View.extend ({
 
+el: "#tools",
 
   initialize: function(pet) {
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
-
+    // $('#main-header').append("<div id='upload-container'></div>");
     this.render(pet);
   },
 
-    render: function(pet){
+  events: {
+
+    'click #close-upload'    : 'closeUpload'
+
+  },
+
+
+  render: function(pet){
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -219,7 +227,17 @@ var ImageUploadView = Parse.View.extend ({
         }
       });
     });
-  }
+  },
+
+  closeUpload: function(e) {
+    $('#upload-container').hide();
+    $('.pic-showcase').masonry({
+
+
+});
+    return false;
+  },
+
 });
 
 var sampledata = [
@@ -323,7 +341,7 @@ var LinkView = Parse.View.extend({
     $('#main-container').addClass('standard');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#tools').html('');
+    // $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
@@ -365,15 +383,19 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click #account"  : "viewAccount"
+    // "click #account"  : "viewAccount"
   },
 
   showProfile: function(e) {
+    e.preventDefault();
     new ProfileView(pet);
+    return false;
   },
 
   imageUploadForm: function(e) {
+    e.preventDefault();
     new ImageUploadView(pet);
+    return false;
   },
 
   viewAccount: function(e) {
@@ -1055,6 +1077,7 @@ $(function() {
       $('#main-header').removeClass('standard');
       new SplashView();
     }
+
 
   });
 
