@@ -21,7 +21,11 @@ var flickrUserId = 'toastie97';
 
     var Pet = Parse.Object.extend("Pet", {
 
-
+    defaults:{
+      "dateDeath": new Date("12/31/2029"),
+      "dateBirth": new Date(),
+      "dateAdopted": new Date()
+    }
 
 
 
@@ -117,6 +121,11 @@ var ProfileView = Parse.View.extend ({
 
     profile = this;
 
+    nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+    nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
+    nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+
+
 
     var query = new Parse.Query(Pet);
     query.equalTo("uniqueName", profile.pet);
@@ -152,9 +161,12 @@ var ProfileView = Parse.View.extend ({
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         console.log(data);
         console.log(data.dateBirth);
-        if (data.dateBirth   !='null') {data.dateBirth   = profile.getDate(data.dateBirth)};
-        if (data.dateDeath   !='null') {data.dateDeath   = profile.getDate(data.dateDeath)};
-        if (data.dateAdopted !='null') {data.dateAdopted = profile.getDate(data.dateAdopted)};
+        if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
+          else { data.dateBirth = null };
+        if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
+          else { data.dateDeath = null };
+        if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
+          else { data.dateAdopted = null };
         console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
         $('#profile-container').show();
@@ -710,7 +722,7 @@ var AccountView = Parse.View.extend({
 
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
-    $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D" });
+    $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
   },
 
 
@@ -727,9 +739,9 @@ var AccountView = Parse.View.extend({
         className: "_User",
         objectId: Parse.User.current().getUsername()
       },
-      dateBirth: new Date($('input#pet-dob').val()),
-      dateDeath: new Date($('input#pet-dod').val()),
-      dateAdopted: new Date($('input#pet-doa').val()),
+      dateBirth: new Date($('input#pet-dob').val() || "01/01/1970"),
+      dateDeath: new Date($('input#pet-dod').val() || "12/31/2029"),
+      dateAdopted: new Date($('input#pet-doa').val() || "01/01/1970"),
       favoriteTreats: $('textarea#pet-treats').val().split(','),
       gender: $('input#pet-gender').val()
      });

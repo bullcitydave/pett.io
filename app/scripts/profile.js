@@ -9,6 +9,11 @@ var ProfileView = Parse.View.extend ({
 
     profile = this;
 
+    nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+    nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
+    nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+
+
 
     var query = new Parse.Query(Pet);
     query.equalTo("uniqueName", profile.pet);
@@ -44,9 +49,12 @@ var ProfileView = Parse.View.extend ({
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
         console.log(data);
         console.log(data.dateBirth);
-        if (data.dateBirth   !='null') {data.dateBirth   = profile.getDate(data.dateBirth)};
-        if (data.dateDeath   !='null') {data.dateDeath   = profile.getDate(data.dateDeath)};
-        if (data.dateAdopted !='null') {data.dateAdopted = profile.getDate(data.dateAdopted)};
+        if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
+          else { data.dateBirth = null };
+        if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
+          else { data.dateDeath = null };
+        if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
+          else { data.dateAdopted = null };
         console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
         $('#profile-container').show();
