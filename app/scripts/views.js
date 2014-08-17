@@ -115,7 +115,7 @@ var FlickrPicListView = Parse.View.extend({
                   itemSelector: '.montageSquare'
             });
           });
-          
+
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
@@ -138,6 +138,10 @@ var FlickrPicListView = Parse.View.extend({
             //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
+            ('.pic-showcase').masonry({
+
+
+      });
         });
 
 
@@ -213,6 +217,10 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
+       ('.pic-showcase').masonry({
+
+
+      });
 
      }
 
