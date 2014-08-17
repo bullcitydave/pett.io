@@ -1,6 +1,6 @@
 
-  $mobile-s: new-breakpoint(min-width 320px 6);
-  $mobile-m: new-breakpoint(min-width 480px 6);
+  $mobile-s: new-breakpoint(min-width 320px 12);
+  $mobile-m: new-breakpoint(min-width 480px 12);
   $mobile-l: new-breakpoint(min-width 768px 12);
   $desktop: new-breakpoint(min-width 960px 12);
 
@@ -39,14 +39,14 @@ div.user-profile {
   div#my-pet-list {
     p.pet-list-name {
       @include media($mobile-s) {
-        @include span-columns(1);
-        @include shift(0.25);
+        @include span-columns(2);
+        @include shift(0.5);
         clear:left;
       }
     }
     button.your-pet-option   {
       @include media($mobile-s) {
-        @include span-columns(1.125);
+        @include span-columns(2.25);
         @include omega(5n);
         font-size: 0.8em;
       }
@@ -62,17 +62,61 @@ div.user-profile {
 
   button#add-pet {
     @include media($mobile-s) {
-      @include span-columns(2); @include shift(2);
+      @include span-columns(4); @include shift(4);
     }
     margin:0 0 20px 0;
+    input {
+      float: left;
+    }
+    select {
+      float: left;
+    }
+    textarea {
+      float: left;
+    }
+    span {
+      display: inline-block;
+      float: left;
+    }
   }
 
   form#add-pet-form {
     @include span-columns(10);
     @include shift(1);
 
-    #pet-dob {
+    #pet-name {
+      @include span-columns(3);
+      float:left;
+    }
+
+    #pet-type {
+      @include span-columns(1.5);
+      float:left;
+    }
+
+    #pet-gender {
+      @include span-columns(1.5);
+      float:left;
+    }
+
+    #pet-treats {
       @include span-columns(4);
+      float:left;
+    }
+
+    #pet-dob {
+      @include shift(0.5);
+      @include span-columns(3);
+      float:left;
+    }
+
+    #pet-doa {
+      @include span-columns(3);
+      float:left;
+    }
+
+    #pet-dod {
+      @include span-columns(3);
     }
   }
 }
