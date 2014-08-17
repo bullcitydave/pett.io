@@ -27,13 +27,10 @@ var AccountView = Parse.View.extend({
 
 
   createPet: function(e) {
-    // $('#add-pet').hide();
+  
     $('#update-pet').html(_.template($("#add-pet-template").html()));
 
-    $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", showOn: "button",
-      buttonImage: "images/calendar.gif",
-      buttonImageOnly: true,
-      buttonText: "Select date" });
+    $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D" });
   },
