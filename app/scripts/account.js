@@ -49,10 +49,10 @@ var AccountView = Parse.View.extend({
         className: "_User",
         objectId: Parse.User.current().getUsername()
       },
-      dateBirth: moment($('input#pet-dob').val()).format('MMMM D, YYYY, h:mm:ss a'),
-      dateDeath: $('input#pet-dod').val(),
-      dateAdopted: $('input#pet-dod').val(),
-      favoriteTreats: $('input#pet-treats').val(),
+      dateBirth: new Date($('input#pet-dob').val()),
+      dateDeath: new Date($('input#pet-dod').val()),
+      dateAdopted: new Date($('input#pet-dod').val()),
+      favoriteTreats: $('input#pet-treats').val().split(','),
       gender: $('input#pet-gender').val()
      });
      newPet.save().then(function(refreshList) {
