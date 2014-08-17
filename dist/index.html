@@ -148,15 +148,24 @@
       <script type="text/template" id="add-pet-template">
 
           <form id="add-pet-form">
-            <p><span>Name</span>
-            <input type="text" id="new-pet-name"></p>
-            <p><span>Type</span>
-            <select id="new-pet-type">
-              <option label="cat" value="cat">
+            <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required"></div>
+            <div id="p-gender"><span>Gender</span><select id="pet-gender">
+              <option selected label="Unk" value="Unk">
+              <option label="F" value="F">
+              <option label="M" value="M">
+            </select></div>
+            <div id="p-type"><span>Type</span><select id="pet-type">
+              <option label="bird" value="bird">
+              <option selected label="cat" value="cat">
               <option label="dog" value="dog">
-            </select>
-            <p><span>Bio</span>
-            <input type="textarea" id="new-pet-bio" placeholder="Tell the world about your pet here!">
+              <option label="horse" value="horse">
+            </select></div>
+            <div id="p-treats"><span>Favorite Treats</span><input type="text" id="pet-treats" placeholder="Just because"></div>
+            <div id="p-bio"><span>Bio</span><textarea rows="5" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
+            <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
+            <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
+            <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
+
             <input type="submit" value="Add">
           </form>
 
@@ -187,7 +196,7 @@
       </script>
 
       <script type="text/template" id="parse-pic-template">
-          
+
             <img class='montageSquare' src='<%-parseImg %>'>
 
       </script>

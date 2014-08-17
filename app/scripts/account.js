@@ -51,7 +51,7 @@ var AccountView = Parse.View.extend({
       },
       dateBirth: new Date($('input#pet-dob').val()),
       dateDeath: new Date($('input#pet-dod').val()),
-      dateAdopted: new Date($('input#pet-dod').val()),
+      dateAdopted: new Date($('input#pet-doa').val()),
       favoriteTreats: $('input#pet-treats').val().split(','),
       gender: $('input#pet-gender').val()
      });
