@@ -138,7 +138,7 @@ var FlickrPicListView = Parse.View.extend({
             //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
-            ('.pic-showcase').masonry({
+            $('.pic-showcase').masonry({
 
 
       });
@@ -217,7 +217,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
-       ('.pic-showcase').masonry({
+      $('.pic-showcase').masonry({
 
 
       });

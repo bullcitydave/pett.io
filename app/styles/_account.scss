@@ -1,6 +1,3 @@
-@import '../../bower_components/bourbon/dist/bourbon';
-@import '../../bower_components/neat/app/assets/stylesheets/neat';
-@import '../../bower_components/bitters/app/assets/stylesheets/_base';
 
   $mobile-s: new-breakpoint(min-width 320px 6);
   $mobile-m: new-breakpoint(min-width 480px 6);
@@ -73,6 +70,10 @@ div.user-profile {
   form#add-pet-form {
     @include span-columns(10);
     @include shift(1);
+
+    #pet-dob {
+      @include span-columns(4);
+    }
   }
 }
 
