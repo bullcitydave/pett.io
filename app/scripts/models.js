@@ -1,6 +1,10 @@
     var Pet = Parse.Object.extend("Pet", {
 
-
+    defaults:{
+      "dateDeath": new Date("12/31/2029"),
+      "dateBirth": new Date(),
+      "dateAdopted": new Date()
+    }
 
 
 
