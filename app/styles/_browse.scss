@@ -1,12 +1,16 @@
 
 div#browse-container {
-  @include outer-container;
-  background:$white;
+  // @include outer-container;
+  margin-top:100px;
+
   div.pet-box {
-    @include span-columns(4);
+    // @include span-columns(4);
+    float:left;
     img.pet-pic {
-      @include size(200px 200px);
+      width: auto;
+      height: 300px;
     }
+    background:#eaeaea;
     p.pet-name {
 
     }
