@@ -1,0 +1,49 @@
+#profile-container {
+    @include outer-container;
+    position: absolute;
+    left: 50%;
+    width: 80%;
+    z-index: 7001;
+
+    .profile {
+      @include column-span(10);
+      @include shift(1);
+      background: #aaa;
+      position:fixed;
+      font-family:$secondary-font;
+      font-size:1.3em;
+      width: 80%;
+      margin-left: -40%;
+
+
+
+      p {
+        border: solid 2px #333;
+        padding: 15px;
+        margin: 15px
+      }
+      p#bio {
+        @include column-span(10);
+      }
+      p#treats {
+        @include column-span(5);
+      }
+      p#colors {
+        @include column-span(5);
+      }
+      p#born, p#died, p#adopted {
+        @include column-span(3.3);
+      }
+      button#close-profile{
+        @include column-span(1.5);
+        @include shift(5.25);
+        background: transparent;
+        color:$black;
+        border-radius:0;
+        margin-bottom:20px;
+        border:solid 2px #333;
+        padding: 15px;
+      }
+
+    }
+  }

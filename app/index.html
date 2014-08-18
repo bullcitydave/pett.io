@@ -29,6 +29,8 @@
     <header id="main-header">
     </header>
     <div id="main-container">
+      <div id="profile-container">
+      </div>
       <div id="content">
       </div>
     </div>
@@ -132,25 +134,29 @@
       <script type="text/template" id="profile-template">
 
           <div class='profile' >
-            <% if (type != "null") { %>
-              <p>Type: <%-type%></p>
-            <% }  %>
-            <% if (!isNaN(dateBirth)) { %>
-              <p>Born: <%-dateBirth%></p>
-            <% }  %>
-            <% if (!isNaN(dateDeath)) { %>
-              <p>Died: <%-dateDeath%></p>
-            <% }  %>
-            <% if (!isNaN(dateAdopted)) { %>
-              <p>Adopted: <%-dateAdopted%></p>
-            <% }  %>
-            <p>Bio: <%-bio%></p>
-            <% if (favoriteTreats != "null") { %>
-              <p>Favorite Treats: <%-favoriteTreats%></p>
-            <% }  %>
-            <% if (colors != "null") { %>
-              <p>Colors: <%-colors%></p>
-            <% }  %>
+              <p id="bio"><%-bio%></p>
+
+              <% if (favoriteTreats != "null") { %>
+                <p id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
+              <% }  %>
+              <% if (colors != "null") { %>
+                <p id="colors">Colors: <%-colors%></p>
+              <% }  %>
+              <% if (type != "null") { %>
+                <p id="type">Type: <%-type%></p>
+              <% }  %>
+              <% if (!isNaN(dateBirth)) { %>
+                <p id="born">Born: <%-dateBirth%></p>
+              <% }  %>
+              <% if (!isNaN(dateDeath)) { %>
+                <p id="died">Died: <%-dateDeath%></p>
+              <% }  %>
+              <% if (!isNaN(dateAdopted)) { %>
+                <p id="adopted">Adopted: <%-dateAdopted%></p>
+              <% }  %>
+
+
+
             <button id="close-profile">Close</button>
           </div>
 
@@ -201,7 +207,7 @@
           <header id="pet-header">
             <h2><%-petName %></h2>
             <div id="about">About</div>
-            <div id="profile-container"></div>
+          <!--<div id="profile-container"></div>-->
       </script>
 
       <script type="text/template" id="parse-pic-template">

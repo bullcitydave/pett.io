@@ -9,6 +9,7 @@
 @import 'account';
 @import 'jqueryui';
 @import 'tools';
+@import 'profile';
 
 $mobile-s: new-breakpoint(min-width 320px 5);
 $mobile-m: new-breakpoint(min-width 480px 5);
@@ -59,9 +60,8 @@ body {
   background: $black;
   font-family: $secondary-font;
 
-  background:url('http://i.imgur.com/cotiNn3.jpg') no-repeat center center fixed;
+  background:linear-gradient(to bottom right, rgba(225,140,0, 0.85), rgba(49,79,79, 0.85)), url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
   background-size: cover;
-
 
   //
   header#main-header{
@@ -132,11 +132,12 @@ body {
         margin-top: -35px;
       }
       button {
-        @include button(shiny, $orange);
+        // @include button(shiny, $orange);
         @include not-as-shiny;
         font-size: 1.5em;
         width: 180px;
         padding: 10px 24px;
+        background: $orange;
       }
     }
   }
@@ -171,8 +172,8 @@ body {
       @include media($mobile-s) {
         position: absolute;
         right: 0;
-        top: 10px;
-        font-size: 0.8em;
+        top: 8px;
+        font-size: 0.9em;
         font-weight: 500;
         text-align: right;
 
@@ -191,7 +192,8 @@ body {
           top: 70px;
           padding: 0px 5px 0px 5px;
           background: #333;
-          color: #fff;
+          font-size: 1.1em;
+          color: #eaeaea;
         }
       }
 
@@ -300,8 +302,9 @@ body {
 
         }
         button {
-          @include button(shiny, $orange);
+          // @include button(shiny, $orange);
           @include not-as-shiny;
+          background:$darker-orange;
           color: $white;
           position:absolute;
           right: calc(50% - 60px)
@@ -323,8 +326,9 @@ body {
       }
 
       button#login {
-        @include button(shiny, $orange);
+        // @include button(shiny, $orange);
         @include not-as-shiny;
+        background: $darker-orange;
         position: absolute;
         top: 5px;
         right: 5px;
@@ -359,8 +363,9 @@ body {
         text-decoration: none;
         display: inline-block;
         button {
-          @include button(shiny, $orange);
+          // @include button(shiny, $orange);
           @include not-as-shiny;
+          background:$darker-orange;
           color: #eaeaea;
           float: left;
           width:120px;
@@ -385,10 +390,10 @@ body {
         top: $std-header-height;
 
           h2 {
-            font-size: 2.5em;
+            font-size: 3.5em;
             font-family: $secondary-font;
             font-weight: 300;
-            letter-spacing: .05em;
+            letter-spacing: .10em;
             background: $black;
             width: 100%;
             text-align: center;
@@ -397,7 +402,7 @@ body {
             text-transform: capitalize;
             color: #eaeaea;
             @media screen and (max-width: 480px){
-              font-size: 2.0em;
+              font-size: 2.5em;
               letter-spacing: .075em;
               margin: 0;
             }
@@ -413,21 +418,7 @@ body {
             margin: -5px 0 0 -32.5px;
           }
 
-          #profile-container {
-              position: absolute;
-              left: 50%;
-              width: 80%;
-              max-width: 600px;
-              opacity: .85;
-              .profile {
-                width: 100%;
-                background: #aaa;
-                position:fixed;
-                font-family:$secondary-font;
-                width: 80%;
-                margin-left: -40%;
-              }
-          }
+
 
 
       }
@@ -439,7 +430,7 @@ body {
 
 
 div.pic-showcase {
-  margin: 140px 0 0 0;
+  margin: 165px 0 0 0;
   position: absolute;
   top: 30px;
 
