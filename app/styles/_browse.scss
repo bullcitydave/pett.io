@@ -1,9 +1,11 @@
 
 div#browse-container {
   @include outer-container;
+  background:$white;
   div.pet-box {
+    @include span-columns(4);
     img.pet-pic {
-
+      @include size(200px 200px);
     }
     p.pet-name {
 

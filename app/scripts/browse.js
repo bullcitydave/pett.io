@@ -7,7 +7,7 @@ var sampledata = [
 
 
   // parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-03a00789-7d41-4538-8a6a-b3a476eafbd2-2014-03-05%2009.51.12.jpg", petName:"Zellouisa", personUsername:"bullcitydave"},  {parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-f1ee7353-45d3-4253-a7c3-1ceb57e613ff-ar020501_171633538_m.jpg", petName:"Aremid", personUsername:"bullcitydave"}];
-  //
+
 
 var BrowseView = Parse.View.extend({
 
@@ -36,31 +36,31 @@ var BrowseView = Parse.View.extend({
 
 
   events: {
-    "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm",
-    "click #account"  : "viewAccount"
+    // "click #about"    : "showProfile",
+    // "click #upload"   : "imageUploadForm",
+    // "click #account"  : "viewAccount"
   },
 
   render: function() {
 
-    // var ppQuery = new Parse.Query(ParsePic);
-    // // ppQuery.equalTo("username", Parse.User.current().getUsername());
+    var ppQuery = new Parse.Query(ParsePic);
+    // ppQuery.equalTo("username", Parse.User.current().getUsername());
     // ppQuery.equalTo("petname", tag);
-    //
-    // console.log('ppQuery: ',ppQuery);
-    //
-    // ppQuery.find({
-    //   success: function(results) {
-          // browseSelf.showPics(results);
-      // },
 
-      browseSelf.showPics(sampledata);
+    console.log('ppQuery: ',ppQuery);
+
+    ppQuery.find({
+      success: function(results) {
+          browseSelf.showPics(results);
+      },
 
 
-      // error: function(error) {
-      //     alert('Error!');
-      //   }
-      // });
+
+
+      error: function(error) {
+          alert('Error!');
+        }
+      });
     },
 
   showPics: function(results) {
@@ -69,13 +69,16 @@ var BrowseView = Parse.View.extend({
         console.log(results[i]);
         console.log(browseView);
 
-       $('#browse-container').append((_.template(browseView),results[i]));
-      //  $('#browse-container').append(_.template(browseView),results[i]);
+      //  $('#browse-container').append((_.template(browseView),results[i]));
+      //  $('#browse-container').append(_.template(browseView),results[i].attributes);
 
       //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i]));
+      //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i].attributes));
+      // $('#browse-container').append(_.template(browseView,JSON.stringify(results[i].attributes)));
+      $('#browse-container').append(_.template(browseView,results[i].attributes));
 
      }
-     return false;
+     
    }
 
 
