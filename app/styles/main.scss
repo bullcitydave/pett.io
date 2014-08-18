@@ -107,7 +107,7 @@ body {
         color: $orange;
 
         @include media($mobile-s) {
-          font-size: 5.0em;
+          font-size: 5.0em; 
         }
         @include media($mobile-l) {
           font-size: 9.0em;
