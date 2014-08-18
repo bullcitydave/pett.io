@@ -2,59 +2,68 @@
     @include outer-container;
     position: absolute;
     left: 50%;
-    width: 80%;
+    top: 155px;
     z-index: 7001;
 
     .profile {
-      @include span-columns(10);
-      @include shift(1);
-      background: #aaa;
       position:fixed;
       font-family:$secondary-font;
-      font-size:1.3em;
       width: 80%;
       margin-left: -40%;
-
-
 
       p {
         border: solid 2px #333;
         padding: 15px;
-        margin: 15px
+        margin: 15px;
+        font-weight: 300;
+        font-size:1.0em;
+
+        span {
+          font-weight: bold;
+          text-transform: uppercase;
+          display:block;
+          font-size:1.2em;
+        }
       }
       p#bio {
-        @include span-columns(10);
-        @include shift(1);
+        // @include span-columns(12);
+        // @include omega();
       }
-      p#treats {
-        @include span-columns(2.5);
+
+      p.small-field {
+        @include span-columns(3);
+        @include omega(4n);
       }
-      p#type {
-        @include span-columns(2.5);
-      }
-      p#body-type {
-        @include span-columns(2.5);
-      }
-      p#colors {
-        @include span-columns(2.5);
-      }
-      p#weight {
-        @include span-columns(2.5);
-      }
-      p#gender {
-        @include span-columns(2.5);
-      }
-      p#breeds {
-        @include span-columns(2.5);
-      }
+      // p#treats {
+      //   @include span-columns(2.5);
+      // }
+      // p#type {
+      //   @include span-columns(2.5);
+      // }
+      // p#body-type {
+      //   @include span-columns(2.5);
+      // }
+      // p#colors {
+      //   @include span-columns(2.5);
+      // }
+      // p#weight {
+      //   @include span-columns(2.5);
+      // }
+      // p#gender {
+      //   @include span-columns(2.5);
+      // }
+      // p#breeds {
+      //   @include span-columns(2.5);
+      // }
       p#born, p#died, p#adopted {
-        @include span-columns(3.3);
-        @include omega;
+        @include span-columns(4);
+        @include omega();
       }
       button#close-profile{
         @include span-columns(1.5);
         @include shift(5.25);
-        background: transparent;
+        clear:both;
+        background: $darker-orange;
         color:$black;
         border-radius:0;
         margin-bottom:20px;

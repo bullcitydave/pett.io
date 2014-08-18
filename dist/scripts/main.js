@@ -152,7 +152,7 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').hide();
+      $('#profile-container').html('');
       $(".pic-showcase").css("opacity", 1);
       return false;
     },
@@ -163,7 +163,7 @@ var ProfileView = Parse.View.extend ({
     },
 
     render: function(data){
-        _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
+        _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
         console.log(data);
         console.log(data.dateBirth);
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
@@ -172,13 +172,26 @@ var ProfileView = Parse.View.extend ({
           else { data.dateDeath = null };
         if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
-        console.log(data.dateBirth);
+
+        if (data.favoriteTreats != "null") {
+          data.favoriteTreats = data.favoriteTreats.toString().split(',').join(', ');
+        }
+        if (data.colors != "null") {
+          data.colors = data.colors.toString().split(',').join(', ');
+        }
+        if (data.breeds != "null") {
+          data.breeds = data.breeds.toString().split(',').join(', ');
+        }
+        if (data.bodyType != "null") {
+          data.bodyType = data.bodyType.toString().split(',').join(', ');
+        }
+
         var profileView = $('#profile-template').html();
-        // $('#profile-container').show();
+
         $('#profile-container').html(_.template(profileView,data));
         var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
 
-        $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.85), rgba(234,234,234,0.85)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
+        $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
       }
 });
 
@@ -731,6 +744,18 @@ var AccountView = Parse.View.extend({
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+
+    $( '#pet-weight').spinner({
+      spin: function( event, ui ) {
+        if ( ui.value > 150 ) {
+          $( this ).spinner( "value", 0 );
+          return false;
+        } else if ( ui.value < 0 ) {
+          $( this ).spinner( "value", 150 );
+          return false;
+        }
+      }
+    });
   },
 
 
@@ -751,7 +776,10 @@ var AccountView = Parse.View.extend({
       dateDeath: new Date($('input#pet-dod').val() || "12/31/2029"),
       dateAdopted: new Date($('input#pet-doa').val() || "01/01/1970"),
       favoriteTreats: $('textarea#pet-treats').val().split(','),
-      gender: $('input#pet-gender').val()
+      breeds: $('input#pet-breeds').val().split(','),
+      bodyType: $('input#body-type').val().split(','),
+      gender: $('input#pet-gender').val(),
+      weight: $('input#weight').val()
      });
      newPet.save().then(function(refreshList) {
       console.log(newPet.name, ' added to database');
@@ -1095,7 +1123,7 @@ $(function() {
       console.log('Logging out and back to main login');
       $('#main-container').removeClass('splash-main');
       $('#main-container').addClass('standard');
-      app_router.navigate('');
+      app_router.navigate('/');
       $('#main-header').removeClass('standard');
       new SplashView();
     }
