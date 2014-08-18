@@ -42,46 +42,70 @@ var BrowseView = Parse.View.extend({
   },
 
   render: function() {
-
+    // var petsQuery = new Parse.Query(Pet);
+    // petsQuery.ascending("uniqueName");
+    // petsQuery.find({
+    //   success: function(results) {
+    //       for (var i = 0; i < results.length ; i++) {
+    //
+    //       browseSelf.showPics(results);
+    //   },
+    //
+    //
+    //
+    //
+    //   error: function(error) {
+    //       alert('Error!');
+    //     }
+    // });
+var petsQuery = new Parse.Query(Pet);
+petsQuery.select("uniqueName");
+petsQuery.ascending("uniqueName");
+petsQuery.find({
+  success: function(results) {
+  for (var i = 0; i < results.length ; i++)
+    { console.log(results[i].attributes.uniqueName);
+    var petUName = results[i].attributes.uniqueName;
     var ppQuery = new Parse.Query(ParsePic);
-    // ppQuery.equalTo("username", Parse.User.current().getUsername());
-    // ppQuery.equalTo("petname", tag);
 
-    console.log('ppQuery: ',ppQuery);
+    ppQuery.equalTo("petname",petUName);
+    ppQuery.first;
+    ppQuery.ascending("petname");
+
 
     ppQuery.find({
       success: function(results) {
+          if (results.length > 0) { var petImg = results[0].attributes.url;};
+          console.log(petImg);
           browseSelf.showPics(results);
-      },
-
-
-
-
-      error: function(error) {
+      }
+    });
+  }
+},
+  error: function(error) {
           alert('Error!');
         }
       });
-    },
-
-  showPics: function(results) {
-     var browseView = $('#browse-template').html();
-     for (var i = 0; i < results.length ; i++) {
-        console.log(results[i]);
-        console.log(browseView);
-
-      //  $('#browse-container').append((_.template(browseView),results[i]));
-      //  $('#browse-container').append(_.template(browseView),results[i].attributes);
-
-      //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i]));
-      //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i].attributes));
-      // $('#browse-container').append(_.template(browseView,JSON.stringify(results[i].attributes)));
-      $('#browse-container').append(_.template(browseView,results[i].attributes));
-
-     }
-     
-   }
 
 
+},
 
 
-});
+showPics: function(results) {
+   var browseView = $('#browse-template').html();
+  //  for (var i = 0; i < results.length ; i++) {
+      console.log(results);
+      console.log(browseView);
+    //
+    //  $('#browse-container').append((_.template(browseView),results[i]));
+    //  $('#browse-container').append(_.template(browseView),results[i].attributes);
+    //
+    //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i]));
+    //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i].attributes));
+    // $('#browse-container').append(_.template(browseView,JSON.stringify(results[i].attributes)));
+    $('#browse-container').append(_.template(browseView,results.attributes));
+
+  //  }
+
+ }
+}) ;
