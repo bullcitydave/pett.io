@@ -106,7 +106,7 @@ section#update-pet {
 
   form#add-pet-form {
     @include span-columns(12);
-    
+
 
     span{
       float:left;
@@ -132,6 +132,17 @@ section#update-pet {
       @include span-columns(2.5);
       float:left;
     }
+
+    #pet-breeds {
+      @include span-columns(2.5);
+      float:left;
+    }
+
+    #pet-weight {
+      @include span-columns(1.5);
+      float:left;
+    }
+
 
     #pet-dob {
       @include shift(0.5);

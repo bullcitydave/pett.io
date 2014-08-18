@@ -134,12 +134,13 @@
       <script type="text/template" id="profile-template">
 
           <div class='profile' >
-              <p id="bio"><%-bio%></p>
-
+              <% if (bio != "null") { %>
+                <p id="bio"><%-bio%></p>
+              <% }  %>
               <% if (type != "null") { %>
                 <p id="type"><span>Type</span> <%-type%></p>
               <% }  %>
-              % if (gender != "null") { %>
+              <% if  (gender != "null") { %>
                 <p id="gender"><span>Gender</span> <%-gender%></p>
               <% }  %>
               <% if (colors != "null") { %>
@@ -147,6 +148,9 @@
               <% }  %>
               <% if (breeds != "null") { %>
                 <p id="breeds"><span>Breed</span> <%-breeds%></p>
+              <% }  %>
+              <% if (bodyType != "null") { %>
+                <p id="body-type"><span>Body Type</span> <%-bodyType%></p>
               <% }  %>
               <% if (weight != "null") { %>
                 <p id="weight"><span>Weight</span> <%-weight%></p>
@@ -189,6 +193,7 @@
               <option label="reptile" value="reptile">
             </select></div>
             <div id="p-colors"><span>Colors</span><textarea rows="1" id="pet-colors" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-body-type"><span>Body Type</span><textarea rows="1" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')">
             <div id="p-weight"><span>Weight (lb.)</span><input type="text" id="pet-weight"></div>
             <div id="p-bio"><span>Bio</span><textarea rows="5" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
             <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>

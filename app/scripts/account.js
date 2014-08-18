@@ -66,9 +66,9 @@ var AccountView = Parse.View.extend({
       dateAdopted: new Date($('input#pet-doa').val() || "01/01/1970"),
       favoriteTreats: $('textarea#pet-treats').val().split(','),
       breeds: $('input#pet-breeds').val().split(','),
+      bodyType: $('input#body-type').val().split(','),
       gender: $('input#pet-gender').val(),
-      weight: $('input#weight').val(),
-      bodyType: $('input#body-type').val().split(',')
+      weight: $('input#weight').val()
      });
      newPet.save().then(function(refreshList) {
       console.log(newPet.name, ' added to database');

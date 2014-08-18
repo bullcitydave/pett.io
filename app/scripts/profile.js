@@ -51,7 +51,7 @@ var ProfileView = Parse.View.extend ({
     },
 
     render: function(data){
-        _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null"});
+        _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
         console.log(data);
         console.log(data.dateBirth);
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
@@ -60,9 +60,22 @@ var ProfileView = Parse.View.extend ({
           else { data.dateDeath = null };
         if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
-        console.log(data.dateBirth);
+
+        if (data.favoriteTreats != "null") {
+          data.favoriteTreats = data.favoriteTreats.toString().split(',').join(', ');
+        }
+        if (data.colors != "null") {
+          data.colors = data.colors.toString().split(',').join(', ');
+        }
+        if (data.breeds != "null") {
+          data.breeds = data.breeds.toString().split(',').join(', ');
+        }
+        if (data.bodyType != "null") {
+          data.bodyType = data.bodyType.toString().split(',').join(', ');
+        }
+
         var profileView = $('#profile-template').html();
-        // $('#profile-container').show();
+
         $('#profile-container').html(_.template(profileView,data));
         var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
 

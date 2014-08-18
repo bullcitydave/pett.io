@@ -6,7 +6,7 @@
     z-index: 7001;
 
     .profile {
-      @include column-span(10);
+      @include span-columns(10);
       @include shift(1);
       background: #aaa;
       position:fixed;
@@ -23,19 +23,36 @@
         margin: 15px
       }
       p#bio {
-        @include column-span(10);
+        @include span-columns(10);
+        @include shift(1);
       }
       p#treats {
-        @include column-span(5);
+        @include span-columns(2.5);
+      }
+      p#type {
+        @include span-columns(2.5);
+      }
+      p#body-type {
+        @include span-columns(2.5);
       }
       p#colors {
-        @include column-span(5);
+        @include span-columns(2.5);
+      }
+      p#weight {
+        @include span-columns(2.5);
+      }
+      p#gender {
+        @include span-columns(2.5);
+      }
+      p#breeds {
+        @include span-columns(2.5);
       }
       p#born, p#died, p#adopted {
-        @include column-span(3.3);
+        @include span-columns(3.3);
+        @include omega;
       }
       button#close-profile{
-        @include column-span(1.5);
+        @include span-columns(1.5);
         @include shift(5.25);
         background: transparent;
         color:$black;
