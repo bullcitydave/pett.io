@@ -134,25 +134,38 @@
       <script type="text/template" id="profile-template">
 
           <div class='profile' >
-              <p id="bio"><%-bio%></p>
-
-              <% if (favoriteTreats != "null") { %>
-                <p id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
-              <% }  %>
-              <% if (colors != "null") { %>
-                <p id="colors">Colors: <%-colors%></p>
+              <% if (bio != "null") { %>
+                <p id="bio"><%-bio%></p>
               <% }  %>
               <% if (type != "null") { %>
-                <p id="type">Type: <%-type%></p>
+                <p class="small-field" id="type"><span>Type</span> <%-type%></p>
+              <% }  %>
+              <% if (gender != "null") { %>
+                <p class="small-field" id="gender"><span>Gender</span> <%-gender%></p>
+              <% }  %>
+              <% if (colors != "null") { %>
+                <p class="small-field" id="colors"><span>Colors</span> <%-colors%></p>
+              <% }  %>
+              <% if (breeds != "null") { %>
+                <p class="small-field" id="breeds"><span>Breed</span> <%-breeds%></p>
+              <% }  %>
+              <% if (bodyType != "null") { %>
+                <p class="small-field" id="body-type"><span>Body Type</span> <%-bodyType%></p>
+              <% }  %>
+              <% if (weight != "null") { %>
+                <p class="small-field" id="weight"><span>Weight</span> <%-weight%></p>
+              <% }  %>
+              <% if (favoriteTreats != "null") { %>
+                <p class="small-field" id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
               <% }  %>
               <% if (!isNaN(dateBirth)) { %>
-                <p id="born">Born: <%-dateBirth%></p>
+                <p class="date-field" id="born"><span>Born</span> <%-dateBirth%></p>
               <% }  %>
               <% if (!isNaN(dateDeath)) { %>
-                <p id="died">Died: <%-dateDeath%></p>
+                <p  class="date-field" id="died"><span>Passed</span> <%-dateDeath%></p>
               <% }  %>
               <% if (!isNaN(dateAdopted)) { %>
-                <p id="adopted">Adopted: <%-dateAdopted%></p>
+                <p  class="date-field" id="adopted"><span>Adopted</span> <%-dateAdopted%></p>
               <% }  %>
 
 
@@ -167,21 +180,27 @@
           <form id="add-pet-form">
             <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required"></div>
             <div id="p-gender"><span>Gender</span><select id="pet-gender">
-              <option selected label="Unk" value="Unk">
-              <option label="F" value="F">
-              <option label="M" value="M">
+              <option selected label="Unknown" value="Unk">
+              <option label="Female" value="Female">
+              <option label="Male" value="Male">
             </select></div>
             <div id="p-type"><span>Type</span><select id="pet-type">
               <option label="bird" value="bird">
               <option selected label="cat" value="cat">
               <option label="dog" value="dog">
+              <option label="fish" value="fish">
               <option label="horse" value="horse">
+              <option label="reptile" value="reptile">
             </select></div>
-            <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-colors"><span>Colors</span><textarea rows="1" id="pet-colors" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-body-type"><span>Body Type</span><textarea rows="1" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')">
+            <div id="p-weight"><span>Weight (lb.)</span><input type="text" id="pet-weight"></div>
             <div id="p-bio"><span>Bio</span><textarea rows="5" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
-            <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
-            <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
-            <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/YY/DDDD"><i class="fa fa-calendar"></i></div>
+            <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
+            <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
+            <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
+            <div id="p-treats"><span>Favorite Treats</span><textarea rows="1" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
+
 
             <input type="submit" value="Add">
           </form>

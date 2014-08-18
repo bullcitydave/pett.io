@@ -70,7 +70,7 @@ $(function() {
       console.log('Logging out and back to main login');
       $('#main-container').removeClass('splash-main');
       $('#main-container').addClass('standard');
-      app_router.navigate('');
+      app_router.navigate('/');
       $('#main-header').removeClass('standard');
       new SplashView();
     }

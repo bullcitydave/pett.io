@@ -33,6 +33,18 @@ var AccountView = Parse.View.extend({
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+
+    $( '#pet-weight').spinner({
+      spin: function( event, ui ) {
+        if ( ui.value > 150 ) {
+          $( this ).spinner( "value", 0 );
+          return false;
+        } else if ( ui.value < 0 ) {
+          $( this ).spinner( "value", 150 );
+          return false;
+        }
+      }
+    });
   },
 
 
@@ -53,7 +65,10 @@ var AccountView = Parse.View.extend({
       dateDeath: new Date($('input#pet-dod').val() || "12/31/2029"),
       dateAdopted: new Date($('input#pet-doa').val() || "01/01/1970"),
       favoriteTreats: $('textarea#pet-treats').val().split(','),
-      gender: $('input#pet-gender').val()
+      breeds: $('input#pet-breeds').val().split(','),
+      bodyType: $('input#body-type').val().split(','),
+      gender: $('input#pet-gender').val(),
+      weight: $('input#weight').val()
      });
      newPet.save().then(function(refreshList) {
       console.log(newPet.name, ' added to database');
