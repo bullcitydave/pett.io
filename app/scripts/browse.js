@@ -69,15 +69,17 @@ petsQuery.find({
     var ppQuery = new Parse.Query(ParsePic);
 
     ppQuery.equalTo("petname",petUName);
-    ppQuery.first;
+    ppQuery.first();
     ppQuery.ascending("petname");
 
 
     ppQuery.find({
       success: function(results) {
-          if (results.length > 0) { var petImg = results[0].attributes.url;};
+          if (results.length > 0) {
+          var petImg = results[0].attributes.url;
           console.log(petImg);
-          browseSelf.showPics(results);
+          browseSelf.showPics(results[0]);
+        };
       }
     });
   }
