@@ -32,6 +32,8 @@ var BrowseView = Parse.View.extend({
     $('body').addClass('whitebg');
     $('#main-container').append("<div id='browse-container'></div>");
     browseSelf.render();
+
+
   },
 
 
@@ -58,11 +60,21 @@ var BrowseView = Parse.View.extend({
     //       alert('Error!');
     //     }
     // });
+
 var petsQuery = new Parse.Query(Pet);
 petsQuery.select("uniqueName");
 petsQuery.ascending("uniqueName");
 petsQuery.find({
   success: function(results) {
+
+    $('#browse-container').imagesLoaded(function() {
+      $('#browse-container').masonry({
+            columnwidth: 200,
+            itemSelector: '.pet-box'
+      });
+    });
+
+
   for (var i = 0; i < results.length ; i++)
     { console.log(results[i].attributes.uniqueName);
     var petUName = results[i].attributes.uniqueName;
@@ -83,6 +95,13 @@ petsQuery.find({
       }
     });
   }
+
+  $('#browse-container').masonry({
+        columnwidth: 300,
+        itemSelector: '.pet-box'
+  });
+
+
 },
   error: function(error) {
           alert('Error!');
