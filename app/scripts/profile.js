@@ -1,8 +1,10 @@
 var ProfileView = Parse.View.extend ({
 
-  el: "#pet-header",
+  el: "#main-container",
 
   initialize: function(tag) {
+
+    $('#main-container').prepend('<div id="profile-container"></div>');
     this.pet = tag;
 
     console.log('Getting profile for ', this.pet);
@@ -12,6 +14,9 @@ var ProfileView = Parse.View.extend ({
     nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
     nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
     nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+
+
+    $(".pic-showcase").css("opacity", .3);
 
 
 
@@ -35,8 +40,8 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').html('');
       $('#profile-container').hide();
+      $(".pic-showcase").css("opacity", 1);
       return false;
     },
 
@@ -57,7 +62,10 @@ var ProfileView = Parse.View.extend ({
           else { data.dateAdopted = null };
         console.log(data.dateBirth);
         var profileView = $('#profile-template').html();
-        $('#profile-container').show();
+        // $('#profile-container').show();
         $('#profile-container').html(_.template(profileView,data));
+        var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
+
+        $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.85), rgba(234,234,234,0.85)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
       }
 });
