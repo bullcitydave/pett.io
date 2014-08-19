@@ -7,7 +7,11 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     link = this;
     pet=tag;
-    user=Parse.User.current().getUsername();
+    if (Parse.User.current() != null)  {
+      user=Parse.User.current().getUsername();
+      }
+    else
+      user = "guest";
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -158,7 +162,7 @@ var FlickrPicListView = Parse.View.extend({
       var fQuery = new Parse.Query(PersonPetTags);
       console.log('User: ',user);
       console.log('Pet: ',pet);
-      fQuery.equalTo("username", user);
+      // fQuery.equalTo("username", user);  //why do I need this?
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {

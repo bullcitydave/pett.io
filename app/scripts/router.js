@@ -6,7 +6,9 @@ var AppRouter = Parse.Router.extend({
        'account/:user'   :     'updateAccount',
        'browse'          :     'goBrowse',
        ''                :     'splash',
-       ':petName'        :     'getPet'
+    ':petName'        :     'getPet',
+
+
 
 
         }
