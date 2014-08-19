@@ -152,7 +152,7 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').html('');
+      $('#profile-container').remove();
       $(".pic-showcase").css("opacity", 1);
       return false;
     },
@@ -415,7 +415,11 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     link = this;
     pet=tag;
-    user=Parse.User.current().getUsername();
+    if (Parse.User.current() != null)  {
+      user=Parse.User.current().getUsername();
+      }
+    else
+      user = "guest";
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -566,7 +570,7 @@ var FlickrPicListView = Parse.View.extend({
       var fQuery = new Parse.Query(PersonPetTags);
       console.log('User: ',user);
       console.log('Pet: ',pet);
-      fQuery.equalTo("username", user);
+      // fQuery.equalTo("username", user);  //why do I need this?
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {
@@ -824,13 +828,15 @@ var AccountView = Parse.View.extend({
       dateDeath: new Date($('input#pet-dod').val() || "12/31/2029"),
       dateAdopted: new Date($('input#pet-doa').val() || "01/01/1970"),
       favoriteTreats: $('textarea#pet-treats').val().split(','),
-      breeds: $('input#pet-breeds').val().split(','),
-      bodyType: $('input#body-type').val().split(','),
+      breeds: $('textarea#pet-breeds').val().split(','),
+      colors: $('textarea#pet-colors').val().split(','),
+      bodyType: $('textarea#pet-body-type').val().split(','),
       gender: $('input#pet-gender').val(),
-      weight: $('input#weight').val()
+      weight: parseInt($('input#pet-weight').val())
      });
      newPet.save().then(function(refreshList) {
       console.log(newPet.name, ' added to database');
+      alert('Information for ' + newPet.name + ' saved');
       x.render();
       }, function(error) {
       console.log('Error adding pet to database');
@@ -988,6 +994,7 @@ var AccountView = Parse.View.extend({
      });
 
       newPetPersonTag.save().then(function() {
+       alert('Flickr user ' + $("input#flickr-account").val() + ' and Flickr tag ' + $("input#flickr-tag").val() + ' added for ' + $("select#pet-names").val());
        console.log('Flickr user ' + $("input#flickr-account").val() + ' and Flickr tag ' + $("input#flickr-tag").val() + ' added to database for pet ' + $("select#pet-names").val());
        }, function(error) {
        console.log('Error adding Flickr tag');
@@ -1028,7 +1035,9 @@ var AppRouter = Parse.Router.extend({
        'account/:user'   :     'updateAccount',
        'browse'          :     'goBrowse',
        ''                :     'splash',
-       ':petName'        :     'getPet'
+    ':petName'        :     'getPet',
+
+
 
 
         }

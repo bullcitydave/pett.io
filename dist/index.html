@@ -84,12 +84,13 @@
             <section id="your-pets">
               <h3>Your Pets</h3>
               <button id="add-pet">Add a pet</button>
+              <section id="update-pet">
+              </section>
               <div id="my-pet-list">
               </div>
             </section>
 
-            <section id="update-pet">
-            </section>
+
 
             <section id="add-media">
               <h3>Add a Flickr account</h3>
@@ -183,17 +184,18 @@
               <option label="horse" value="horse">
               <option label="reptile" value="reptile">
             </select></div>
-            <div id="p-colors"><span>Colors</span><textarea rows="1" id="pet-colors" placeholder="Separate list w/ commas"></textarea></div>
-            <div id="p-body-type"><span>Body Type</span><textarea rows="1" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')">
-            <div id="p-weight"><span>Weight (lb.)</span><input type="text" id="pet-weight"></div>
-            <div id="p-bio"><span>Bio</span><textarea rows="5" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
-            <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
-            <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
-            <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"><i class="fa fa-calendar"></i></div>
-            <div id="p-treats"><span>Favorite Treats</span><textarea rows="1" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
-
-
-            <input type="submit" value="Add">
+            <div id="p-weight"><span id="weight-label">Weight (lb.)</span><input type="text" id="pet-weight"></div>
+            <div id="p-colors"><span>Colors</span><textarea rows="2" id="pet-colors" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-breeds"><span>Breed</span><textarea rows="2" id="pet-breeds" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-body-type"><span>Body Type</span><textarea rows="2" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')"></textarea></div>
+            <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
+            <div id="p-bio"><span>Bio</span><textarea rows="9" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
+            <div id="p-dates">
+              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"></div>
+              <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"></div>
+              <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"></div>
+            </div>
+            <input id="p-submit" type="submit" value="Submit">
           </form>
 
       </script>
