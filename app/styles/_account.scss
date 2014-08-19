@@ -107,56 +107,102 @@ section#update-pet {
   form#add-pet-form {
     @include span-columns(12);
 
+    input, label, select {
+      clear: left;
+    }
+
 
     span{
       float:left;
       padding: 0px 10px 0 10px;
     }
 
-    #pet-name {
-      @include span-columns(2.5);
+    #p-name {
+      @include span-columns(3.5);
       float:left;
     }
 
-    #pet-type {
-      @include span-columns(1.5);
+    #p-gender {
+      @include span-columns(2);
       float:left;
     }
 
-    #pet-gender {
-      @include span-columns(1.5);
+    #p-type {
+      @include span-columns(2);
       float:left;
     }
 
-    #pet-treats {
-      @include span-columns(2.5);
+    #p-weight {
+      @include span-columns(4.5);
       float:left;
+      @include omega;
+      span#weight-label {
+        @include span-columns(1 of 4.5);
+      }
+      span.ui-widget {
+        @include span-columns(3.5 of 4.5);
+          input {
+            @include span-columns(1.5 of 3.5);
+          }
+          a {
+            @include span-columns(1 of 3.5);
+            @include omega;
+            span {
+              padding:4px;
+            }
+          }
+        }
+      }
+
+    #p-colors {
+      @include span-columns(6);
+      float:left;
+      clear:left;
+
     }
 
-    #pet-breeds {
-      @include span-columns(2.5);
+    #p-breeds {
+      @include span-columns(6);
       float:left;
+      @include omega();
     }
 
-    #pet-weight {
-      @include span-columns(1.5);
+    #p-body-type {
+      @include span-columns(6);
       float:left;
+
     }
 
+    #p-treats {
+      @include span-columns(6);
+      float:left;
+      @include omega();
+    }
+    #p-bio {
+      @include span-columns(6);
+      float:left;
+      clear:left;
 
-    #pet-dob {
-      @include shift(0.5);
+    }
+    #p-dates {
+      @include span-columns(6);
+      float:left;
+      @include omega();
+      #p-dob {
+        clear:left;
+      }
+
+      #p-doa {
+        clear:left;
+      }
+
+      #p-dod {
+        clear:left;
+      }
+    }
+    #p-submit {
       @include span-columns(3);
-      float:left;
-    }
-
-    #pet-doa {
-      @include span-columns(3);
-      float:left;
-    }
-
-    #pet-dod {
-      @include span-columns(3);
+      @include shift(4.5);
     }
   }
 }
