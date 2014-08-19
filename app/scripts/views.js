@@ -47,6 +47,11 @@ var LinkView = Parse.View.extend({
     new ParsePicListView(tag);
     new FlickrPicListView(tag);
 
+    // for demo / POC
+    if (tag == 'moksha') {
+      new VineListView(tag);
+    }
+
   },
 
 
@@ -241,29 +246,29 @@ var ParsePicListView = Parse.View.extend({
 
 /////////////////////////
 
-// var VineListView = Parse.View.extend({
-    //
-    // initialize: function() {
-    //   this.vineList = new VineList;
-    //   this.tag = 'mokshadog';
-    //   this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
-    //   this.render();
-    //
-    // },
-    //
-    //
-    //
-    // render: function () {
-    //   tag = this.tag;
-    //   $.getJSON(this.vineApiUrl).done(function(vineData, tag){
-    //     var vineView = $('#vine-template').html();
-    //     console.log = vineData.data.records;
-    //     for (var i = 0; i < 9 ; i++) {
-    //         permalinkUrl = vineData.data.records[i].permalinkUrl;
-    //         console.log = vineData.data.records[i];
-    //         postId = vineData.data.records[i].postId;
-    //         $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
-    //       }
-    //     })
-    //   }
-    // });
+var VineListView = Parse.View.extend({
+
+    initialize: function() {
+      this.vineList = new VineList;
+      this.tag = 'mokshadog';
+      this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
+      this.render();
+
+    },
+
+
+
+    render: function () {
+      tag = this.tag;
+      $.getJSON(this.vineApiUrl).done(function(vineData, tag){
+        var vineView = $('#vine-template').html();
+        console.log = vineData.data.records;
+        for (var i = 0; i < 9 ; i++) {
+            permalinkUrl = vineData.data.records[i].permalinkUrl;
+            console.log = vineData.data.records[i];
+            postId = vineData.data.records[i].postId;
+            $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
+          }
+        })
+      }
+    });
