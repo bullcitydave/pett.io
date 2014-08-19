@@ -35,7 +35,8 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile'
+      'click #close-profile'    : 'closeProfile',
+      'click #next-pic'    : 'getBackground'
 
     },
 
@@ -50,6 +51,12 @@ var ProfileView = Parse.View.extend ({
     getDate: function(parseDate) {
       var pettioDate = moment(parseDate).year();
       return pettioDate;
+    },
+
+    getBackground: function() {
+      var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
+
+      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
     },
 
     render: function(data){
@@ -79,8 +86,9 @@ var ProfileView = Parse.View.extend ({
         var profileView = $('#profile-template').html();
 
         $('#profile-container').html(_.template(profileView,data));
-        var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
 
-        $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
+        profile.getBackground();
+
+
       }
 });
