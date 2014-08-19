@@ -66,6 +66,7 @@ var LinkView = Parse.View.extend({
   showProfile: function(e) {
     e.preventDefault();
     $('#about').hide();
+    // $('#main-container').css('overflow', 'hidden');
     new ProfileView(pet);
     return false;
   },
