@@ -44,13 +44,17 @@ var LinkView = Parse.View.extend({
     //   });
     // });
 
-    new ParsePicListView(tag);
-    new FlickrPicListView(tag);
+    mContainer.imagesLoaded(function() {
+      mContainer.masonry({
+            columnwidth: 300,
+            itemSelector: '.montageSquare'
+      });
+    });
 
-    // for demo / POC
-    if (tag == 'moksha') {
-      new VineListView(tag);
-    }
+
+    this.render();
+
+
 
   },
 
@@ -66,6 +70,17 @@ var LinkView = Parse.View.extend({
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
     // "click #account"  : "viewAccount"
+  },
+
+  render: function() {
+    var parsePicListView = new ParsePicListView(pet);
+    var flickrPicListView = new FlickrPicListView(pet);
+
+
+    // for demo / POC
+    // if (pet == 'moksha') {
+    //   new VineListView(pet);
+    // }
   },
 
   showProfile: function(e) {
@@ -148,7 +163,7 @@ var FlickrPicListView = Parse.View.extend({
 
             // for (var i = 0; i < 9 ; i++) {
             //     if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-            //     {
+            //       {
             //       console.log('Vertical!');
             //       $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
             //       $(".picContainer").eq(i).addClass("w2");
@@ -194,10 +209,10 @@ var FlickrPicListView = Parse.View.extend({
 var ParsePicListView = Parse.View.extend({
     el: "#main-container",
 
-    initialize: function(tag) {
+    initialize: function(pet) {
       parseSelf=this;
-      console.log('Initializing parse pic view. Tag: ',tag);
-      this.render(tag);
+      console.log('Initializing parse pic view. Pet: ',pet);
+      this.render(pet);
 
     },
 
@@ -267,7 +282,7 @@ var VineListView = Parse.View.extend({
             permalinkUrl = vineData.data.records[i].permalinkUrl;
             console.log = vineData.data.records[i];
             postId = vineData.data.records[i].postId;
-            $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
+            $('.pic-showcase').insertAfter(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
           }
         })
       }
