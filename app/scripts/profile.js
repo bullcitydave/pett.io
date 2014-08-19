@@ -40,7 +40,7 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').html('');
+      $('#profile-container').remove();
       $(".pic-showcase").css("opacity", 1);
       return false;
     },
