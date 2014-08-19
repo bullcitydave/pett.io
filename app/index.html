@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <title>pett.io</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
+    <link rel="shortcut icon" href="favicon.ico?v=1" />
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
@@ -218,11 +218,13 @@
 <!-- <img src='<%-browseImg %>' class='pet-pic'> -->
       <script type="text/template" id="browse-template">
           <div class='pet-box'>
-
-            <div class='pet-name'><a href="/#/<%=petname %>"><%=petname %></a></div>
-            <div class='pet-person'><%=username %></div>
-
             <img class='pet-pic' src='<%=url %>'>
+            <div class="pet-pic-info">
+              <div class='pet-name'><a href="/#/<%=petname %>"><%=petname %></a></div>
+              <div class='pet-person'><%=username %></div>
+            </div>
+
+
           </div>
       </script>
 

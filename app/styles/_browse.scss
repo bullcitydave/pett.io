@@ -6,17 +6,35 @@ div#browse-container {
   div.pet-box {
     // @include span-columns(4);
     float:left;
+
     img.pet-pic {
       width: auto;
       height: 300px;
     }
-    background:#eaeaea;
-    p.pet-name {
+
+   .pet-pic-info {
+
+        width: 100%;
+
+        margin: 0;
+        padding: 0 5px 0 5px;
+
+        .pet-person {
+          float:right;
+          color: $black;
+        }
+        .pet-name {
+           float: left;
+    color:$darker-orange;
+    width: 85px;
+    font-size:2.0em
+        }
 
     }
-    p.pet-person {
 
-    }
+    background-color: $white;
+    margin: 18px 14px 0 14px;
+
   }
 
 }
