@@ -4,9 +4,12 @@
       "dateDeath": new Date("12/31/2029"),
       "dateBirth": new Date(),
       "dateAdopted": new Date()
-    }
+    },
 
 
+    isLiving: function () {
+    return (this.get("dateDeath") === "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") === undefined);
+  }
 
     });
 
@@ -88,3 +91,11 @@
           }
 
         });
+
+    var Pets = Parse.Collection.extend({
+
+      model:Pet
+
+    });
+
+    thesePets = new Pets();

@@ -411,6 +411,16 @@ body {
             }
           }
 
+        span#life-marker {
+          position: absolute;
+          top: 60%;
+          left: 50%;
+          color: darkorange;
+          width: 20%;
+          margin-left: -10%;
+          }
+
+
           #about {
             @include not-as-shiny;
             position: absolute;
@@ -423,14 +433,9 @@ body {
             text-transform: uppercase;
             color:$black;
           }
-
-
-
-
+        }
       }
-    }
 }
-
 
 
 

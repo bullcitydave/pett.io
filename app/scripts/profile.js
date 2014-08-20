@@ -26,9 +26,32 @@ var ProfileView = Parse.View.extend ({
       success: function(results) {
         console.log("Successfully retrieved " + profile.pet + ". Attempting to render...");
         profile.render(results[0].attributes);
+
+        thesePets.fetch({
+        success: function(collection) {
+            console.log(collection);
+            var thisPet = thesePets.get(results[0].id);
+            if(thisPet.get("dateDeath")) {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
+              var lifeMarkerEl = document.createElement("p");
+              // lifeMarkerEl.attr('id', "lifeMarker");
+             $(lifeMarkerEl).insertAfter($('header h2'));
+           $(lifeMarkerEl).html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            }
+        },
+        error: function(collection, error) {
+            console.log("Error: " + error.code + " " + error.message);
+        }
+    });
+
+
+
+
+        console.log(results[0].attributes);
       },
       error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+        console.log("Error: " + error.code + " " + error.message);
       }
     });
   },
