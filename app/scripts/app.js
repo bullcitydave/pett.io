@@ -10,12 +10,13 @@ $(function() {
         // "click #upload"   : "imageUploadForm",
         // "click #account"  : "viewAccount"
       },
-    
+
 
     initialize: function() {
       self = this;
 
-      mContainer = $('.pic-showcase');
+      self.masonryContainer = $('.pic-showcase').masonry();
+
 
       userType = "visitor";
 
