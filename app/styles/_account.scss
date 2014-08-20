@@ -32,6 +32,26 @@ div.user-profile {
   section#your-pets {
     @include span-columns(12);
 
+    h3 {
+        text-align:center;
+        clear:both;
+        font-weight:300;
+        background: $orange;
+        color: $white;
+        border-radius: 0.1875em;
+       }
+
+    button#add-pet {
+      @include media($mobile-s) {
+        @include span-columns(4 of 12); @include shift(4 of 12);
+      }
+      margin:0 0 20px 0;
+      position: absolute;
+      top: 0;
+      right: 50%;
+      margin-left: calc(50%-50px);
+    }
+
     div#my-pet-list {
       @include span-columns(12 of 12);
       p.pet-list-name {
@@ -48,25 +68,7 @@ div.user-profile {
           font-size: 0.8em;
         }
       }
-      h3 {
-          text-align:center;
-          clear:both;
-          font-weight:300;
-          background: $orange;
-          color: $white;
-          border-radius: 0.1875em;
-         }
 
-      button#add-pet {
-        @include media($mobile-s) {
-          @include span-columns(4 of 12); @include shift(4 of 12);
-        }
-        margin:0 0 20px 0;
-        position: absolute;
-        top: 0;
-        right: 50%;
-        margin-left: calc(50%-50px);
-      }
 
       input {
         float: left;
