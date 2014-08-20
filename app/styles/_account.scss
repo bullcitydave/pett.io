@@ -29,50 +29,11 @@ div.user-profile {
       background: #aaa;
     }
 
-  section#yourpets {
-
-    h3 {
-        text-align:center;
-        clear:both;
-        font-weight:300;
-        background: $orange;
-        color: $white;
-        border-radius: 0.1875em;
-       }
-
-    button#add-pet {
-      @include media($mobile-s) {
-        @include span-columns(4); @include shift(4);
-      }
-      margin:0 0 20px 0;
-      position: absolute;
-      top: 0;
-      right: 50%;
-      margin-left: calc(50%-50px);
-    }
-
-    input {
-      float: left;
-    }
-    select {
-      float: left;
-    }
-    textarea {
-      float: left;
-    }
-    span {
-      display: inline-block;
-      float: left;
-    }
-
-    p.help {
-        font-size: 0.8em;
-        padding: 0 20px 0 20px;
-      }
-
-
+  section#your-pets {
+    @include span-columns(12);
 
     div#my-pet-list {
+      @include span-columns(12 of 12);
       p.pet-list-name {
         @include media($mobile-s) {
           @include span-columns(2);
@@ -87,20 +48,49 @@ div.user-profile {
           font-size: 0.8em;
         }
       }
-      button.default {
-        background: $orange;
+      h3 {
+          text-align:center;
+          clear:both;
+          font-weight:300;
+          background: $orange;
+          color: $white;
+          border-radius: 0.1875em;
+         }
+
+      button#add-pet {
+        @include media($mobile-s) {
+          @include span-columns(4 of 12); @include shift(4 of 12);
+        }
+        margin:0 0 20px 0;
+        position: absolute;
+        top: 0;
+        right: 50%;
+        margin-left: calc(50%-50px);
       }
-      button.not-default {
-        background: $med-gray;
+
+      input {
+        float: left;
       }
+      select {
+        float: left;
+      }
+      textarea {
+        float: left;
+      }
+      span {
+        display: inline-block;
+        float: left;
+      }
+
+      p.help {
+          font-size: 0.8em;
+          padding: 0 20px 0 20px;
+        }
     }
-
-
-
 }
 
 
-section#update-pet {
+div#update-pet {
   overflow-y: auto;
 }
 
@@ -215,4 +205,12 @@ section#update-pet {
     left: 20%;
     z-index: 2000;
   }
+}
+
+
+button.default {
+  background: $orange;
+}
+button.not-default {
+  background: $med-gray;
 }
