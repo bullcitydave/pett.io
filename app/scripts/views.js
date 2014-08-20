@@ -23,6 +23,7 @@ var LinkView = Parse.View.extend({
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
+    $('body').removeClass('splash');
     $('body').addClass('whitebg');
     $('#main-container').append("<div class='pic-showcase'></div>");
 
@@ -91,7 +92,10 @@ var LinkView = Parse.View.extend({
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
-    link.doMasonry();
+
+    self.masonryContainer.imagesLoaded( function() {
+      self.masonryContainer.masonry();
+    });
 
 
     // for demo / POC
@@ -158,12 +162,12 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           // try putting this here
-          // mContainer.imagesLoaded(function() {
-          //   mContainer.masonry({
-          //         columnwidth: 300,
-          //         itemSelector: '.montageSquare'
-          //   });
-          // });
+          mContainer.imagesLoaded(function() {
+            mContainer.masonry({
+                  columnwidth: 300,
+                  itemSelector: '.montageSquare'
+            });
+          });
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
