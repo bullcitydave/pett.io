@@ -13,6 +13,8 @@ $(function() {
 
       mContainer = $('.pic-showcase');
 
+      userType = "visitor";
+
       if (Parse.User.current()) {
         self.user = Parse.User.current().getUsername();
         console.log(self.user + " is logged in");

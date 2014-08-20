@@ -1,13 +1,3 @@
-var sampledata = [
-  { "browseImg":"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-9a119094-9aa2-4730-9159-fa6a4c63d90e-hermancanvas.jpg",
-  "petName":"Herman",
-  "personUsername":"bullcitydave"}
-];
-
-
-
-  // parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-03a00789-7d41-4538-8a6a-b3a476eafbd2-2014-03-05%2009.51.12.jpg", petName:"Zellouisa", personUsername:"bullcitydave"},  {parseImg:"http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-f1ee7353-45d3-4253-a7c3-1ceb57e613ff-ar020501_171633538_m.jpg", petName:"Aremid", personUsername:"bullcitydave"}];
-
 
 var BrowseView = Parse.View.extend({
 
@@ -17,6 +7,14 @@ var BrowseView = Parse.View.extend({
 
   initialize: function(tag) {
     user=Parse.User.current() || null;
+
+    if (user == null) {
+      $('#header-nav.ul.li.site-user').hide();
+    }
+    else {
+      $('#header-nav.ul.li.site-visitor').hide();
+    }
+  
 
     browseSelf=this;
     console.log('Initializing browse view');
@@ -38,28 +36,13 @@ var BrowseView = Parse.View.extend({
 
 
   events: {
-    // "click #about"    : "showProfile",
-    // "click #upload"   : "imageUploadForm",
-    // "click #account"  : "viewAccount"
+    "click #about"    : "showProfile",
+    "click #upload"   : "imageUploadForm",
+    "click #account"  : "viewAccount"
   },
 
   render: function() {
-    // var petsQuery = new Parse.Query(Pet);
-    // petsQuery.ascending("uniqueName");
-    // petsQuery.find({
-    //   success: function(results) {
-    //       for (var i = 0; i < results.length ; i++) {
-    //
-    //       browseSelf.showPics(results);
-    //   },
-    //
-    //
-    //
-    //
-    //   error: function(error) {
-    //       alert('Error!');
-    //     }
-    // });
+
 
 var petsQuery = new Parse.Query(Pet);
 petsQuery.select("uniqueName");
