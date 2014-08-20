@@ -10,7 +10,8 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-
+    $('body').addClass('whitebg');
+    $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
