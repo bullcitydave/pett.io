@@ -77,7 +77,7 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
     console.log('Running masonry');
-    mContainer.masonry({
+    $('.pic-showcase').masonry({
               columnwidth: 200,
               itemSelector: '.montageSquare'
         });
@@ -93,8 +93,10 @@ var LinkView = Parse.View.extend({
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
 
-    self.masonryContainer.imagesLoaded( function() {
-      self.masonryContainer.masonry();
+    $('.pic-showcase').imagesLoaded( function() {
+      $('.pic-showcase').masonry({
+        itemSelector: '.montageSquare'
+      });
     });
 
 

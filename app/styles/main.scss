@@ -440,10 +440,9 @@ div.pic-showcase {
   margin: 100px 0 0 0;  // from 165px
 
 
-  // div.pic-container {
-  //   margin: 10px;
-  //   width: 200px;
-  //   float:left;
+  div.pic-container {
+
+  position: relative;
 
     .montageSquare {
       // transition: opacity 1.0s easing;
@@ -455,6 +454,7 @@ div.pic-showcase {
 
 
 
+
       // border: solid 2px black;
       // transition: margin .2s linear;
       // transition: width .6s linear;
@@ -463,10 +463,19 @@ div.pic-showcase {
     }
 
     .flickr {
-      // border-radius: 20% ;
-      // border-left: solid 2px #0063dc;
-      // border-right: solid 2px #ff0084;
+
+
     }
+
+    .inlay {
+    position:absolute;
+    bottom:2px;
+    right:2px;
+    height:10px;
+    width:10px;
+    }
+
+}
 
     iframe.vine-embed-small {
       width:400px;
