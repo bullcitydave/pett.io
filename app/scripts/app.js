@@ -4,6 +4,7 @@ $(function() {
 
     el: $("#main-header"),
 
+
     events: {
       "click #log-out"    : "logOut"
         // "click #about"    : "showProfile",
@@ -15,7 +16,11 @@ $(function() {
     initialize: function() {
       self = this;
 
-      self.masonryContainer = $('.pic-showcase').masonry();
+    
+
+
+
+      // self.masonryContainer = $('.pic-showcase').masonry();
 
 
       userType = "visitor";
