@@ -49,7 +49,8 @@ var ProfileView = Parse.View.extend ({
     },
 
     getDate: function(parseDate) {
-      var pettioDate = moment(parseDate).year();
+      var parsedDate = moment(parseDate);
+      var pettioDate = parsedDate.months().toString() + '-' + parsedDate.day().toString() + '-' + moment(parseDate).year().toString();
       return pettioDate;
     },
 
