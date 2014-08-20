@@ -59,8 +59,7 @@ body {
   font-family: $secondary-font;
 
   // background:linear-gradient(to bottom right, rgba(225,140,0, 0.85), rgba(49,79,79, 0.25)), url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
-  background: url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
-  background-size: cover;
+
 
   //
   header#main-header{
@@ -551,4 +550,10 @@ form#fileupload {
 
 .whitebg {
   background: $black;
+}
+
+body.splash {
+
+  background: url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
