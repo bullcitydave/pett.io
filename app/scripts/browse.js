@@ -8,14 +8,6 @@ var BrowseView = Parse.View.extend({
   initialize: function(tag) {
     user=Parse.User.current() || null;
 
-    if (user == null) {
-      $('#header-nav.ul.li.site-user').hide();
-    }
-    else {
-      $('#header-nav.ul.li.site-visitor').hide();
-    }
-  
-
     browseSelf=this;
     console.log('Initializing browse view');
 
@@ -36,19 +28,25 @@ var BrowseView = Parse.View.extend({
 
 
   events: {
-    "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm",
-    "click #account"  : "viewAccount"
+    // "click #about"    : "showProfile",
+    // "click #upload"   : "imageUploadForm",
+    // "click #account"  : "viewAccount"
   },
 
   render: function() {
 
+    if (user == null) {
+      $('.site-user').hide();
+    }
+    else {
+      $('.site-visitor').show();
+    }
 
-var petsQuery = new Parse.Query(Pet);
-petsQuery.select("uniqueName");
-petsQuery.ascending("uniqueName");
-petsQuery.find({
-  success: function(results) {
+    var petsQuery = new Parse.Query(Pet);
+    petsQuery.select("uniqueName");
+    petsQuery.ascending("uniqueName");
+    petsQuery.find({
+      success: function(results) {
 
     $('#browse-container').imagesLoaded(function() {
       $('#browse-container').masonry({

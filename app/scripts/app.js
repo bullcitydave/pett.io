@@ -6,7 +6,11 @@ $(function() {
 
     events: {
       "click #log-out"    : "logOut"
-    },
+        // "click #about"    : "showProfile",
+        // "click #upload"   : "imageUploadForm",
+        // "click #account"  : "viewAccount"
+      },
+    
 
     initialize: function() {
       self = this;

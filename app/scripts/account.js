@@ -145,6 +145,13 @@ var AccountView = Parse.View.extend({
 
 
   render: function() {
+
+    $('.site-visitor').hide();
+    $('#upload').hide();
+    $('#account').addClass('active');
+    $('#account').siblings().removeClass('active');
+
+
     this.$el.html(_.template($("#account-template").html(), ({"userName": Parse.User.current().getUsername()})));
 
     var ppQuery = new Parse.Query(Pet);
