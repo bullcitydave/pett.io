@@ -10,8 +10,7 @@ var SplashView = Parse.View.extend({
   },
 
   render: function() {
-    console.log('Main el: ', this.$el);
-    console.log('Head el: ', $(this.splashHead));
+    $('body').addClass('splash');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');

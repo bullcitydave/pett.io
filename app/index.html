@@ -63,9 +63,12 @@
 
           <nav id="header-nav">
             <ul>
-              <li id="log-out"><a href="#">Log Out</a></li>
-              <li id="account"><a href="#/account/<%-userName %>">Update Account</a></li>
-              <li id="upload"><a href="#">Upload Images</a></li>
+              <li id="log-out" class="site-user"><a href="#">Log Out</a></li>
+              <li id="log-in" class="site-visitor"><a href="/#/login">Log In</a></li>
+              <li id="sign-up" class="site-visitor"><a href="/#/signup">Sign Up</a></li>
+              <li id="account" class="site-user"><a href="#/account/<%-userName %>">Update Account</a></li>
+              <li id="upload" class="site-user"><a href="#">Upload Images</a></li>
+              <li id="browse" class="site-visitor"><a href="/#/browse">Browse</a></li>
             </ul>
             <p id="header-username"><a href="/#/account/<%-userName %>"><%-userName %></a></p>
           </nav>

@@ -6,12 +6,18 @@ $(function() {
 
     events: {
       "click #log-out"    : "logOut"
-    },
+        // "click #about"    : "showProfile",
+        // "click #upload"   : "imageUploadForm",
+        // "click #account"  : "viewAccount"
+      },
+    
 
     initialize: function() {
       self = this;
 
       mContainer = $('.pic-showcase');
+
+      userType = "visitor";
 
       if (Parse.User.current()) {
         self.user = Parse.User.current().getUsername();

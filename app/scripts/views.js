@@ -85,6 +85,10 @@ var LinkView = Parse.View.extend({
   },
 
   render: function() {
+
+    $('.site-visitor').hide();
+    $('.site-user').show();
+
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
     link.doMasonry();
