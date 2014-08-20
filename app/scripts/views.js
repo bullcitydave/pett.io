@@ -7,6 +7,7 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     link = this;
     pet=tag;
+    didMasonry=false;
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
@@ -44,8 +45,17 @@ var LinkView = Parse.View.extend({
     //   });
     // });
 
-    new ParsePicListView(tag);
-    new FlickrPicListView(tag);
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //         columnwidth: 300,
+    //         itemSelector: '.montageSquare'
+    //   });
+    // });
+
+
+    this.render();
+
+
 
   },
 
@@ -60,7 +70,31 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
+    "click h2" : "doMasonry"
     // "click #account"  : "viewAccount"
+  },
+
+  doMasonry: function() {
+    console.log('Running masonry');
+    mContainer.masonry({
+              columnwidth: 200,
+              itemSelector: '.montageSquare'
+        });
+        didMasonry = true;
+        console.log(didMasonry);
+  },
+
+  render: function() {
+    var parsePicListView = new ParsePicListView(pet);
+    var flickrPicListView = new FlickrPicListView(pet);
+    link.doMasonry();
+
+
+    // for demo / POC
+    // if (pet == 'moksha') {
+    //
+    //   new VineListView(pet);
+    // }
   },
 
   showProfile: function(e) {
@@ -120,12 +154,12 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           // try putting this here
-          mContainer.imagesLoaded(function() {
-            mContainer.masonry({
-                  columnwidth: 300,
-                  itemSelector: '.montageSquare'
-            });
-          });
+          // mContainer.imagesLoaded(function() {
+          //   mContainer.masonry({
+          //         columnwidth: 300,
+          //         itemSelector: '.montageSquare'
+          //   });
+          // });
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
@@ -143,16 +177,16 @@ var FlickrPicListView = Parse.View.extend({
 
             // for (var i = 0; i < 9 ; i++) {
             //     if ($('.montageSquare')[i].clientHeight > $('.montageSquare')[i].clientWidth)
-            //     {
+            //       {
             //       console.log('Vertical!');
             //       $(".montageSquare").eq(i).css("border", "solid 2px darkorange");
             //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
-            $('.pic-showcase').masonry({
+            // $('.pic-showcase').masonry({
 
 
-      });
+      // });
         });
 
 
@@ -189,10 +223,10 @@ var FlickrPicListView = Parse.View.extend({
 var ParsePicListView = Parse.View.extend({
     el: "#main-container",
 
-    initialize: function(tag) {
+    initialize: function(pet) {
       parseSelf=this;
-      console.log('Initializing parse pic view. Tag: ',tag);
-      this.render(tag);
+      console.log('Initializing parse pic view. Pet: ',pet);
+      this.render(pet);
 
     },
 
@@ -228,10 +262,10 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
-      $('.pic-showcase').masonry({
-
-
-      });
+      // $('.pic-showcase').masonry({
+      //
+      //
+      // });
 
      }
 
@@ -241,29 +275,29 @@ var ParsePicListView = Parse.View.extend({
 
 /////////////////////////
 
-// var VineListView = Parse.View.extend({
-    //
-    // initialize: function() {
-    //   this.vineList = new VineList;
-    //   this.tag = 'mokshadog';
-    //   this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
-    //   this.render();
-    //
-    // },
-    //
-    //
-    //
-    // render: function () {
-    //   tag = this.tag;
-    //   $.getJSON(this.vineApiUrl).done(function(vineData, tag){
-    //     var vineView = $('#vine-template').html();
-    //     console.log = vineData.data.records;
-    //     for (var i = 0; i < 9 ; i++) {
-    //         permalinkUrl = vineData.data.records[i].permalinkUrl;
-    //         console.log = vineData.data.records[i];
-    //         postId = vineData.data.records[i].postId;
-    //         $('#vineMontage').append(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
-    //       }
-    //     })
-    //   }
-    // });
+var VineListView = Parse.View.extend({
+
+    initialize: function() {
+      this.vineList = new VineList;
+      this.tag = 'mokshadog';
+      this.vineApiUrl = 'http://protected-harbor-8958.herokuapp.com/api/timelines/tags/' + this.tag;
+      this.render();
+
+    },
+
+
+
+    render: function () {
+      tag = this.tag;
+      $.getJSON(this.vineApiUrl).done(function(vineData, tag){
+        var vineView = $('#vine-template').html();
+        console.log = vineData.data.records;
+        for (var i = 0; i < 9 ; i++) {
+            permalinkUrl = vineData.data.records[i].permalinkUrl;
+            console.log = vineData.data.records[i];
+            postId = vineData.data.records[i].postId;
+            $('.pic-showcase').insertAfter(_.template(vineView,({"permalinkUrl":permalinkUrl},{"postId":postId},{"tag":tag})));
+          }
+        })
+      }
+    });

@@ -9,7 +9,7 @@ div.user-profile {
 
   position: absolute;
   top: $std-header-height;
-  @include outer-container;
+
   width: 100%;
   background: $white;
 
@@ -29,9 +29,11 @@ div.user-profile {
       background: #aaa;
     }
 
-  section#yourpets {
+  section#your-pets {
+    @include outer-container;
 
     h3 {
+
         text-align:center;
         clear:both;
         font-weight:300;
@@ -42,37 +44,21 @@ div.user-profile {
 
     button#add-pet {
       @include media($mobile-s) {
-        @include span-columns(4); @include shift(4);
+
+        @include span-columns(2);
+        @include shift(8);
+        margin: 15px 0 15px 0;
       }
-      margin:0 0 20px 0;
-      position: absolute;
-      top: 0;
-      right: 50%;
-      margin-left: calc(50%-50px);
+      // margin:0 0 20px 0;
+      // position: absolute;
+      // top: 0;
+      // right: 50%;
+      // margin-left: calc(50%-50px);
     }
-
-    input {
-      float: left;
-    }
-    select {
-      float: left;
-    }
-    textarea {
-      float: left;
-    }
-    span {
-      display: inline-block;
-      float: left;
-    }
-
-    p.help {
-        font-size: 0.8em;
-        padding: 0 20px 0 20px;
-      }
-
-
 
     div#my-pet-list {
+      @include span-columns(12);
+      @include omega();
       p.pet-list-name {
         @include media($mobile-s) {
           @include span-columns(2);
@@ -87,21 +73,33 @@ div.user-profile {
           font-size: 0.8em;
         }
       }
-      button.default {
-        background: $orange;
+
+
+      input {
+        float: left;
       }
-      button.not-default {
-        background: $med-gray;
+      select {
+        float: left;
       }
+      textarea {
+        float: left;
+      }
+      span {
+        display: inline-block;
+        float: left;
+      }
+
+      p.help {
+          font-size: 0.8em;
+          padding: 0 20px 0 20px;
+        }
     }
-
-
-
 }
 
 
 section#update-pet {
   overflow-y: auto;
+  clear:left;
 }
 
   form#add-pet-form {
@@ -215,4 +213,12 @@ section#update-pet {
     left: 20%;
     z-index: 2000;
   }
+}
+
+
+button.default {
+  background: $orange;
+}
+button.not-default {
+  background: $med-gray;
 }

@@ -432,9 +432,8 @@ body {
 
 
 div.pic-showcase {
-  margin: 75px 0 0 0;  // from 165px
-  position: absolute;
-  top: 30px;
+  margin: 100px 0 0 0;  // from 165px
+  
 
   // div.pic-container {
   //   margin: 10px;
@@ -449,6 +448,8 @@ div.pic-showcase {
       @include if-brightness(0.9);
       float:left;
 
+
+
       // border: solid 2px black;
       // transition: margin .2s linear;
       // transition: width .6s linear;
@@ -461,6 +462,38 @@ div.pic-showcase {
       // border-left: solid 2px #0063dc;
       // border-right: solid 2px #ff0084;
     }
+
+    iframe.vine-embed-small {
+      width:400px;
+      html {
+        body {
+          div.embed-simple {
+            position: relative;
+            // height: 100%;
+            // width: 150%;
+ overflow: hidden;
+ color: #464646;
+ background: #000;
+
+      .embed .video-container {
+        position: relative;
+ //        height: 100%;
+ // width: 100%;
+
+text-align: inherit;
+
+
+            .embed video {
+      height: auto;
+      width: auto;
+        }
+          }
+          }
+
+        }
+      }
+}
+
 
     .montageSquare:hover {
 

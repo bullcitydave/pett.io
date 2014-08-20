@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <title>pett.io</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
+    <link rel="shortcut icon" href="favicon.ico?v=1" />
     <link rel="stylesheet" href="styles/vendor.css">
 
     <link rel="stylesheet" href="styles/main.css">
@@ -163,6 +163,7 @@
 
 
             <button id="close-profile">Close</button>
+            <button id="next-pic">Next Pic!</button>
           </div>
 
       </script>
@@ -209,18 +210,20 @@
 <!-- <img src='<%-browseImg %>' class='pet-pic'> -->
       <script type="text/template" id="browse-template">
           <div class='pet-box'>
-
-            <div class='pet-name'><%=petname %></div>
-            <div class='pet-person'><%=username %></div>
-
             <img class='pet-pic' src='<%=url %>'>
+            <div class="pet-pic-info">
+              <div class='pet-name'><a href="/#/<%=petname %>"><%=petname %></a></div>
+              <div class='pet-person'><%=username %></div>
+            </div>
+
+
           </div>
       </script>
 
       <script type="text/template" id="pet-header-template">
           <header id="pet-header">
             <h2><%-petName %></h2>
-            <div id="about">About</div>
+            <div id="about"><a href="#">About</a></div>
           <!--<div id="profile-container"></div>-->
       </script>
 
