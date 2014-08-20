@@ -295,7 +295,8 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-
+    $('body').addClass('whitebg');
+    $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
@@ -407,6 +408,11 @@ var LinkView = Parse.View.extend({
     link = this;
     pet=tag;
     didMasonry=false;
+
+
+
+
+
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
@@ -422,9 +428,13 @@ var LinkView = Parse.View.extend({
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
-    $('body').removeClass('splash');
     $('body').addClass('whitebg');
+    $('body').removeClass('splash');
     $('#main-container').append("<div class='pic-showcase'></div>");
+
+    // $('.pic-showcase').imagesLoaded(function() {
+    //   self.masonry;
+    // });
 
 
 
@@ -436,7 +446,7 @@ var LinkView = Parse.View.extend({
     //   });
     // });
 
-    mContainer = $('#main-container');
+    // mContainer = $('#main-container');
     //
     // mContainer.imagesLoaded(function() {
     //   mContainer.masonry({
@@ -476,13 +486,28 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
     console.log('Running masonry');
+    // mContainer.masonry({
+    //           columnwidth: 200,
+    //           itemSelector: '.montageSquare'
+    //     });
+
+
+    // or with jQuery
+
+// initialize Masonry after all images have loaded
+$('.pic-showcase').imagesLoaded( function() {
+  $('.pic-showcase').masonry({
+                  columnwidth: 300,
+                  itemSelector: '.montageSquare'
+            });
+  });
+
     $('.pic-showcase').masonry({
-              columnwidth: 200,
-              itemSelector: '.montageSquare'
-        });
-        didMasonry = true;
-        console.log(didMasonry);
-  },
+
+  });
+
+
+},
 
   render: function() {
 
@@ -492,11 +517,6 @@ var LinkView = Parse.View.extend({
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
 
-    $('.pic-showcase').imagesLoaded( function() {
-      $('.pic-showcase').masonry({
-        itemSelector: '.montageSquare'
-      });
-    });
 
 
     // for demo / POC
@@ -563,12 +583,12 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           // try putting this here
-          mContainer.imagesLoaded(function() {
-            mContainer.masonry({
-                  columnwidth: 300,
-                  itemSelector: '.montageSquare'
-            });
-          });
+          // mContainer.imagesLoaded(function() {
+          //   mContainer.masonry({
+          //         columnwidth: 300,
+          //         itemSelector: '.montageSquare'
+          //   });
+          // });
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
@@ -815,6 +835,8 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+    $('body').addClass('whitebg');
+    $('body').removeClass('splash');
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
@@ -1145,6 +1167,7 @@ var SplashView = Parse.View.extend({
 
   render: function() {
     $('body').addClass('splash');
+    $('body').removeClass('whitebg');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
@@ -1158,6 +1181,7 @@ $(function() {
 
     el: $("#main-header"),
 
+
     events: {
       "click #log-out"    : "logOut"
         // "click #about"    : "showProfile",
@@ -1169,7 +1193,11 @@ $(function() {
     initialize: function() {
       self = this;
 
-      self.masonryContainer = $('.pic-showcase').masonry();
+    
+
+
+
+      // self.masonryContainer = $('.pic-showcase').masonry();
 
 
       userType = "visitor";
