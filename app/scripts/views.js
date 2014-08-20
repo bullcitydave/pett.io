@@ -7,6 +7,7 @@ var LinkView = Parse.View.extend({
   initialize: function(tag) {
     link = this;
     pet=tag;
+    didMasonry=false;
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
@@ -44,12 +45,12 @@ var LinkView = Parse.View.extend({
     //   });
     // });
 
-    mContainer.imagesLoaded(function() {
-      mContainer.masonry({
-            columnwidth: 300,
-            itemSelector: '.montageSquare'
-      });
-    });
+    // mContainer.imagesLoaded(function() {
+    //   mContainer.masonry({
+    //         columnwidth: 300,
+    //         itemSelector: '.montageSquare'
+    //   });
+    // });
 
 
     this.render();
@@ -69,16 +70,29 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
+    "click h2" : "doMasonry"
     // "click #account"  : "viewAccount"
+  },
+
+  doMasonry: function() {
+    console.log('Running masonry');
+    mContainer.masonry({
+              columnwidth: 200,
+              itemSelector: '.montageSquare'
+        });
+        didMasonry = true;
+        console.log(didMasonry);
   },
 
   render: function() {
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
+    link.doMasonry();
 
 
     // for demo / POC
     // if (pet == 'moksha') {
+    //
     //   new VineListView(pet);
     // }
   },
@@ -140,12 +154,12 @@ var FlickrPicListView = Parse.View.extend({
           var secret='';
 
           // try putting this here
-          mContainer.imagesLoaded(function() {
-            mContainer.masonry({
-                  columnwidth: 300,
-                  itemSelector: '.montageSquare'
-            });
-          });
+          // mContainer.imagesLoaded(function() {
+          //   mContainer.masonry({
+          //         columnwidth: 300,
+          //         itemSelector: '.montageSquare'
+          //   });
+          // });
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
@@ -169,10 +183,10 @@ var FlickrPicListView = Parse.View.extend({
             //       $(".picContainer").eq(i).addClass("w2");
             //     }
             // }
-            $('.pic-showcase').masonry({
+            // $('.pic-showcase').masonry({
 
 
-      });
+      // });
         });
 
 
@@ -248,10 +262,10 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
-      $('.pic-showcase').masonry({
-
-
-      });
+      // $('.pic-showcase').masonry({
+      //
+      //
+      // });
 
      }
 
