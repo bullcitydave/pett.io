@@ -74,8 +74,8 @@ var AccountView = Parse.View.extend({
       weight: parseInt($('input#pet-weight').val())
      });
      newPet.save().then(function(refreshList) {
-      console.log(newPet.name, ' added to database');
-      alert('Information for ' + newPet.name + ' saved');
+      console.log('Pet added to database');
+      alert('Information for pet saved');
       x.render();
       }, function(error) {
       console.log('Error adding pet to database');
