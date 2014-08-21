@@ -34,10 +34,10 @@ var ProfileView = Parse.View.extend ({
             if(thisPet.get("dateDeath")) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
               // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
-              var lifeMarkerEl = document.createElement("p");
-              $(lifeMarkerEl).attr('id', "life-marker");
-             $(lifeMarkerEl).insertAfter($('header h2'));
-           $(lifeMarkerEl).html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // var lifeMarkerEl = document.createElement("p");
+              // $(lifeMarkerEl).attr('id', "life-marker");
+            //  $(lifeMarkerEl).insertAfter($('header h2'));
+           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
             }
         },
         error: function(collection, error) {
