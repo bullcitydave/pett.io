@@ -25,9 +25,12 @@ var flickrUserId = 'toastie97';
       "dateDeath": new Date("12/31/2029"),
       "dateBirth": new Date(),
       "dateAdopted": new Date()
-    }
+    },
 
 
+    isLiving: function () {
+    return (this.get("dateDeath") === "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") === undefined);
+  }
 
     });
 
@@ -110,6 +113,14 @@ var flickrUserId = 'toastie97';
 
         });
 
+    var Pets = Parse.Collection.extend({
+
+      model:Pet
+
+    });
+
+    thesePets = new Pets();
+
 var ProfileView = Parse.View.extend ({
 
   el: "#main-container",
@@ -138,9 +149,32 @@ var ProfileView = Parse.View.extend ({
       success: function(results) {
         console.log("Successfully retrieved " + profile.pet + ". Attempting to render...");
         profile.render(results[0].attributes);
+
+        thesePets.fetch({
+        success: function(collection) {
+            console.log(collection);
+            var thisPet = thesePets.get(results[0].id);
+            if(thisPet.get("dateDeath")) {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
+              // var lifeMarkerEl = document.createElement("p");
+              // $(lifeMarkerEl).attr('id', "life-marker");
+            //  $(lifeMarkerEl).insertAfter($('header h2'));
+           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            }
+        },
+        error: function(collection, error) {
+            console.log("Error: " + error.code + " " + error.message);
+        }
+    });
+
+
+
+
+        console.log(results[0].attributes);
       },
       error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+        console.log("Error: " + error.code + " " + error.message);
       }
     });
   },
@@ -161,7 +195,8 @@ var ProfileView = Parse.View.extend ({
     },
 
     getDate: function(parseDate) {
-      var pettioDate = moment(parseDate).year();
+      var parsedDate = moment(parseDate);
+      var pettioDate = parsedDate.months().toString() + '-' +  parsedDate.date().toString() + '-' +  parsedDate.year().toString();
       return pettioDate;
     },
 
@@ -173,12 +208,15 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
+
         console.log(data);
-        console.log(data.dateBirth);
+
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };
+
         if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
           else { data.dateDeath = null };
+
         if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
 
@@ -200,8 +238,6 @@ var ProfileView = Parse.View.extend ({
         $('#profile-container').html(_.template(profileView,data));
 
         profile.getBackground();
-
-
       }
 });
 
@@ -513,6 +549,7 @@ $('.pic-showcase').imagesLoaded( function() {
 
     $('.site-visitor').hide();
     $('.site-user').show();
+    $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
