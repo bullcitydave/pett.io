@@ -113,6 +113,7 @@ $('.pic-showcase').imagesLoaded( function() {
 
     $('.site-visitor').hide();
     $('.site-user').show();
+    $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
