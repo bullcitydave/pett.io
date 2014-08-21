@@ -199,7 +199,7 @@ var FlickrPicListView = Parse.View.extend({
               farmId = photoData.photos.photo[i].farm;
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
-              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_b.jpg';
+              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_z.jpg';
               console.log('Rendering Flickr image: ',flickrImg);
               $('.pic-showcase').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
