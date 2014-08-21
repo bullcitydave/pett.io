@@ -166,10 +166,10 @@
               <% if (dateBirth != "null") { %>
                 <p class="date-field" id="born"><span>Born</span> <%-dateBirth%></p>
               <% }  %>
-              <% if (!isNaN(dateDeath)) { %>
+              <% if (dateDeath != "null") { %>
                 <p  class="date-field" id="died"><span>Passed</span> <%-dateDeath%></p>
               <% }  %>
-              <% if (!isNaN(dateAdopted)) { %>
+              <% if (dateAdopted != "null") { %>
                 <p  class="date-field" id="adopted"><span>Adopted</span> <%-dateAdopted%></p>
               <% }  %>
 

@@ -85,12 +85,15 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
+
         console.log(data);
-        console.log(data.dateBirth);
+
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };
+
         if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
           else { data.dateDeath = null };
+
         if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
 
@@ -112,7 +115,5 @@ var ProfileView = Parse.View.extend ({
         $('#profile-container').html(_.template(profileView,data));
 
         profile.getBackground();
-
-
       }
 });
