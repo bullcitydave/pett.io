@@ -29,20 +29,26 @@
         }
       }
       p#bio {
-        // @include span-columns(12);
-        // @include omega();
+        @include span-columns(8);
+        line-height: 25px;
+        letter-spacing: 0.05em;
       }
 
       p.small-field {
+        @include span-columns(2);
+
+      }
+
+      p.med-field {
         @include span-columns(3);
-        @include omega(4n);
+
       }
       // p#treats {
       //   @include span-columns(2.5);
       // }
-      // p#type {
-      //   @include span-columns(2.5);
-      // }
+      p#type {
+         clear: both;
+      }
       // p#body-type {
       //   @include span-columns(2.5);
       // }
@@ -59,13 +65,10 @@
       //   @include span-columns(2.5);
       // }
       p#born, p#died, p#adopted {
-        @include span-columns(4);
-        @include omega();
+        @include span-columns(2);
       }
-      button#close-profile{
-        @include span-columns(1.5);
-        @include shift(5.25);
-        clear:both;
+      button#close-profile, button#next-pic{
+        @include span-columns(1.75);
         background: $darker-orange;
         color:$black;
         border-radius:0;

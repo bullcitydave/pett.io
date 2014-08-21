@@ -141,6 +141,9 @@
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><%-bio%></p>
+              <button id="next-pic">New Pic</button>
+              <button id="close-profile">Close</button>
+
               <% }  %>
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span>Type</span> <%-type%></p>
@@ -149,19 +152,19 @@
                 <p class="small-field" id="gender"><span>Gender</span> <%-gender%></p>
               <% }  %>
               <% if (colors != "null") { %>
-                <p class="small-field" id="colors"><span>Colors</span> <%-colors%></p>
+                <p class="med-field" id="colors"><span>Colors</span> <%-colors%></p>
               <% }  %>
               <% if (breeds != "null") { %>
-                <p class="small-field" id="breeds"><span>Breed</span> <%-breeds%></p>
+                <p class="med-field" id="breeds"><span>Breed</span> <%-breeds%></p>
               <% }  %>
               <% if (bodyType != "null") { %>
-                <p class="small-field" id="body-type"><span>Body Type</span> <%-bodyType%></p>
+                <p class="med-field" id="body-type"><span>Body Type</span> <%-bodyType%></p>
               <% }  %>
               <% if (weight != "null") { %>
                 <p class="small-field" id="weight"><span>Weight</span> <%-weight%></p>
               <% }  %>
               <% if (favoriteTreats != "null") { %>
-                <p class="small-field" id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
+                <p class="med-field" id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
               <% }  %>
               <% if (dateBirth != "null") { %>
                 <p class="date-field" id="born"><span>Born</span> <%-dateBirth%></p>
@@ -173,10 +176,6 @@
                 <p  class="date-field" id="adopted"><span>Adopted</span> <%-dateAdopted%></p>
               <% }  %>
 
-
-
-            <button id="close-profile">Close</button>
-            <button id="next-pic">Next Pic!</button>
           </div>
 
       </script>
