@@ -18,6 +18,7 @@ el: "#tools",
 
 
   render: function(pet){
+        $('#upload-container').show();
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api

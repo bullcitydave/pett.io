@@ -424,7 +424,8 @@ body {
             opacity: 1;
             z-index: 100;
             text-transform: capitalize;
-            color: #eaeaea;
+            color: $white;
+            // margin-top: -10px;
             @media screen and (max-width: 480px){
               font-size: 2.5em;
               letter-spacing: .075em;
@@ -445,7 +446,7 @@ body {
           #about {
             @include not-as-shiny;
             position: absolute;
-            top: 100%;
+            top: 130%;
             background: #ff8c00;
             left: 50%;
             width: 50px;

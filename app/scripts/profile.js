@@ -38,6 +38,7 @@ var ProfileView = Parse.View.extend ({
               // $(lifeMarkerEl).attr('id', "life-marker");
             //  $(lifeMarkerEl).insertAfter($('header h2'));
            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+           $('#about').css("top","100%"); // added 
             }
         },
         error: function(collection, error) {
