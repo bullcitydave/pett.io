@@ -105,10 +105,16 @@ body {
         color: $orange;
 
         @include media($mobile-s) {
-          font-size: 5.0em;
+          font-size: 7.0em;
+        }
+        @include media($mobile-m) {
+          font-size: 9.0em;
         }
         @include media($mobile-l) {
-          font-size: 9.0em;
+          font-size: 12.0em;
+        }
+        @include media($desktop) {
+          font-size: 15.0em;
         }
         font-weight: 300;
         margin: 5px 0 -20px 0;
@@ -118,24 +124,39 @@ body {
       h2 {
         color: #eaeaea;
         @include media($mobile-s) {
-          font-size: 0.8em;
+          font-size: 1.1em;
+          margin-top: -5px;
         }
         @include media($mobile-l) {
-          font-size: 1.5em;
-
+          font-size: 1.6em;
+        }
+        @include media($mobile-l) {
+          font-size: 1.8em;
+          margin-top: -35px;
+        }
+        @include media($desktop) {
+          font-size: 2.4em;
         }
         font-family: $secondary-font;
         font-weight: 300;
         letter-spacing: 0.05em;
-        margin-top: -35px;
+
       }
       button {
         // @include button(shiny, $orange);
         @include not-as-shiny;
-        font-size: 1.5em;
-        width: 180px;
+        @include media($mobile-s) {
+          font-size: 1.1em;
+        }
+        @include media($mobile-l) {
+          font-size: 1.5em;
+        }
+        width: 25%;
+        max-width: 400px;
+        min-width: 150px;
         padding: 10px 24px;
         background: $orange;
+        text-align:center;
       }
     }
   }
@@ -409,15 +430,15 @@ body {
               letter-spacing: .075em;
               margin: 0;
             }
+
           }
 
-        span#life-marker {
-          position: absolute;
-          top: 60%;
-          left: 50%;
+          p#life-marker {
+          font-size: 2.0em;
           color: darkorange;
-          width: 20%;
-          margin-left: -10%;
+          margin: 0;
+          text-align: center;
+          margin-top: -20px;
           }
 
 

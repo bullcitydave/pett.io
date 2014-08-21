@@ -34,10 +34,10 @@ var ProfileView = Parse.View.extend ({
             if(thisPet.get("dateDeath")) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
               // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
-              var lifeMarkerEl = document.createElement("p");
-              // lifeMarkerEl.attr('id', "lifeMarker");
-             $(lifeMarkerEl).insertAfter($('header h2'));
-           $(lifeMarkerEl).html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // var lifeMarkerEl = document.createElement("p");
+              // $(lifeMarkerEl).attr('id', "life-marker");
+            //  $(lifeMarkerEl).insertAfter($('header h2'));
+           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
             }
         },
         error: function(collection, error) {
@@ -73,7 +73,7 @@ var ProfileView = Parse.View.extend ({
 
     getDate: function(parseDate) {
       var parsedDate = moment(parseDate);
-      var pettioDate = parsedDate.months().toString() + '-' + parsedDate.day().toString() + '-' + moment(parseDate).year().toString();
+      var pettioDate = parsedDate.months().toString() + '-' +  parsedDate.date().toString() + '-' +  parsedDate.year().toString();
       return pettioDate;
     },
 
@@ -85,12 +85,15 @@ var ProfileView = Parse.View.extend ({
 
     render: function(data){
         _.defaults(data, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
+
         console.log(data);
-        console.log(data.dateBirth);
+
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };
+
         if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
           else { data.dateDeath = null };
+
         if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
 
@@ -112,7 +115,5 @@ var ProfileView = Parse.View.extend ({
         $('#profile-container').html(_.template(profileView,data));
 
         profile.getBackground();
-
-
       }
 });
