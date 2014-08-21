@@ -430,15 +430,15 @@ body {
               letter-spacing: .075em;
               margin: 0;
             }
+
           }
 
-        span#life-marker {
-          position: absolute;
-          top: 60%;
-          left: 50%;
+          p#life-marker {
+          font-size: 2.0em;
           color: darkorange;
-          width: 20%;
-          margin-left: -10%;
+          margin: 0;
+          text-align: center;
+          margin-top: -20px;
           }
 
 
