@@ -132,38 +132,39 @@
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><%-bio%></p>
+                <% }  %>
               <button id="next-pic">New Pic</button>
               <button id="close-profile">Close</button>
 
-              <% }  %>
+
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span>Type</span> <%-type%></p>
               <% }  %>
               <% if (gender != "null") { %>
                 <p class="small-field" id="gender"><span>Gender</span> <%-gender%></p>
               <% }  %>
-              <% if (colors != "null") { %>
+              <% if (colors.length > 0) { %>
                 <p class="med-field" id="colors"><span>Colors</span> <%-colors%></p>
               <% }  %>
-              <% if (breeds != "null") { %>
+              <% if (breeds.length > 0) { %>
                 <p class="med-field" id="breeds"><span>Breed</span> <%-breeds%></p>
               <% }  %>
-              <% if (bodyType != "null") { %>
+              <% if (bodyType.length > 0) { %>
                 <p class="med-field" id="body-type"><span>Body Type</span> <%-bodyType%></p>
               <% }  %>
-              <% if (weight != "null") { %>
+              <% if (weight > 0) { %>
                 <p class="small-field" id="weight"><span>Weight</span> <%-weight%></p>
               <% }  %>
-              <% if (favoriteTreats != "null") { %>
+              <% if (favoriteTreats.length > 0) { %>
                 <p class="med-field" id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
               <% }  %>
-              <% if (dateBirth != "null") { %>
+              <% if (dateBirth != null) { console.log(dateBirth); %>
                 <p class="date-field" id="born"><span>Born</span> <%-dateBirth%></p>
               <% }  %>
-              <% if (dateDeath != "null") { %>
+              <% if (dateDeath != null) { console.log(dateDeath);%>
                 <p  class="date-field" id="died"><span>Passed</span> <%-dateDeath%></p>
               <% }  %>
-              <% if (dateAdopted != "null") { %>
+              <% if (dateAdopted != null) { %>
                 <p  class="date-field" id="adopted"><span>Adopted</span> <%-dateAdopted%></p>
               <% }  %>
 
@@ -193,7 +194,7 @@
             <div id="p-breeds"><span>Breed</span><textarea rows="2" id="pet-breeds" placeholder="Separate list w/ commas"></textarea></div>
             <div id="p-body-type"><span>Body Type</span><textarea rows="2" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')"></textarea></div>
             <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
-            <div id="p-bio"><span>Bio</span><textarea rows="9" id="new-pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
+            <div id="p-bio"><span>Bio</span><textarea rows="9" id="pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
             <div id="p-dates">
               <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"></div>
               <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"></div>

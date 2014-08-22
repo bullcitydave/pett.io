@@ -28,7 +28,7 @@
           font-size:1.2em;
         }
       }
-      p#bio {
+      p#pet-bio {
         @include span-columns(8);
         line-height: 25px;
         letter-spacing: 0.05em;
