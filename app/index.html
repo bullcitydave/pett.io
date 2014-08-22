@@ -141,35 +141,36 @@
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><%-bio%></p>
+                <% }  %>
               <button id="next-pic">New Pic</button>
               <button id="close-profile">Close</button>
 
-              <% }  %>
+
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span>Type</span> <%-type%></p>
               <% }  %>
               <% if (gender != "null") { %>
                 <p class="small-field" id="gender"><span>Gender</span> <%-gender%></p>
               <% }  %>
-              <% if (colors != "null") { %>
+              <% if (colors.length > 0) { %>
                 <p class="med-field" id="colors"><span>Colors</span> <%-colors%></p>
               <% }  %>
-              <% if (breeds != "null") { %>
+              <% if (breeds.length > 0) { %>
                 <p class="med-field" id="breeds"><span>Breed</span> <%-breeds%></p>
               <% }  %>
-              <% if (bodyType != "null") { %>
+              <% if (bodyType.length > 0) { %>
                 <p class="med-field" id="body-type"><span>Body Type</span> <%-bodyType%></p>
               <% }  %>
-              <% if (weight != "null") { %>
+              <% if (weight > 0) { %>
                 <p class="small-field" id="weight"><span>Weight</span> <%-weight%></p>
               <% }  %>
-              <% if (favoriteTreats != "null") { %>
+              <% if (favoriteTreats.length > 0) { %>
                 <p class="med-field" id="treats"><span>Favorite Treats</span> <%-favoriteTreats%></p>
               <% }  %>
-              <% if (dateBirth != "null") { %>
+              <% if (dateBirth != "null") { console.log(dateBirth); %>
                 <p class="date-field" id="born"><span>Born</span> <%-dateBirth%></p>
               <% }  %>
-              <% if (dateDeath != "null") { %>
+              <% if (dateDeath != "null") { console.log(dateDeath);%>
                 <p  class="date-field" id="died"><span>Passed</span> <%-dateDeath%></p>
               <% }  %>
               <% if (dateAdopted != "null") { %>
