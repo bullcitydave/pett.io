@@ -913,7 +913,7 @@ var AccountView = Parse.View.extend({
       name: $('input#pet-name').val(),
       uniqueName: $('input#pet-name').val().toLowerCase(),
       type: $('select#pet-type').val(),
-      bio: $('input#pet-bio').val(),
+      bio: $('textarea#pet-bio').val(),
       person: {
         __type: "Pointer",
         className: "_User",
