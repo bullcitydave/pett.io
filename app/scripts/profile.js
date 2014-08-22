@@ -31,13 +31,10 @@ var ProfileView = Parse.View.extend ({
         success: function(collection) {
             console.log(collection);
             var thisPet = thesePets.get(results[0].id);
-            if(thisPet.get("dateDeath")) {
+            if((thisPet.get("dateDeath")) !=  nullDateDeath) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
-              // var lifeMarkerEl = document.createElement("p");
-              // $(lifeMarkerEl).attr('id', "life-marker");
-            //  $(lifeMarkerEl).insertAfter($('header h2'));
-           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+             $('#about').css("top","100%"); // added
             }
         },
         error: function(collection, error) {
