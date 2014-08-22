@@ -154,13 +154,10 @@ var ProfileView = Parse.View.extend ({
         success: function(collection) {
             console.log(collection);
             var thisPet = thesePets.get(results[0].id);
-            if(thisPet.get("dateDeath")) {
+            if((thisPet.get("dateDeath")) !=  nullDateDeath) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              // printYearMarkers(results[0].attributes.dateBirth,results[0].attributes.dateBirth );
-              // var lifeMarkerEl = document.createElement("p");
-              // $(lifeMarkerEl).attr('id', "life-marker");
-            //  $(lifeMarkerEl).insertAfter($('header h2'));
-           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+             $('#about').css("top","100%"); // added
             }
         },
         error: function(collection, error) {
@@ -261,6 +258,7 @@ el: "#tools",
 
 
   render: function(pet){
+        $('#upload-container').show();
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -932,8 +930,8 @@ var AccountView = Parse.View.extend({
       weight: parseInt($('input#pet-weight').val())
      });
      newPet.save().then(function(refreshList) {
-      console.log(newPet.name, ' added to database');
-      alert('Information for ' + newPet.name + ' saved');
+      console.log('Pet added to database');
+      alert('Information for pet saved');
       x.render();
       }, function(error) {
       console.log('Error adding pet to database');
