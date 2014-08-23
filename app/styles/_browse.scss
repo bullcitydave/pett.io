@@ -17,17 +17,19 @@ div#browse-container {
         width: 100%;
 
         margin: 0;
-        padding: 0 5px 0 5px;
+        padding: 0 10px 0 10px;
 
         .pet-person {
           float:right;
           color: $black;
+          font-size: 1.5em;
         }
         .pet-name {
-           float: left;
-    color:$darker-orange;
-    width: 85px;
-    font-size:2.0em
+          float: left;
+          color: #ee7600;
+          width: 85px;
+          font-size: 2.5em;
+          font-family: $primary-font;
         }
 
     }
