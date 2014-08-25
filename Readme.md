@@ -1,1 +1,1 @@
-## pett.io : The only pet page you'll ever need
+## pett.io : The only pet showcase you'll ever need
