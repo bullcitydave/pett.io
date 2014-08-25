@@ -117,15 +117,22 @@ $('.pic-showcase').imagesLoaded( function() {
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
+    window.setInterval(function(){
+  $('.pic-showcase').imagesLoaded( function() {
+    $('.pic-showcase').masonry({
+                    columnwidth: 300,
+                    itemSelector: '.montageSquare'
+              });
+    });
+    console.log($('img').length);
+}, 5000);
 
 
 
-    // for demo / POC
-    // if (pet == 'moksha') {
-    //
-    //   new VineListView(pet);
-    // }
-  },
+
+
+
+},
 
   showProfile: function(e) {
     e.preventDefault();
