@@ -583,3 +583,31 @@ body.splash {
   background: url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
   background-size: cover;
 }
+
+
+footer {
+  position: fixed;
+bottom: 0;
+text-align: center;
+background: #eaeaea;
+width: 100%;
+opacity: .4;
+-webkit-margin-before: 0;
+-webkit-margin-after: 0;
+font-size: 0.9em;
+  p{
+    span {
+      padding:0 10px 0 10px;
+      margin: 0;
+    }
+    span#copyright {
+
+    }
+    span#version {
+      font-style: italic;
+    }
+    span#disclaimer {
+      color: $orange;
+    }
+  }
+}
