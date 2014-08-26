@@ -8,6 +8,7 @@ var LinkView = Parse.View.extend({
     link = this;
     pet=tag;
     didMasonry=false;
+    imgCount = 0;
 
 
 
@@ -24,7 +25,6 @@ var LinkView = Parse.View.extend({
     $('#main-container').addClass('standard');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    // $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
@@ -32,47 +32,12 @@ var LinkView = Parse.View.extend({
     $('body').removeClass('splash');
     $('#main-container').append("<div class='pic-showcase'></div>");
 
-    // $('.pic-showcase').imagesLoaded(function() {
-    //   self.masonry;
-    // });
-
-
-
-    // //   // initialize Masonry after all images have loaded
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //
-    //     itemSelector: '.pic-container'
-    //   });
-    // });
-
-    // mContainer = $('#main-container');
-    //
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //         columnwidth: 300,
-    //         itemSelector: '.montageSquare'
-    //   });
-    // });
-
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //         columnwidth: 300,
-    //         itemSelector: '.montageSquare'
-    //   });
-    // });
-
 
     this.render();
 
 
 
   },
-
-
-
-
-  //   // initialize Masonry after all images have loaded
 
 
 
@@ -86,25 +51,16 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
     console.log('Running masonry');
-    // mContainer.masonry({
-    //           columnwidth: 200,
-    //           itemSelector: '.montageSquare'
-    //     });
 
-
-    // or with jQuery
-
-// initialize Masonry after all images have loaded
 $('.pic-showcase').imagesLoaded( function() {
   $('.pic-showcase').masonry({
                   columnwidth: 300,
                   itemSelector: '.montageSquare'
             });
+  console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
   });
 
-    $('.pic-showcase').masonry({
 
-  });
 
 
 },
@@ -117,15 +73,29 @@ $('.pic-showcase').imagesLoaded( function() {
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
+    console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+
+    function imageLoadCheck() {
+      var c = 0;
+      for (i = 0; i < $('img').length; i++) {
+        console.log('Image ' + i +  ' loaded: ' + $('img')[i].complete);
+        if ($('img')[i].complete) { c++; }
+      }
+      return c;
+    }
+
+  var complete = 0;
+
+  var buildingImages = setInterval(function(){
+      complete = imageLoadCheck();
+      console.log('Percent loaded: ', complete/imgCount);
+      link.doMasonry()},500);
+
+  setTimeout(function(){
+    clearInterval(buildingImages)},15000);
 
 
-
-    // for demo / POC
-    // if (pet == 'moksha') {
-    //
-    //   new VineListView(pet);
-    // }
-  },
+},
 
   showProfile: function(e) {
     e.preventDefault();
@@ -158,7 +128,6 @@ var FlickrPicListView = Parse.View.extend({
     initialize: function() {
       z = this;
       console.log("Initializing FlickrPicListView.");
-      // this.flickrPicList = new FlickrPicList;
       this.getFlickr(pet);
 
 
@@ -167,15 +136,10 @@ var FlickrPicListView = Parse.View.extend({
 
 
     render: function () {
-      //
-      // $('.montageSquare').bind('load', function() {
-      // console.log('height ', $('.montageSquare').clientHeight);
-      // console.log('width ',  $('.montageSquare').clientWidth);
-      // });
-
-
-
       $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
+          flickrLength = Math.min(photoData.photos.photo.length,9);
+          imgCount = imgCount + flickrLength;
+          console.log('Flickr images: ' + flickrLength + ' Total images rendered: ' + imgCount);
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
           var photoId = '';
@@ -183,13 +147,7 @@ var FlickrPicListView = Parse.View.extend({
           var serverId ='';
           var secret='';
 
-          // try putting this here
-          // mContainer.imagesLoaded(function() {
-          //   mContainer.masonry({
-          //         columnwidth: 300,
-          //         itemSelector: '.montageSquare'
-          //   });
-          // });
+
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
@@ -229,7 +187,7 @@ var FlickrPicListView = Parse.View.extend({
       var fQuery = new Parse.Query(PersonPetTags);
       console.log('User: ',user);
       console.log('Pet: ',pet);
-      // fQuery.equalTo("username", user);  //why do I need this?
+
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {
@@ -265,7 +223,7 @@ var ParsePicListView = Parse.View.extend({
 
 
       var ppQuery = new Parse.Query(ParsePic);
-      // ppQuery.equalTo("username", Parse.User.current().getUsername());
+
       ppQuery.equalTo("petname", tag);
 
       console.log('ppQuery: ',ppQuery);
@@ -285,6 +243,8 @@ var ParsePicListView = Parse.View.extend({
       },
 
     showPics: function(results) {
+       imgCount = imgCount + results.length;
+       console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
           console.log(results[i]);
@@ -292,10 +252,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
-      // $('.pic-showcase').masonry({
-      //
-      //
-      // });
+
 
      }
 
