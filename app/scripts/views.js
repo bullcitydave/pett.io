@@ -8,6 +8,7 @@ var LinkView = Parse.View.extend({
     link = this;
     pet=tag;
     didMasonry=false;
+    imgCount = 0;
 
 
 
@@ -100,11 +101,10 @@ $('.pic-showcase').imagesLoaded( function() {
                   columnwidth: 300,
                   itemSelector: '.montageSquare'
             });
+  console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
   });
 
-    $('.pic-showcase').masonry({
 
-  });
 
 
 },
@@ -117,17 +117,38 @@ $('.pic-showcase').imagesLoaded( function() {
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
-    window.setInterval(function(){
-  $('.pic-showcase').imagesLoaded( function() {
-    $('.pic-showcase').masonry({
-                    columnwidth: 300,
-                    itemSelector: '.montageSquare'
-              });
-    });
-    console.log($('img').length);
-}, 5000);
+    console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+
+    function imageLoadCheck() {
+      var c = 0;
+      for (i = 0; i < $('img').length; i++) {
+        console.log('Image ' + i +  ' loaded: ' + $('img')[i].complete);
+        if ($('img')[i].complete) { c++; }
+      }
+      return c;
+    }
+
+  var complete = 0;
+
+  var buildingImages = setInterval(function(){
+      complete = imageLoadCheck();
+      console.log('Percent loaded: ', complete/imgCount);
+      link.doMasonry()},500);
+
+  setTimeout(function(){
+    clearInterval(buildingImages)},10000);
 
 
+  //    setTimeout(function(){
+  //      var complete = imageLoadCheck();
+  //      console.log('Percent loaded: ',complete/imgCount);
+  //       link.doMasonry()}, 1500);
+   //
+  //  setTimeout(function(){
+  //    imageLoadCheck();
+  //    var complete = imageLoadCheck();
+  //    console.log('Percent loaded: ',complete/imgCount);
+  //     link.doMasonry()}, 2500);
 
 
 
@@ -183,6 +204,9 @@ var FlickrPicListView = Parse.View.extend({
 
 
       $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
+          flickrLength = Math.min(photoData.photos.photo.length,9);
+          imgCount = imgCount + flickrLength;
+          console.log('Flickr images: ' + flickrLength + ' Total images rendered: ' + imgCount);
           var flickrView = $('#flickr-template').html();
           var flickrImg = '';
           var photoId = '';
@@ -292,6 +316,8 @@ var ParsePicListView = Parse.View.extend({
       },
 
     showPics: function(results) {
+       imgCount = imgCount + results.length;
+       console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
           console.log(results[i]);
