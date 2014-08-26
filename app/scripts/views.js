@@ -25,7 +25,6 @@ var LinkView = Parse.View.extend({
     $('#main-container').addClass('standard');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    // $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
@@ -33,47 +32,12 @@ var LinkView = Parse.View.extend({
     $('body').removeClass('splash');
     $('#main-container').append("<div class='pic-showcase'></div>");
 
-    // $('.pic-showcase').imagesLoaded(function() {
-    //   self.masonry;
-    // });
-
-
-
-    // //   // initialize Masonry after all images have loaded
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //
-    //     itemSelector: '.pic-container'
-    //   });
-    // });
-
-    // mContainer = $('#main-container');
-    //
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //         columnwidth: 300,
-    //         itemSelector: '.montageSquare'
-    //   });
-    // });
-
-    // mContainer.imagesLoaded(function() {
-    //   mContainer.masonry({
-    //         columnwidth: 300,
-    //         itemSelector: '.montageSquare'
-    //   });
-    // });
-
 
     this.render();
 
 
 
   },
-
-
-
-
-  //   // initialize Masonry after all images have loaded
 
 
 
@@ -87,15 +51,7 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
     console.log('Running masonry');
-    // mContainer.masonry({
-    //           columnwidth: 200,
-    //           itemSelector: '.montageSquare'
-    //     });
 
-
-    // or with jQuery
-
-// initialize Masonry after all images have loaded
 $('.pic-showcase').imagesLoaded( function() {
   $('.pic-showcase').masonry({
                   columnwidth: 300,
@@ -136,21 +92,7 @@ $('.pic-showcase').imagesLoaded( function() {
       link.doMasonry()},500);
 
   setTimeout(function(){
-    clearInterval(buildingImages)},10000);
-
-
-  //    setTimeout(function(){
-  //      var complete = imageLoadCheck();
-  //      console.log('Percent loaded: ',complete/imgCount);
-  //       link.doMasonry()}, 1500);
-   //
-  //  setTimeout(function(){
-  //    imageLoadCheck();
-  //    var complete = imageLoadCheck();
-  //    console.log('Percent loaded: ',complete/imgCount);
-  //     link.doMasonry()}, 2500);
-
-
+    clearInterval(buildingImages)},15000);
 
 
 },
@@ -186,7 +128,6 @@ var FlickrPicListView = Parse.View.extend({
     initialize: function() {
       z = this;
       console.log("Initializing FlickrPicListView.");
-      // this.flickrPicList = new FlickrPicList;
       this.getFlickr(pet);
 
 
@@ -195,14 +136,6 @@ var FlickrPicListView = Parse.View.extend({
 
 
     render: function () {
-      //
-      // $('.montageSquare').bind('load', function() {
-      // console.log('height ', $('.montageSquare').clientHeight);
-      // console.log('width ',  $('.montageSquare').clientWidth);
-      // });
-
-
-
       $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
           flickrLength = Math.min(photoData.photos.photo.length,9);
           imgCount = imgCount + flickrLength;
@@ -214,13 +147,7 @@ var FlickrPicListView = Parse.View.extend({
           var serverId ='';
           var secret='';
 
-          // try putting this here
-          // mContainer.imagesLoaded(function() {
-          //   mContainer.masonry({
-          //         columnwidth: 300,
-          //         itemSelector: '.montageSquare'
-          //   });
-          // });
+
 
           for (var i = 0; i < 9 ; i++) {
             if (!photoData.photos.photo[i]) {
@@ -260,7 +187,7 @@ var FlickrPicListView = Parse.View.extend({
       var fQuery = new Parse.Query(PersonPetTags);
       console.log('User: ',user);
       console.log('Pet: ',pet);
-      // fQuery.equalTo("username", user);  //why do I need this?
+
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {
@@ -296,7 +223,7 @@ var ParsePicListView = Parse.View.extend({
 
 
       var ppQuery = new Parse.Query(ParsePic);
-      // ppQuery.equalTo("username", Parse.User.current().getUsername());
+
       ppQuery.equalTo("petname", tag);
 
       console.log('ppQuery: ',ppQuery);
@@ -325,10 +252,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
        };
-      // $('.pic-showcase').masonry({
-      //
-      //
-      // });
+
 
      }
 
