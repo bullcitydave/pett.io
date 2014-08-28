@@ -329,7 +329,7 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -339,7 +339,7 @@ var BrowseView = Parse.View.extend({
     $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#log-out').show();
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
     browseSelf.render();
 
@@ -827,14 +827,14 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('body').removeClass('splash');
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
     $('#main-header').addClass('standard');
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     x=this;
     _.bindAll(this, "createPet");
     this.render();
@@ -1159,7 +1159,7 @@ var SplashView = Parse.View.extend({
 
   render: function() {
     $('body').addClass('splash');
-    $('body').removeClass('whitebg');
+    $('body').removeClass('darkbg');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
