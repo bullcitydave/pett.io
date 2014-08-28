@@ -14,14 +14,14 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('body').removeClass('splash');
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
     $(this.el).addClass('standard');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
     $('#main-header').addClass('standard');
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     x=this;
     _.bindAll(this, "createPet");
     this.render();

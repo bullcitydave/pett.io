@@ -10,7 +10,7 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -20,7 +20,7 @@ var BrowseView = Parse.View.extend({
     $('#tools').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
     $('#log-out').show();
-    $('body').addClass('whitebg');
+    $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
     browseSelf.render();
 
