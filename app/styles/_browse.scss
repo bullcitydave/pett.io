@@ -1,15 +1,17 @@
 
 div#browse-container {
-  // @include outer-container;
-  margin-top:100px;
+  margin: -75px 0 0 0;
 
   div.pet-box {
-    // @include span-columns(4);
+
     float:left;
+    border-radius: 45px;
+    padding: 20px;
 
     img.pet-pic {
       width: auto;
       height: 300px;
+      border-radius: 45px;
     }
 
    .pet-pic-info {
@@ -35,7 +37,7 @@ div#browse-container {
     }
 
     background-color: $white;
-    margin: 18px 14px 0 14px;
+    margin: 20px;;
 
   }
 
