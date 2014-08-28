@@ -23,17 +23,19 @@ el: "#tools",
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
 
+    var files;
     var file;
 
     // Set an event listener on the Choose File field.
     $('#fileselect').bind("change", function(e) {
-      var files = e.target.files || e.dataTransfer.files;
+      files = e.target.files || e.dataTransfer.files;
       // Our file var now holds the selected file
-      file = files[0];
     });
 
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
-    $('#uploadbutton').click(function() {
+    $('#uploadbutton').click(function(s) {
+    for (var i = 0; file = files[i]; i++) {
+
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
 
       $.ajax({
@@ -63,6 +65,7 @@ el: "#tools",
           alert(obj.error);
         }
       });
+    }
     });
   },
 
