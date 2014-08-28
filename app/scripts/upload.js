@@ -25,6 +25,7 @@ el: "#tools",
 
     var files;
     var file;
+    var fileResult;
 
     // Set an event listener on the Choose File field.
     $('#fileselect').bind("change", function(e) {
@@ -37,7 +38,8 @@ el: "#tools",
     for (var i = 0; file = files[i]; i++) {
 
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
-
+      fileResult += '<li>' + file.name + ' ' + file.size + ' bytes</li>';
+      $('ul#file-list').append(fileResult);
       $.ajax({
         type: "POST",
         beforeSend: function(request) {
