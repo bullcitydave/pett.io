@@ -589,16 +589,17 @@ body.splash {
 
 
 footer {
-  position: fixed;
+position: fixed;
 bottom: 0;
 text-align: center;
 background: #eaeaea;
 width: 100%;
-opacity: .4;
 -webkit-margin-before: 0;
 -webkit-margin-after: 0;
 font-size: 0.9em;
   p{
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
     span {
       padding:0 10px 0 10px;
       margin: 0;
@@ -608,6 +609,7 @@ font-size: 0.9em;
     }
     span#version {
       font-style: italic;
+      color: $orange;
     }
     span#disclaimer {
       color: $orange;
