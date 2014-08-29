@@ -578,6 +578,24 @@ text-align: inherit;
 form#fileupload {
   clear:both;
   z-index:3000;
+  span.progress
+  {
+  	display: block;
+  	width: 140px;
+  	padding: 2px 5px;
+  	margin: 2px 0;
+  	border: 1px inset #446;
+  	border-radius: 5px;
+  }
+  .progress.success
+  {
+	   background: #0c0 none 0 0 no-repeat;
+  }
+
+  .progress.failed
+  {
+	   background: #c00 none 0 0 no-repeat;
+  }
 }
 
 .display-message {
