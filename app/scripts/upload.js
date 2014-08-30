@@ -3,6 +3,7 @@ var ImageUploadView = Parse.View.extend ({
 el: "#tools",
 
   initialize: function(pet) {
+    upload = this;
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
@@ -36,10 +37,11 @@ el: "#tools",
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
     $('#uploadbutton').click(function(s) {
     for (var i = 0; file = files[i]; i++) {
-
+      var f = file;
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
       fileResult += '<li>' + file.name + ' ' + file.size + ' bytes<progress></progress></li>';
       $('ul#file-list').html(fileResult);
+
       $.ajax({
         type: "POST",
         beforeSend: function(request) {
@@ -49,13 +51,6 @@ el: "#tools",
         },
         url: serverUrl,
         data: file,
-        // xhr: function() {  // Custom XMLHttpRequest
-        //     var myXhr = $.ajaxSettings.xhr();
-        //     if(myXhr.upload){ // Check if upload property exists
-        //         myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
-        //     }
-        //     return myXhr;
-        // },
 
         processData: false,
         contentType: false,
@@ -68,9 +63,12 @@ el: "#tools",
             source: 'parse'
           });
           newPic.save();
-          alert('Photo has been successfully uploaded. Refresh the page to view the image in the gallery.');
+          alert('Photo has been successfully uploaded.');
+          upload.resizeAndUpload(f);  // generate thumbnail
           $('#file-list').html('');
           $('#file-select').html('');
+
+          // $('.input').attr('value') = '';
 
         },
         error: function(data) {
@@ -86,6 +84,87 @@ el: "#tools",
     if(e.lengthComputable){
         $('progress').attr({value:e.loaded,max:e.total});
     }
+},
+
+// from http://www.codeforest.net/html5-image-upload-resize-and-crop
+  resizeAndUpload: function(file) {
+    // var reader = new FileReader();
+    // reader.onloadend = function() {
+
+      var tempImg = new Image();
+      // tempImg.src = reader.result;
+      tempImg.src = URL.createObjectURL(file); //THIS
+      // tempImg = file;
+      tempImg.onload = function() {
+
+          var MAX_WIDTH = 800;
+          var MAX_HEIGHT = 600;
+          var tempW = tempImg.width;
+          var tempH = tempImg.height;
+          if (tempW > tempH) {
+              if (tempW > MAX_WIDTH) {
+                 tempH *= MAX_WIDTH / tempW;
+                 tempW = MAX_WIDTH;
+              }
+          } else {
+              if (tempH > MAX_HEIGHT) {
+                 tempW *= MAX_HEIGHT / tempH;
+                 tempH = MAX_HEIGHT;
+              }
+          }
+
+
+          var canvas = document.getElementById('uploadCanvas');
+          canvas.width = tempW;
+          canvas.height = tempH;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(this, 0, 0, tempW, tempH);
+
+          var base64DataUri = canvas.toDataURL();
+          var base64Data = base64DataUri.substring(base64DataUri.indexOf(',')+1);
+          console.log(base64Data);
+          var jsonData = { "base64":base64Data,"_ContentType":"image/png" };
+          console.log(jsonData);
+          var sendData = JSON.stringify(jsonData);
+          console.log(sendData);
+          // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
+
+          var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+          $.ajax({
+            type: "POST",
+            beforeSend: function(request) {
+              request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
+              request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
+              request.setRequestHeader("Content-Type", "text/plain");
+            },
+            url: serverUrl,
+            data: sendData,
+
+
+            processData: false,
+            contentType: false,
+            success: function(data) {
+              console.log("File available at: " + data.url);
+
+              var newPic = new ParsePic ({
+                url: data.url,
+                username: Parse.User.current().getUsername(),
+                petname: pet,
+                source: 'parse'
+              });
+              newPic.save();
+              alert('Small photo has been successfully uploaded.');
+
+
+            },
+            error: function(data) {
+              console.log('Error saving small photo')
+            }
+          });
+
+      }
+
 },
 
 
