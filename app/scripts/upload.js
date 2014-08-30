@@ -121,8 +121,12 @@ el: "#tools",
           ctx.drawImage(this, 0, 0, tempW, tempH);
 
           var base64DataUri = canvas.toDataURL();
-
-
+          var base64Data = base64DataUri.substring(base64DataUri.indexOf(',')+1);
+          console.log(base64Data);
+          var jsonData = { "base64":base64Data,"_ContentType":"image/png" };
+          console.log(jsonData);
+          var sendData = JSON.stringify(jsonData);
+          console.log(sendData);
           // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
 
           var serverUrl = 'https://api.parse.com/1/files/' + file.name;
@@ -132,10 +136,11 @@ el: "#tools",
             beforeSend: function(request) {
               request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
               request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
-              request.setRequestHeader("Content-Type", "image/png");
+              request.setRequestHeader("Content-Type", "text/plain");
             },
             url: serverUrl,
-            data: base64DataUri,
+            data: sendData,
+
 
             processData: false,
             contentType: false,
