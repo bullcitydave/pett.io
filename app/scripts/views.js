@@ -54,7 +54,7 @@ var LinkView = Parse.View.extend({
 
 $('.pic-showcase').imagesLoaded( function() {
   $('.pic-showcase').masonry({
-                  columnwidth: 300,
+                  columnwidth: 50,
                   itemSelector: '.montageSquare'
             });
   console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);

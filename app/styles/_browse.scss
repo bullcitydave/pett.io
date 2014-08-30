@@ -5,13 +5,15 @@ div#browse-container {
   div.pet-box {
 
     float:left;
-    border-radius: 45px;
-    padding: 20px 20px 10px 20px;
+
+    border-radius: 10%;
+    padding: 20px;
+
 
     img.pet-pic {
       width: auto;
       height: 300px;
-      border-radius: 45px;
+      border-radius: 10%;
     }
 
    .pet-pic-info {
@@ -38,7 +40,7 @@ div#browse-container {
     }
 
     background-color: $white;
-    margin: 20px;;
+    margin: 10px;
 
   }
 
