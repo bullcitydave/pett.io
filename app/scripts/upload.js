@@ -123,16 +123,16 @@ el: "#tools",
           var base64DataUri = canvas.toDataURL();
 
 
+          // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
 
-
-          var serverUrl = 'https://api.parse.com/1/files/' + file.name + '_s';
+          var serverUrl = 'https://api.parse.com/1/files/' + file.name;
 
           $.ajax({
             type: "POST",
             beforeSend: function(request) {
               request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
               request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
-              request.setRequestHeader("Content-Type", file.type);
+              request.setRequestHeader("Content-Type", "image/png");
             },
             url: serverUrl,
             data: base64DataUri,
@@ -140,6 +140,7 @@ el: "#tools",
             processData: false,
             contentType: false,
             success: function(data) {
+              console.log("File available at: " + data.url);
 
               var newPic = new ParsePic ({
                 url: data.url,
