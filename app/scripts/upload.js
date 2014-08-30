@@ -51,13 +51,6 @@ el: "#tools",
         },
         url: serverUrl,
         data: file,
-        // xhr: function() {  // Custom XMLHttpRequest
-        //     var myXhr = $.ajaxSettings.xhr();
-        //     if(myXhr.upload){ // Check if upload property exists
-        //         myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
-        //     }
-        //     return myXhr;
-        // },
 
         processData: false,
         contentType: false,
@@ -127,25 +120,45 @@ el: "#tools",
           var ctx = canvas.getContext("2d");
           ctx.drawImage(this, 0, 0, tempW, tempH);
 
+          var base64DataUri = canvas.toDataURL();
 
 
 
 
-          // var dataURL = canvas.toDataURL("image/jpeg");
+          var serverUrl = 'https://api.parse.com/1/files/' + file.name + '_s';
 
-          // var xhr = new XMLHttpRequest();
-          // xhr.onreadystatechange = function(ev){
-          //     document.getElementById('filesInfo').innerHTML = 'Done!';
-          // };
-          //
-          // xhr.open('POST', 'uploadResized.php', true);
-          // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-          // var data = 'image=' + dataURL;
-          // xhr.send(data);
+          $.ajax({
+            type: "POST",
+            beforeSend: function(request) {
+              request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
+              request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
+              request.setRequestHeader("Content-Type", file.type);
+            },
+            url: serverUrl,
+            data: base64DataUri,
+
+            processData: false,
+            contentType: false,
+            success: function(data) {
+
+              var newPic = new ParsePic ({
+                url: data.url,
+                username: Parse.User.current().getUsername(),
+                petname: pet,
+                source: 'parse'
+              });
+              newPic.save();
+              alert('Small photo has been successfully uploaded.');
+
+
+            },
+            error: function(data) {
+              console.log('Error saving small photo')
+            }
+          });
 
       }
 
-  //  reader.readAsDataURL(file);
 },
 
 
