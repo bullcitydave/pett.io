@@ -3,6 +3,7 @@ var ImageUploadView = Parse.View.extend ({
 el: "#tools",
 
   initialize: function(pet) {
+    upload = this;
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
@@ -40,6 +41,7 @@ el: "#tools",
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
       fileResult += '<li>' + file.name + ' ' + file.size + ' bytes<progress></progress></li>';
       $('ul#file-list').html(fileResult);
+
       $.ajax({
         type: "POST",
         beforeSend: function(request) {
@@ -68,9 +70,12 @@ el: "#tools",
             source: 'parse'
           });
           newPic.save();
-          alert('Photo has been successfully uploaded. Refresh the page to view the image in the gallery.');
+          alert('Photo has been successfully uploaded.');
+          upload.resizeAndUpload(data.url);  // generate thumbnail
           $('#file-list').html('');
           $('#file-select').html('');
+
+          // $('.input').attr('value') = '';
 
         },
         error: function(data) {
@@ -86,6 +91,56 @@ el: "#tools",
     if(e.lengthComputable){
         $('progress').attr({value:e.loaded,max:e.total});
     }
+},
+
+// from http://www.codeforest.net/html5-image-upload-resize-and-crop
+  resizeAndUpload: function(url) {
+    // var reader = new FileReader();
+    // reader.onloadend = function() {
+
+      var tempImg = new Image();
+      // tempImg.src = reader.result;
+      tempImg.src = url;
+      // tempImg = file;
+      tempImg.onload = function() {
+
+          var MAX_WIDTH = 800;
+          var MAX_HEIGHT = 600;
+          var tempW = tempImg.width;
+          var tempH = tempImg.height;
+          if (tempW > tempH) {
+              if (tempW > MAX_WIDTH) {
+                 tempH *= MAX_WIDTH / tempW;
+                 tempW = MAX_WIDTH;
+              }
+          } else {
+              if (tempH > MAX_HEIGHT) {
+                 tempW *= MAX_HEIGHT / tempH;
+                 tempH = MAX_HEIGHT;
+              }
+          }
+
+
+          var canvas = document.getElementById('uploadCanvas');
+          canvas.width = tempW;
+          canvas.height = tempH;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(this, 0, 0, tempW, tempH);
+          // var dataURL = canvas.toDataURL("image/jpeg");
+
+          // var xhr = new XMLHttpRequest();
+          // xhr.onreadystatechange = function(ev){
+          //     document.getElementById('filesInfo').innerHTML = 'Done!';
+          // };
+          //
+          // xhr.open('POST', 'uploadResized.php', true);
+          // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+          // var data = 'image=' + dataURL;
+          // xhr.send(data);
+
+      }
+
+  //  reader.readAsDataURL(file);
 },
 
 
