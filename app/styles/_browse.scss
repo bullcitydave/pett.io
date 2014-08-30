@@ -5,8 +5,10 @@ div#browse-container {
   div.pet-box {
 
     float:left;
+
     border-radius: 10%;
     padding: 20px;
+
 
     img.pet-pic {
       width: auto;
@@ -22,14 +24,15 @@ div#browse-container {
         padding: 0 10px 0 10px;
 
         .pet-person {
-          float:right;
+          clear:both;
+          text-align:center;
           color: $black;
-          font-size: 1.5em;
+          font-size: 1.2em;
+          margin-top: -1.2em;
         }
         .pet-name {
-          float: left;
+          text-align: center;
           color: #ee7600;
-          width: 85px;
           font-size: 2.5em;
           font-family: $primary-font;
         }

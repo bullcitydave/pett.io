@@ -63,16 +63,18 @@ var BrowseView = Parse.View.extend({
     var ppQuery = new Parse.Query(ParsePic);
 
     ppQuery.equalTo("petname",petUName);
-    ppQuery.first();
+    // ppQuery.first();
     ppQuery.ascending("petname");
 
 
     ppQuery.find({
       success: function(results) {
           if (results.length > 0) {
-          var petImg = results[0].attributes.url;
-          console.log(petImg);
-          browseSelf.showPics(results[0]);
+            var randomImg = Math.floor(Math.random() * (results.length));
+            console.log(randomImg);
+            var petImg = results[randomImg].attributes.url;
+            console.log(petImg);
+            browseSelf.showPics(results[randomImg]);
         };
       }
     });
@@ -95,17 +97,7 @@ var BrowseView = Parse.View.extend({
 
 
 showPics: function(results) {
-   var browseView = $('#browse-template').html();
-  //  for (var i = 0; i < results.length ; i++) {
-      console.log(results);
-      console.log(browseView);
-    //
-    //  $('#browse-container').append((_.template(browseView),results[i]));
-    //  $('#browse-container').append(_.template(browseView),results[i].attributes);
-    //
-    //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i]));
-    //  $('#browse-container').append(_.template(browseView),JSON.stringify(results[i].attributes));
-    // $('#browse-container').append(_.template(browseView,JSON.stringify(results[i].attributes)));
+    var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
 
   //  }
