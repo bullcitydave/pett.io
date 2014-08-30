@@ -60,7 +60,8 @@ el: "#tools",
             url: data.url,
             username: Parse.User.current().getUsername(),
             petname: pet,
-            source: 'parse'
+            source: 'parse',
+            size: 'original'
           });
           newPic.save();
           alert('Photo has been successfully uploaded.');
@@ -151,7 +152,8 @@ el: "#tools",
                 url: data.url,
                 username: Parse.User.current().getUsername(),
                 petname: pet,
-                source: 'parse'
+                source: 'parse',
+                size: 'medium'
               });
               newPic.save();
               alert('Small photo has been successfully uploaded.');
