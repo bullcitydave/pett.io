@@ -37,7 +37,7 @@ el: "#tools",
     // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
     $('#uploadbutton').click(function(s) {
     for (var i = 0; file = files[i]; i++) {
-
+      var f = file;
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
       fileResult += '<li>' + file.name + ' ' + file.size + ' bytes<progress></progress></li>';
       $('ul#file-list').html(fileResult);
@@ -71,7 +71,7 @@ el: "#tools",
           });
           newPic.save();
           alert('Photo has been successfully uploaded.');
-          upload.resizeAndUpload(data.url);  // generate thumbnail
+          upload.resizeAndUpload(f);  // generate thumbnail
           $('#file-list').html('');
           $('#file-select').html('');
 
@@ -94,13 +94,13 @@ el: "#tools",
 },
 
 // from http://www.codeforest.net/html5-image-upload-resize-and-crop
-  resizeAndUpload: function(url) {
+  resizeAndUpload: function(file) {
     // var reader = new FileReader();
     // reader.onloadend = function() {
 
       var tempImg = new Image();
       // tempImg.src = reader.result;
-      tempImg.src = url;
+      tempImg.src = URL.createObjectURL(file); //THIS
       // tempImg = file;
       tempImg.onload = function() {
 
@@ -126,6 +126,11 @@ el: "#tools",
           canvas.height = tempH;
           var ctx = canvas.getContext("2d");
           ctx.drawImage(this, 0, 0, tempW, tempH);
+
+
+
+
+
           // var dataURL = canvas.toDataURL("image/jpeg");
 
           // var xhr = new XMLHttpRequest();
