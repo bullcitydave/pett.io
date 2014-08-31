@@ -1,13 +1,14 @@
 
 div#browse-container {
-  margin: -75px 0 0 0;
+  margin: -125px 0 0 0;
 
   div.pet-box {
 
     float:left;
 
     border-radius: 10%;
-    padding: 20px;
+    padding: 10px;
+    background-color: white;
 
 
     img.pet-pic {
@@ -28,11 +29,11 @@ div#browse-container {
           text-align:center;
           color: $black;
           font-size: 1.2em;
-          margin-top: -1.2em;
+          margin-top: -1.1em;
         }
         .pet-name {
           text-align: center;
-          color: #ee7600;
+          color: $orange;
           font-size: 2.5em;
           font-family: $primary-font;
         }
@@ -40,7 +41,7 @@ div#browse-container {
     }
 
     background-color: $white;
-    margin: 10px;
+    margin: 0 10px;
 
   }
 
