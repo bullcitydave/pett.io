@@ -47,6 +47,7 @@ var AccountView = Parse.View.extend({
         }
       }
     });
+
   },
 
 
@@ -78,6 +79,8 @@ var AccountView = Parse.View.extend({
      alert('Information for pet saved');
      x.cleanup();
      x.render();
+
+     return false;
     },
 
 
