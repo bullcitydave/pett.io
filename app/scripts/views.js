@@ -11,7 +11,9 @@ var LinkView = Parse.View.extend({
     imgCount = 0;
 
 
-
+    $( window ).resize(function() {
+      link.reMargin();
+    });
 
 
     if (Parse.User.current() != null)  {
@@ -50,20 +52,25 @@ var LinkView = Parse.View.extend({
   },
 
   doMasonry: function() {
-    console.log('Running masonry');
 
 $('.pic-showcase').imagesLoaded( function() {
   $('.pic-showcase').masonry({
-                  columnwidth: 50,
+                  columnwidth: 200,
                   itemSelector: '.montageSquare'
             });
   console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+
   });
 
 
 
 
 },
+
+  reMargin: function() {
+    $('.pic-showcase').css("margin-left",((window.innerWidth-$('.pic-showcase').width())/2));
+  },
+
 
   render: function() {
 
@@ -73,12 +80,11 @@ $('.pic-showcase').imagesLoaded( function() {
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
-    console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+
 
     function imageLoadCheck() {
       var c = 0;
       for (i = 0; i < $('img').length; i++) {
-        console.log('Image ' + i +  ' loaded: ' + $('img')[i].complete);
         if ($('img')[i].complete) { c++; }
       }
       return c;
@@ -88,8 +94,8 @@ $('.pic-showcase').imagesLoaded( function() {
 
   var buildingImages = setInterval(function(){
       complete = imageLoadCheck();
-      console.log('Percent loaded: ', complete/imgCount);
-      link.doMasonry()},500);
+      console.log('Percent loaded: ', (complete/imgCount)*100);
+      link.doMasonry()},750);
 
   setTimeout(function(){
     clearInterval(buildingImages)},15000);
@@ -222,16 +228,21 @@ var ParsePicListView = Parse.View.extend({
 
 
 
-      var ppQuery = new Parse.Query(ParsePic);
+      var ppQuery1 = new Parse.Query(ParsePic);
+      ppQuery1.equalTo("petname", tag);
+      ppQuery1.equalTo("size", "medium");
 
-      ppQuery.equalTo("petname", tag);
+      var ppQuery2 = new Parse.Query(ParsePic);
+      ppQuery2.equalTo("petname", tag);
+      ppQuery2.doesNotExist("size");
+
+      var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
 
       console.log('ppQuery: ',ppQuery);
 
       ppQuery.find({
         success: function(results) {
 
-          //
             parseSelf.showPics(results);
 
         },

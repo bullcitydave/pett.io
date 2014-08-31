@@ -39,6 +39,8 @@ el: "#tools",
     for (var i = 0; file = files[i]; i++) {
       var f = file;
       var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+      var fSize = file.size;
+      var fName = file.name;
       fileResult += '<li>' + file.name + ' ' + file.size + ' bytes<progress></progress></li>';
       $('ul#file-list').html(fileResult);
 
@@ -58,9 +60,12 @@ el: "#tools",
           console.log("File available at: " + data.url);
           var newPic = new ParsePic ({
             url: data.url,
+            filesize: fSize,
+            filename: fName,
             username: Parse.User.current().getUsername(),
             petname: pet,
-            source: 'parse'
+            source: 'parse',
+            size: 'original'
           });
           newPic.save();
           alert('Photo has been successfully uploaded.');
@@ -127,6 +132,8 @@ el: "#tools",
           console.log(jsonData);
           var sendData = JSON.stringify(jsonData);
           console.log(sendData);
+          var fSize = sendData.length;
+          var fName = file.name;
           // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
 
           var serverUrl = 'https://api.parse.com/1/files/' + file.name;
@@ -151,7 +158,13 @@ el: "#tools",
                 url: data.url,
                 username: Parse.User.current().getUsername(),
                 petname: pet,
-                source: 'parse'
+                size: data.size,
+                filesize: fSize,
+                filename: fName,
+                source: 'parse',
+                height: tempH,
+                width: tempW,
+                size: 'medium'
               });
               newPic.save();
               alert('Small photo has been successfully uploaded.');

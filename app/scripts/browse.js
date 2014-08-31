@@ -60,10 +60,19 @@ var BrowseView = Parse.View.extend({
   for (var i = 0; i < results.length ; i++)
     { console.log(results[i].attributes.uniqueName);
     var petUName = results[i].attributes.uniqueName;
-    var ppQuery = new Parse.Query(ParsePic);
 
-    ppQuery.equalTo("petname",petUName);
-    // ppQuery.first();
+    var ppQuery1 = new Parse.Query(ParsePic);
+    ppQuery1.equalTo("petname",petUName);
+    ppQuery1.equalTo("size","medium");
+
+    var ppQuery2 = new Parse.Query(ParsePic);
+    ppQuery2.equalTo("petname",petUName);
+    ppQuery2.doesNotExist("size");
+
+    var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
+
+
+
     ppQuery.ascending("petname");
 
 
