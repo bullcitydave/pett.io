@@ -73,13 +73,11 @@ var AccountView = Parse.View.extend({
       gender: $('input#pet-gender').val(),
       weight: parseInt($('input#pet-weight').val())
      });
-     newPet.save().then(function(refreshList) {
-      console.log('Pet added to database');
-      alert('Information for pet saved');
-      x.render();
-      }, function(error) {
-      console.log('Error adding pet to database');
-      });
+     newPet.save();
+     console.log('Pet added to database');
+     alert('Information for pet saved');
+     x.cleanup();
+     x.render();
     },
 
 
@@ -145,6 +143,9 @@ var AccountView = Parse.View.extend({
     } });
   },
 
+  cleanup: function() {
+    $('#ui-datepicker-div').remove();
+  },
 
   render: function() {
 
@@ -256,7 +257,7 @@ var AccountView = Parse.View.extend({
     // fQuery.equalTo("pet", x.pet);
     fQuery.find({
       success:function(results) {
-        if (results[0].attributes.flickrUser && results[0].attributes.flickrTag) {
+        if (results.length > 0) {
           APP.flickrUser = results[0].attributes.flickrUser;
           APP.flickrTag = results[0].attributes.flickrTag;
           $("input#flickr-account").val(results[0].attributes.flickrUser);
