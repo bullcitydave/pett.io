@@ -107,15 +107,18 @@ body {
 
         @include media($mobile-s) {
           font-size: 7.0em;
+          text-shadow: 3px 3px 3px $black;
         }
         @include media($mobile-m) {
           font-size: 9.0em;
         }
         @include media($mobile-l) {
           font-size: 12.0em;
+          text-shadow: 6px 6px 6px $black;
         }
         @include media($desktop) {
           font-size: 15.0em;
+          text-shadow: 10px 10px 10px $black;
         }
         font-weight: 300;
         margin: 5px 0 -20px 0;
@@ -210,7 +213,8 @@ body {
             color: $white;
           }
           li:hover {
-            color: $white;
+            color: $darker-orange;
+            text-decoration: underline;
           }
         }
 
@@ -596,6 +600,10 @@ form#fileupload {
   {
 	   background: #c00 none 0 0 no-repeat;
   }
+  ul#file-list
+  {
+    padding: 0 0 25px 25px;
+  }
 }
 
 .display-message {
@@ -640,4 +648,8 @@ font-size: 0.9em;
       color: $orange;
     }
   }
+}
+
+canvas {
+  display: none;
 }

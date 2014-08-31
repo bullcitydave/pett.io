@@ -68,8 +68,8 @@ el: "#tools",
             size: 'original'
           });
           newPic.save();
-          alert('Photo has been successfully uploaded.');
-          upload.resizeAndUpload(f);  // generate thumbnail
+          alert('Photo' + fName + ' has been successfully uploaded.');
+          upload.resizeAndUpload(f);  // generate medium image
           $('#file-list').html('');
           $('#file-select').html('');
 
@@ -167,7 +167,7 @@ el: "#tools",
                 size: 'medium'
               });
               newPic.save();
-              alert('Small photo has been successfully uploaded.');
+              console.log('Medium photo has been successfully uploaded.');
 
 
             },
