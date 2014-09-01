@@ -44,11 +44,7 @@ var ProfileView = Parse.View.extend ({
             console.log("Error: " + error.code + " " + error.message);
         }
     });
-
-
-
-
-        console.log(results[0].attributes);
+    console.log(results[0].attributes);
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
@@ -58,8 +54,8 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile',
-      'click #next-pic'    : 'getBackground'
+      'click #close-profile'    : 'closeProfile'
+      // 'click #next-pic'    : 'getBackground'  disable for now
 
     },
 

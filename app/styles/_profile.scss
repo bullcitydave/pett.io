@@ -28,10 +28,13 @@
           font-size:1.2em;
         }
       }
-      p#pet-bio {
-        @include span-columns(8);
+      p#bio {
+        @include span-columns(9.5);
         line-height: 25px;
         letter-spacing: 0.05em;
+        opacity: 1;
+        font-size: 1.3em;
+        line-height: 1.6em;
       }
 
       p.small-field {
@@ -72,7 +75,7 @@
         background: $darker-orange;
         color:$black;
         border-radius:0;
-        margin-bottom:20px;
+        margin:20px;
         border:solid 2px #333;
         padding: 15px;
       }

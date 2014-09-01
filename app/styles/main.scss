@@ -447,6 +447,7 @@ body {
           text-align: center;
           margin-top: -35px;
           letter-spacing: 0.20em;
+          font-weight: bold;
           }
 
 
@@ -465,15 +466,16 @@ body {
             text-align: center;
             margin: -5px 0 0 -60px;
             text-transform: uppercase;
-            color: $orange;
-            background: $black;
+            color: $black;
+            background: $orange;
             padding: 3px 10px 3px 10px;
             border-radius: 5px;
             font-weight: 600;
           }
           #about:hover {
-            color: $black;
-            background: $orange;
+            color: $darker-orange;
+            background: $white;
+            border: 1px solid $black;
           }
         }
       }

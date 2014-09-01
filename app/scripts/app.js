@@ -16,7 +16,7 @@ $(function() {
     initialize: function() {
       self = this;
 
-    
+
 
 
 
@@ -57,11 +57,11 @@ $(function() {
               success: function(results) {
                 self.dp = results.attributes.uniqueName;
                 console.log('Default pet: ',self.dp);
-                app_router.navigate('//' + self.dp);
+                app_router.navigate('/#/' + self.dp);
                 },
               error: function(myUser) {
                 console.log('Could not determine default pet value');
-                app_router.navigate('//account/'+self.user);
+                app_router.navigate('/#/account/'+self.user);
               }
             });
           }
