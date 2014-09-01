@@ -1,23 +1,26 @@
     var Pet = Parse.Object.extend("Pet", {
 
-    defaults:{
-      "dateDeath": new Date("12/31/2029"),
-      "dateBirth": new Date(),
-      "dateAdopted": new Date()
-    },
+        defaults:{
+          "dateDeath": new Date("12/31/2029"),
+          "dateBirth": new Date("01/01/1970"),
+          "dateAdopted": new Date("01/01/1970")
+        },
 
 
-    isLiving: function () {
-    return (this.get("dateDeath") === "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") === undefined);
-  }
+        isLiving: function () {
+          return (this.get("dateDeath") == "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") == undefined);
+        },
+
+        age: function() {
+          return Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))
+        }
 
     });
 
+
+
+
     var ParsePic = Parse.Object.extend("ParsePic", {
-
-
-
-
 
     });
 
