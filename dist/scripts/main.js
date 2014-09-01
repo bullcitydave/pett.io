@@ -21,24 +21,27 @@ var flickrUserId = 'toastie97';
 
     var Pet = Parse.Object.extend("Pet", {
 
-    defaults:{
-      "dateDeath": new Date("12/31/2029"),
-      "dateBirth": new Date(),
-      "dateAdopted": new Date()
-    },
+        defaults:{
+          "dateDeath": new Date("12/31/2029"),
+          "dateBirth": new Date("01/01/1970"),
+          "dateAdopted": new Date("01/01/1970")
+        },
 
 
-    isLiving: function () {
-    return (this.get("dateDeath") === "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") === undefined);
-  }
+        isLiving: function () {
+          return (this.get("dateDeath") == "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") == undefined);
+        },
+
+        age: function() {
+          return Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))
+        }
 
     });
 
+
+
+
     var ParsePic = Parse.Object.extend("ParsePic", {
-
-
-
-
 
     });
 
@@ -154,21 +157,20 @@ var ProfileView = Parse.View.extend ({
         success: function(collection) {
             console.log(collection);
             var thisPet = thesePets.get(results[0].id);
-            if((thisPet.get("dateDeath")) !=  nullDateDeath) {
+            if (!(thisPet.isLiving())) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-             $('#about').css("top","100%"); // added
-            }
-        },
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+
+              }
+            else {
+              $('#life-marker').html(thisPet.age() + ' years old');
+              }
+            },
         error: function(collection, error) {
             console.log("Error: " + error.code + " " + error.message);
         }
     });
-
-
-
-
-        console.log(results[0].attributes);
+    console.log(results[0].attributes);
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
@@ -178,8 +180,8 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile',
-      'click #next-pic'    : 'getBackground'
+      'click #close-profile'    : 'closeProfile'
+      // 'click #next-pic'    : 'getBackground'  disable for now
 
     },
 
@@ -308,8 +310,8 @@ el: "#tools",
             size: 'original'
           });
           newPic.save();
-          alert('Photo has been successfully uploaded.');
-          upload.resizeAndUpload(f);  // generate thumbnail
+          alert('Photo' + fName + ' has been successfully uploaded.');
+          upload.resizeAndUpload(f);  // generate medium image
           $('#file-list').html('');
           $('#file-select').html('');
 
@@ -407,7 +409,7 @@ el: "#tools",
                 size: 'medium'
               });
               newPic.save();
-              alert('Small photo has been successfully uploaded.');
+              console.log('Medium photo has been successfully uploaded.');
 
 
             },
@@ -449,6 +451,7 @@ var BrowseView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').addClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
@@ -575,6 +578,7 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
@@ -582,6 +586,9 @@ var LinkView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
+
+    link.getAge();
+
     $('#main-container').append("<div class='pic-showcase'></div>");
 
 
@@ -612,14 +619,35 @@ $('.pic-showcase').imagesLoaded( function() {
 
   });
 
-
-
-
 },
+
 
   reMargin: function() {
     $('.pic-showcase').css("margin-left",((window.innerWidth-$('.pic-showcase').width())/2));
   },
+
+
+  getAge: function() {
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.first();
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + pet + ". Attempting to render...");
+        var thisPet = new Pet(results[0].attributes);
+        if (!(thisPet.isLiving())) {
+            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+        }
+        else {
+            $('#life-marker').html(thisPet.age() + ' years old');
+        }
+      },
+      error: function(collection, error) {
+            console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+    },
 
 
   render: function() {
@@ -958,6 +986,7 @@ var AccountView = Parse.View.extend({
     $('body').removeClass('splash');
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
+    $(this.el).removeClass('browse');
     $(this.el).addClass('standard');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
     $('#main-header').addClass('standard');
@@ -987,6 +1016,7 @@ var AccountView = Parse.View.extend({
         }
       }
     });
+
   },
 
 
@@ -1013,13 +1043,13 @@ var AccountView = Parse.View.extend({
       gender: $('input#pet-gender').val(),
       weight: parseInt($('input#pet-weight').val())
      });
-     newPet.save().then(function(refreshList) {
-      console.log('Pet added to database');
-      alert('Information for pet saved');
-      x.render();
-      }, function(error) {
-      console.log('Error adding pet to database');
-      });
+     newPet.save();
+     console.log('Pet added to database');
+     alert('Information for pet saved');
+     x.cleanup();
+     x.render();
+
+     return false;
     },
 
 
@@ -1085,6 +1115,9 @@ var AccountView = Parse.View.extend({
     } });
   },
 
+  cleanup: function() {
+    $('#ui-datepicker-div').remove();
+  },
 
   render: function() {
 
@@ -1196,7 +1229,7 @@ var AccountView = Parse.View.extend({
     // fQuery.equalTo("pet", x.pet);
     fQuery.find({
       success:function(results) {
-        if (results[0].attributes.flickrUser && results[0].attributes.flickrTag) {
+        if (results.length > 0) {
           APP.flickrUser = results[0].attributes.flickrUser;
           APP.flickrTag = results[0].attributes.flickrTag;
           $("input#flickr-account").val(results[0].attributes.flickrUser);
@@ -1312,7 +1345,7 @@ $(function() {
     initialize: function() {
       self = this;
 
-    
+
 
 
 
@@ -1353,11 +1386,11 @@ $(function() {
               success: function(results) {
                 self.dp = results.attributes.uniqueName;
                 console.log('Default pet: ',self.dp);
-                app_router.navigate('//' + self.dp);
+                app_router.navigate('/#/' + self.dp);
                 },
               error: function(myUser) {
                 console.log('Could not determine default pet value');
-                app_router.navigate('//account/'+self.user);
+                app_router.navigate('/#/account/'+self.user);
               }
             });
           }

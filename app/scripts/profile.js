@@ -31,21 +31,20 @@ var ProfileView = Parse.View.extend ({
         success: function(collection) {
             console.log(collection);
             var thisPet = thesePets.get(results[0].id);
-            if((thisPet.get("dateDeath")) !=  nullDateDeath) {
+            if (!(thisPet.isLiving())) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-             $('#about').css("top","100%"); // added
-            }
-        },
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+
+              }
+            else {
+              $('#life-marker').html(thisPet.age() + ' years old');
+              }
+            },
         error: function(collection, error) {
             console.log("Error: " + error.code + " " + error.message);
         }
     });
-
-
-
-
-        console.log(results[0].attributes);
+    console.log(results[0].attributes);
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
@@ -55,8 +54,8 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile',
-      'click #next-pic'    : 'getBackground'
+      'click #close-profile'    : 'closeProfile'
+      // 'click #next-pic'    : 'getBackground'  disable for now
 
     },
 
