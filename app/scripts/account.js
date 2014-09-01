@@ -18,6 +18,7 @@ var AccountView = Parse.View.extend({
     $('body').removeClass('splash');
     console.log("Account view initialized");
     $(this.el).removeClass('splash');
+    $(this.el).removeClass('browse');
     $(this.el).addClass('standard');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
     $('#main-header').addClass('standard');

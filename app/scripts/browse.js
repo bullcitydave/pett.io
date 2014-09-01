@@ -15,6 +15,7 @@ var BrowseView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').addClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');

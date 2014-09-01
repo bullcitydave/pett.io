@@ -25,6 +25,7 @@ var LinkView = Parse.View.extend({
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
+    $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
