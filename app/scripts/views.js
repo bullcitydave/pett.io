@@ -33,6 +33,9 @@ var LinkView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
+
+    link.getAge();
+
     $('#main-container').append("<div class='pic-showcase'></div>");
 
 
@@ -63,14 +66,35 @@ $('.pic-showcase').imagesLoaded( function() {
 
   });
 
-
-
-
 },
+
 
   reMargin: function() {
     $('.pic-showcase').css("margin-left",((window.innerWidth-$('.pic-showcase').width())/2));
   },
+
+
+  getAge: function() {
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.first();
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + pet + ". Attempting to render...");
+        var thisPet = new Pet(results[0].attributes);
+        if (!(thisPet.isLiving())) {
+            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+        }
+        else {
+            $('#life-marker').html(thisPet.age() + ' years old');
+        }
+      },
+      error: function(collection, error) {
+            console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+    },
 
 
   render: function() {
