@@ -473,13 +473,15 @@ var BrowseView = Parse.View.extend({
 
   render: function() {
 
-    if (user == null) {
+  if (Parse.User.current() !== null)
+    {
+      $('.site-visitor').hide();
+      $('.site-user').show();
+    }
+  else {
       $('.site-user').hide();
-    }
-    else {
       $('.site-visitor').show();
-    }
-
+  }
     var petsQuery = new Parse.Query(Pet);
     petsQuery.select("uniqueName");
     petsQuery.ascending("uniqueName");
@@ -651,9 +653,15 @@ $('.pic-showcase').imagesLoaded( function() {
 
 
   render: function() {
-
-    $('.site-visitor').hide();
-    $('.site-user').show();
+    if (Parse.User.current() !== null)
+      {
+        $('.site-visitor').hide();
+        $('.site-user').show();
+      }
+    else {
+        $('.site-user').hide();
+        $('.site-visitor').show();
+    }
     $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);
