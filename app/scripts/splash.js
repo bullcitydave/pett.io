@@ -6,6 +6,10 @@ var SplashView = Parse.View.extend({
 
   initialize: function() {
     console.log("Splash view initialized");
+    $(window).resize(function(){
+      $('#header-box').css("margin-top",($(window).height() * 0.4));
+      $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
+    });
     this.render();
   },
 
