@@ -261,7 +261,8 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
-      ppQuery1.equalTo("size", "medium");
+      ppQuery1.containedIn("size",
+                  ["medium", "undefined"]);
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
