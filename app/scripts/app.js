@@ -17,12 +17,6 @@ $(function() {
       self = this;
 
 
-
-
-
-      // self.masonryContainer = $('.pic-showcase').masonry();
-
-
       userType = "visitor";
 
       if (Parse.User.current()) {
@@ -90,6 +84,14 @@ $(function() {
 
   });
 
+
+        $(window).resize(function(){
+          $('#header-box').css("margin-top",($(window).height() * 0.4));
+          $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
+        });
+
+
   window.APP = new AppView;
+
 
 });

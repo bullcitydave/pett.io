@@ -1327,6 +1327,10 @@ var SplashView = Parse.View.extend({
 
   initialize: function() {
     console.log("Splash view initialized");
+    $(window).resize(function(){
+      $('#header-box').css("margin-top",($(window).height() * 0.4));
+      $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
+    });
     this.render();
   },
 
@@ -1357,12 +1361,6 @@ $(function() {
 
     initialize: function() {
       self = this;
-
-
-
-
-
-      // self.masonryContainer = $('.pic-showcase').masonry();
 
 
       userType = "visitor";
@@ -1432,6 +1430,14 @@ $(function() {
 
   });
 
+
+        $(window).resize(function(){
+          $('#header-box').css("margin-top",($(window).height() * 0.4));
+          $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
+        });
+
+
   window.APP = new AppView;
+
 
 });
