@@ -306,6 +306,7 @@ el: "#tools",
             filename: fName,
             username: Parse.User.current().getUsername(),
             petname: pet,
+            petUniqueName: pet,
             source: 'parse',
             size: 'original'
           });
@@ -400,6 +401,7 @@ el: "#tools",
                 url: data.url,
                 username: Parse.User.current().getUsername(),
                 petname: pet,
+                petUniqueName: pet,
                 size: data.size,
                 filesize: fSize,
                 filename: fName,
@@ -488,6 +490,7 @@ var BrowseView = Parse.View.extend({
     petsQuery.find({
       success: function(results) {
 
+
     $('#browse-container').imagesLoaded(function() {
       $('#browse-container').masonry({
             columnwidth: 200,
@@ -501,11 +504,12 @@ var BrowseView = Parse.View.extend({
     var petUName = results[i].attributes.uniqueName;
 
     var ppQuery1 = new Parse.Query(ParsePic);
-    ppQuery1.equalTo("petname",petUName);
-    ppQuery1.equalTo("size","medium");
+    ppQuery1.equalTo("petUniqueName",petUName);
+    ppQuery1.containedIn("size",
+                ["medium", "undefined"]);
 
     var ppQuery2 = new Parse.Query(ParsePic);
-    ppQuery2.equalTo("petname",petUName);
+    ppQuery2.equalTo("petUniqueName",petUName);
     ppQuery2.doesNotExist("size");
 
     var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
@@ -816,7 +820,8 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
-      ppQuery1.equalTo("size", "medium");
+      ppQuery1.containedIn("size",
+                  ["medium", "undefined"]);
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
