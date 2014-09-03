@@ -98,9 +98,15 @@ $('.pic-showcase').imagesLoaded( function() {
 
 
   render: function() {
-
-    $('.site-visitor').hide();
-    $('.site-user').show();
+    if (Parse.User.current() !== null)
+      {
+        $('.site-visitor').hide();
+        $('.site-user').show();
+      }
+    else {
+        $('.site-user').hide();
+        $('.site-visitor').show();
+    }
     $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);

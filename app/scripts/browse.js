@@ -37,13 +37,15 @@ var BrowseView = Parse.View.extend({
 
   render: function() {
 
-    if (user == null) {
+  if (Parse.User.current() !== null)
+    {
+      $('.site-visitor').hide();
+      $('.site-user').show();
+    }
+  else {
       $('.site-user').hide();
-    }
-    else {
       $('.site-visitor').show();
-    }
-
+  }
     var petsQuery = new Parse.Query(Pet);
     petsQuery.select("uniqueName");
     petsQuery.ascending("uniqueName");
