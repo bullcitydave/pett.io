@@ -51,7 +51,7 @@ $(function() {
               success: function(results) {
                 self.dp = results.attributes.uniqueName;
                 console.log('Default pet: ',self.dp);
-                app_router.navigate('/#/' + self.dp);
+                app_router.navigate('/#/pet/' + self.dp);
                 },
               error: function(myUser) {
                 console.log('Could not determine default pet value');
@@ -60,13 +60,13 @@ $(function() {
             });
           }
           else {
-            app_router.navigate('//account/'+self.user);
+            app_router.navigate('/#/account/'+self.user);
           }
         },
 
         error: function(error) {
             alert('Could not determine default pet value');
-            app_router.navigate('//account/'+self.user);
+            app_router.navigate('/#/account/'+self.user);
           }
         });
     },
@@ -76,8 +76,9 @@ $(function() {
       console.log('Logging out and back to main login');
       $('#main-container').removeClass('splash-main');
       $('#main-container').addClass('standard');
-      app_router.navigate('/');
+      app_router.navigate('//');
       $('#main-header').removeClass('standard');
+      $('#main-container').removeClass('standard');
       new SplashView();
     }
 
