@@ -540,7 +540,7 @@ var BrowseView = Parse.View.extend({
 
 },
   error: function(error) {
-          alert('Error!');
+          console.log("Error: " + error.code + " " + error.message);
         }
       });
 
@@ -578,8 +578,9 @@ var LinkView = Parse.View.extend({
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
-    else
+    else {
       user = "guest";
+    }
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -900,7 +901,7 @@ var LoginView = Parse.View.extend({
 
   initialize: function() {
     console.log("LoginView initialized");
-    $('#big-browse').hide();
+    // $('#big-browse').hide();
     $('h2').hide();
     self = this;
     this.render();
@@ -1075,7 +1076,7 @@ var AccountView = Parse.View.extend({
 
   viewPet: function(e) {
     pet = $(e.toElement).prev().html().toLowerCase();
-    app_router.navigate('//' + pet);
+    app_router.navigate('/#/pet/' + pet);
     return false;
   },
 
@@ -1267,7 +1268,7 @@ var AppRouter = Parse.Router.extend({
        'account/:user'   :     'updateAccount',
        'browse'          :     'goBrowse',
        ''                :     'splash',
-    ':petName'        :     'getPet',
+       'pet/:petName'        :     'getPet'
 
 
 
@@ -1307,6 +1308,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:getPet', function(petName) {
         console.log('Getting page for ',petName);
+      
         linkView = new LinkView(petName);
     });
 
@@ -1397,7 +1399,7 @@ $(function() {
               success: function(results) {
                 self.dp = results.attributes.uniqueName;
                 console.log('Default pet: ',self.dp);
-                app_router.navigate('/#/' + self.dp);
+                app_router.navigate('/#/pet/' + self.dp);
                 },
               error: function(myUser) {
                 console.log('Could not determine default pet value');
@@ -1406,13 +1408,13 @@ $(function() {
             });
           }
           else {
-            app_router.navigate('//account/'+self.user);
+            app_router.navigate('/#/account/'+self.user);
           }
         },
 
         error: function(error) {
             alert('Could not determine default pet value');
-            app_router.navigate('//account/'+self.user);
+            app_router.navigate('/#/account/'+self.user);
           }
         });
     },
@@ -1422,8 +1424,9 @@ $(function() {
       console.log('Logging out and back to main login');
       $('#main-container').removeClass('splash-main');
       $('#main-container').addClass('standard');
-      app_router.navigate('/');
+      app_router.navigate('//');
       $('#main-header').removeClass('standard');
+      $('#main-container').removeClass('standard');
       new SplashView();
     }
 

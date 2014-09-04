@@ -94,7 +94,7 @@ var AccountView = Parse.View.extend({
 
   viewPet: function(e) {
     pet = $(e.toElement).prev().html().toLowerCase();
-    app_router.navigate('//' + pet);
+    app_router.navigate('/#/pet/' + pet);
     return false;
   },
 

@@ -160,22 +160,22 @@ div#main-container.splash{
 
       @include media($mobile-s) {
         @include span-columns(3); @include shift(1);
-        margin-top: 25%;
+        margin-top: 0;
         font-size: 0.8em;
       }
       @include media($mobile-m) {
         @include span-columns(2); @include shift(1.5);
-        margin-top: 25%;
+        margin-top: 0;
         font-size: 0.8em;
       }
       @include media($mobile-l) {
         @include span-columns(3); @include shift(4.5);
-        margin-top: 25%;
+        margin-top: 0;
         font-size: 0.9em;
       }
       @include media($desktop) {
         @include span-columns(3); @include shift(4.5);
-        margin-top: 25%;
+        margin-top: 0;
         font-size: 1.0em;
       }
 
@@ -195,7 +195,8 @@ div#main-container.splash{
         background:$darker-orange;
         color: $white;
         position:absolute;
-        right: calc(50% - 60px)
+        right: calc(50% - 60px);
+        margin-top: 0;
       }
       .error {
         opacity: .7;

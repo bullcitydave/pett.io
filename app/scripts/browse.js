@@ -102,7 +102,7 @@ var BrowseView = Parse.View.extend({
 
 },
   error: function(error) {
-          alert('Error!');
+          console.log("Error: " + error.code + " " + error.message);
         }
       });
 
