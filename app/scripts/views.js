@@ -19,8 +19,9 @@ var LinkView = Parse.View.extend({
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
-    else
+    else {
       user = "guest";
+    }
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
