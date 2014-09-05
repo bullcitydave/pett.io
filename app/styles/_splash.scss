@@ -131,10 +131,10 @@ div#main-container.splash{
 
   div#login, div#signup {
     @include media($mobile-s) {
-      @include span-columns(5);
+      @include span-columns(12);
     }
     @include media($mobile-m) {
-      @include span-columns(5);
+      @include span-columns(12);
     }
     @include media($mobile-l) {
       @include span-columns(12);
@@ -168,12 +168,12 @@ div#main-container.splash{
       position: relative;
 
       @include media($mobile-s) {
-        @include span-columns(3); @include shift(1);
+        @include span-columns(9); @include shift(1.5);
         margin-top: 0;
         font-size: 0.8em;
       }
       @include media($mobile-m) {
-        @include span-columns(2); @include shift(1.5);
+        @include span-columns(6); @include shift(3);
         margin-top: 0;
         font-size: 0.8em;
       }
