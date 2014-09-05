@@ -86,16 +86,16 @@ $(function() {
   });
 
 
-    $(window).resize(function(){
-      if ($(window).height() > 575 && $(window).width() > 760) {
-        $('#header-box').css("margin-top",($(window).height() * 0.4));
-        $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
-      }
+    // $(window).resize(function(){
+      // if ($(window).height() > 575 && $(window).width() > 760) {
+      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
+      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
+      // }
       // if ($(window).height() < 575 && $(window).width() > 760) {
       //   $('#header-box').css("margin-top","0");
       //   $('#header-box-overlay').css("margin-top","0");
       // }
-    });
+    // });
 
 
   window.APP = new AppView;
