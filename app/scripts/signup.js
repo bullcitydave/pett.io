@@ -9,6 +9,7 @@ var SignUpView = Parse.View.extend({
     console.log("SignUpView initialized");
     $('#browse').hide();
     $('h2').hide();
+    $('#login').remove();
     _.bindAll(this, "signUp");
     this.render();
   },

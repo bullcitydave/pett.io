@@ -153,18 +153,18 @@ div#main-container.splash{
     z-index: 6000;
 
     .login-form, .signup-form,  {
-      @include media($mobile-s) {
-        @include span-columns(5);
-      }
-      @include media($mobile-m) {
-        @include span-columns(5);
-      }
-      @include media($mobile-l) {
-        @include span-columns(12);
-      }
-      @include media($desktop) {
-        @include span-columns(12);
-      }
+      // @include media($mobile-s) {
+      //   @include span-columns(5);
+      // }
+      // @include media($mobile-m) {
+      //   @include span-columns(5);
+      // }
+      // @include media($mobile-l) {
+      //   @include span-columns(12);
+      // }
+      // @include media($desktop) {
+      //   @include span-columns(12);
+      // }
       position: relative;
 
       @include media($mobile-s) {
