@@ -19,11 +19,12 @@ header#main-header{
   #header-box, #header-box-overlay {
     width: 80%;
     @include media($mobile-s) {
-      height: 175px;
+
     }
     @include media($mobile-l) {
-      height: 350px;
+
     }
+
 
     left: 10%;
     opacity: 1;
@@ -32,17 +33,24 @@ header#main-header{
     margin: 40% 0 auto 0;
     position: absolute;
     padding: 0 0 10px 0;
+    overflow-y: scroll;
+    @media screen and (max-height: 600px ) and (min-width: 760px){
+      margin-top: 0;
+    }
   }
   #header-box-overlay {
     opacity: 1;
     z-index: 5001;
     background: transparent;
+
     h1 {
       color: $orange;
 
       @include media($mobile-s) {
         font-size: 5.0em;
         text-shadow: 3px 3px 3px $black;
+        font-weight: 300;
+        font-family: $primary-font;
       }
       @include media($mobile-m) {
         font-size: 7.0em;
@@ -55,8 +63,9 @@ header#main-header{
         font-size: 10.0em;
         text-shadow: 10px 10px 10px $black;
       }
-      font-weight: 300;
-      font-family: $primary-font;
+
+
+
     }
 
     h2 {
@@ -245,6 +254,7 @@ div#main-container.splash{
       right: calc(50% - 152px);
       margin: 0;
       padding: 0;
+      z-index: 7000;
     }
     @include media($mobile-l) {
       position: absolute;
@@ -256,7 +266,7 @@ div#main-container.splash{
       display: inline-block;
       button {
         @include not-as-shiny;
-        background: rgba($white, 0.3);
+        background: rgba($white, 0.5);
         border: 2px solid $darker-orange;
         color: rgba($black, 0.5);
         float: left;
