@@ -255,11 +255,10 @@ div#main-container.splash{
       text-decoration: none;
       display: inline-block;
       button {
-        // @include button(shiny, $orange);
         @include not-as-shiny;
-        background: transparent;
+        background: rgba($white, 0.3);
         border: 2px solid $darker-orange;
-        color: $white;
+        color: rgba($black, 0.5);
         float: left;
         width:120px;
         margin: 5px 20px 0 0;
@@ -267,6 +266,7 @@ div#main-container.splash{
       button:hover {
         background: $darker-orange;
         border-color: $white;
+        color: $white;
       }
     }
   }
