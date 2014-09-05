@@ -19,30 +19,37 @@ header#main-header{
   #header-box, #header-box-overlay {
     width: 80%;
     @include media($mobile-s) {
-      height: 175px;
+
     }
     @include media($mobile-l) {
-      height: 350px;
+
     }
+
 
     left: 10%;
     opacity: 1;
     z-index: 5000;
     background: transparent;
-    margin: 40% 0 auto 0;
+    margin: 10% 0 auto 0;
     position: absolute;
     padding: 0 0 10px 0;
+    @media screen and (max-height: 600px ) and (min-width: 760px){
+      margin-top: 0;
+    }
   }
   #header-box-overlay {
     opacity: 1;
     z-index: 5001;
     background: transparent;
+
     h1 {
       color: $orange;
 
       @include media($mobile-s) {
         font-size: 5.0em;
         text-shadow: 3px 3px 3px $black;
+        font-weight: 300;
+        font-family: $primary-font;
       }
       @include media($mobile-m) {
         font-size: 7.0em;
@@ -55,8 +62,9 @@ header#main-header{
         font-size: 10.0em;
         text-shadow: 10px 10px 10px $black;
       }
-      font-weight: 300;
-      font-family: $primary-font;
+
+
+
     }
 
     h2 {
@@ -96,12 +104,98 @@ header#main-header{
       background: transparent;
       text-align:center;
       border: 3px solid $darker-orange;
-      margin-top: 5%;
     }
     button:hover {
       background: $darker-orange;
       border-color: $white;
     }
+    div#login, div#signup {
+      @include media($mobile-s) {
+        @include span-columns(12);
+      }
+      @include media($mobile-m) {
+        @include span-columns(12);
+      }
+      @include media($mobile-l) {
+        @include span-columns(12);
+      }
+      @include media($desktop) {
+        @include span-columns(12);
+      }
+
+      // @include media($mobile-s) {
+      //   // @include span-columns(3);
+      //   // @include shift(1);
+      // }
+      position: absolute;
+      // top: 10%;
+      opacity: .8;
+      z-index: 6000;
+
+      .login-form, .signup-form,  {
+        // @include media($mobile-s) {
+        //   @include span-columns(5);
+        // }
+        // @include media($mobile-m) {
+        //   @include span-columns(5);
+        // }
+        // @include media($mobile-l) {
+        //   @include span-columns(12);
+        // }
+        // @include media($desktop) {
+        //   @include span-columns(12);
+        // }
+        position: relative;
+
+        @include media($mobile-s) {
+          @include span-columns(9); @include shift(1.5);
+          margin-top: 0;
+          font-size: 0.8em;
+        }
+        @include media($mobile-m) {
+          @include span-columns(6); @include shift(3);
+          margin-top: 0;
+          font-size: 0.8em;
+        }
+        @include media($mobile-l) {
+          @include span-columns(3); @include shift(4.5);
+          margin-top: 0;
+          font-size: 0.9em;
+        }
+        @include media($desktop) {
+          @include span-columns(3); @include shift(4.5);
+          margin-top: 0;
+          font-size: 1.0em;
+        }
+
+        input {
+          display: block;
+          clear: both;
+          margin-bottom: 10px;
+          opacity: .9;
+          padding: 5px 10px 5px 10px;
+          letter-spacing: .8px;
+          font-family: $secondary-font;
+
+        }
+        button {
+          // @include button(shiny, $orange);
+          @include not-as-shiny;
+          background:$darker-orange;
+          color: $white;
+          position:absolute;
+          right: calc(50% - 60px);
+          margin-top: 0;
+        }
+        .error {
+          opacity: .7;
+          color: $orange;
+          background: $black;
+          text-align:center;
+        }
+      }
+    }
+
   }
 }
 
@@ -120,92 +214,6 @@ div#main-container.splash{
   @include media($desktop)  { top: 0%; }
 
 
-  div#login, div#signup {
-    @include media($mobile-s) {
-      @include span-columns(5);
-    }
-    @include media($mobile-m) {
-      @include span-columns(5);
-    }
-    @include media($mobile-l) {
-      @include span-columns(12);
-    }
-    @include media($desktop) {
-      @include span-columns(12);
-    }
-
-    // @include media($mobile-s) {
-    //   // @include span-columns(3);
-    //   // @include shift(1);
-    // }
-    position: absolute;
-    top: 20%;
-    opacity: .8;
-    z-index: 6000;
-
-    .login-form, .signup-form,  {
-      @include media($mobile-s) {
-        @include span-columns(5);
-      }
-      @include media($mobile-m) {
-        @include span-columns(5);
-      }
-      @include media($mobile-l) {
-        @include span-columns(12);
-      }
-      @include media($desktop) {
-        @include span-columns(12);
-      }
-      position: relative;
-
-      @include media($mobile-s) {
-        @include span-columns(3); @include shift(1);
-        margin-top: 0;
-        font-size: 0.8em;
-      }
-      @include media($mobile-m) {
-        @include span-columns(2); @include shift(1.5);
-        margin-top: 0;
-        font-size: 0.8em;
-      }
-      @include media($mobile-l) {
-        @include span-columns(3); @include shift(4.5);
-        margin-top: 0;
-        font-size: 0.9em;
-      }
-      @include media($desktop) {
-        @include span-columns(3); @include shift(4.5);
-        margin-top: 0;
-        font-size: 1.0em;
-      }
-
-      input {
-        display: block;
-        clear: both;
-        margin-bottom: 10px;
-        opacity: .9;
-        padding: 5px 10px 5px 10px;
-        letter-spacing: .8px;
-        font-family: $secondary-font;
-
-      }
-      button {
-        // @include button(shiny, $orange);
-        @include not-as-shiny;
-        background:$darker-orange;
-        color: $white;
-        position:absolute;
-        right: calc(50% - 60px);
-        margin-top: 0;
-      }
-      .error {
-        opacity: .7;
-        color: $orange;
-        background: $black;
-        text-align:center;
-      }
-    }
-  }
 
   div#splash-img-container{
     position: relative;
@@ -245,6 +253,7 @@ div#main-container.splash{
       right: calc(50% - 152px);
       margin: 0;
       padding: 0;
+      z-index: 7000;
     }
     @include media($mobile-l) {
       position: absolute;
@@ -255,11 +264,10 @@ div#main-container.splash{
       text-decoration: none;
       display: inline-block;
       button {
-        // @include button(shiny, $orange);
         @include not-as-shiny;
-        background: transparent;
+        background: rgba($white, 0.5);
         border: 2px solid $darker-orange;
-        color: $white;
+        color: rgba($black, 0.5);
         float: left;
         width:120px;
         margin: 5px 20px 0 0;
@@ -267,6 +275,7 @@ div#main-container.splash{
       button:hover {
         background: $darker-orange;
         border-color: $white;
+        color: $white;
       }
     }
   }

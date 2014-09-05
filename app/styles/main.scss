@@ -14,6 +14,7 @@ $mobile-l: new-breakpoint(min-width 768px 12);
 $desktop: new-breakpoint(min-width 960px 12);
 
 
+
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
   -ms-filter: brightness($amt);
@@ -62,6 +63,7 @@ a {
 body {
   background: $white;
   font-family: $secondary-font;
+
 
 
 
@@ -390,33 +392,33 @@ body.splash {
 
 
 footer {
-position: fixed;
-bottom: 0;
-text-align: center;
-background: #eaeaea;
-width: 100%;
--webkit-margin-before: 0;
--webkit-margin-after: 0;
-font-size: 0.9em;
-  p{
-    -webkit-margin-before: 4px;
-    -webkit-margin-after: 4px;
-    span {
-      padding:0 10px 0 10px;
-      margin: 0;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  background: #eaeaea;
+  width: 100%;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  font-size: 0.9em;
+    p{
+      -webkit-margin-before: 4px;
+      -webkit-margin-after: 4px;
+      span {
+        padding:0 10px 0 10px;
+        margin: 0;
+      }
+      span#copyright {
+      }
+      span#version {
+        font-style: italic;
+        color: $orange;
+      }
+      span#disclaimer {
+        color: $black;
+      }
     }
-    span#copyright {
-
-    }
-    span#version {
-      font-style: italic;
-      color: $orange;
-    }
-    span#disclaimer {
-      color: $black;
-    }
+  z-index:6000;
   }
-}
 
 canvas {
   display: none;
