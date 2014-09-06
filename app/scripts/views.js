@@ -58,16 +58,16 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
 
-$('.pic-showcase').imagesLoaded( function() {
-  $('.pic-showcase').masonry({
-                  columnwidth: 200,
-                  itemSelector: '.montageSquare'
-            });
-  console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+    $('.pic-showcase').imagesLoaded( function() {
+      $('.pic-showcase').masonry({
+                      columnwidth: 250,
+                      itemSelector: '.montageSquare'
+                });
+      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
-  });
+      });
 
-},
+  },
 
 
   reMargin: function() {
