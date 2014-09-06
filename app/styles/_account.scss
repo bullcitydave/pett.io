@@ -45,10 +45,10 @@ div.user-profile {
 
     button#add-pet {
       @include media($mobile-s) {
-
-        @include span-columns(2);
-        @include shift(8);
-        margin: 15px 0 15px 0;
+        clear:both;
+        @include span-columns(4);
+        @include shift(4);
+        // margin: 15px 0 15px 0;
       }
       // margin:0 0 20px 0;
       // position: absolute;
