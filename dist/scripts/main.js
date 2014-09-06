@@ -617,16 +617,16 @@ var LinkView = Parse.View.extend({
 
   doMasonry: function() {
 
-$('.pic-showcase').imagesLoaded( function() {
-  $('.pic-showcase').masonry({
-                  columnwidth: 200,
-                  itemSelector: '.montageSquare'
-            });
-  console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+    $('.pic-showcase').imagesLoaded( function() {
+      $('.pic-showcase').masonry({
+                      columnwidth: 250,
+                      itemSelector: '.montageSquare'
+                });
+      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
-  });
+      });
 
-},
+  },
 
 
   reMargin: function() {
@@ -897,12 +897,13 @@ var LoginView = Parse.View.extend({
     "submit form.login-form": "logIn"
   },
 
-  el: "#main-container",
+  el: "#main-header",
 
   initialize: function() {
     console.log("LoginView initialized");
-    // $('#big-browse').hide();
+    $('#big-browse').hide();
     $('h2').hide();
+    $('#signup').remove();
     self = this;
     this.render();
   },
@@ -932,7 +933,8 @@ var LoginView = Parse.View.extend({
   render: function() {
       $("#signup-username").attr('placeholder','');
       $("#signup-password").attr('placeholder','');
-      this.$el.append(_.template($("#login-template").html()));
+
+      $('#header-box-overlay h1').after(_.template($("#login-template").html()));
   }
 });
 
@@ -941,12 +943,13 @@ var SignUpView = Parse.View.extend({
     "submit form.signup-form": "signUp"
   },
 
-  el: "#main-container",
+  el: "#main-header",
 
   initialize: function() {
     console.log("SignUpView initialized");
-    $('#browse').hide();
+    $('#big-browse').hide();
     $('h2').hide();
+    $('#login').remove();
     _.bindAll(this, "signUp");
     this.render();
   },
@@ -976,7 +979,7 @@ var SignUpView = Parse.View.extend({
   render: function() {
     $("#login-username").attr('placeholder','');
     $("#login-password").attr('placeholder','');
-    this.$el.append(_.template($("#signup-template").html()));
+    $('#header-box-overlay h1').after(_.template($("#signup-template").html()));
   }
 });
 
@@ -1013,6 +1016,7 @@ var AccountView = Parse.View.extend({
 
   createPet: function(e) {
 
+    $('#update-pet').show();
     $('#update-pet').html(_.template($("#add-pet-template").html()));
 
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
@@ -1329,10 +1333,7 @@ var SplashView = Parse.View.extend({
 
   initialize: function() {
     console.log("Splash view initialized");
-    $(window).resize(function(){
-      $('#header-box').css("margin-top",($(window).height() * 0.4));
-      $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
-    });
+
     this.render();
   },
 
@@ -1434,10 +1435,16 @@ $(function() {
   });
 
 
-        $(window).resize(function(){
-          $('#header-box').css("margin-top",($(window).height() * 0.4));
-          $('#header-box-overlay').css("margin-top",($(window).height() * 0.4));
-        });
+    // $(window).resize(function(){
+      // if ($(window).height() > 575 && $(window).width() > 760) {
+      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
+      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
+      // }
+      // if ($(window).height() < 575 && $(window).width() > 760) {
+      //   $('#header-box').css("margin-top","0");
+      //   $('#header-box-overlay').css("margin-top","0");
+      // }
+    // });
 
 
   window.APP = new AppView;
