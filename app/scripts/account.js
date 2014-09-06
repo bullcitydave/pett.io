@@ -31,6 +31,7 @@ var AccountView = Parse.View.extend({
 
   createPet: function(e) {
 
+    $('#update-pet').show();
     $('#update-pet').html(_.template($("#add-pet-template").html()));
 
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
