@@ -6,15 +6,19 @@ div#browse-container {
 
     float:left;
 
-    border-radius: 10%;
-    padding: 10px;
+    padding: 5px;
+
     background-color: white;
+
+    border: solid 2px $black;
+    border-radius: 5px;
 
 
     img.pet-pic {
       width: auto;
       height: 200px;
-      border-radius: 10%;
+      border-radius: 5px;
+      @include if-brightness(0.9);
     }
 
    .pet-pic-info {
@@ -25,24 +29,31 @@ div#browse-container {
         padding: 0 10px 0 10px;
 
         .pet-person {
-          clear:both;
-          text-align:center;
-          color: $black;
+          clear: both;
+          text-align: center;
+          color: $darker-orange;
           font-size: 1.0em;
-          margin-top: -0.9em;
+          font-weight: 600;
         }
         .pet-name {
           text-align: center;
-          color: $orange;
-          font-size: 2.0em;
-          font-family: $primary-font;
+          color: $black;
+          font-size: 1.4em;
+          font-family: $secondary-font;
         }
 
     }
 
     background-color: $white;
-    margin: 0 10px;
+    margin: 10px;
 
+  }
+
+  .pet-box:hover {
+    background-color: #FFF;
+    img.pet-pic {
+      @include if-brightness(1.25);
+    }
   }
 
   .pet-box:last-child {
