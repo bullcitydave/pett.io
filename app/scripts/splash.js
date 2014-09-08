@@ -8,14 +8,7 @@ var SplashView = Parse.View.extend({
     console.log("Splash view initialized");
 
 
-    Parse.Cloud.run('hello', {}, {
-  success: function(result) {
-    console.log(result); // result is 'Hello world!'
-  },
-  error: function(error) {
-  }
-});
-
+    
 
     this.render();
   },

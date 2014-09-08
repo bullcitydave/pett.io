@@ -128,11 +128,10 @@ el: "#tools",
 
           var base64DataUri = canvas.toDataURL();
           var base64Data = base64DataUri.substring(base64DataUri.indexOf(',')+1);
-          console.log(base64Data);
+
           var jsonData = { "base64":base64Data,"_ContentType":"image/png" };
-          console.log(jsonData);
+
           var sendData = JSON.stringify(jsonData);
-          console.log(sendData);
           var fSize = sendData.length;
           var fName = file.name;
           // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));

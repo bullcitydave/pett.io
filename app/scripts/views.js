@@ -52,8 +52,21 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry"
+    "click h2" : "doMasonry",
+    "click h1"  : "testHello"
     // "click #account"  : "viewAccount"
+  },
+
+  testHello: function() {
+    Parse.Cloud.run('hello', {}, {
+  success: function(result) {
+    console.log(result); // result is 'Hello world!'
+  },
+  error: function(error) {
+    console.log(error);
+  }
+});
+
   },
 
   doMasonry: function() {
