@@ -32,28 +32,26 @@ if  (user.id === "Y9dDmIqvvk")  {
     return image.setData(response.buffer);
 
   }).then(function(image) {
-    // Crop the image to the smaller of width or height.
-    var image_m = new Image();
-    image_m = image;
-    var images = [image,image_m]
-    var size = Math.min(image.width(), image.height());
+        var MAX_WIDTH = 300;
+        var MAX_HEIGHT = 400;
+        var tempW = image.width();
+        var tempH = image.height();
+        if (tempW > tempH) {
+            if (tempW > MAX_WIDTH) {
+               tempH *= MAX_WIDTH / tempW;
+               tempW = MAX_WIDTH;
+            }
+        } else {
+            if (tempH > MAX_HEIGHT) {
+               tempW *= MAX_HEIGHT / tempH;
+               tempH = MAX_HEIGHT;
+            }
+        }
 
-    image.crop({
-      left: (image.width() - size) / 2,
-      top: (image.height() - size) / 2,
-      width: size,
-      height: size
-    });
-    return image;
-
-  }).then(function(image) {
-    // Resize the image to 64x64.
-
-    image.scale({
-      width: 64,
-      height: 64
-    });
-    return image;
+       return image.scale({
+                 width: tempW,
+                 height: tempH
+               });
 
   }).then(function(image) {
     console.log('width is ' + image.width());
@@ -69,14 +67,14 @@ if  (user.id === "Y9dDmIqvvk")  {
   }).then(function(buffer) {
     // Save the image into a new file.
     var base64 = buffer.toString("base64");
-    var file = new Parse.File("thumbnail.jpg", { base64: base64});
+    var file = new Parse.File("medium.jpg", { base64: base64});
     return file.save();
 
   }).then(function(file) {
     // Attach the image file to the original object.
     console.log('Hello?');
     console.log(file.url());
-    pic.set("thumbnail", file);
+    pic.set("medium", file);
 
   }).then(function(result) {
     response.success();
@@ -90,6 +88,10 @@ else {
 });
 
 
+
+//
+// var Image = require("parse-image");
+//
 // Parse.Cloud.beforeSave("ParsePic", function(request, response) {
 //
 // var user = request.user;
@@ -173,19 +175,14 @@ else {
 //     var base64_t = buffers[0].toString("base64");
 //     var base64_m = buffers[1].toString("base64");
 //     var files = [(new Parse.File("thumbnail.jpg", { base64: base64_t })), (new Parse.File("medium.jpg", { base64: base64_m }))];
-//     // try this...
-//     return files;
-//   }).then(function(files) {
-//     //
 //     files[0].save();
 //     files[1].save();
 //     return files;
-//
 //   }).then(function(files) {
 //     // Attach the image file to the original object.
-//     console.log('Hello?');
-//     console.log(files[0].url());
-//     console.log(files[1].url());
+//     // console.log('Hello?');
+//     // console.log(files[0].url());
+//     // console.log(files[1].url());
 //     pic.set("thumbnail", files[0]);
 //     pic.set("medium", files[1]);
 //
