@@ -370,11 +370,10 @@ el: "#tools",
 
           var base64DataUri = canvas.toDataURL();
           var base64Data = base64DataUri.substring(base64DataUri.indexOf(',')+1);
-          console.log(base64Data);
+
           var jsonData = { "base64":base64Data,"_ContentType":"image/png" };
-          console.log(jsonData);
+
           var sendData = JSON.stringify(jsonData);
-          console.log(sendData);
           var fSize = sendData.length;
           var fName = file.name;
           // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
@@ -471,7 +470,21 @@ var BrowseView = Parse.View.extend({
     // "click #about"    : "showProfile",
     // "click #upload"   : "imageUploadForm",
     // "click #account"  : "viewAccount"
+    "click .pet-person" : "generateMedImgs"
   },
+
+
+  generateMedImgs: function() {
+
+          Parse.Cloud.run('createMedImgs', {}, {
+              success: function(result) {
+                console.log(result); // result is 'Hello world!'
+              },
+              error: function(error) {
+                console.log(error);
+              }
+      });
+},
 
   render: function() {
 
@@ -506,7 +519,7 @@ var BrowseView = Parse.View.extend({
     var ppQuery1 = new Parse.Query(ParsePic);
     ppQuery1.equalTo("petUniqueName",petUName);
     ppQuery1.containedIn("size",
-                ["medium", "undefined"]);
+                ["original", "undefined"]);
 
     var ppQuery2 = new Parse.Query(ParsePic);
     ppQuery2.equalTo("petUniqueName",petUName);
@@ -523,19 +536,19 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
           if (results.length > 0) {
             var randomImg = Math.floor(Math.random() * (results.length));
-            console.log(randomImg);
-            var petImg = results[randomImg].attributes.url;
-            console.log(petImg);
+            // console.log(randomImg);
+            // var petImg = results[randomImg].attributes.medium;
+            // console.log(petImg);
             browseSelf.showPics(results[randomImg]);
         };
       }
     });
   }
 
-  $('#browse-container').masonry({
-        columnwidth: 300,
-        itemSelector: '.pet-box'
-  });
+  // $('#browse-container').masonry({
+  //       columnwidth: 300,
+  //       itemSelector: '.pet-box'
+  // });
 
 
 },
@@ -611,8 +624,21 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry"
+    "click h2" : "doMasonry",
+    "click h1"  : "testHello"
     // "click #account"  : "viewAccount"
+  },
+
+  testHello: function() {
+    Parse.Cloud.run('hello', {}, {
+  success: function(result) {
+    console.log(result); // result is 'Hello world!'
+  },
+  error: function(error) {
+    console.log(error);
+  }
+});
+
   },
 
   doMasonry: function() {
@@ -821,8 +847,7 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
-      ppQuery1.containedIn("size",
-                  ["medium", "undefined"]);
+      ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
@@ -853,7 +878,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url})));
        };
 
 
@@ -1333,6 +1358,9 @@ var SplashView = Parse.View.extend({
 
   initialize: function() {
     console.log("Splash view initialized");
+
+
+    
 
     this.render();
   },
