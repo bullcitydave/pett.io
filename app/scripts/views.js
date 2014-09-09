@@ -52,8 +52,21 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry"
+    "click h2" : "doMasonry",
+    "click h1"  : "testHello"
     // "click #account"  : "viewAccount"
+  },
+
+  testHello: function() {
+    Parse.Cloud.run('hello', {}, {
+  success: function(result) {
+    console.log(result); // result is 'Hello world!'
+  },
+  error: function(error) {
+    console.log(error);
+  }
+});
+
   },
 
   doMasonry: function() {
@@ -262,8 +275,7 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
-      ppQuery1.containedIn("size",
-                  ["medium", "undefined"]);
+      ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
@@ -294,7 +306,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.url})));
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url})));
        };
 
 

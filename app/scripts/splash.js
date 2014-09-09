@@ -7,6 +7,9 @@ var SplashView = Parse.View.extend({
   initialize: function() {
     console.log("Splash view initialized");
 
+
+    
+
     this.render();
   },
 

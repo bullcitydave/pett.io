@@ -33,7 +33,21 @@ var BrowseView = Parse.View.extend({
     // "click #about"    : "showProfile",
     // "click #upload"   : "imageUploadForm",
     // "click #account"  : "viewAccount"
+    "click .pet-person" : "generateMedImgs"
   },
+
+
+  generateMedImgs: function() {
+
+          Parse.Cloud.run('createMedImgs', {}, {
+              success: function(result) {
+                console.log(result); // result is 'Hello world!'
+              },
+              error: function(error) {
+                console.log(error);
+              }
+      });
+},
 
   render: function() {
 
@@ -68,7 +82,7 @@ var BrowseView = Parse.View.extend({
     var ppQuery1 = new Parse.Query(ParsePic);
     ppQuery1.equalTo("petUniqueName",petUName);
     ppQuery1.containedIn("size",
-                ["medium", "undefined"]);
+                ["original", "undefined"]);
 
     var ppQuery2 = new Parse.Query(ParsePic);
     ppQuery2.equalTo("petUniqueName",petUName);
@@ -85,19 +99,19 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
           if (results.length > 0) {
             var randomImg = Math.floor(Math.random() * (results.length));
-            console.log(randomImg);
-            var petImg = results[randomImg].attributes.url;
-            console.log(petImg);
+            // console.log(randomImg);
+            // var petImg = results[randomImg].attributes.medium;
+            // console.log(petImg);
             browseSelf.showPics(results[randomImg]);
         };
       }
     });
   }
 
-  $('#browse-container').masonry({
-        columnwidth: 300,
-        itemSelector: '.pet-box'
-  });
+  // $('#browse-container').masonry({
+  //       columnwidth: 300,
+  //       itemSelector: '.pet-box'
+  // });
 
 
 },
