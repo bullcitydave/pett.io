@@ -33,7 +33,21 @@ var BrowseView = Parse.View.extend({
     // "click #about"    : "showProfile",
     // "click #upload"   : "imageUploadForm",
     // "click #account"  : "viewAccount"
+    "click .pet-person" : "generateMedImgs"
   },
+
+
+  generateMedImgs: function() {
+
+          Parse.Cloud.run('createMedImgs', {}, {
+              success: function(result) {
+                console.log(result); // result is 'Hello world!'
+              },
+              error: function(error) {
+                console.log(error);
+              }
+      });
+},
 
   render: function() {
 
