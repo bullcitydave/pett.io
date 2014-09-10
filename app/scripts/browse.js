@@ -6,7 +6,7 @@ var BrowseView = Parse.View.extend({
 
 
   initialize: function(tag) {
-    user=Parse.User.current() || null;
+    user=Parse.User.current().get("username") || null;
 
     browseSelf=this;
     console.log('Initializing browse view');

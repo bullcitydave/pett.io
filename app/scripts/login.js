@@ -10,6 +10,7 @@ var LoginView = Parse.View.extend({
     $('#big-browse').hide();
     $('h2').hide();
     $('#signup').remove();
+    _.bindAll(this, "logIn");
     self = this;
     this.render();
   },
