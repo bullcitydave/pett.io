@@ -1293,6 +1293,30 @@ var AccountView = Parse.View.extend({
 
 });
 
+var SplashView = Parse.View.extend({
+
+  el: "#main-container",
+
+  splashHead: "#main-header",
+
+  initialize: function() {
+    console.log("Splash view initialized");
+
+    this.render();
+  },
+
+  render: function() {
+    $('body').addClass('splash');
+    $('body').removeClass('darkbg');
+    $('#main-header').removeClass('standard');
+    $('#main-header').addClass('splash');
+    $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
+    this.$el.html(_.template($("#splash-template").html()));
+    this.$el.addClass('splash');
+    $('#header-nav').hide();
+  }
+});
+
 var AppRouter = Parse.Router.extend({
     routes: {
 
@@ -1350,30 +1374,6 @@ var AppRouter = Parse.Router.extend({
     Parse.history.start({
       // pushState: true
     });
-
-var SplashView = Parse.View.extend({
-
-  el: "#main-container",
-
-  splashHead: "#main-header",
-
-  initialize: function() {
-    console.log("Splash view initialized");
-
-    this.render();
-  },
-
-  render: function() {
-    $('body').addClass('splash');
-    $('body').removeClass('darkbg');
-    $('#main-header').removeClass('standard');
-    $('#main-header').addClass('splash');
-    $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
-    this.$el.html(_.template($("#splash-template").html()));
-    this.$el.addClass('splash');
-    $('#header-nav').hide();
-  }
-});
 
 $(function() {
 
