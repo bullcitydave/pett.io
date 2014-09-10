@@ -443,7 +443,12 @@ var BrowseView = Parse.View.extend({
 
 
   initialize: function(tag) {
-    user=Parse.User.current() || null;
+    if (Parse.User.current() != null) {
+       user=Parse.User.current().get("username");
+     }
+    else {
+       user=null;
+    }
 
     browseSelf=this;
     console.log('Initializing browse view');
@@ -456,7 +461,7 @@ var BrowseView = Parse.View.extend({
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
@@ -591,9 +596,7 @@ var LinkView = Parse.View.extend({
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
-    else {
-      user = "guest";
-    }
+
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
@@ -929,6 +932,7 @@ var LoginView = Parse.View.extend({
     $('#big-browse').hide();
     $('h2').hide();
     $('#signup').remove();
+    _.bindAll(this, "logIn");
     self = this;
     this.render();
   },
@@ -1296,12 +1300,9 @@ var AppRouter = Parse.Router.extend({
        'signup'          :     'goSignUp',
        'account/:user'   :     'updateAccount',
        'browse'          :     'goBrowse',
-       ''                :     'splash',
-       'pet/:petName'        :     'getPet'
-
-
-
-
+       ''                :     'goSplash',
+       'pet/:petName'        :     'getPet',
+       '*actions': 'goSplash'
         }
 
 
@@ -1337,7 +1338,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:getPet', function(petName) {
         console.log('Getting page for ',petName);
-      
+
         linkView = new LinkView(petName);
     });
 
@@ -1359,15 +1360,14 @@ var SplashView = Parse.View.extend({
   initialize: function() {
     console.log("Splash view initialized");
 
-
-    
-
     this.render();
   },
 
   render: function() {
     $('body').addClass('splash');
     $('body').removeClass('darkbg');
+    $('#main-header').removeClass('standard');
+    $('#main-header').addClass('splash');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
@@ -1451,12 +1451,10 @@ $(function() {
     logOut: function(e) {
       Parse.User.logOut();
       console.log('Logging out and back to main login');
-      $('#main-container').removeClass('splash-main');
-      $('#main-container').addClass('standard');
-      app_router.navigate('//');
+
       $('#main-header').removeClass('standard');
       $('#main-container').removeClass('standard');
-      new SplashView();
+       app_router.navigate('//');
     }
 
 

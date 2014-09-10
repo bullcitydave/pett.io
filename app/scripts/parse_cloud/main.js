@@ -1,16 +1,4 @@
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-
-  var currentUser = Parse.User.current().id;
-    console.log('Current user is ' + currentUser);
-  response.success("Hello " + currentUser + "!");
-
-});
-
-
-
 var Image = require("parse-image");
 
 Parse.Cloud.beforeSave("ParsePic", function(request, response) {
@@ -18,7 +6,7 @@ Parse.Cloud.beforeSave("ParsePic", function(request, response) {
 var user = request.user;
 
 
-if  (user.id === "Y9dDmIqvvk")  {
+if  (user != null) {
 
 
   var pic = request.object;
@@ -72,7 +60,7 @@ if  (user.id === "Y9dDmIqvvk")  {
 
   }).then(function(file) {
     // Attach the image file to the original object.
-    console.log('Hello?');
+
     console.log(file.url());
     pic.set("medium", file);
 
@@ -198,72 +186,71 @@ else {
 // });
 
 
-Parse.Cloud.define("createMedImgs", function(request, response) {
 
+////////
+// ONE-TIME JOB TO UPDATE EXISTING ORIGINAL IMAGES AND ATTACH A MEDIUM-SIZED IMAGE
+////////
 
+Parse.Cloud.job("mediumImages", function(request, status) {
+
+ Parse.Cloud.useMasterKey();
 var Image = require("parse-image");
 
+var picsQuery = new Parse.Query("ParsePic");
+picsQuery.doesNotExist("medium");
+
+picsQuery.each(function(pic) {
+
+              Parse.Cloud.httpRequest({
+                url: pic.get("url")
+              }).then(function(response) {
+                var image = new Image();
+                return image.setData(response.buffer);
+
+              }).then(function(image) {
+                    var MAX_WIDTH = 300;
+                    var MAX_HEIGHT = 400;
+                    var tempW = image.width();
+                    var tempH = image.height();
+                    if (tempW > tempH) {
+                        if (tempW > MAX_WIDTH) {
+                           tempH *= MAX_WIDTH / tempW;
+                           tempW = MAX_WIDTH;
+                        }
+                    } else {
+                        if (tempH > MAX_HEIGHT) {
+                           tempW *= MAX_HEIGHT / tempH;
+                           tempH = MAX_HEIGHT;
+                        }
+                    }
+
+                   return image.scale({
+                             width: tempW,
+                             height: tempH
+                           });
+
+              }).then(function(image) {
+                // Make sure it's a JPEG to save disk space and bandwidth.
+                image.setFormat("JPEG");
+                return image;
+
+              }).then(function(image) {
+                // Get the image data in a Buffer.
+                var buffer =  image.data();
+                return buffer;
+
+              }).then(function(buffer) {
+                // Save the image into a new file.
+                var base64 = buffer.toString("base64");
+                var file = new Parse.File("medium.jpg", { base64: base64});
+                return file.save();
+
+              }).then(function(file) {
+                console.log(file.url());
+                pic.set("medium", file);
+                pic.save();
+              })
+          });
 
 
-
-  var pic = request.object;
-
-
-  Parse.Cloud.httpRequest({
-    url: pic.get("url")
-
-  }).then(function(response) {
-    var image = new Image();
-    return image.setData(response.buffer);
-
-  }).then(function(image) {
-        var MAX_WIDTH = 300;
-        var MAX_HEIGHT = 400;
-        var tempW = image.width();
-        var tempH = image.height();
-        if (tempW > tempH) {
-            if (tempW > MAX_WIDTH) {
-               tempH *= MAX_WIDTH / tempW;
-               tempW = MAX_WIDTH;
-            }
-        } else {
-            if (tempH > MAX_HEIGHT) {
-               tempW *= MAX_HEIGHT / tempH;
-               tempH = MAX_HEIGHT;
-            }
-        }
-
-       return image.scale({
-                 width: tempW,
-                 height: tempH
-               });
-
-  }).then(function(image) {
-    console.log('width is ' + image.width());
-    // Make sure it's a JPEG to save disk space and bandwidth.
-    image.setFormat("JPEG");
-    return image;
-
-  }).then(function(image) {
-    // Get the image data in a Buffer.
-    var buffer =  image.data();
-    return buffer;
-
-  }).then(function(buffer) {
-    // Save the image into a new file.
-    var base64 = buffer.toString("base64");
-    var file = new Parse.File("medium.jpg", { base64: base64});
-    return file.save();
-
-  }).then(function(file) {
-    // Attach the image file to the original object.
-    console.log('Hello?');
-    console.log(file.url());
-    pic.set("medium", file);
-
-  }).then(function(result) {
-    response.success();
-  }, function(error) {
-    response.error();
-  });
-};
+});
