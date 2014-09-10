@@ -6,7 +6,12 @@ var BrowseView = Parse.View.extend({
 
 
   initialize: function(tag) {
-    user=Parse.User.current().get("username") || null;
+    if (Parse.User.current() != null) {
+       user=Parse.User.current().get("username");
+     }
+    else {
+       user=null;
+    }
 
     browseSelf=this;
     console.log('Initializing browse view');
@@ -19,7 +24,7 @@ var BrowseView = Parse.View.extend({
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
