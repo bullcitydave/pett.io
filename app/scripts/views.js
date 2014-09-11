@@ -27,8 +27,9 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    if (Parse.User.current() != null)  {
+      $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    }  $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');

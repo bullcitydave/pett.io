@@ -13,8 +13,8 @@ var AppRouter = Parse.Router.extend({
 
   });
 
-    // Initiate the router
-    var app_router = new AppRouter;
+
+    var app_router = new AppRouter();
 
     app_router.on('route:goSplash', function() {
         console.log('Loading splash page');
@@ -51,7 +51,7 @@ var AppRouter = Parse.Router.extend({
 
 
 
-
-    Parse.history.start({
-      // pushState: true
-    });
+    //
+    // Parse.history.start({
+    //   // pushState: true
+    // });
