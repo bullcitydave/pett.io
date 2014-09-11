@@ -192,7 +192,7 @@
       <script type="text/template" id="add-pet-template">
 
           <form id="add-pet-form">
-            <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required"></div>
+            <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required" required="required"></div>
             <div id="p-gender"><span>Gender</span><select id="pet-gender">
               <option selected label="-" value="Unk">
               <option label="Female" value="Female">
@@ -214,7 +214,7 @@
             <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
             <div id="p-bio"><span>Bio</span><textarea rows="9" id="pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
             <div id="p-dates">
-              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"></div>
+              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY" value="01/01/2014"></div>
               <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"></div>
               <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"></div>
             </div>
