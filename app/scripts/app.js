@@ -12,9 +12,7 @@ $(function() {
 
     events: {
       "click #log-out"    : "logOut"
-        // "click #about"    : "showProfile",
-        // "click #upload"   : "imageUploadForm",
-        // "click #account"  : "viewAccount"
+
       },
 
 
@@ -58,17 +56,6 @@ app_router.on('route:getPet', function(petName) {
 
 },
 
-    //   if (Parse.User.current()) {
-    //     self.user = Parse.User.current().getUsername();
-    //     console.log(self.user + " is logged in");
-    //     self.render();
-    //   }
-    //   else {
-    //     console.log('No user signed in. Proceeding to splash screen.');
-    //     new SplashView();
-    //   }
-    // },
-
     render: function() {
 
       self.getDefaultPet(self.user);
@@ -111,6 +98,7 @@ app_router.on('route:getPet', function(petName) {
     },
 
     logOut: function(e) {
+      e.preventDefault();
       Parse.User.logOut();
       console.log('Logging out and back to main login');
 

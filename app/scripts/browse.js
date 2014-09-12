@@ -34,14 +34,6 @@ var BrowseView = Parse.View.extend({
   },
 
 
-  events: {
-    // "click #about"    : "showProfile",
-    // "click #upload"   : "imageUploadForm",
-    // "click #account"  : "viewAccount"
-    "click .pet-person" : "generateMedImgs"
-  },
-
-
   generateMedImgs: function() {
 
           Parse.Cloud.run('createMedImgs', {}, {
@@ -113,11 +105,6 @@ var BrowseView = Parse.View.extend({
     });
   }
 
-  // $('#browse-container').masonry({
-  //       columnwidth: 300,
-  //       itemSelector: '.pet-box'
-  // });
-
 
 },
   error: function(error) {
@@ -133,7 +120,7 @@ showPics: function(results) {
     var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
 
-  //  }
+
 
  }
 }) ;
