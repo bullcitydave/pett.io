@@ -1,5 +1,10 @@
 $(function() {
 
+  Parse.history.start({
+    pushState: false,
+    root: '/'
+  });
+
   var AppView = Parse.View.extend({
 
     el: $("#main-header"),
@@ -16,19 +21,53 @@ $(function() {
     initialize: function() {
       self = this;
 
+      var app_router = new AppRouter;
 
-      userType = "visitor";
 
-      if (Parse.User.current()) {
-        self.user = Parse.User.current().getUsername();
-        console.log(self.user + " is logged in");
-        self.render();
-      }
-      else {
-        console.log('No user signed in. Proceeding to splash screen.');
-        new SplashView();
-      }
-    },
+
+app_router.on('route:goSplash', function() {
+    console.log('Loading splash page');
+    loginView = new SplashView();
+  });
+
+app_router.on('route:goLogin', function() {
+    console.log('Loading login page');
+    loginView = new LoginView();
+  });
+
+app_router.on('route:goSignUp', function() {
+    console.log('Loading signup page');
+    signUpView = new SignUpView();
+  });
+
+app_router.on('route:updateAccount', function(user) {
+    console.log('Loading account page');
+    accountView = new AccountView(user);
+  });
+
+app_router.on('route:goBrowse', function() {
+    console.log('Loading browse view');
+    browseView = new BrowseView();
+});
+
+app_router.on('route:getPet', function(petName) {
+    console.log('Getting page for ',petName);
+
+    linkView = new LinkView(petName);
+});
+
+},
+
+    //   if (Parse.User.current()) {
+    //     self.user = Parse.User.current().getUsername();
+    //     console.log(self.user + " is logged in");
+    //     self.render();
+    //   }
+    //   else {
+    //     console.log('No user signed in. Proceeding to splash screen.');
+    //     new SplashView();
+    //   }
+    // },
 
     render: function() {
 
@@ -83,7 +122,7 @@ $(function() {
 
   });
 
-
+});
     // $(window).resize(function(){
       // if ($(window).height() > 575 && $(window).width() > 760) {
       //   $('#header-box').css("margin-top",($(window).height() * 0.1));
@@ -96,7 +135,4 @@ $(function() {
     // });
 
 
-  window.APP = new AppView;
-
-
-});
+// window.APP = new AppView;
