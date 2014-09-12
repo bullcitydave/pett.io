@@ -254,15 +254,12 @@ div.pic-showcase {
         width:200px;
         @include if-brightness(0.9);
         float:left;
-        padding: 2px;
-        border: solid 1px $black;
+        padding: 6px;
+        // border: solid 4px $black;
       }
       @include media($mobile-l) {
-        width:200px;
-        @include if-brightness(0.9);
-        float:left;
-        padding: 4px;
-        border: solid 2px $black;
+
+
       }
     }
 
@@ -311,10 +308,7 @@ text-align: inherit;
     .montageSquare:hover {
 
       @include if-brightness(1.2);
-      // border: 6px;
-      // padding: 0;
-      padding: 0;
-      border: solid 6px $orange;
+      background: $orange;
 
 
     }
