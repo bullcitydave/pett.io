@@ -21,6 +21,8 @@ var BrowseView = Parse.View.extend({
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').addClass('browse');
+    $('#header-nav').show();
+    $('#browse').hide();
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
@@ -72,12 +74,7 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
 
 
-    $('#browse-container').imagesLoaded(function() {
-      $('#browse-container').masonry({
-            columnwidth: 200,
-            itemSelector: '.pet-box'
-      });
-    });
+
 
 
   for (var i = 0; i < results.length ; i++)

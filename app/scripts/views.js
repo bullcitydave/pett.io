@@ -17,8 +17,11 @@ var LinkView = Parse.View.extend({
 
 
     if (Parse.User.current() != null)  {
-      user=Parse.User.current().getUsername();
-      }
+       user=Parse.User.current().getUsername();
+       }
+    else {
+      user='';
+    }
 
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
