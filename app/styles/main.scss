@@ -209,7 +209,7 @@ body {
             box-shadow: none;
             font-size: 1.0em;
             text-align: center;
-            margin: -40px 0 5px 5px;
+            margin: -40px 0 0 20px;
             text-transform: uppercase;
             color: $black;
             background: $orange;
@@ -241,7 +241,7 @@ div.pic-showcase {
       @include media($mobile-s) {
 
         width:100%;
-        @include if-brightness(0.9);
+        @include if-brightness(1);
         float:left;
         padding:0;
       }
@@ -302,7 +302,7 @@ text-align: inherit;
 
     .montageSquare:hover {
 
-      @include if-brightness(1.2);
+      @include if-brightness(1.25);
       background: $orange;
 
 
@@ -310,7 +310,7 @@ text-align: inherit;
 
     .flickr:hover {
 
-      @include if-brightness(1.2);
+      @include if-brightness(1.25);
       // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;
