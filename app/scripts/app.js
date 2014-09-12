@@ -27,11 +27,12 @@ $(function() {
 
 app_router.on('route:goSplash', function() {
     console.log('Loading splash page');
-    loginView = new SplashView();
+    splashView = new SplashView();
   });
 
 app_router.on('route:goLogin', function() {
     console.log('Loading login page');
+    splashView = new SplashView();
     loginView = new LoginView();
   });
 
@@ -64,10 +65,10 @@ app_router.on('route:getPet', function(petName) {
     },
 
 
-    getDefaultPet: function() {
+    getDefaultPet: function(user) {
 
       var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", self.user);
+      userQuery.equalTo("username", user.getUsername());
       userQuery.find({
 
         success: function(results) {
