@@ -249,7 +249,7 @@ div.pic-showcase {
         width:200px;
         @include if-brightness(0.9);
         float:left;
-        padding: 6px;
+        padding-bottom:10px;
         // border: solid 4px $black;
       }
       @include media($mobile-l) {

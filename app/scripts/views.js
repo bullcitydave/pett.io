@@ -11,9 +11,9 @@ var LinkView = Parse.View.extend({
     imgCount = 0;
 
 
-    $( window ).resize(function() {
-      link.reMargin();
-    });
+    // $( window ).resize(function() {
+    //   link.reMargin();
+    // });
 
 
     if (Parse.User.current() != null)  {
@@ -79,10 +79,13 @@ var LinkView = Parse.View.extend({
 
     $('.pic-showcase').imagesLoaded( function() {
       $('.pic-showcase').masonry({
-                      columnwidth: 250,
-                      itemSelector: '.montageSquare'
+                      columnwidth: 200,
+                      gutter: 10,
+                      itemSelector: '.montageSquare',
+                      isFitWidth: true,
+                      transitionDuration: 0
                 });
-      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+      // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
       });
 
@@ -145,7 +148,7 @@ var LinkView = Parse.View.extend({
 
   var buildingImages = setInterval(function(){
       complete = imageLoadCheck();
-      console.log('Percent loaded: ', (complete/imgCount)*100);
+      // console.log('Percent loaded: ', (complete/imgCount)*100);
       link.doMasonry()},750);
 
   setTimeout(function(){
@@ -215,7 +218,7 @@ var FlickrPicListView = Parse.View.extend({
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
               flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_z.jpg';
-              console.log('Rendering Flickr image: ',flickrImg);
+              // console.log('Rendering Flickr image: ',flickrImg);
               $('.pic-showcase').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
 
@@ -303,12 +306,12 @@ var ParsePicListView = Parse.View.extend({
 
     showPics: function(results) {
        imgCount = imgCount + results.length;
-       console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
+      //  console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
-          console.log(results[i]);
-          console.log(results[i].attributes.url);
-          console.log(this.parseView);
+          // console.log(results[i]);
+          // console.log(results[i].attributes.url);
+          // console.log(this.parseView);
          $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url})));
        };
 
