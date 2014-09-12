@@ -201,7 +201,6 @@ body {
 
 
           #about {
-            @include not-as-shiny;
             width: 120px;
             border: none;
             text-decoration: none;
@@ -209,16 +208,12 @@ body {
             text-shadow: none;
             box-shadow: none;
             font-size: 1.0em;
-            position: absolute;
-            top: 110%;
-            left: 50%;
             text-align: center;
-            margin: -5px 0 0 -60px;
+            margin: -40px 0 5px 5px;
             text-transform: uppercase;
             color: $black;
             background: $orange;
-            padding: 3px 10px 3px 10px;
-            border-radius: 5px;
+            padding: 10px;
             font-weight: 600;
           }
           #about:hover {
