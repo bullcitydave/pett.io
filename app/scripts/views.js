@@ -309,7 +309,7 @@ var ParsePicListView = Parse.View.extend({
           console.log(results[i]);
           console.log(results[i].attributes.url);
           console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url})));
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url})));
        };
 
 
