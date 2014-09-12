@@ -22,6 +22,7 @@ $(function() {
       self = this;
 
       var app_router = new AppRouter;
+<<<<<<< HEAD
 
 
 
@@ -36,6 +37,21 @@ app_router.on('route:goLogin', function() {
     loginView = new LoginView();
   });
 
+=======
+
+
+
+app_router.on('route:goSplash', function() {
+    console.log('Loading splash page');
+    loginView = new SplashView();
+  });
+
+app_router.on('route:goLogin', function() {
+    console.log('Loading login page');
+    loginView = new LoginView();
+  });
+
+>>>>>>> master
 app_router.on('route:goSignUp', function() {
     console.log('Loading signup page');
     signUpView = new SignUpView();
@@ -56,7 +72,9 @@ app_router.on('route:getPet', function(petName) {
 
     linkView = new LinkView(petName);
 });
-    },
+
+},
+
 
     render: function() {
 
@@ -111,20 +129,5 @@ app_router.on('route:getPet', function(petName) {
 
   });
 
-
-    // $(window).resize(function(){
-      // if ($(window).height() > 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
-      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
-      // }
-      // if ($(window).height() < 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top","0");
-      //   $('#header-box-overlay').css("margin-top","0");
-      // }
-    // });
-
-
-  window.APP = new AppView;
-
-
 });
+    

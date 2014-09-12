@@ -129,6 +129,25 @@ section#update-pet {
     #p-name {
       @include span-columns(3.5);
       float:left;
+
+      ::-webkit-input-placeholder {
+          color: $darker-orange;
+        }
+      :-moz-placeholder { /* Firefox 18- */
+          color: $darker-orange;
+        }
+      ::-moz-placeholder {  /* Firefox 19+ */
+          color: $darker-orange;
+        }
+      :-ms-input-placeholder {
+          color: $darker-orange;
+        }
+        #pet-name, #p-name {
+          color: $darker-orange;
+        }
+
+
+
     }
 
     #p-gender {
@@ -197,8 +216,15 @@ section#update-pet {
       @include span-columns(6);
       float:left;
       @include omega();
+      #p-birth {
+        color: $darker-orange;
+      }
       #p-dob {
         clear:left;
+        color: $darker-orange;
+        input {
+          color: $darker-orange;
+        }
       }
 
       #p-doa {
