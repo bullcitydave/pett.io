@@ -17,8 +17,10 @@ var LinkView = Parse.View.extend({
 
 
     if (Parse.User.current() != null)  {
-      user=Parse.User.current().getUsername();
-      }
+
+       user=Parse.User.current().getUsername();
+       }
+
     else {
       user='';
     }
@@ -82,7 +84,7 @@ var LinkView = Parse.View.extend({
                       columnwidth: 250,
                       itemSelector: '.montageSquare'
                 });
-      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+      // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
       });
 
@@ -145,7 +147,7 @@ var LinkView = Parse.View.extend({
 
   var buildingImages = setInterval(function(){
       complete = imageLoadCheck();
-      console.log('Percent loaded: ', (complete/imgCount)*100);
+      // console.log('Percent loaded: ', (complete/imgCount)*100);
       link.doMasonry()},750);
 
   setTimeout(function(){

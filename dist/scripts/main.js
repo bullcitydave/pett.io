@@ -458,6 +458,8 @@ var BrowseView = Parse.View.extend({
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').addClass('browse');
+    $('#header-nav').show();
+    $('#browse').hide();
     $('#main-container').html('');
     $('.pic-showcase').html('');
     $('#tools').html('');
@@ -470,13 +472,6 @@ var BrowseView = Parse.View.extend({
 
   },
 
-
-  events: {
-    // "click #about"    : "showProfile",
-    // "click #upload"   : "imageUploadForm",
-    // "click #account"  : "viewAccount"
-    "click .pet-person" : "generateMedImgs"
-  },
 
 
   generateMedImgs: function() {
@@ -509,16 +504,7 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
 
 
-    $('#browse-container').imagesLoaded(function() {
-      $('#browse-container').masonry({
-            columnwidth: 200,
-            itemSelector: '.pet-box'
-      });
-    });
-
-
-  for (var i = 0; i < results.length ; i++)
-    { console.log(results[i].attributes.uniqueName);
+  for (var i = 0; i < results.length ; i++)  { 
     var petUName = results[i].attributes.uniqueName;
 
     var ppQuery1 = new Parse.Query(ParsePic);
@@ -541,19 +527,12 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
           if (results.length > 0) {
             var randomImg = Math.floor(Math.random() * (results.length));
-            // console.log(randomImg);
-            // var petImg = results[randomImg].attributes.medium;
-            // console.log(petImg);
             browseSelf.showPics(results[randomImg]);
         };
       }
     });
   }
 
-  // $('#browse-container').masonry({
-  //       columnwidth: 300,
-  //       itemSelector: '.pet-box'
-  // });
 
 
 },
@@ -570,7 +549,7 @@ showPics: function(results) {
     var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
 
-  //  }
+
 
  }
 }) ;
@@ -594,8 +573,13 @@ var LinkView = Parse.View.extend({
 
 
     if (Parse.User.current() != null)  {
-      user=Parse.User.current().getUsername();
-      }
+
+       user=Parse.User.current().getUsername();
+       }
+
+    else {
+      user='';
+    }
 
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
@@ -604,8 +588,13 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    // if (Parse.User.current() != null)  {
+      $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+
+      // }
+      //
+
+         $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
@@ -651,7 +640,7 @@ var LinkView = Parse.View.extend({
                       columnwidth: 250,
                       itemSelector: '.montageSquare'
                 });
-      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+      // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
       });
 
@@ -714,7 +703,7 @@ var LinkView = Parse.View.extend({
 
   var buildingImages = setInterval(function(){
       complete = imageLoadCheck();
-      console.log('Percent loaded: ', (complete/imgCount)*100);
+      // console.log('Percent loaded: ', (complete/imgCount)*100);
       link.doMasonry()},750);
 
   setTimeout(function(){
@@ -811,9 +800,6 @@ var FlickrPicListView = Parse.View.extend({
     getFlickr: function(e) {
       var flickrUser = '';
       var fQuery = new Parse.Query(PersonPetTags);
-      console.log('User: ',user);
-      console.log('Pet: ',pet);
-
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {
@@ -945,8 +931,7 @@ var LoginView = Parse.View.extend({
     Parse.User.logIn(username, password, {
         success: function(user) {
           self.$el.html('');
-          APP.initialize();
-          // app_router.navigate('//'+self.pet);
+          APP.getDefaultPet(user);
         },
 
         error: function(user, error) {
@@ -1332,16 +1317,17 @@ var AppRouter = Parse.Router.extend({
 
   });
 
-    // Initiate the router
-    var app_router = new AppRouter;
+
+    var app_router = new AppRouter();
 
     app_router.on('route:goSplash', function() {
         console.log('Loading splash page');
-        loginView = new SplashView();
+        splashView = new SplashView();
       });
 
     app_router.on('route:goLogin', function() {
         console.log('Loading login page');
+        splashView = new SplashView();
         loginView = new LoginView();
       });
 
@@ -1366,16 +1352,12 @@ var AppRouter = Parse.Router.extend({
         linkView = new LinkView(petName);
     });
 
-
-
-
-
-
-    Parse.history.start({
-      // pushState: true
-    });
-
 $(function() {
+
+  Parse.history.start({
+    pushState: false,
+    root: '/'
+  });
 
   var AppView = Parse.View.extend({
 
@@ -1390,22 +1372,63 @@ $(function() {
       },
 
 
-    initialize: function() {
+     initialize: function() {
       self = this;
 
+      var app_router = new AppRouter;
+<<<<<<< HEAD
 
-      userType = "visitor";
 
-      if (Parse.User.current()) {
-        self.user = Parse.User.current().getUsername();
-        console.log(self.user + " is logged in");
-        self.render();
-      }
-      else {
-        console.log('No user signed in. Proceeding to splash screen.');
-        new SplashView();
-      }
-    },
+
+app_router.on('route:goSplash', function() {
+    console.log('Loading splash page');
+    splashView = new SplashView();
+  });
+
+app_router.on('route:goLogin', function() {
+    console.log('Loading login page');
+    splashView = new SplashView();
+    loginView = new LoginView();
+  });
+
+=======
+
+
+
+app_router.on('route:goSplash', function() {
+    console.log('Loading splash page');
+    loginView = new SplashView();
+  });
+
+app_router.on('route:goLogin', function() {
+    console.log('Loading login page');
+    loginView = new LoginView();
+  });
+
+>>>>>>> master
+app_router.on('route:goSignUp', function() {
+    console.log('Loading signup page');
+    signUpView = new SignUpView();
+  });
+
+app_router.on('route:updateAccount', function(user) {
+    console.log('Loading account page');
+    accountView = new AccountView(user);
+  });
+
+app_router.on('route:goBrowse', function() {
+    console.log('Loading browse view');
+    browseView = new BrowseView();
+});
+
+app_router.on('route:getPet', function(petName) {
+    console.log('Getting page for ',petName);
+
+    linkView = new LinkView(petName);
+});
+
+},
+
 
     render: function() {
 
@@ -1414,10 +1437,10 @@ $(function() {
     },
 
 
-    getDefaultPet: function() {
+    getDefaultPet: function(user) {
 
       var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", self.user);
+      userQuery.equalTo("username", user.getUsername());
       userQuery.find({
 
         success: function(results) {
@@ -1460,20 +1483,5 @@ $(function() {
 
   });
 
-
-    // $(window).resize(function(){
-      // if ($(window).height() > 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
-      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
-      // }
-      // if ($(window).height() < 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top","0");
-      //   $('#header-box-overlay').css("margin-top","0");
-      // }
-    // });
-
-
-  window.APP = new AppView;
-
-
 });
+    

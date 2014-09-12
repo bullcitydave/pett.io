@@ -23,8 +23,7 @@ var LoginView = Parse.View.extend({
     Parse.User.logIn(username, password, {
         success: function(user) {
           self.$el.html('');
-          APP.initialize();
-          // app_router.navigate('//'+self.pet);
+          APP.getDefaultPet(user);
         },
 
         error: function(user, error) {

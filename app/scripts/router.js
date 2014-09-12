@@ -18,11 +18,12 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:goSplash', function() {
         console.log('Loading splash page');
-        loginView = new SplashView();
+        splashView = new SplashView();
       });
 
     app_router.on('route:goLogin', function() {
         console.log('Loading login page');
+        splashView = new SplashView();
         loginView = new LoginView();
       });
 
@@ -46,12 +47,3 @@ var AppRouter = Parse.Router.extend({
 
         linkView = new LinkView(petName);
     });
-
-
-
-
-
-    //
-    // Parse.history.start({
-    //   // pushState: true
-    // });

@@ -18,10 +18,26 @@ $(function() {
       },
 
 
-    initialize: function() {
+     initialize: function() {
       self = this;
 
       var app_router = new AppRouter;
+<<<<<<< HEAD
+
+
+
+app_router.on('route:goSplash', function() {
+    console.log('Loading splash page');
+    splashView = new SplashView();
+  });
+
+app_router.on('route:goLogin', function() {
+    console.log('Loading login page');
+    splashView = new SplashView();
+    loginView = new LoginView();
+  });
+
+=======
 
 
 
@@ -35,6 +51,7 @@ app_router.on('route:goLogin', function() {
     loginView = new LoginView();
   });
 
+>>>>>>> master
 app_router.on('route:goSignUp', function() {
     console.log('Loading signup page');
     signUpView = new SignUpView();
@@ -58,16 +75,6 @@ app_router.on('route:getPet', function(petName) {
 
 },
 
-    //   if (Parse.User.current()) {
-    //     self.user = Parse.User.current().getUsername();
-    //     console.log(self.user + " is logged in");
-    //     self.render();
-    //   }
-    //   else {
-    //     console.log('No user signed in. Proceeding to splash screen.');
-    //     new SplashView();
-    //   }
-    // },
 
     render: function() {
 
@@ -76,10 +83,10 @@ app_router.on('route:getPet', function(petName) {
     },
 
 
-    getDefaultPet: function() {
+    getDefaultPet: function(user) {
 
       var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", self.user);
+      userQuery.equalTo("username", user.getUsername());
       userQuery.find({
 
         success: function(results) {
@@ -123,16 +130,4 @@ app_router.on('route:getPet', function(petName) {
   });
 
 });
-    // $(window).resize(function(){
-      // if ($(window).height() > 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
-      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
-      // }
-      // if ($(window).height() < 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top","0");
-      //   $('#header-box-overlay').css("margin-top","0");
-      // }
-    // });
-
-
-// window.APP = new AppView;
+    
