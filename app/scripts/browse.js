@@ -25,6 +25,7 @@ var BrowseView = Parse.View.extend({
     $('.pic-showcase').html('');
     $('#tools').html('');
     if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
+    $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
@@ -33,18 +34,6 @@ var BrowseView = Parse.View.extend({
 
   },
 
-
-  generateMedImgs: function() {
-
-          Parse.Cloud.run('createMedImgs', {}, {
-              success: function(result) {
-                console.log(result); // result is 'Hello world!'
-              },
-              error: function(error) {
-                console.log(error);
-              }
-      });
-},
 
   render: function() {
 
@@ -64,16 +53,8 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
 
 
-    $('#browse-container').imagesLoaded(function() {
-      $('#browse-container').masonry({
-            columnwidth: 200,
-            itemSelector: '.pet-box'
-      });
-    });
 
-
-  for (var i = 0; i < results.length ; i++)
-    { console.log(results[i].attributes.uniqueName);
+  for (var i = 0; i < results.length ; i++){
     var petUName = results[i].attributes.uniqueName;
 
     var ppQuery1 = new Parse.Query(ParsePic);
@@ -96,9 +77,6 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
           if (results.length > 0) {
             var randomImg = Math.floor(Math.random() * (results.length));
-            // console.log(randomImg);
-            // var petImg = results[randomImg].attributes.medium;
-            // console.log(petImg);
             browseSelf.showPics(results[randomImg]);
         };
       }
