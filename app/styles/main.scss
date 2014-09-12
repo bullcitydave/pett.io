@@ -156,7 +156,12 @@ body {
 
 
     div#main-container.standard {
-      margin: 180px 0 0 15px;
+      @include media($mobile-s) {
+        margin: 180px 0 0 0;
+      }
+      @include media($mobile-m) {
+        margin: 180px 0 0 15px;
+      }
 
       header#pet-header {
         position: fixed;
@@ -243,35 +248,32 @@ div.pic-showcase {
         width:100%;
         @include if-brightness(0.9);
         float:left;
-        border-radius: 5px;
-        padding: 5px;
+        padding:0;
       }
       @include media($mobile-m) {
-        width:250px;
+        width:200px;
         @include if-brightness(0.9);
         float:left;
-        border-radius: 5px;
-        padding: 5px;
+        padding: 2px;
+        border: solid 1px $black;
       }
       @include media($mobile-l) {
-        width:250px;
+        width:200px;
         @include if-brightness(0.9);
         float:left;
-        border-radius: 5px;
-        padding: 5px;
+        padding: 4px;
+        border: solid 2px $black;
       }
     }
 
 
 
-    a:last-child {
-      margin-bottom:40px;
-    }
-
     .flickr {
-      // border-radius: 20% ;
+
       // border-left: solid 2px #0063dc;
+      // border-top: solid 2px #0063dc;
       // border-right: solid 2px #ff0084;
+      // border: solid 4px $flickr;
     }
 
     iframe.vine-embed-small {
@@ -309,6 +311,10 @@ text-align: inherit;
     .montageSquare:hover {
 
       @include if-brightness(1.2);
+      // border: 6px;
+      // padding: 0;
+      padding: 0;
+      border: solid 6px $orange;
 
 
     }
