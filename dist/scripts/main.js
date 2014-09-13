@@ -200,9 +200,13 @@ var ProfileView = Parse.View.extend ({
     },
 
     getBackground: function() {
-      var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
 
-      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
+
+      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45))'));
+
+      // var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
+      //
+      // $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
     },
 
     render: function(data){
@@ -462,6 +466,7 @@ var BrowseView = Parse.View.extend({
     $('.pic-showcase').html('');
     $('#tools').html('');
     if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
+    $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
@@ -470,26 +475,6 @@ var BrowseView = Parse.View.extend({
 
   },
 
-
-  events: {
-    // "click #about"    : "showProfile",
-    // "click #upload"   : "imageUploadForm",
-    // "click #account"  : "viewAccount"
-    "click .pet-person" : "generateMedImgs"
-  },
-
-
-  generateMedImgs: function() {
-
-          Parse.Cloud.run('createMedImgs', {}, {
-              success: function(result) {
-                console.log(result); // result is 'Hello world!'
-              },
-              error: function(error) {
-                console.log(error);
-              }
-      });
-},
 
   render: function() {
 
@@ -509,16 +494,8 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
 
 
-    $('#browse-container').imagesLoaded(function() {
-      $('#browse-container').masonry({
-            columnwidth: 200,
-            itemSelector: '.pet-box'
-      });
-    });
 
-
-  for (var i = 0; i < results.length ; i++)
-    { console.log(results[i].attributes.uniqueName);
+  for (var i = 0; i < results.length ; i++){
     var petUName = results[i].attributes.uniqueName;
 
     var ppQuery1 = new Parse.Query(ParsePic);
@@ -541,19 +518,11 @@ var BrowseView = Parse.View.extend({
       success: function(results) {
           if (results.length > 0) {
             var randomImg = Math.floor(Math.random() * (results.length));
-            // console.log(randomImg);
-            // var petImg = results[randomImg].attributes.medium;
-            // console.log(petImg);
             browseSelf.showPics(results[randomImg]);
         };
       }
     });
   }
-
-  // $('#browse-container').masonry({
-  //       columnwidth: 300,
-  //       itemSelector: '.pet-box'
-  // });
 
 
 },
@@ -570,7 +539,7 @@ showPics: function(results) {
     var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
 
-  //  }
+
 
  }
 }) ;
@@ -588,14 +557,17 @@ var LinkView = Parse.View.extend({
     imgCount = 0;
 
 
-    $( window ).resize(function() {
-      link.reMargin();
-    });
+    // $( window ).resize(function() {
+    //   link.reMargin();
+    // });
 
 
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
+    else {
+      user='';
+    }
 
     console.log('Initializing LinkView. Tag:',tag);
     $('#main-header').addClass('standard');
@@ -604,8 +576,13 @@ var LinkView = Parse.View.extend({
     $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    // if (Parse.User.current() != null)  {
+      $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+
+      // }
+      //
+
+         $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
@@ -648,10 +625,13 @@ var LinkView = Parse.View.extend({
 
     $('.pic-showcase').imagesLoaded( function() {
       $('.pic-showcase').masonry({
-                      columnwidth: 250,
-                      itemSelector: '.montageSquare'
+                      columnwidth: 200,
+                      gutter: 10,
+                      itemSelector: '.montageSquare',
+                      isFitWidth: true,
+                      transitionDuration: 0
                 });
-      console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+      // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
 
       });
 
@@ -714,7 +694,7 @@ var LinkView = Parse.View.extend({
 
   var buildingImages = setInterval(function(){
       complete = imageLoadCheck();
-      console.log('Percent loaded: ', (complete/imgCount)*100);
+      // console.log('Percent loaded: ', (complete/imgCount)*100);
       link.doMasonry()},750);
 
   setTimeout(function(){
@@ -763,7 +743,7 @@ var FlickrPicListView = Parse.View.extend({
 
     render: function () {
       $.getJSON(z.flickrApiUrl + "&format=json&nojsoncallback=1").done(function(photoData){
-          flickrLength = Math.min(photoData.photos.photo.length,9);
+          flickrLength = Math.min(photoData.photos.photo.length,15);
           imgCount = imgCount + flickrLength;
           console.log('Flickr images: ' + flickrLength + ' Total images rendered: ' + imgCount);
           var flickrView = $('#flickr-template').html();
@@ -775,7 +755,7 @@ var FlickrPicListView = Parse.View.extend({
 
 
 
-          for (var i = 0; i < 9 ; i++) {
+          for (var i = 0; i < flickrLength ; i++) {
             if (!photoData.photos.photo[i]) {
               continue;
             }
@@ -783,8 +763,9 @@ var FlickrPicListView = Parse.View.extend({
               farmId = photoData.photos.photo[i].farm;
               serverId = photoData.photos.photo[i].server;
               secret = photoData.photos.photo[i].secret;
-              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_z.jpg';
-              console.log('Rendering Flickr image: ',flickrImg);
+              flickrImg = 'https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + photoId + '_'+ secret + '_n.jpg';
+              flickrUrl = 'https://www.flickr.com/photos/' + z.flickrUser + '/' + photoId + '/';
+              // console.log('Rendering Flickr image: ',flickrImg);
               $('.pic-showcase').append(_.template(flickrView,({"flickrImg":flickrImg})));
             }
 
@@ -809,18 +790,15 @@ var FlickrPicListView = Parse.View.extend({
 
 
     getFlickr: function(e) {
-      var flickrUser = '';
+      z.flickrUser = '';
       var fQuery = new Parse.Query(PersonPetTags);
-      console.log('User: ',user);
-      console.log('Pet: ',pet);
-
       fQuery.equalTo("pet", pet);
       fQuery.find({
         success:function(results) {
           if (results.length > 0) {
-            flickrUser = encodeURIComponent(results[0].attributes.flickrUser.trim());
+            z.flickrUser = encodeURIComponent(results[0].attributes.flickrUser.trim());
             flickrTag = results[0].attributes.flickrTag;
-            z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
+            z.flickrApiUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrApiKey + "&user_id=" + z.flickrUser + "&tags=" + flickrTag +"&per_page=16&page=1&format=json&nojsoncallback=1";
             console.log("Flickr URL is ", z.flickrApiUrl);
             z.render();
           }
@@ -875,13 +853,13 @@ var ParsePicListView = Parse.View.extend({
 
     showPics: function(results) {
        imgCount = imgCount + results.length;
-       console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
+      //  console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
-          console.log(results[i]);
-          console.log(results[i].attributes.url);
-          console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url})));
+          // console.log(results[i]);
+          // console.log(results[i].attributes.url);
+          // console.log(this.parseView);
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url})));
        };
 
 
@@ -945,8 +923,7 @@ var LoginView = Parse.View.extend({
     Parse.User.logIn(username, password, {
         success: function(user) {
           self.$el.html('');
-          APP.initialize();
-          // app_router.navigate('//'+self.pet);
+          APP.getDefaultPet();
         },
 
         error: function(user, error) {
@@ -1332,8 +1309,8 @@ var AppRouter = Parse.Router.extend({
 
   });
 
-    // Initiate the router
-    var app_router = new AppRouter;
+
+    var app_router = new AppRouter();
 
     app_router.on('route:goSplash', function() {
         console.log('Loading splash page');
@@ -1366,16 +1343,12 @@ var AppRouter = Parse.Router.extend({
         linkView = new LinkView(petName);
     });
 
-
-
-
-
-
-    Parse.history.start({
-      // pushState: true
-    });
-
 $(function() {
+
+  Parse.history.start({
+    pushState: false,
+    root: '/'
+  });
 
   var AppView = Parse.View.extend({
 
@@ -1384,28 +1357,49 @@ $(function() {
 
     events: {
       "click #log-out"    : "logOut"
-        // "click #about"    : "showProfile",
-        // "click #upload"   : "imageUploadForm",
-        // "click #account"  : "viewAccount"
+
       },
 
 
     initialize: function() {
       self = this;
 
+      var app_router = new AppRouter;
 
-      userType = "visitor";
 
-      if (Parse.User.current()) {
-        self.user = Parse.User.current().getUsername();
-        console.log(self.user + " is logged in");
-        self.render();
-      }
-      else {
-        console.log('No user signed in. Proceeding to splash screen.');
-        new SplashView();
-      }
-    },
+
+    app_router.on('route:goSplash', function() {
+        console.log('Loading splash page');
+        loginView = new SplashView();
+      });
+
+    app_router.on('route:goLogin', function() {
+        console.log('Loading login page');
+        loginView = new LoginView();
+      });
+
+    app_router.on('route:goSignUp', function() {
+        console.log('Loading signup page');
+        signUpView = new SignUpView();
+      });
+
+    app_router.on('route:updateAccount', function(user) {
+        console.log('Loading account page');
+        accountView = new AccountView(user);
+      });
+
+    app_router.on('route:goBrowse', function() {
+        console.log('Loading browse view');
+        browseView = new BrowseView();
+    });
+
+    app_router.on('route:getPet', function(petName) {
+        console.log('Getting page for ',petName);
+
+        linkView = new LinkView(petName);
+    });
+
+},
 
     render: function() {
 
@@ -1417,7 +1411,7 @@ $(function() {
     getDefaultPet: function() {
 
       var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", self.user);
+      userQuery.equalTo("username", Parse.User.current().get("username"));
       userQuery.find({
 
         success: function(results) {
@@ -1449,6 +1443,7 @@ $(function() {
     },
 
     logOut: function(e) {
+      e.preventDefault();
       Parse.User.logOut();
       console.log('Logging out and back to main login');
 
@@ -1460,20 +1455,6 @@ $(function() {
 
   });
 
-
-    // $(window).resize(function(){
-      // if ($(window).height() > 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
-      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
-      // }
-      // if ($(window).height() < 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top","0");
-      //   $('#header-box-overlay').css("margin-top","0");
-      // }
-    // });
-
-
   window.APP = new AppView;
-
 
 });

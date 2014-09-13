@@ -23,36 +23,36 @@ $(function() {
 
 
 
-app_router.on('route:goSplash', function() {
-    console.log('Loading splash page');
-    loginView = new SplashView();
-  });
+    app_router.on('route:goSplash', function() {
+        console.log('Loading splash page');
+        loginView = new SplashView();
+      });
 
-app_router.on('route:goLogin', function() {
-    console.log('Loading login page');
-    loginView = new LoginView();
-  });
+    app_router.on('route:goLogin', function() {
+        console.log('Loading login page');
+        loginView = new LoginView();
+      });
 
-app_router.on('route:goSignUp', function() {
-    console.log('Loading signup page');
-    signUpView = new SignUpView();
-  });
+    app_router.on('route:goSignUp', function() {
+        console.log('Loading signup page');
+        signUpView = new SignUpView();
+      });
 
-app_router.on('route:updateAccount', function(user) {
-    console.log('Loading account page');
-    accountView = new AccountView(user);
-  });
+    app_router.on('route:updateAccount', function(user) {
+        console.log('Loading account page');
+        accountView = new AccountView(user);
+      });
 
-app_router.on('route:goBrowse', function() {
-    console.log('Loading browse view');
-    browseView = new BrowseView();
-});
+    app_router.on('route:goBrowse', function() {
+        console.log('Loading browse view');
+        browseView = new BrowseView();
+    });
 
-app_router.on('route:getPet', function(petName) {
-    console.log('Getting page for ',petName);
+    app_router.on('route:getPet', function(petName) {
+        console.log('Getting page for ',petName);
 
-    linkView = new LinkView(petName);
-});
+        linkView = new LinkView(petName);
+    });
 
 },
 
@@ -66,7 +66,7 @@ app_router.on('route:getPet', function(petName) {
     getDefaultPet: function() {
 
       var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", self.user);
+      userQuery.equalTo("username", Parse.User.current().get("username"));
       userQuery.find({
 
         success: function(results) {
@@ -110,17 +110,6 @@ app_router.on('route:getPet', function(petName) {
 
   });
 
+  window.APP = new AppView;
+
 });
-    // $(window).resize(function(){
-      // if ($(window).height() > 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top",($(window).height() * 0.1));
-      //   $('#header-box-overlay').css("margin-top",($(window).height() * 0.1));
-      // }
-      // if ($(window).height() < 575 && $(window).width() > 760) {
-      //   $('#header-box').css("margin-top","0");
-      //   $('#header-box-overlay').css("margin-top","0");
-      // }
-    // });
-
-
-// window.APP = new AppView;

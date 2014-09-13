@@ -25,7 +25,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.38</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, fave fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.39</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, fave fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -60,9 +60,9 @@
           <nav id="header-nav">
             <ul>
               <li id="log-out" class="site-user"><a href="#">Log Out</a></li>
-              <li id="log-in" class="site-visitor"><a href="/#/login">Log In</a></li>
-              <li id="sign-up" class="site-visitor"><a href="/#/signup">Sign Up</a></li>
-              <li id="account" class="site-user"><a href="/#/account/<%-userName %>">Update Account</a></li>
+              <li id="log-in" class="site-visitor"><a href="/#login">Log In</a></li>
+              <li id="sign-up" class="site-visitor"><a href="/#signup">Sign Up</a></li>
+              <li id="account" class="site-user"><a href="/#account/<%-userName %>">Update Account</a></li>
               <li id="upload" class="site-user"><a href="#">Upload Images</a></li>
               <li id="browse" ><a href="/#/browse">Browse</a></li>
             </ul>
@@ -183,7 +183,7 @@
       <script type="text/template" id="add-pet-template">
 
           <form id="add-pet-form">
-            <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required"></div>
+            <div id="p-name"><span>Name</span><input type="text" id="pet-name" placeholder="Required" required="required"></div>
             <div id="p-gender"><span>Gender</span><select id="pet-gender">
               <option selected label="-" value="Unk">
               <option label="Female" value="Female">
@@ -205,7 +205,7 @@
             <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"></textarea></div>
             <div id="p-bio"><span>Bio</span><textarea rows="9" id="pet-bio" placeholder="Tell the world about your pet here!"></textarea></div>
             <div id="p-dates">
-              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY"></div>
+              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY" value="01/01/2014"></div>
               <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY"></div>
               <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"></div>
             </div>
@@ -217,7 +217,7 @@
 
       <script type="text/template" id="flickr-template">
 
-            <img class='montageSquare flickr' src='<%-flickrImg %>'>
+            <a href="<%-flickrUrl %>" target="_blank"><img class='montageSquare flickr' src='<%-flickrImg %>'></a>
 
 
       </script>
@@ -244,7 +244,7 @@
 
       <script type="text/template" id="parse-pic-template">
 
-            <img class='montageSquare' src='<%-parseImg %>'>
+            <a href='<%-fullURL %>' target='_blank'><img class='montageSquare' src='<%-parseImg %>'></a>
 
       </script>
 
