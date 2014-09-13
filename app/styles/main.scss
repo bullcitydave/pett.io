@@ -156,7 +156,10 @@ body {
 
 
     div#main-container.standard {
-      margin: 180px 0 0 15px;
+      @include media($mobile-s) {
+        margin: 180px 0 0 0;
+      }
+
 
       header#pet-header {
         position: fixed;
@@ -196,7 +199,6 @@ body {
 
 
           #about {
-            @include not-as-shiny;
             width: 120px;
             border: none;
             text-decoration: none;
@@ -204,16 +206,12 @@ body {
             text-shadow: none;
             box-shadow: none;
             font-size: 1.0em;
-            position: absolute;
-            top: 110%;
-            left: 50%;
             text-align: center;
-            margin: -5px 0 0 -60px;
+            margin: -40px 0 0 20px;
             text-transform: uppercase;
             color: $black;
             background: $orange;
-            padding: 3px 10px 3px 10px;
-            border-radius: 5px;
+            padding: 10px;
             font-weight: 600;
           }
           #about:hover {
@@ -235,43 +233,37 @@ body {
 
 div.pic-showcase {
 
-    margin: 100px auto 0 auto;
+    margin: 0 auto;
 
     .montageSquare {
       @include media($mobile-s) {
 
         width:100%;
-        @include if-brightness(0.9);
+        @include if-brightness(1);
         float:left;
-        border-radius: 5px;
-        padding: 5px;
+        padding:0;
+        margin-bottom:10px;
       }
       @include media($mobile-m) {
-        width:250px;
+        width:200px;
         @include if-brightness(0.9);
         float:left;
-        border-radius: 5px;
-        padding: 5px;
+        border: solid 4px $black;
       }
       @include media($mobile-l) {
-        width:250px;
-        @include if-brightness(0.9);
-        float:left;
-        border-radius: 5px;
-        padding: 5px;
+
+
       }
     }
 
 
 
-    .montageSquare:last-child {
-      margin-bottom:40px;
-    }
-
     .flickr {
-      // border-radius: 20% ;
+
       // border-left: solid 2px #0063dc;
+      // border-top: solid 2px #0063dc;
       // border-right: solid 2px #ff0084;
+      // border: solid 4px $flickr;
     }
 
     iframe.vine-embed-small {
@@ -308,14 +300,15 @@ text-align: inherit;
 
     .montageSquare:hover {
 
-      @include if-brightness(1.2);
-
+      @include if-brightness(1.25);
+      border: solid 4px $orange;
 
     }
 
     .flickr:hover {
 
-      @include if-brightness(1.2);
+      @include if-brightness(1.25);
+      border: solid 4px $flickr;
       // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;

@@ -74,9 +74,13 @@ var ProfileView = Parse.View.extend ({
     },
 
     getBackground: function() {
-      var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
 
-      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
+
+      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45))'));
+
+      // var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
+      //
+      // $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45)),url(' + profileBackgroundImg + ') no-repeat center center fixed' ));
     },
 
     render: function(data){

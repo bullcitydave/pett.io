@@ -46,12 +46,3 @@ var AppRouter = Parse.Router.extend({
 
         linkView = new LinkView(petName);
     });
-
-
-
-
-
-    //
-    // Parse.history.start({
-    //   // pushState: true
-    // });
