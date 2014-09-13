@@ -159,9 +159,7 @@ body {
       @include media($mobile-s) {
         margin: 180px 0 0 0;
       }
-      @include media($mobile-m) {
-        margin: 180px 0 0 15px;
-      }
+
 
       header#pet-header {
         position: fixed;
@@ -235,7 +233,7 @@ body {
 
 div.pic-showcase {
 
-    margin: 100px auto 0 auto;
+    margin: 0 auto;
 
     .montageSquare {
       @include media($mobile-s) {
@@ -244,13 +242,13 @@ div.pic-showcase {
         @include if-brightness(1);
         float:left;
         padding:0;
+        margin-bottom:10px;
       }
       @include media($mobile-m) {
         width:200px;
         @include if-brightness(0.9);
         float:left;
-        padding-bottom:10px;
-        // border: solid 4px $black;
+        border: solid 4px $black;
       }
       @include media($mobile-l) {
 
@@ -303,14 +301,14 @@ text-align: inherit;
     .montageSquare:hover {
 
       @include if-brightness(1.25);
-      background: $orange;
-
+      border: solid 4px $orange;
 
     }
 
     .flickr:hover {
 
       @include if-brightness(1.25);
+      border: solid 4px $flickr;
       // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;
