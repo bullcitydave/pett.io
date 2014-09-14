@@ -1,24 +1,36 @@
 
+
 div#browse-container {
-  margin: 0 0 0 0;
+  @include media($mobile-s) {
+    text-align:center;
+    margin: 0 0 0 0;
+  }
+
+  @include media($desktop) {
+    text-align:justify;
+    margin: 0 20px 0 5px;
+  }
+
 
   div.pet-box {
 
-    float:left;
+    display:inline-block;
+    text-align:center;
 
     padding: 5px;
 
     background-color: white;
 
-    border: solid 2px $black;
-    border-radius: 5px;
+
 
 
     img.pet-pic {
       width: auto;
-      height: 200px;
-      border-radius: 5px;
-      @include if-brightness(0.9);
+      height: 150px;
+      border: solid 1px $black;
+      padding:4px;
+      border-radius: 2px;
+      @include if-brightness(1.0);
     }
 
    .pet-pic-info {
@@ -38,13 +50,14 @@ div#browse-container {
         .pet-name {
           text-align: center;
           color: $black;
-          font-size: 1.4em;
+          font-size: 1.2em;
           font-family: $secondary-font;
+          font-weight: 600;
         }
 
     }
 
-    background-color: $white;
+    background-color: white;
     margin: 10px;
 
   }
