@@ -128,8 +128,7 @@ header#main-header{
       //   // @include shift(1);
       // }
       position: absolute;
-      // top: 10%;
-      opacity: .8;
+
       z-index: 6000;
 
       .login-form, .signup-form,  {
@@ -173,7 +172,7 @@ header#main-header{
           clear: both;
           margin-bottom: 10px;
           padding: 5px 10px 5px 10px;
-          letter-spacing: .8px;
+          letter-spacing: .4px;
           font-family: $secondary-font;
           font-weight: bold;
         }
