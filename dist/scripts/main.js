@@ -1385,14 +1385,22 @@ $(function() {
 
     app_router.on('route:goLogin', function() {
         console.log('Loading login page');
+        if (!($('#main-container').hasClass("splash")))
+        {
+          splashView = new SplashView();
+        }
         loginView = new LoginView();
       });
 
     app_router.on('route:goSignUp', function() {
         console.log('Loading signup page');
+        if (!($('#main-container').hasClass("splash")))
+        {
+          splashView = new SplashView();
+        }
         signUpView = new SignUpView();
       });
-
+      
     app_router.on('route:updateAccount', function(user) {
         console.log('Loading account page');
         accountView = new AccountView(user);

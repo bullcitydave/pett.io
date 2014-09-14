@@ -140,6 +140,20 @@ gulp.task('deploy', function() {
 
 });
 
+///NEW
+
+// var uglify = require('gulp-uglify');
+//
+// gulp.task('compress', function() {
+//   gulp.src(['app/scripts/**/*.js','app/scripts/*.js'])
+//     .pipe(uglify())
+//     .pipe(gulp.dest('dist/scripts/'))
+// });
+
+
+///
+
+
 // Test your app in the browser
 // Needs to be better, but needed something quick
 gulp.task('test-server', function() {
