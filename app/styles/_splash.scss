@@ -172,11 +172,10 @@ header#main-header{
           display: block;
           clear: both;
           margin-bottom: 10px;
-          opacity: .9;
           padding: 5px 10px 5px 10px;
           letter-spacing: .8px;
           font-family: $secondary-font;
-
+          font-weight: bold;
         }
         button {
           // @include button(shiny, $orange);
