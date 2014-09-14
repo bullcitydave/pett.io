@@ -34,7 +34,6 @@ $desktop: new-breakpoint(min-width 960px 12);
   font-size: 0.9em;
 }
 
-
 @import 'browse';
 @import 'account';
 @import 'jqueryui';
@@ -51,7 +50,6 @@ li,ul,h1,h2,h3 {
 -webkit-margin-end: 0px;
 -webkit-padding-start: 0px;
 }
-
 
 ///
 
@@ -229,8 +227,6 @@ body {
 }
 
 
-
-
 div.pic-showcase {
 
     margin: 0 auto;
@@ -248,7 +244,7 @@ div.pic-showcase {
         width:200px;
         @include if-brightness(0.9);
         float:left;
-        border: solid 4px $black;
+        border: solid 2px $black;
       }
       @include media($mobile-l) {
 
@@ -301,7 +297,7 @@ text-align: inherit;
     .montageSquare:hover {
 
       @include if-brightness(1.25);
-      border: solid 4px $orange;
+      border: solid 2px $orange;
 
     }
 
@@ -416,4 +412,12 @@ canvas {
 p.help {
   line-height: 1.2em;
   font-size: 1.1em;
+}
+
+.scrolling {
+  overflow: scrolling;
+}
+
+.no-scrolling {
+  overflow: hidden;
 }
