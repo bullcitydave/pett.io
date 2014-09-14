@@ -47,7 +47,7 @@ header#main-header{
 
       @include media($mobile-s) {
         font-size: 5.0em;
-        text-shadow: 3px 3px 3px $black;
+        text-shadow: 1px 1px 0px $black;
         font-weight: 300;
         font-family: $primary-font;
       }
@@ -56,11 +56,10 @@ header#main-header{
       }
       @include media($mobile-l) {
         font-size: 9.0em;
-        text-shadow: 6px 6px 6px $black;
+        text-shadow: 2px 2px 0 $black;
       }
       @include media($desktop) {
         font-size: 10.0em;
-        text-shadow: 10px 10px 10px $black;
       }
 
 
@@ -175,7 +174,22 @@ header#main-header{
           letter-spacing: .4px;
           font-family: $secondary-font;
           font-weight: bold;
-        }
+            ::-webkit-input-placeholder {
+               color: $dark-gray;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+               color: $dark-gray;
+            }
+
+            ::-moz-placeholder {  /* Firefox 19+ */
+               color: $dark-gray;
+            }
+
+            :-ms-input-placeholder {
+               color: $dark-gray;
+            }
+          }
         button {
           // @include button(shiny, $orange);
           @include not-as-shiny;
