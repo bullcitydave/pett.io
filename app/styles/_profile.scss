@@ -1,16 +1,20 @@
 #profile-container {
     @include outer-container;
-    position: absolute;
+    position: fixed;
     left: 0;
-    top: 180px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    // top: 180px;
     z-index: 7001;
     width:100%;
+    overflow:scroll;
 
     .profile {
-      position:fixed;
+      position:static;
       font-family:$secondary-font;
       width: 100%;
-      height:100%;
+      height:110%; // change
 
       p {
         border: solid 2px #333;

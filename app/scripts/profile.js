@@ -5,6 +5,7 @@ var ProfileView = Parse.View.extend ({
   initialize: function(tag) {
 
     $('#main-container').prepend('<div id="profile-container"></div>');
+    body.toggleClass('no-scrolling');
     this.pet = tag;
 
     console.log('Getting profile for ', this.pet);
@@ -62,7 +63,8 @@ var ProfileView = Parse.View.extend ({
     closeProfile: function(e) {
       $('#profile-container').remove();
       $('#about').show();
-      $('#main-container').css('overflow', 'initial');
+      // $('#main-container').css('overflow', 'initial');
+      body.toggleClass('no-scrolling');
       $(".pic-showcase").css("opacity", 1);
       return false;
     },

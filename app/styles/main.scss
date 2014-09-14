@@ -34,7 +34,6 @@ $desktop: new-breakpoint(min-width 960px 12);
   font-size: 0.9em;
 }
 
-
 @import 'browse';
 @import 'account';
 @import 'jqueryui';
@@ -51,7 +50,6 @@ li,ul,h1,h2,h3 {
 -webkit-margin-end: 0px;
 -webkit-padding-start: 0px;
 }
-
 
 ///
 
@@ -414,4 +412,12 @@ canvas {
 p.help {
   line-height: 1.2em;
   font-size: 1.1em;
+}
+
+.scrolling {
+  overflow: scrolling;
+}
+
+.no-scrolling {
+  overflow: hidden;
 }

@@ -18,7 +18,7 @@ $(function() {
 
     initialize: function() {
       self = this;
-
+      body = $('body');
       var app_router = new AppRouter;
 
 
@@ -45,7 +45,7 @@ $(function() {
         }
         signUpView = new SignUpView();
       });
-      
+
     app_router.on('route:updateAccount', function(user) {
         console.log('Loading account page');
         accountView = new AccountView(user);
