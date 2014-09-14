@@ -131,6 +131,7 @@ var ProfileView = Parse.View.extend ({
   initialize: function(tag) {
 
     $('#main-container').prepend('<div id="profile-container"></div>');
+    body.toggleClass('no-scrolling');
     this.pet = tag;
 
     console.log('Getting profile for ', this.pet);
@@ -188,7 +189,8 @@ var ProfileView = Parse.View.extend ({
     closeProfile: function(e) {
       $('#profile-container').remove();
       $('#about').show();
-      $('#main-container').css('overflow', 'initial');
+      // $('#main-container').css('overflow', 'initial');
+      body.toggleClass('no-scrolling');
       $(".pic-showcase").css("opacity", 1);
       return false;
     },
@@ -202,7 +204,7 @@ var ProfileView = Parse.View.extend ({
     getBackground: function() {
 
 
-      $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45))'));
+      // $('#profile-container .profile').css('background', ('linear-gradient(to bottom right, rgba(225,140,0,0.45), rgba(234,234,234,0.45))'));
 
       // var profileBackgroundImg = document.images[Math.floor(Math.random() * (document.images.length)) + 1].src;
       //
@@ -708,8 +710,8 @@ var LinkView = Parse.View.extend({
   showProfile: function(e) {
     e.preventDefault();
     $('#about').hide();
-    $('#main-container').css('overflow', 'hidden');
-    $('#profile-container').css('overflow', 'auto');
+    // $('#main-container').css('overflow', 'hidden');
+    // $('#profile-container').css('overflow', 'auto');
     new ProfileView(pet);
     return false;
   },
@@ -1373,7 +1375,7 @@ $(function() {
 
     initialize: function() {
       self = this;
-
+      body = $('body');
       var app_router = new AppRouter;
 
 
@@ -1400,7 +1402,7 @@ $(function() {
         }
         signUpView = new SignUpView();
       });
-      
+
     app_router.on('route:updateAccount', function(user) {
         console.log('Loading account page');
         accountView = new AccountView(user);
