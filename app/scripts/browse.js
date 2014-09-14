@@ -18,6 +18,8 @@ var BrowseView = Parse.View.extend({
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
+    $('#main-header').removeClass('splash');
+    $('#header-nav').css("display","block");
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').addClass('browse');
