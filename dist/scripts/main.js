@@ -1,7 +1,48 @@
 // Initialize parse and support functions
 
+// This function is for me while I'm testing
+function doesConnectionExist() {
+    var xhr = new XMLHttpRequest();
+    var file = "http://i.imgur.com/rwWvcQk.png";
+    var randomNum = Math.round(Math.random() * 10000);
 
+    xhr.open('HEAD', file + "?rand=" + randomNum, false);
+
+    try {
+        xhr.send();
+
+        if (xhr.status >= 200 && xhr.status < 304) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+}
+
+function runningLocally() {
+  if (document.location.href === 'http://localhost:9000/') {
+    console.log('Running locally');
+    return true;
+  }
+}
+
+var local = runningLocally();
+console.log(local);
+
+
+if (!(doesConnectionExist()))  {
+    alert('It looks like there may be a problem with your internet connection.' );
+}
+
+
+try {
   Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
+}  catch (exception)
+  {
+    alert('It looks like pett.io is having trouble connecting to its database server. We\'re quite sorry. Please try again shortly.' )
+  };
 
 
 
@@ -33,7 +74,27 @@ var flickrUserId = 'toastie97';
         },
 
         age: function() {
-          return Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))
+          var age = Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25));
+          var ageString = age.toString();
+
+          switch (ageString) {
+            case '44':
+              ageString = '';
+              break;
+
+            case '0':
+              age = Math.floor((((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))*12);
+              ageString = age + ' months old';
+              break;
+
+            case '1':
+              ageString = '1 year old';
+              break;
+
+            default:
+              ageString = ageString + ' years old';
+          }
+          return ageString;
         }
 
     });
@@ -129,7 +190,7 @@ var ProfileView = Parse.View.extend ({
   el: "#main-container",
 
   initialize: function(tag) {
-
+    $('#profile-container').remove();
     $('#main-container').prepend('<div id="profile-container"></div>');
     body.toggleClass('no-scrolling');
     this.pet = tag;
@@ -164,7 +225,7 @@ var ProfileView = Parse.View.extend ({
 
               }
             else {
-              $('#life-marker').html(thisPet.age() + ' years old');
+              $('#life-marker').html(thisPet.age());
               }
             },
         error: function(collection, error) {
@@ -660,7 +721,7 @@ var LinkView = Parse.View.extend({
             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
         }
         else {
-            $('#life-marker').html(thisPet.age() + ' years old');
+            $('#life-marker').html(thisPet.age());
         }
       },
       error: function(collection, error) {
@@ -710,8 +771,6 @@ var LinkView = Parse.View.extend({
   showProfile: function(e) {
     e.preventDefault();
     $('#about').hide();
-    // $('#main-container').css('overflow', 'hidden');
-    // $('#profile-container').css('overflow', 'auto');
     new ProfileView(pet);
     return false;
   },
@@ -1357,6 +1416,8 @@ var AppRouter = Parse.Router.extend({
 
 $(function() {
 
+  if (!(Parse)) { alert("oh no"); };
+
   Parse.history.start({
     pushState: false,
     root: '/'
@@ -1376,7 +1437,9 @@ $(function() {
     initialize: function() {
       self = this;
       body = $('body');
-      var app_router = new AppRouter;
+      title = document.title;
+      title = 'pett.io - the ultimate pet showcase';
+      app_router = new AppRouter;
 
 
 
