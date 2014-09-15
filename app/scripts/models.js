@@ -12,7 +12,27 @@
         },
 
         age: function() {
-          return Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))
+          var age = Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25));
+          var ageString = age.toString();
+
+          switch (ageString) {
+            case '44':
+              ageString = '';
+              break;
+
+            case '0':
+              age = Math.floor((((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25))*12);
+              ageString = age + ' months old';
+              break;
+
+            case '1':
+              ageString = '1 year old';
+              break;
+
+            default:
+              ageString = ageString + ' years old';
+          }
+          return ageString;
         }
 
     });

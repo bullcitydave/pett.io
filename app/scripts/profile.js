@@ -3,7 +3,7 @@ var ProfileView = Parse.View.extend ({
   el: "#main-container",
 
   initialize: function(tag) {
-
+    $('#profile-container').remove();
     $('#main-container').prepend('<div id="profile-container"></div>');
     body.toggleClass('no-scrolling');
     this.pet = tag;
@@ -38,7 +38,7 @@ var ProfileView = Parse.View.extend ({
 
               }
             else {
-              $('#life-marker').html(thisPet.age() + ' years old');
+              $('#life-marker').html(thisPet.age());
               }
             },
         error: function(collection, error) {

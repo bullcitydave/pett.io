@@ -110,7 +110,7 @@ var LinkView = Parse.View.extend({
             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
         }
         else {
-            $('#life-marker').html(thisPet.age() + ' years old');
+            $('#life-marker').html(thisPet.age());
         }
       },
       error: function(collection, error) {
@@ -160,8 +160,6 @@ var LinkView = Parse.View.extend({
   showProfile: function(e) {
     e.preventDefault();
     $('#about').hide();
-    // $('#main-container').css('overflow', 'hidden');
-    // $('#profile-container').css('overflow', 'auto');
     new ProfileView(pet);
     return false;
   },

@@ -1,5 +1,7 @@
 $(function() {
 
+  if (!(Parse)) { alert("oh no"); };
+
   Parse.history.start({
     pushState: false,
     root: '/'
@@ -19,7 +21,9 @@ $(function() {
     initialize: function() {
       self = this;
       body = $('body');
-      var app_router = new AppRouter;
+      title = document.title;
+      title = 'pett.io - the ultimate pet showcase';
+      app_router = new AppRouter;
 
 
 

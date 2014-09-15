@@ -42,7 +42,7 @@ header#main-header{
     z-index: 5001;
     background: transparent;
 
-    h1 {
+    h1.site-logo {
       color: $orange;
 
       @include media($mobile-s) {
