@@ -1,12 +1,47 @@
 // Initialize parse and support functions
 
+// This function is for me while I'm testing
+function doesConnectionExist() {
+    var xhr = new XMLHttpRequest();
+    var file = "http://i.imgur.com/rwWvcQk.png";
+    var randomNum = Math.round(Math.random() * 10000);
+
+    xhr.open('HEAD', file + "?rand=" + randomNum, false);
+
+    try {
+        xhr.send();
+
+        if (xhr.status >= 200 && xhr.status < 304) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+}
+
+function runningLocally() {
+  if (document.location.href === 'http://localhost:9000/') {
+    console.log('Running locally');
+    return true;
+  }
+}
+
+var local = runningLocally();
+console.log(local);
+
+
+if (!(doesConnectionExist()))  {
+    alert('It looks like there may be a problem with your internet connection.' );
+}
 
 
 try {
   Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
 }  catch (exception)
   {
-    alert('It looks like there may be a problem with either your internet connection or pett.io\'s ability to reach its database server. Please try again shortly.' )
+    alert('It looks like pett.io is having trouble connecting to its database server. We're quite sorry. Please try again shortly.' )
   };
 
 
