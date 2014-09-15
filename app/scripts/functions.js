@@ -41,7 +41,7 @@ try {
   Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
 }  catch (exception)
   {
-    alert('It looks like pett.io is having trouble connecting to its database server. We're quite sorry. Please try again shortly.' )
+    alert('It looks like pett.io is having trouble connecting to its database server. We\'re quite sorry. Please try again shortly.' )
   };
 
 

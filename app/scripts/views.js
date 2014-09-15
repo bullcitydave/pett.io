@@ -110,7 +110,7 @@ var LinkView = Parse.View.extend({
             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
         }
         else {
-            $('#life-marker').html(thisPet.age() + ' years old');
+            $('#life-marker').html(thisPet.age());
         }
       },
       error: function(collection, error) {
