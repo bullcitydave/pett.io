@@ -2,7 +2,7 @@
     @include outer-container;
     position: fixed;
     left: 0;
-    top: 0;
+    top: 155px;
     right: 0;
     bottom: 0;
     // top: 180px;
@@ -19,22 +19,31 @@
 
       p {
         border: solid 2px #333;
-        padding: 15px;
-        margin: 15px;
+        margin: 15px auto;
         font-weight: 300;
         font-size: 1.0em;
         opacity: .8;
         background: #eaeaea;
+        text-align: center;
 
-        span {
+        span.profile-label {
           font-weight: bold;
           text-transform: uppercase;
           display:block;
-          font-size:1.2em;
+          font-size:1.0em;
+          background:$orange;
+          padding:5px 3px;
+        }
+        span.profile-value {
+          display:block;
+          font-size:1.0em;
+          background:white;
+          padding:5px 3px;
         }
       }
       p#bio {
-        @include span-columns(9.5);
+        @include span-columns(12);
+        @include omega();
         line-height: 25px;
         letter-spacing: 0.05em;
         opacity: 1;
@@ -76,13 +85,20 @@
         @include span-columns(2);
       }
       button#close-profile, button#next-pic{
-        @include span-columns(1.75);
-        background: $darker-orange;
-        color:$black;
-        border-radius:0;
-        margin:20px;
-        border:solid 2px #333;
-        padding: 15px;
+        display: block;
+
+        background: #ee7600;
+        color: #111;
+        border-radius: 12.5px;
+
+        border: solid 2px #333;
+
+        height: 25px;
+        width: 25px;
+        position: absolute;
+        padding: 0;
+        right: 0;
+        top: 5px;
       }
 
     }

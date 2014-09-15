@@ -12,8 +12,8 @@
         },
 
         age: function() {
-          age = Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25));
-          ageString = age.toString();
+          var age = Math.floor(((new Date()-this.get("dateBirth")))/(1000*60*60*24*365.25));
+          var ageString = age.toString();
 
           switch (ageString) {
             case '44':

@@ -38,7 +38,7 @@ var ProfileView = Parse.View.extend ({
 
               }
             else {
-              $('#life-marker').html(thisPet.age() + ' years old');
+              $('#life-marker').html(thisPet.age());
               }
             },
         error: function(collection, error) {
