@@ -145,15 +145,15 @@
       </script>
 
       <script type="text/template" id="profile-template">
-
+          <button id="close-profile" text="Close">&#x2715</button>
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><span class="profile-value"><%-bio%></span></p>
                 <% }  %>
               <!-- <button id="next-pic">Change Background</button> -->
-              <button id="close-profile" text="Close">X</button>
-
-
+              <% if (age != "null") { %>
+                <p class="small-field" id="type"><span class="profile-label">Age</span><span class="profile-value"><%-age%></span></p>
+              <% }  %>
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span class="profile-label">Type</span><span class="profile-value"><%-type%></span></p>
               <% }  %>

@@ -6,11 +6,14 @@ var ProfileView = Parse.View.extend ({
     $('#profile-container').remove();
     $('#main-container').prepend('<div id="profile-container"></div>');
     body.toggleClass('no-scrolling');
-    this.pet = tag;
+    pet = tag;
 
-    console.log('Getting profile for ', this.pet);
+
+
+    console.log('Getting profile for ', pet);
 
     profile = this;
+    profile.thisPet = {};
 
     nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
     nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
@@ -22,23 +25,23 @@ var ProfileView = Parse.View.extend ({
 
 
     var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", profile.pet);
+    query.equalTo("uniqueName", profile.options);
     query.find({
       success: function(results) {
-        console.log("Successfully retrieved " + profile.pet + ". Attempting to render...");
+        console.log("Successfully retrieved " + profile.options + ". Attempting to render...");
         profile.render(results[0].attributes);
 
         thesePets.fetch({
         success: function(collection) {
             console.log(collection);
-            var thisPet = thesePets.get(results[0].id);
-            if (!(thisPet.isLiving())) {
+            profile.thisPet = thesePets.get(results[0].id);
+            if (!(profile.thisPet.isLiving())) {
               console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
               $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-
               }
             else {
-              $('#life-marker').html(thisPet.age());
+              profile.age = profile.thisPet.age();
+              $('#life-marker').html(profile.age);
               }
             },
         error: function(collection, error) {
@@ -111,6 +114,8 @@ var ProfileView = Parse.View.extend ({
         if (data.bodyType != "null") {
           data.bodyType = data.bodyType.toString().split(',').join(', ');
         }
+        data.age = profile.age;
+
 
         var profileView = $('#profile-template').html();
 

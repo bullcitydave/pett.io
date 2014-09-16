@@ -69,11 +69,9 @@ body {
 
   header#main-header.standard{
     height: $std-header-height;
-    margin: 0 1% 0 1%;  //masonry puts something in there that requires this; not needed when masonry fails
-    text-align: none;
+    margin: 0;
     top: 0;
-    border-bottom: 2px solid #ddd;
-    width: 98%;
+    width: 100%;
 
     #header-box-overlay, #header-box, h2 {
       display: none;
@@ -82,49 +80,55 @@ body {
 
     h1.standard {
       display: block;
-      color: $darker-orange;
+      color: $black;
 
       @include media($mobile-s) {
         font-size: 2.2em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
-        margin: 5px 0 0 10px;
+        margin: 0 0 0 10px;
       }
       @include media($mobile-l) {
         font-size: 2.8em;
-        margin: 5px 0 0 15px;
+        margin: 0 0 0 15px;
       }
     }
     nav#header-nav {
       @include media($mobile-s) {
         position: absolute;
         right: 0;
-        top: 8px;
         font-size: 0.9em;
-        font-weight: 500;
+        font-weight: 600;
         text-align: right;
-
+        text-transform:uppercase;
+        top: 70px;
         ul {
           list-style-type: none;
           li {
             display: inherit;
             padding: 0 5px 0 0;
+            font-size: 0.8em;
+            letter-spacing: -0.08em;
           }
           li .active {
             color: $white;
           }
           li:hover {
-            color: $darker-orange;
-            text-decoration: underline;
+            border: 1px solid black;
+
           }
+
+          height: 50px;
+          margin-top: -5px;
+
         }
 
         #header-username {
           position: absolute;
           top: 0;
           right: 0;
-          top: 70px;
+          top: -87px;
           padding: 0px 5px 0px 5px;
           background: #333;
           font-size: 1.1em;
@@ -136,17 +140,28 @@ body {
         top: 25px;
         ul {
           li {
-            padding: 4px 8px 0 8px;
+            padding: 4px 10px 4px;
             float: right;
-            font-size:1.2em;
+          }
+          li:first-child {
+            padding-right: 4px;
+          }
+          li:hover {
+            color: white;
+            border: 1px solid white;
+            padding-bottom: 5px;
           }
         }
         #header-username {
-          position: absolute;
-          top: 0;
-          right: 0;
-          top: 10px;
-          margin: -34px 7px 0px 0px;
+          top: -40px;
+        }
+      }
+      @include media($mobile-l) {
+        ul {
+          li {
+            font-size: 1.2em;
+            letter-spacing: inherit;
+          }
         }
       }
     }
@@ -157,68 +172,84 @@ body {
 
     div#main-container.standard {
       @include media($mobile-s) {
-        margin: 180px 0 0 0;
-      }
-
-
+      margin: 180px 0 0 0;
       header#pet-header {
         position: fixed;
         z-index: 50;
-        margin: 0;
         background: $white;
         width: 100%;
         top: $std-header-height;
+        text-align: left;
 
-          h2 {
-            font-size: 4.5em;
-            font-family: $primary-font;
-            font-weight: 300;
-            width: 100%;
-            text-align: center;
-            opacity: 1;
-            z-index: 100;
-            text-transform: capitalize;
-            color: $black;
-            text-shadow: 1px 1px 1px darkorange;
-            @media screen and (max-width: 480px){
-              font-size: 3.5em;
-              margin: 0;
-            }
+        h2 {
+          font-size: 3.5em;
+          font-family: $primary-font;
+          font-weight: 300;
+          width: 100%;
+          text-align: left;
+          opacity: 1;
+          z-index: 100;
+          text-transform: capitalize;
+          color: $black;
+          text-shadow: 1px 1px 1px darkorange;
+          margin: 0;
           }
-
-          p#life-marker {
+        p#life-marker {
           font-size: 1.5em;
           color: $black;
-          margin: 0;
-          text-align: center;
-          margin-top: -25px;
+          text-align: left;
+          margin: -45px 0 0 5px;
           letter-spacing: 0.20em;
           font-weight: 400;
-          }
-
-          #about {
-            width: 120px;
-            border: none;
-            text-decoration: none;
-            border-radius: 0;
-            text-shadow: none;
-            box-shadow: none;
-            font-size: 1.0em;
-            text-align: center;
-            margin: -40px 0 0 20px;
-            text-transform: uppercase;
-            color: $black;
-            background: $orange;
-            padding: 10px;
-            font-weight: 600;
-          }
-          #about:hover {
-            color: $darker-orange;
-            background: $white;
-            border: 1px solid $black;
-          }
+        }
+        #about {
+          width: 120px;
+          border: none;
+          text-decoration: none;
+          border-radius: 0;
+          text-shadow: none;
+          box-shadow: none;
+          font-size: 1.0em;
+          text-align: center;
+          margin: -20px 0 0 auto;
+          text-transform: uppercase;
+          color: $black;
+          background: $orange;
+          padding: 10px;
+          font-weight: 600;
+          position: relative;
+        }
         }
       }
+
+
+      @include media($mobile-m) {
+      header#pet-header {
+        text-align: center;
+        margin:0;
+
+        h2 {
+          font-size: 4.5em;
+          text-align: center;
+          }
+
+
+        p#life-marker {
+          text-align: center;
+        }
+
+        #about {
+          margin: -40px 0 0 20px;
+          position: static;
+        }
+        #about:hover {
+          color: $darker-orange;
+          background: $white;
+          border: 1px solid $black;
+        }
+      }
+      }
+    }
 
 
       div#main-container.browse{

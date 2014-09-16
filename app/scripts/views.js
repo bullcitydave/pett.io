@@ -41,7 +41,7 @@ var LinkView = Parse.View.extend({
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
-    link.getAge();
+    link.getAge(pet);
 
     $('#main-container').append("<div class='pic-showcase'></div>");
 
@@ -97,7 +97,7 @@ var LinkView = Parse.View.extend({
   },
 
 
-  getAge: function() {
+  getAge: function(pet) {
     var query = new Parse.Query(Pet);
     query.equalTo("uniqueName", pet);
     query.first();
