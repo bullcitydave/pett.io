@@ -172,10 +172,7 @@ body {
 
     div#main-container.standard {
       @include media($mobile-s) {
-        margin: 180px 0 0 0;
-      }
-
-
+      margin: 180px 0 0 0;
       header#pet-header {
         position: fixed;
         z-index: 50;
@@ -183,57 +180,77 @@ body {
         background: $white;
         width: 100%;
         top: $std-header-height;
+        text-align: left;
 
-          h2 {
-            font-size: 4.5em;
-            font-family: $primary-font;
-            font-weight: 300;
-            width: 100%;
-            text-align: center;
-            opacity: 1;
-            z-index: 100;
-            text-transform: capitalize;
-            color: $black;
-            text-shadow: 1px 1px 1px darkorange;
-            @media screen and (max-width: 480px){
-              font-size: 3.5em;
-              margin: 0;
-            }
+        h2 {
+          font-size: 3.5em;
+          font-family: $primary-font;
+          font-weight: 300;
+          width: 100%;
+          text-align: left;
+          opacity: 1;
+          z-index: 100;
+          text-transform: capitalize;
+          color: $black;
+          text-shadow: 1px 1px 1px darkorange;
+          margin: 0;
           }
-
-          p#life-marker {
+        p#life-marker {
           font-size: 1.5em;
           color: $black;
           margin: 0;
-          text-align: center;
+          text-align: left;
           margin-top: -25px;
           letter-spacing: 0.20em;
           font-weight: 400;
-          }
-
-          #about {
-            width: 120px;
-            border: none;
-            text-decoration: none;
-            border-radius: 0;
-            text-shadow: none;
-            box-shadow: none;
-            font-size: 1.0em;
-            text-align: center;
-            margin: -40px 0 0 20px;
-            text-transform: uppercase;
-            color: $black;
-            background: $orange;
-            padding: 10px;
-            font-weight: 600;
-          }
-          #about:hover {
-            color: $darker-orange;
-            background: $white;
-            border: 1px solid $black;
-          }
+        }
+        #about {
+          width: 120px;
+          border: none;
+          text-decoration: none;
+          border-radius: 0;
+          text-shadow: none;
+          box-shadow: none;
+          font-size: 1.0em;
+          text-align: center;
+          margin: -20px 0 0 auto;
+          text-transform: uppercase;
+          color: $black;
+          background: $orange;
+          padding: 10px;
+          font-weight: 600;
+          position: relative;
+        }
         }
       }
+
+
+      @include media($mobile-m) {
+      header#pet-header {
+        text-align: center;
+
+        h2 {
+          font-size: 4.5em;
+          text-align: center;
+          }
+
+
+        p#life-marker {
+          text-align: center;
+        }
+
+        #about {
+          margin: -40px 0 0 20px;
+          position: static;
+        }
+        #about:hover {
+          color: $darker-orange;
+          background: $white;
+          border: 1px solid $black;
+        }
+      }
+      }
+    }
 
 
       div#main-container.browse{
