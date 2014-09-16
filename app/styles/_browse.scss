@@ -4,6 +4,76 @@ div#browse-container {
   @include media($mobile-s) {
     text-align:center;
     margin: 0 0 0 0;
+
+
+    div.pet-box {
+
+      display:inline-block;
+      text-align:center;
+
+      padding: 5px;
+
+      background-color: white;
+
+
+      img.pet-pic {
+        width: 100%;
+        height: auto;
+        border: solid 1px $black;
+        padding:4px;
+        border-radius: 2px;
+        @include if-brightness(1.0);
+      }
+
+     .pet-pic-info {
+
+          width: 100%;
+
+          margin: 0;
+          padding: 0 10px 0 10px;
+
+          .pet-person {
+            clear: both;
+            text-align: center;
+            color: $darker-orange;
+            font-size: 1.0em;
+            font-weight: 600;
+          }
+          .pet-name {
+            text-align: center;
+            color: $black;
+            font-size: 1.2em;
+            font-family: $secondary-font;
+            font-weight: 600;
+          }
+
+      }
+
+      background-color: white;
+      margin: 10px;
+
+    }
+
+    .pet-box:hover {
+      background-color: #FFF;
+      img.pet-pic {
+        @include if-brightness(1.25);
+      }
+    }
+
+    .pet-box:last-child {
+      margin-bottom:40px;
+    }
+
+  }
+
+  @include media($mobile-m) {
+    div.pet-box {
+      img.pet-pic {
+        width: auto;
+        height: 150px;
+      }
+    }
   }
 
   @include media($desktop) {
@@ -11,66 +81,5 @@ div#browse-container {
     margin: 0 20px 0 5px;
   }
 
-
-  div.pet-box {
-
-    display:inline-block;
-    text-align:center;
-
-    padding: 5px;
-
-    background-color: white;
-
-
-
-
-    img.pet-pic {
-      width: auto;
-      height: 150px;
-      border: solid 1px $black;
-      padding:4px;
-      border-radius: 2px;
-      @include if-brightness(1.0);
-    }
-
-   .pet-pic-info {
-
-        width: 100%;
-
-        margin: 0;
-        padding: 0 10px 0 10px;
-
-        .pet-person {
-          clear: both;
-          text-align: center;
-          color: $darker-orange;
-          font-size: 1.0em;
-          font-weight: 600;
-        }
-        .pet-name {
-          text-align: center;
-          color: $black;
-          font-size: 1.2em;
-          font-family: $secondary-font;
-          font-weight: 600;
-        }
-
-    }
-
-    background-color: white;
-    margin: 10px;
-
-  }
-
-  .pet-box:hover {
-    background-color: #FFF;
-    img.pet-pic {
-      @include if-brightness(1.25);
-    }
-  }
-
-  .pet-box:last-child {
-    margin-bottom:40px;
-  }
 
 }

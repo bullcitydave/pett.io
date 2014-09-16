@@ -176,7 +176,6 @@ body {
       header#pet-header {
         position: fixed;
         z-index: 50;
-        margin-left:10px;
         background: $white;
         width: 100%;
         top: $std-header-height;
@@ -198,9 +197,8 @@ body {
         p#life-marker {
           font-size: 1.5em;
           color: $black;
-          margin: 0;
           text-align: left;
-          margin-top: -25px;
+          margin: -45px 0 0 5px;
           letter-spacing: 0.20em;
           font-weight: 400;
         }
