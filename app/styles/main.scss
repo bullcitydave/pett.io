@@ -128,7 +128,7 @@ body {
           position: absolute;
           top: 0;
           right: 0;
-          top: -80px;
+          top: -87px;
           padding: 0px 5px 0px 5px;
           background: #333;
           font-size: 1.1em;
@@ -176,7 +176,7 @@ body {
       header#pet-header {
         position: fixed;
         z-index: 50;
-        margin: 0;
+        margin-left:10px;
         background: $white;
         width: 100%;
         top: $std-header-height;
@@ -228,6 +228,7 @@ body {
       @include media($mobile-m) {
       header#pet-header {
         text-align: center;
+        margin:0;
 
         h2 {
           font-size: 4.5em;
