@@ -26,6 +26,9 @@
         opacity: .8;
         background: #eaeaea;
         text-align: center;
+        border-radius: 2px;
+        min-width: 100px;
+
 
         span.profile-label {
           font-weight: bold;
@@ -40,16 +43,26 @@
           font-size:1.0em;
           background:white;
           padding:5px 3px;
+          font-weight: 600;
+          letter-spacing: -0.05em
         }
       }
       p#bio {
         @include span-columns(12);
         @include omega();
         line-height: 25px;
-        letter-spacing: 0.05em;
         opacity: 1;
         font-size: 1.3em;
         line-height: 1.6em;
+        text-align: justify;
+        padding: 15px;
+        background: white;
+        font-weight: 700;
+        border-radius: 4px;
+
+        span.profile-value {
+          letter-spacing: 0.02em
+        }
       }
 
       p.small-field {
@@ -110,5 +123,13 @@
       padding: 0;
       right: 0;
       top: 10px;
+    }
+
+    button#close-profile:hover{
+
+      color: $white;
+      border: solid 2px white;
+
+
     }
   }
