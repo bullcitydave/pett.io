@@ -10,17 +10,17 @@ div#browse-container {
 
       display:inline-block;
       text-align:center;
-
       padding: 5px;
-
       background-color: white;
+      box-shadow: 5px 5px 10px $black;
+      position:relative;
+      transition: transform .5s;
 
 
       img.pet-pic {
         width: 100%;
         height: auto;
         border: solid 1px $black;
-        padding:4px;
         border-radius: 2px;
         @include if-brightness(1.0);
       }
@@ -55,10 +55,13 @@ div#browse-container {
     }
 
     .pet-box:hover {
+      z-index:10;
       background-color: #FFF;
       img.pet-pic {
         @include if-brightness(1.25);
       }
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
+      box-shadow: 15px 15px 30px $black;
     }
 
     .pet-box:last-child {
