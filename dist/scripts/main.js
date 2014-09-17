@@ -522,6 +522,8 @@ var BrowseView = Parse.View.extend({
        user=null;
     }
 
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    
     browseSelf=this;
     console.log('Initializing browse view');
     $('body').addClass('darkbg');
