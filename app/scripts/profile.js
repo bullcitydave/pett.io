@@ -93,6 +93,9 @@ var ProfileView = Parse.View.extend ({
 
         console.log(data);
 
+        var ageString = null;
+        data.age = "null";
+
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };
 
@@ -115,7 +118,7 @@ var ProfileView = Parse.View.extend ({
           data.bodyType = data.bodyType.toString().split(',').join(', ');
         }
         if ((data.DateBirth != "null") && (data.dateDeath == null)) {
-          var ageString = $('#life-marker').html();
+          ageString = $('#life-marker').html();
           data.age = ageString.substring(0,(ageString.indexOf('old'))-1);
         }
 
