@@ -31,23 +31,23 @@ var ProfileView = Parse.View.extend ({
         console.log("Successfully retrieved " + profile.options + ". Attempting to render...");
         profile.render(results[0].attributes);
 
-        thesePets.fetch({
-        success: function(collection) {
-            console.log(collection);
-            profile.thisPet = thesePets.get(results[0].id);
-            if (!(profile.thisPet.isLiving())) {
-              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              }
-            else {
-              profile.age = profile.thisPet.age();
-              $('#life-marker').html(profile.age);
-              }
-            },
-        error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-    });
+    //     thesePets.fetch({
+    //     success: function(collection) {
+    //         console.log(collection);
+    //         profile.thisPet = thesePets.get(results[0].id);
+    //         if (!(profile.thisPet.isLiving())) {
+    //           console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+    //           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+    //           }
+    //         else {
+    //           profile.age = profile.thisPet.age();
+    //           $('#life-marker').html(profile.age);
+    //           }
+    //         },
+    //     error: function(collection, error) {
+    //         console.log("Error: " + error.code + " " + error.message);
+    //     }
+    // });
     console.log(results[0].attributes);
       },
       error: function(error) {
@@ -114,7 +114,10 @@ var ProfileView = Parse.View.extend ({
         if (data.bodyType != "null") {
           data.bodyType = data.bodyType.toString().split(',').join(', ');
         }
-        data.age = profile.age;
+        if ((data.DateBirth != "null") && (data.dateDeath == null)) {
+          var ageString = $('#life-marker').html();
+          data.age = ageString.substring(0,(ageString.indexOf('old'))-1);
+        }
 
 
         var profileView = $('#profile-template').html();
