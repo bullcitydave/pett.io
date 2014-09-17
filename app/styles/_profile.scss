@@ -64,9 +64,9 @@
       // p#treats {
       //   @include span-columns(2.5);
       // }
-      p#type {
-         clear: both;
-      }
+      // p#type {
+      //    clear: both;
+      // }
       // p#body-type {
       //   @include span-columns(2.5);
       // }
@@ -84,6 +84,12 @@
       // }
       p#born, p#died, p#adopted {
         @include span-columns(2);
+      }
+      p.date-field {
+        clear:left;
+      }
+      p.date-field ~ .date-field {
+        clear:none;
       }
 
 

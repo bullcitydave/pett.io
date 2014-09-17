@@ -152,7 +152,7 @@
                 <% }  %>
               <!-- <button id="next-pic">Change Background</button> -->
               <% if (age != "null") { %>
-                <p class="small-field" id="type"><span class="profile-label">Age</span><span class="profile-value"><%-age%></span></p>
+                <p class="small-field" id="age"><span class="profile-label">Age</span><span class="profile-value"><%-age%></span></p>
               <% }  %>
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span class="profile-label">Type</span><span class="profile-value"><%-type%></span></p>
@@ -175,14 +175,16 @@
               <% if (favoriteTreats.length > 0) { %>
                 <p class="med-field" id="treats"><span class="profile-label">Favorite Treats</span><span class="profile-value"><%-favoriteTreats%></span></p>
               <% }  %>
-              <% if (dateBirth != null) { console.log(dateBirth); %>
+              <% if (dateBirth != null) {  %>
                 <p class="date-field" id="born"><span class="profile-label">Born</span><span class="profile-value"><%-dateBirth%></span></p>
               <% }  %>
-              <% if (dateDeath != null) { console.log(dateDeath);%>
-                <p  class="date-field" id="died"><span class="profile-label">Passed</span><span class="profile-value"><%-dateDeath%></span></p>
-              <% }  %>
+
               <% if (dateAdopted != null) { %>
                 <p  class="date-field" id="adopted"><span class="profile-label">Adopted</span><span class="profile-value"><%-dateAdopted%></span></p>
+              <% }  %>
+
+              <% if (dateDeath != null) { %>
+                <p  class="date-field" id="died"><span class="profile-label">Passed</span><span class="profile-value"><%-dateDeath%></span></p>
               <% }  %>
 
           </div>
