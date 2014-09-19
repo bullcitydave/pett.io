@@ -252,10 +252,10 @@ body {
       }
     }
 
-
       div#main-container.browse{
         margin: 60px 0 0 15px;
       }
+
 }
 
 
@@ -452,4 +452,30 @@ p.help {
 
 .no-scrolling {
   overflow: hidden;
+}
+
+
+button.close{
+  display: block;
+
+  background: $darker-orange;
+  color: #111;
+  border-radius: 17.5px;
+
+  border: solid 2px #333;
+
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  padding: 0;
+  right: 0;
+  top: 10px;
+}
+
+button.close:hover{
+
+  color: $white;
+  border: solid 2px white;
+
+
 }

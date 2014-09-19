@@ -110,7 +110,8 @@ var LinkView = Parse.View.extend({
             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
         }
         else {
-            $('#life-marker').html(thisPet.age());
+            age = thisPet.age();
+            $('#life-marker').html(age);
         }
       },
       error: function(collection, error) {
@@ -136,23 +137,23 @@ var LinkView = Parse.View.extend({
     var flickrPicListView = new FlickrPicListView(pet);
 
 
-    function imageLoadCheck() {
-      var c = 0;
-      for (i = 0; i < $('img').length; i++) {
-        if ($('img')[i].complete) { c++; }
+      function imageLoadCheck() {
+        var c = 0;
+        for (i = 0; i < $('img').length; i++) {
+          if ($('img')[i].complete) { c++; }
+        }
+        return c;
       }
-      return c;
-    }
 
-  var complete = 0;
+    var complete = 0;
 
-  var buildingImages = setInterval(function(){
-      complete = imageLoadCheck();
-      // console.log('Percent loaded: ', (complete/imgCount)*100);
-      link.doMasonry()},750);
+    var buildingImages = setInterval(function(){
+        complete = imageLoadCheck();
+        // console.log('Percent loaded: ', (complete/imgCount)*100);
+        link.doMasonry()},750);
 
-  setTimeout(function(){
-    clearInterval(buildingImages)},15000);
+    setTimeout(function(){
+      clearInterval(buildingImages)},15000);
 
 
 },
