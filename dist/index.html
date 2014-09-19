@@ -25,7 +25,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.44</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.45</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -80,7 +80,7 @@
         </fieldset>
         <ul id="file-list"></ul>
         <p class="display-message"></p>
-        <button id="close-upload">Close</button>
+        <button class="close">&#x2715</button>
         </form>
         <canvas id="uploadCanvas"></canvas>
       </script>
@@ -136,14 +136,14 @@
       </script>
 
       <script type="text/template" id="profile-template">
-          <button id="close-profile" text="Close">&#x2715</button>
+          <button class="close" text="Close">&#x2715</button>
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><span class="profile-value"><%-bio%></span></p>
                 <% }  %>
               <!-- <button id="next-pic">Change Background</button> -->
               <% if (age != "null") { %>
-                <p class="small-field" id="type"><span class="profile-label">Age</span><span class="profile-value"><%-age%></span></p>
+                <p class="small-field" id="age"><span class="profile-label">Age</span><span class="profile-value"><%-age%></span></p>
               <% }  %>
               <% if (type != "null") { %>
                 <p class="small-field" id="type"><span class="profile-label">Type</span><span class="profile-value"><%-type%></span></p>
@@ -166,14 +166,16 @@
               <% if (favoriteTreats.length > 0) { %>
                 <p class="med-field" id="treats"><span class="profile-label">Favorite Treats</span><span class="profile-value"><%-favoriteTreats%></span></p>
               <% }  %>
-              <% if (dateBirth != null) { console.log(dateBirth); %>
+              <% if (dateBirth != null) {  %>
                 <p class="date-field" id="born"><span class="profile-label">Born</span><span class="profile-value"><%-dateBirth%></span></p>
               <% }  %>
-              <% if (dateDeath != null) { console.log(dateDeath);%>
-                <p  class="date-field" id="died"><span class="profile-label">Passed</span><span class="profile-value"><%-dateDeath%></span></p>
-              <% }  %>
+
               <% if (dateAdopted != null) { %>
                 <p  class="date-field" id="adopted"><span class="profile-label">Adopted</span><span class="profile-value"><%-dateAdopted%></span></p>
+              <% }  %>
+
+              <% if (dateDeath != null) { %>
+                <p  class="date-field" id="died"><span class="profile-label">Passed</span><span class="profile-value"><%-dateDeath%></span></p>
               <% }  %>
 
           </div>

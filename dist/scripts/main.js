@@ -218,23 +218,23 @@ var ProfileView = Parse.View.extend ({
         console.log("Successfully retrieved " + profile.options + ". Attempting to render...");
         profile.render(results[0].attributes);
 
-        thesePets.fetch({
-        success: function(collection) {
-            console.log(collection);
-            profile.thisPet = thesePets.get(results[0].id);
-            if (!(profile.thisPet.isLiving())) {
-              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              }
-            else {
-              profile.age = profile.thisPet.age();
-              $('#life-marker').html(profile.age);
-              }
-            },
-        error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-    });
+    //     thesePets.fetch({
+    //     success: function(collection) {
+    //         console.log(collection);
+    //         profile.thisPet = thesePets.get(results[0].id);
+    //         if (!(profile.thisPet.isLiving())) {
+    //           console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+    //           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+    //           }
+    //         else {
+    //           profile.age = profile.thisPet.age();
+    //           $('#life-marker').html(profile.age);
+    //           }
+    //         },
+    //     error: function(collection, error) {
+    //         console.log("Error: " + error.code + " " + error.message);
+    //     }
+    // });
     console.log(results[0].attributes);
       },
       error: function(error) {
@@ -245,7 +245,7 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile'
+      'click .close'    : 'closeProfile'
       // 'click #next-pic'    : 'getBackground'  disable for now
 
     },
@@ -280,6 +280,9 @@ var ProfileView = Parse.View.extend ({
 
         console.log(data);
 
+        var ageString = null;
+        data.age = "null" ;
+
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };
 
@@ -301,7 +304,10 @@ var ProfileView = Parse.View.extend ({
         if (data.bodyType != "null") {
           data.bodyType = data.bodyType.toString().split(',').join(', ');
         }
-        data.age = profile.age;
+        if ((data.DateBirth != "null") && (data.dateDeath == null)) {
+          ageString = $('#life-marker').html();
+          data.age = ageString.substring(0,(ageString.indexOf('old'))-1);
+        }
 
 
         var profileView = $('#profile-template').html();
@@ -327,13 +333,13 @@ el: "#tools",
 
   events: {
 
-    'click #close-upload'    : 'closeUpload'
+    'click .close'    : 'closeUpload'
 
   },
 
 
   render: function(pet){
-        $('#upload-container').show();
+        $('#tools').show();
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -523,7 +529,7 @@ var BrowseView = Parse.View.extend({
     }
 
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    
+
     browseSelf=this;
     console.log('Initializing browse view');
     $('body').addClass('darkbg');
@@ -536,16 +542,16 @@ var BrowseView = Parse.View.extend({
     $('#main-container').addClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#tools').html('');
+    // $('#tools').html('');
     if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
     $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
     browseSelf.render();
-
-
   },
+
+
 
 
   render: function() {
@@ -610,11 +616,30 @@ var BrowseView = Parse.View.extend({
 showPics: function(results) {
     var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
+},
+
+
+hoverBox: function(event) {
+    console.log('hovering');
+    $(event.target).addClass('hovering');
+    if (($(event.target).getBoundingClientRect().top) < 100) {
+      console.log(' < 100 ');
+    }
+},
+
+leaveBox: function(event) {
+    console.log('unhovering');
+    $(event.target).removeClass('hovering');
+},
 
 
 
- }
-}) ;
+events: {
+  "mouseover .pet-box"    : "hoverBox",
+  "mouseout  .pet-box"    : "leaveBox",
+
+}
+});
 
 var LinkView = Parse.View.extend({
 
@@ -728,7 +753,8 @@ var LinkView = Parse.View.extend({
             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
         }
         else {
-            $('#life-marker').html(thisPet.age());
+            age = thisPet.age();
+            $('#life-marker').html(age);
         }
       },
       error: function(collection, error) {
@@ -754,23 +780,23 @@ var LinkView = Parse.View.extend({
     var flickrPicListView = new FlickrPicListView(pet);
 
 
-    function imageLoadCheck() {
-      var c = 0;
-      for (i = 0; i < $('img').length; i++) {
-        if ($('img')[i].complete) { c++; }
+      function imageLoadCheck() {
+        var c = 0;
+        for (i = 0; i < $('img').length; i++) {
+          if ($('img')[i].complete) { c++; }
+        }
+        return c;
       }
-      return c;
-    }
 
-  var complete = 0;
+    var complete = 0;
 
-  var buildingImages = setInterval(function(){
-      complete = imageLoadCheck();
-      // console.log('Percent loaded: ', (complete/imgCount)*100);
-      link.doMasonry()},750);
+    var buildingImages = setInterval(function(){
+        complete = imageLoadCheck();
+        // console.log('Percent loaded: ', (complete/imgCount)*100);
+        link.doMasonry()},750);
 
-  setTimeout(function(){
-    clearInterval(buildingImages)},15000);
+    setTimeout(function(){
+      clearInterval(buildingImages)},15000);
 
 
 },
@@ -1531,6 +1557,30 @@ $(function() {
           }
         });
     },
+
+    getAge: function(pet) {
+      var query = new Parse.Query(Pet);
+      query.equalTo("uniqueName", pet);
+      query.first();
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + pet + ". Attempting to render...");
+          var thisPet = new Pet(results[0].attributes);
+          if (!(thisPet.isLiving())) {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+          }
+          else {
+              var age = thisPet.age();
+              $('#life-marker').html(age);
+              return age;
+            }
+          },
+        error: function(collection, error) {
+              console.log("Error: " + error.code + " " + error.message);
+          }
+        });
+      },
 
     logOut: function(e) {
       e.preventDefault();

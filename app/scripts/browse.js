@@ -14,7 +14,7 @@ var BrowseView = Parse.View.extend({
     }
 
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    
+
     browseSelf=this;
     console.log('Initializing browse view');
     $('body').addClass('darkbg');
@@ -27,16 +27,16 @@ var BrowseView = Parse.View.extend({
     $('#main-container').addClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    $('#tools').html('');
+    // $('#tools').html('');
     if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
     $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
     $('#main-container').append("<div id='browse-container'></div>");
     browseSelf.render();
-
-
   },
+
+
 
 
   render: function() {
@@ -101,8 +101,27 @@ var BrowseView = Parse.View.extend({
 showPics: function(results) {
     var browseView = $('#browse-template').html();
     $('#browse-container').append(_.template(browseView,results.attributes));
+},
+
+
+hoverBox: function(event) {
+    console.log('hovering');
+    $(event.target).addClass('hovering');
+    if (($(event.target).getBoundingClientRect().top) < 100) {
+      console.log(' < 100 ');
+    }
+},
+
+leaveBox: function(event) {
+    console.log('unhovering');
+    $(event.target).removeClass('hovering');
+},
 
 
 
- }
-}) ;
+events: {
+  "mouseover .pet-box"    : "hoverBox",
+  "mouseout  .pet-box"    : "leaveBox",
+
+}
+});

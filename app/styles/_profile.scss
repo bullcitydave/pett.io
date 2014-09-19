@@ -108,28 +108,5 @@
 
     }
 
-    button#close-profile, button#next-pic{
-      display: block;
-
-      background: $darker-orange;
-      color: #111;
-      border-radius: 17.5px;
-
-      border: solid 2px #333;
-
-      height: 35px;
-      width: 35px;
-      position: absolute;
-      padding: 0;
-      right: 0;
-      top: 10px;
-    }
-
-    button#close-profile:hover{
-
-      color: $white;
-      border: solid 2px white;
-
-
-    }
+    
   }

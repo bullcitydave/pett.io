@@ -13,13 +13,13 @@ el: "#tools",
 
   events: {
 
-    'click #close-upload'    : 'closeUpload'
+    'click .close'    : 'closeUpload'
 
   },
 
 
   render: function(pet){
-        $('#upload-container').show();
+        $('#tools').show();
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api

@@ -58,7 +58,7 @@ var ProfileView = Parse.View.extend ({
 
     events: {
 
-      'click #close-profile'    : 'closeProfile'
+      'click .close'    : 'closeProfile'
       // 'click #next-pic'    : 'getBackground'  disable for now
 
     },
@@ -94,7 +94,7 @@ var ProfileView = Parse.View.extend ({
         console.log(data);
 
         var ageString = null;
-        data.age = "null";
+        data.age = "null" ;
 
         if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
           else { data.dateBirth = null };

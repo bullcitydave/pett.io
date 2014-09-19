@@ -34,7 +34,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.44</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.45</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -89,7 +89,7 @@
         </fieldset>
         <ul id="file-list"></ul>
         <p class="display-message"></p>
-        <button id="close-upload">Close</button>
+        <button class="close">&#x2715</button>
         </form>
         <canvas id="uploadCanvas"></canvas>
       </script>
@@ -145,7 +145,7 @@
       </script>
 
       <script type="text/template" id="profile-template">
-          <button id="close-profile" text="Close">&#x2715</button>
+          <button class="close" text="Close">&#x2715</button>
           <div class='profile' >
               <% if (bio != "null") { %>
                 <p id="bio"><span class="profile-value"><%-bio%></span></p>

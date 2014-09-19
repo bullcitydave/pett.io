@@ -54,7 +54,7 @@ div#browse-container {
 
     }
 
-    .pet-box:hover {
+    .pet-box:hover, .pet-box.hovering {
       z-index:10;
       background-color: #FFF;
       img.pet-pic {
