@@ -20,14 +20,26 @@ div.user-profile {
   }
 
 
-  h2 {
-      text-align:center;
-      font-size: 4em;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      width: 100%;
-      background: #aaa;
+  // h2 {
+  //     text-align:center;
+  //     font-size: 4em;
+  //     font-weight: 300;
+  //     letter-spacing: 0.05em;
+  //     width: 100%;
+  //     background: #aaa;
+  //   }
+
+  button#add-pet {
+    @include media($mobile-s) {
+      clear:both;
+      @include span-columns(2);
+      @include shift(5);
+      margin-bottom: 10px;
+      margin-top: 20px;
+
     }
+  }
+
 
   section#your-pets {
     @include outer-container;
@@ -43,16 +55,6 @@ div.user-profile {
         font-weight: 600;
         margin: 0 0 10px 0;
        }
-
-    button#add-pet {
-      @include media($mobile-s) {
-        clear:both;
-        @include span-columns(4);
-        @include shift(4);
-        margin-bottom: 10px
-
-      }
-    }
 
     section#update-pet {
       display: none;

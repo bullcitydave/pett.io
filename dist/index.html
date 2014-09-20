@@ -25,7 +25,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.45</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.46</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -62,7 +62,7 @@
               <li id="log-out" class="site-user"><a href="#">Log Out</a></li>
               <li id="log-in" class="site-visitor"><a href="/#login">Log In</a></li>
               <li id="sign-up" class="site-visitor"><a href="/#signup">Sign Up</a></li>
-              <li id="account" class="site-user"><a href="/#account/<%-userName %>">Update Account</a></li>
+              <li id="account" class="site-user"><a href="/#account/<%-userName %>">Manage Account</a></li>
               <li id="upload" class="site-user"><a href="#">Upload Images</a></li>
               <li id="browse" ><a href="/#/browse">Browse</a></li>
             </ul>
@@ -88,11 +88,9 @@
       <script type="text/template" id="account-template">
 
           <div class='user-profile'>
-            <h2><%-userName%></h2>
-
+                <button id="add-pet">Add a pet</button>
             <section id="your-pets">
               <h3>Your Pets</h3>
-              <button id="add-pet">Add a pet</button>
               <section id="update-pet">
               </section>
               <div id="my-pet-list">
@@ -113,7 +111,7 @@
 
 
 
-              <div style="opacity:0.3; margin:10px 0 10px 0;"><h3>Add a Vine account – functionality not currently available</h3>
+            <!--  <div style="opacity:0.3; margin:10px 0 10px 0;"><h3>Add a Vine account – functionality not currently available</h3> -->
             <!--   /*<p class="help">In this initial version of pett.io, Vine is provided by providing a single tag that should be unique enough to pull only vines that features your pet. To use this feature, an example of a unique tag you might use could be 'davesdogbuster'. There is no validation of this tag. The last 12 vines you have tagged of your pet will be included in your pet's showcase page.</p>*/
               <input type="text" id="vine-account" placeholder="account name"></input>
               /*<input type="text" id="vine-tag" placeholder="tag used for pet photos"></input>
