@@ -3,12 +3,14 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet"        : "createPet",
-    "submit"                : "submitPet",
-    "click #upload-image"   : "imageUploadForm",
-    "click #view-page"      : "viewPet",
-    "click #set-default"    : "setDefault",
-    "click #add-flickr"     : "setFlickr"
+    "click #add-pet"       : "createPet",
+    "submit"               : "submitPet",
+    "click #upload-image"  : "imageUploadForm",
+    "click #view-page"     : "viewPet",
+    "click #set-default"   : "setDefault",
+    "click #add-flickr"    : "setFlickr",
+    "mouseover .your-pet-option" : "highlightPet",
+    "mouseout .your-pet-option" : "unhighlightPet"
   },
 
 
@@ -214,6 +216,15 @@ var AccountView = Parse.View.extend({
         console.log('No default pet found');
       }
     });
+  },
+
+
+  highlightPet: function(event) {
+    $(event.target).prevAll('.pet-list-name:first').addClass('pet-selected');
+  },
+
+  unhighlightPet: function(event) {
+    $(event.target).prevAll('.pet-list-name:first').removeClass('pet-selected');
   },
 
 

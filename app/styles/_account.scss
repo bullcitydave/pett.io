@@ -61,25 +61,41 @@ div.user-profile {
     div#my-pet-list {
       @include span-columns(12);
       @include omega();
+
+
       p.pet-list-name {
         @include media($mobile-s) {
-          @include span-columns(2);
-          @include shift(0.5);
+          @include span-columns(2.5);
           clear:left;
-          font-size: 1.3em;
-          font-weight: 600;
+          font-size: 0.9em;
+          font-weight: 400;
           line-height: 1.3em;
           margin: 0 5px 0 10px;
           overflow-wrap: break-word;
+          text-rendering: optimizeLegibility;
+          padding: 2px 5px;
         }
+        @include media($mobile-l) {
+          font-size: 1.0em;
+        }
+      }
+      p.pet-selected {
+          border: 1px solid $black;
+          background: $orange;
       }
       button.your-pet-option   {
         @include media($mobile-s) {
           @include span-columns(2.25);
           @include omega(5n);
-          font-size: 1.0em;
+          font-size: 0.9em;
           white-space: normal;
           margin-bottom: 2px;
+          padding: .35em;
+          letter-spacing: -0.1em;
+        }
+        @include media($mobile-l) {
+          font-size: 1.0em;
+          letter-spacing: initial;
         }
       }
 
