@@ -54,7 +54,7 @@ div#browse-container {
 
     }
 
-    // .pet-box:hover, 
+    // .pet-box:hover,
     .pet-box.hovering {
       z-index:10;
       background-color: #FFF;
@@ -66,7 +66,8 @@ div#browse-container {
     }
 
     .pet-box.hovering-down {
-      transform: translate(0px, 125px);
+      @extend .pet-box.hovering;
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 50px);
     }
 
     .pet-box:last-child {

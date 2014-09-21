@@ -111,19 +111,21 @@ showPics: function(results) {
 
 hoverBox: function(event) {
     // $('.hovering').removeClass('hovering');
-    $(event.target).parent().parent().addClass('hovering');
-    // if (($(event.target).position().top) < 100) {
-    //   $(event.target).addClass('hovering-down');
-    // }
+    var targetBox = $(event.target).parent().parent();
+    targetBox.addClass('hovering');
+    if (targetBox.position().top < 100) {
+      targetBox.addClass('hovering-down');
+    }
     console.log('hovering, top is ' + $(event.target).position().top);
 
 
 },
 
 leaveBox: function(event) {
+    var targetBox = $(event.target).parent().parent();
     console.log('unhovering');
     $('.hovering').removeClass('hovering');
-    $(event.target).removeClass('hovering-down');
+    targetBox.removeClass('hovering-down');
 }
 
 });
