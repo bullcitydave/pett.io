@@ -58,11 +58,9 @@ a {
 }
 
 body {
-  background: #fff;  // as opposed to $white
+  background: $black;  // as opposed to $white
   font-family: $secondary-font;
 
-:focus {
-  outline: none;
 }
 
 
@@ -243,7 +241,7 @@ body {
           background: $white;
           border: 1px solid $black;
         }
-      }
+
       }
     }
 
@@ -269,9 +267,9 @@ div.pic-showcase {
       }
       @include media($mobile-m) {
         width:250px;
-        @include if-brightness(0.9);
+        @include if-brightness(1);
         float:left;
-        border: solid 1px $black;
+        border: solid 1px $white;
         border-radius: 5px;
       }
       @include media($mobile-l) {
@@ -394,16 +392,8 @@ form#fileupload {
 }
 
 .darkbg {
-  background: $white;  // misnomer of sorts
+  background: $black;
 }
-
-body.splash {
-
-  background: url("http://i.imgur.com/cotiNn3.jpg") no-repeat center center fixed;
-  background-size: cover;
-}
-
-
 footer {
   position: fixed;
   bottom: 0;
@@ -472,6 +462,5 @@ button.close:hover{
 
   color: $white;
   border: solid 2px white;
-
 
 }

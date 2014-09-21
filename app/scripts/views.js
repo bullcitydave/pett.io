@@ -24,6 +24,8 @@ var LinkView = Parse.View.extend({
     }
 
     console.log('Initializing LinkView. Tag:',tag);
+    $('body').css('background','#111');
+    // $('body').addClass('darkbg');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');

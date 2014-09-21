@@ -519,6 +519,11 @@ var BrowseView = Parse.View.extend({
   el: "#main-container",
 
 
+  events: {
+    "mouseover .pet-pic"    : "hoverBox",
+    "mouseout  .pet-pic"    : "leaveBox"
+
+  },
 
   initialize: function(tag) {
     if (Parse.User.current() != null) {
@@ -532,7 +537,8 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-    $('body').addClass('darkbg');
+    $('body').css('background','none');
+    $('body').addClass('darkBg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-header').removeClass('splash');
@@ -620,25 +626,28 @@ showPics: function(results) {
 
 
 hoverBox: function(event) {
-    console.log('hovering');
-    $(event.target).addClass('hovering');
-    if (($(event.target).getBoundingClientRect().top) < 100) {
-      console.log(' < 100 ');
+    // $('.hovering').removeClass('hovering');
+    var targetBox = $(event.target).parent().parent();
+    targetBox.addClass('hovering');
+    // need separate for 1st el, top x els, last of row 1
+    // bottom left, bottom, bottom-right
+    // left, right
+    // everything else
+    if ((targetBox.position().top < 100)) {
+      targetBox.switchClass('hovering','hovering-down');
     }
+    if ((targetBox.parent().height() - targetBox.position().top) < 300) {
+      targetBox.switchClass('hovering','hovering-up');
+    }
+
 },
 
 leaveBox: function(event) {
-    console.log('unhovering');
-    $(event.target).removeClass('hovering');
-},
-
-
-
-events: {
-  "mouseover .pet-box"    : "hoverBox",
-  "mouseout  .pet-box"    : "leaveBox",
-
+    var targetBox = $(event.target).parent().parent();
+    // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
+    targetBox.removeClass('hovering hovering-up hovering-down');
 }
+
 });
 
 var LinkView = Parse.View.extend({
@@ -667,6 +676,8 @@ var LinkView = Parse.View.extend({
     }
 
     console.log('Initializing LinkView. Tag:',tag);
+    $('body').css('background','#111');
+    // $('body').addClass('darkbg');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
@@ -1103,6 +1114,7 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+    $('body').css('background','none');
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
     console.log("Account view initialized");
@@ -1384,13 +1396,14 @@ var SplashView = Parse.View.extend({
   splashHead: "#main-header",
 
   initialize: function() {
+    thisView = this;
     console.log("Splash view initialized");
-
     this.render();
   },
 
   render: function() {
     $('body').addClass('splash');
+    thisView.getSplashImgUrl();
     $('body').removeClass('darkbg');
     $('#main-header').removeClass('standard');
     $('#main-header').addClass('splash');
@@ -1398,6 +1411,14 @@ var SplashView = Parse.View.extend({
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
     $('#header-nav').hide();
+  },
+
+  getSplashImgUrl: function(){
+    var randomImg = Math.floor(Math.random() * 6);
+    var imagePath = '../images/splash/splash';
+    var bgImgAttrib = 'no-repeat top center fixed';
+    $('body.splash').css('background',('url("' + imagePath + randomImg + '.jpg")' + bgImgAttrib));
+    $('body.splash').css('background-size',('cover'));
   }
 });
 

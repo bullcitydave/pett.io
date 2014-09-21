@@ -22,7 +22,8 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-    $('body').addClass('darkbg');
+    $('body').css('background','none');
+    $('body').addClass('darkBg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-header').removeClass('splash');
