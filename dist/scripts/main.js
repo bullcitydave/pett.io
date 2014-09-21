@@ -537,7 +537,8 @@ var BrowseView = Parse.View.extend({
 
     browseSelf=this;
     console.log('Initializing browse view');
-    $('body').addClass('darkbg');
+    $('body').css('background','none');
+    $('body').addClass('darkBg');
     $('body').removeClass('splash');
     $('#main-header').addClass('standard');
     $('#main-header').removeClass('splash');
@@ -675,6 +676,8 @@ var LinkView = Parse.View.extend({
     }
 
     console.log('Initializing LinkView. Tag:',tag);
+    $('body').css('background','#111');
+    // $('body').addClass('darkbg');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
@@ -1111,6 +1114,7 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+    $('body').css('background','none');
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
     console.log("Account view initialized");
