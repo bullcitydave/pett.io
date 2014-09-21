@@ -16,6 +16,7 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+    $('body').css('background','none');
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
     console.log("Account view initialized");
