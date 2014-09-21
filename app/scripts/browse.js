@@ -4,6 +4,11 @@ var BrowseView = Parse.View.extend({
   el: "#main-container",
 
 
+  events: {
+    "mouseover .pet-pic"    : "hoverBox",
+    "mouseout  .pet-pic"    : "leaveBox"
+
+  },
 
   initialize: function(tag) {
     if (Parse.User.current() != null) {
@@ -105,23 +110,20 @@ showPics: function(results) {
 
 
 hoverBox: function(event) {
-    console.log('hovering');
-    $(event.target).addClass('hovering');
-    if (($(event.target).getBoundingClientRect().top) < 100) {
-      console.log(' < 100 ');
-    }
+    // $('.hovering').removeClass('hovering');
+    $(event.target).parent().parent().addClass('hovering');
+    // if (($(event.target).position().top) < 100) {
+    //   $(event.target).addClass('hovering-down');
+    // }
+    console.log('hovering, top is ' + $(event.target).position().top);
+
+
 },
 
 leaveBox: function(event) {
     console.log('unhovering');
-    $(event.target).removeClass('hovering');
-},
-
-
-
-events: {
-  "mouseover .pet-box"    : "hoverBox",
-  "mouseout  .pet-box"    : "leaveBox",
-
+    $('.hovering').removeClass('hovering');
+    $(event.target).removeClass('hovering-down');
 }
+
 });
