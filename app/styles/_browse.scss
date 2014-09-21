@@ -69,6 +69,18 @@ div#browse-container {
       @extend .pet-box.hovering;
       transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 50px);
     }
+    .pet-box.hovering-up {
+      @extend .pet-box.hovering;
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -50px);
+    }
+    .pet-box.hovering-right {
+      @extend .pet-box.hovering;
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(50px, 0px);
+    }
+    .pet-box.hovering-left {
+      @extend .pet-box.hovering;
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-50px, 0px);
+    }
 
     .pet-box:last-child {
       margin-bottom:40px;

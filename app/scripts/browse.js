@@ -113,19 +113,23 @@ hoverBox: function(event) {
     // $('.hovering').removeClass('hovering');
     var targetBox = $(event.target).parent().parent();
     targetBox.addClass('hovering');
-    if (targetBox.position().top < 100) {
-      targetBox.addClass('hovering-down');
+    // need separate for 1st el, top x els, last of row 1
+    // bottom left, bottom, bottom-right
+    // left, right
+    // everything else
+    if ((targetBox.position().top < 100)) {
+      targetBox.switchClass('hovering','hovering-down');
     }
-    console.log('hovering, top is ' + $(event.target).position().top);
-
+    if ((targetBox.parent().height() - targetBox.position().top) < 300) {
+      targetBox.switchClass('hovering','hovering-up');
+    }
 
 },
 
 leaveBox: function(event) {
     var targetBox = $(event.target).parent().parent();
-    console.log('unhovering');
-    $('.hovering').removeClass('hovering');
-    targetBox.removeClass('hovering-down');
+    // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
+    targetBox.removeClass('hovering hovering-up hovering-down');
 }
 
 });
