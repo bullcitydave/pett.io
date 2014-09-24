@@ -58,6 +58,21 @@ var AccountView = Parse.View.extend({
 
 
   editPet: function(e) {
+    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.first();
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + pet + ". Attempting to render...");
+        var thisPet = new Pet(results[0].attributes);
+        // profile.render(results[0].attributes);  
+        console.log(results[0].attributes);
+      },
+      error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
 
     $('#update-pet').show();
     $('#update-pet').html(_.template($("#edit-pet-template").html()));
@@ -128,7 +143,7 @@ var AccountView = Parse.View.extend({
 
 
   setDefault: function(e) {
-    pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
+    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
 
     x.pet = pet;
 
