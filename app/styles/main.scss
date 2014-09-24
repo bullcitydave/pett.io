@@ -33,6 +33,7 @@ $desktop: new-breakpoint(min-width 960px 12);
   font-size: 0.9em;
 }
 
+
 @import 'browse';
 @import 'account';
 @import 'jqueryui';
@@ -69,6 +70,7 @@ body {
     margin: 0;
     top: 0;
     width: 100%;
+    transition: all .5s;
 
     #header-box-overlay, #header-box, h2 {
       display: none;
@@ -255,6 +257,7 @@ body {
 div.pic-showcase {
 
     margin: 0 auto;
+    transition: opacity .8s;
 
     .montageSquare {
       @include media($mobile-s) {

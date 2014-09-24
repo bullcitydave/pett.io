@@ -4,7 +4,8 @@ var ProfileView = Parse.View.extend ({
 
   initialize: function(tag) {
     $('#profile-container').remove();
-    $('#main-container').prepend('<div id="profile-container"></div>');
+    $('#main-container').prepend('<div style="display:none" id="profile-container"></div>');
+    $('#profile-container').fadeIn(750, "swing");
     body.toggleClass('no-scrolling');
     pet = tag;
 
@@ -64,12 +65,16 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').remove();
-      $('#about').show();
-      // $('#main-container').css('overflow', 'initial');
-      body.toggleClass('no-scrolling');
-      $(".pic-showcase").css("opacity", 1);
-      return false;
+      $('#profile-container').fadeOut(750, function() {
+
+
+        $('#profile-container').remove();
+        $('#about').show();
+        // $('#main-container').css('overflow', 'initial');
+        body.toggleClass('no-scrolling');
+        $(".pic-showcase").css("opacity", 1);
+        return false;
+      });
     },
 
     getDate: function(parseDate) {

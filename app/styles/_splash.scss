@@ -2,6 +2,7 @@ body.splash {
 
   background: url("../images/splash/splash0.jpg") no-repeat top center fixed;
   background-size: cover;
+  transition: all .5s;
 }
 
 header#main-header{
