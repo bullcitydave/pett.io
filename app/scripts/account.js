@@ -5,7 +5,7 @@ var AccountView = Parse.View.extend({
   events: {
     "click #add-pet"       : "createPet",
     "submit"               : "submitPet",
-    // "click #edit-profile"  : "editPet",
+    "click #edit-profile"  : "editPet",
     "click #upload-image"  : "imageUploadForm",
     "click #view-page"     : "viewPet",
     "click #set-default"   : "setDefault",
@@ -56,6 +56,29 @@ var AccountView = Parse.View.extend({
 
   },
 
+
+  editPet: function(e) {
+
+    $('#update-pet').show();
+    $('#update-pet').html(_.template($("#edit-pet-template").html()));
+
+    $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+
+    $( '#pet-weight').spinner({
+      spin: function( event, ui ) {
+        if ( ui.value > 150 ) {
+          $( this ).spinner( "value", 0 );
+          return false;
+        } else if ( ui.value < 0 ) {
+          $( this ).spinner( "value", 150 );
+          return false;
+        }
+      }
+    });
+
+  },
 
 
   submitPet: function(e) {
