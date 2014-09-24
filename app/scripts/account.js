@@ -5,6 +5,7 @@ var AccountView = Parse.View.extend({
   events: {
     "click #add-pet"       : "createPet",
     "submit"               : "submitPet",
+    // "click #edit-profile"  : "editPet",
     "click #upload-image"  : "imageUploadForm",
     "click #view-page"     : "viewPet",
     "click #set-default"   : "setDefault",
@@ -76,7 +77,7 @@ var AccountView = Parse.View.extend({
       breeds: $('textarea#pet-breeds').val().split(','),
       colors: $('textarea#pet-colors').val().split(','),
       bodyType: $('textarea#pet-body-type').val().split(','),
-      gender: $('input#pet-gender').val(),
+      gender: $('select#pet-gender').val(),
       weight: parseInt($('input#pet-weight').val())
      });
      newPet.save();
