@@ -56,3 +56,11 @@ function getDims(image) {
     });
   });
 };
+
+function disable(el){
+  $(el).prop("disabled",true);
+}
+
+function enable(el){
+  $(el).prop("disabled",false);
+}

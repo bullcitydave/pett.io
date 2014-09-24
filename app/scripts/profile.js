@@ -127,6 +127,6 @@ var ProfileView = Parse.View.extend ({
 
         $('#profile-container').html(_.template(profileView,data));
 
-        profile.getBackground();
+        // profile.getBackground();
       }
 });
