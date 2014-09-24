@@ -74,7 +74,7 @@ var ProfileView = Parse.View.extend ({
 
     getDate: function(parseDate) {
       var parsedDate = moment(parseDate);
-      var pettioDate = parsedDate.months().toString() + '-' +  parsedDate.date().toString() + '-' +  parsedDate.year().toString();
+      var pettioDate = (parsedDate.months()+1).toString() + '-' +  parsedDate.date().toString() + '-' +  parsedDate.year().toString();
       return pettioDate;
     },
 
@@ -127,6 +127,6 @@ var ProfileView = Parse.View.extend ({
 
         $('#profile-container').html(_.template(profileView,data));
 
-        profile.getBackground();
+        // profile.getBackground();
       }
 });

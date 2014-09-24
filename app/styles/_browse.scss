@@ -14,7 +14,7 @@ div#browse-container {
       background-color: white;
       box-shadow: 5px 5px 10px $black;
       position:relative;
-      transition: all .3s;
+      transition: all .5s;
 
 
       img.pet-pic {
@@ -99,7 +99,7 @@ div#browse-container {
 
   @include media($desktop) {
     text-align:justify;
-    margin: 0 20px 0 5px;
+    margin: -120px 20px 0 5px;
   }
 
 
