@@ -157,14 +157,24 @@ var AccountView = Parse.View.extend({
      query.get(x.petId, {
         success: function(pet) {
           pet.set("bio",$('textarea#pet-bio').val());
+          pet.set("type",$('select#pet-type').val());
+          pet.set("gender",$('select#pet-gender').val());
+          pet.set("favoriteTreats",$('textarea#pet-treats').val().split(','));
+          pet.set("breeds",$('textarea#pet-breeds').val().split(','));
+          pet.set("colors",$('textarea#pet-colors').val().split(','));
+          pet.set("bodyType",$('textarea#pet-body-type').val().split(','));
+          pet.set("weight",parseInt($('input#pet-weight').val()));
+          pet.set("dateBirth",new Date($('input#pet-dob').val() || "01/01/1970"));
+          pet.set("dateAdopted",new Date($('input#pet-doa').val() || "01/01/1970"));
+          pet.set("dateDeath",new Date($('input#pet-dod').val() || "12/31/2029"));
           pet.save();
+          alert('Update saved.')
         },
         error: function(object, error) {
-          // The object was not retrieved successfully.
-          // error is a Parse.Error with an error code and message.
+          console.log("Error: " + error.code + " " + error.message);
         }
       });
-     alert('I\'m still working on this!');
+
      return false;
     },
 
