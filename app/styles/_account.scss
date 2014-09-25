@@ -253,7 +253,7 @@ section#update-pet {
         clear:left;
       }
     }
-    #p-submit {
+    #p-submit, #p-update {
       @include span-columns(3);
       @include shift(4.5);
     }

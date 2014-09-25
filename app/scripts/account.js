@@ -3,8 +3,9 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet"       : "createPet",
-    "submit"               : "submitPet",
+    "click #add-pet"                : "createPet",
+    "submit form#add-pet-form"      : "submitPet",
+    "submit form#edit-pet-form"     : "updatePet",
     "click #edit-profile"  : "editPet",
     "click #upload-image"  : "imageUploadForm",
     "click #view-page"     : "viewPet",
@@ -66,6 +67,7 @@ var AccountView = Parse.View.extend({
       success: function(results) {
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
         var thisPet = results[0].attributes;
+        x.petId = results[0].id;
         _.defaults(thisPet, {type: "unknown",dateBirth: "",dateDeath: "",dateAdopted: "",bio: "",favoriteTreats: "",colors: "",gender: "unknown",breeds: "",weight: "",bodyType: ""});
 
         thisPet.dateBirth = APP.getDate(thisPet.dateBirth);
@@ -146,6 +148,23 @@ var AccountView = Parse.View.extend({
      x.cleanup();
      x.render();
 
+     return false;
+    },
+
+  updatePet: function(e) {
+     e.preventDefault();
+     var query = new Parse.Query(Pet);
+     query.get(x.petId, {
+        success: function(pet) {
+          pet.set("bio",$('textarea#pet-bio').val());
+          pet.save();
+        },
+        error: function(object, error) {
+          // The object was not retrieved successfully.
+          // error is a Parse.Error with an error code and message.
+        }
+      });
+     alert('I\'m still working on this!');
      return false;
     },
 
