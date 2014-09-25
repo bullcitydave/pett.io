@@ -26,7 +26,7 @@ var SplashView = Parse.View.extend({
     var randomImg = Math.floor(Math.random() * 6);
     var imagePath = '../images/splash/splash';
     var bgImgAttrib = 'no-repeat top center fixed';
-    $('body.splash').css('background',('url("' + imagePath + randomImg + '.jpg")' + bgImgAttrib));
+    $('body.splash').css('background',('linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url("' + imagePath + randomImg + '.jpg")' + bgImgAttrib));
     $('body.splash').css('background-size',('cover'));
   }
 });

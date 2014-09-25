@@ -133,6 +133,13 @@ $(function() {
         });
       },
 
+    getDate: function(parseDate) {
+      var parsedDate = moment(parseDate);
+      var pettioDate = (parsedDate.months()+1).toString() + '/' +  parsedDate.date().toString() + '/' +  parsedDate.year().toString();
+      return pettioDate;
+    },
+
+
     logOut: function(e) {
       e.preventDefault();
       Parse.User.logOut();
@@ -147,5 +154,6 @@ $(function() {
   });
 
   window.APP = new AppView;
+
 
 });

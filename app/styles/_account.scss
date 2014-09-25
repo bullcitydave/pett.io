@@ -129,7 +129,7 @@ section#update-pet {
   clear:left;
 }
 
-  form#add-pet-form {
+  form#add-pet-form, form#edit-pet-form {
     @include span-columns(12);
 
     input, label, select {
@@ -253,7 +253,7 @@ section#update-pet {
         clear:left;
       }
     }
-    #p-submit {
+    #p-submit, #p-update {
       @include span-columns(3);
       @include shift(4.5);
     }

@@ -3,9 +3,10 @@ var AccountView = Parse.View.extend({
   el: "#main-container",
 
   events: {
-    "click #add-pet"       : "createPet",
-    "submit"               : "submitPet",
-    // "click #edit-profile"  : "editPet",
+    "click #add-pet"                : "createPet",
+    "submit form#add-pet-form"      : "submitPet",
+    "submit form#edit-pet-form"     : "updatePet",
+    "click #edit-profile"  : "editPet",
     "click #upload-image"  : "imageUploadForm",
     "click #view-page"     : "viewPet",
     "click #set-default"   : "setDefault",
@@ -57,9 +58,77 @@ var AccountView = Parse.View.extend({
   },
 
 
+  editPet: function(e) {
+    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.first();
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + pet + ". Attempting to render...");
+        var thisPet = results[0].attributes;
+        x.petId = results[0].id;
+        _.defaults(thisPet, {type: "unknown",dateBirth: "",dateDeath: "",dateAdopted: "",bio: "",favoriteTreats: "",colors: "",gender: "unknown",breeds: "",weight: "",bodyType: ""});
+
+        if (nullDateBirth.toString() != thisPet.dateBirth.toString()) {thisPet.dateBirth   = APP.getDate(thisPet.dateBirth)}
+          else { thisPet.dateBirth = null };
+
+        if (nullDateDeath.toString() != thisPet.dateDeath.toString()) {thisPet.dateDeath   = APP.getDate(thisPet.dateDeath)}
+          else { thisPet.dateDeath = null };
+
+        if (nullDateAdopted.toString() != thisPet.dateAdopted.toString()) {thisPet.dateAdopted = APP.getDate(thisPet.dateAdopted)}
+          else { thisPet.dateAdopted = null };
+
+        console.log(thisPet.attributes);
+        var editView = $("#edit-pet-template").html();
+        $('#update-pet').show();
+        $('#update-pet').html(_.template(editView,thisPet));
+
+        x.getUiControls();
+        x.editDropdownCleanup("pet-gender");
+        x.editDropdownCleanup("pet-type");
+      },
+      error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+  },
+
+  // http://stackoverflow.com/questions/1875607/filter-duplicate-options-from-select-dropdown
+  editDropdownCleanup: function(dropdown) {
+    var usedNames = {};
+    $("select[id='" + dropdown + "'] > option").each(function () {
+        if(usedNames[this.text]) {
+            $(this).remove();
+        } else {
+            usedNames[this.text] = this.value;
+        }
+    });
+  },
+
+
+  getUiControls: function() {
+    $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+    $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
+
+    $( '#pet-weight').spinner({
+      spin: function( event, ui ) {
+        if ( ui.value > 150 ) {
+          $( this ).spinner( "value", 0 );
+          return false;
+        } else if ( ui.value < 0 ) {
+          $( this ).spinner( "value", 150 );
+          return false;
+        }
+      }
+    });
+  },
 
   submitPet: function(e) {
      e.preventDefault();
+     thisButton = this;
+     disable(thisButton);
      var newPet = new Pet ({
       name: $('input#pet-name').val(),
       uniqueName: $('input#pet-name').val().toLowerCase(),
@@ -83,8 +152,36 @@ var AccountView = Parse.View.extend({
      newPet.save();
      console.log('Pet added to database');
      alert('Information for pet saved');
+     enable(thisButton);
      x.cleanup();
      x.render();
+
+     return false;
+    },
+
+  updatePet: function(e) {
+     e.preventDefault();
+     var query = new Parse.Query(Pet);
+     query.get(x.petId, {
+        success: function(pet) {
+          pet.set("bio",$('textarea#pet-bio').val());
+          pet.set("type",$('select#pet-type').val());
+          pet.set("gender",$('select#pet-gender').val());
+          pet.set("favoriteTreats",$('textarea#pet-treats').val().split(','));
+          pet.set("breeds",$('textarea#pet-breeds').val().split(','));
+          pet.set("colors",$('textarea#pet-colors').val().split(','));
+          pet.set("bodyType",$('textarea#pet-body-type').val().split(','));
+          pet.set("weight",parseInt($('input#pet-weight').val()));
+          pet.set("dateBirth",new Date($('input#pet-dob').val() || "01/01/1970"));
+          pet.set("dateAdopted",new Date($('input#pet-doa').val() || "01/01/1970"));
+          pet.set("dateDeath",new Date($('input#pet-dod').val() || "12/31/2029"));
+          pet.save();
+          alert('Update saved.')
+        },
+        error: function(object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
 
      return false;
     },
@@ -105,7 +202,7 @@ var AccountView = Parse.View.extend({
 
 
   setDefault: function(e) {
-    pet = $(e.toElement).prev().prev().prev().prev().html().toLowerCase();
+    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
 
     x.pet = pet;
 

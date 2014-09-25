@@ -4,7 +4,8 @@ var ProfileView = Parse.View.extend ({
 
   initialize: function(tag) {
     $('#profile-container').remove();
-    $('#main-container').prepend('<div id="profile-container"></div>');
+    $('#main-container').prepend('<div style="display:none" id="profile-container"></div>');
+    $('#profile-container').fadeIn(750, "swing");
     body.toggleClass('no-scrolling');
     pet = tag;
 
@@ -30,25 +31,7 @@ var ProfileView = Parse.View.extend ({
       success: function(results) {
         console.log("Successfully retrieved " + profile.options + ". Attempting to render...");
         profile.render(results[0].attributes);
-
-    //     thesePets.fetch({
-    //     success: function(collection) {
-    //         console.log(collection);
-    //         profile.thisPet = thesePets.get(results[0].id);
-    //         if (!(profile.thisPet.isLiving())) {
-    //           console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-    //           $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-    //           }
-    //         else {
-    //           profile.age = profile.thisPet.age();
-    //           $('#life-marker').html(profile.age);
-    //           }
-    //         },
-    //     error: function(collection, error) {
-    //         console.log("Error: " + error.code + " " + error.message);
-    //     }
-    // });
-    console.log(results[0].attributes);
+        console.log(results[0].attributes);
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
@@ -64,18 +47,16 @@ var ProfileView = Parse.View.extend ({
     },
 
     closeProfile: function(e) {
-      $('#profile-container').remove();
-      $('#about').show();
-      // $('#main-container').css('overflow', 'initial');
-      body.toggleClass('no-scrolling');
-      $(".pic-showcase").css("opacity", 1);
-      return false;
-    },
+      $('#profile-container').fadeOut(750, function() {
 
-    getDate: function(parseDate) {
-      var parsedDate = moment(parseDate);
-      var pettioDate = (parsedDate.months()+1).toString() + '-' +  parsedDate.date().toString() + '-' +  parsedDate.year().toString();
-      return pettioDate;
+
+        $('#profile-container').remove();
+        $('#about').show();
+        // $('#main-container').css('overflow', 'initial');
+        body.toggleClass('no-scrolling');
+        $(".pic-showcase").css("opacity", 1);
+        return false;
+      });
     },
 
     getBackground: function() {
@@ -96,13 +77,13 @@ var ProfileView = Parse.View.extend ({
         var ageString = null;
         data.age = "null" ;
 
-        if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = profile.getDate(data.dateBirth)}
+        if (nullDateBirth.toString() != data.dateBirth.toString()) {data.dateBirth   = APP.getDate(data.dateBirth)}
           else { data.dateBirth = null };
 
-        if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = profile.getDate(data.dateDeath)}
+        if (nullDateDeath.toString() != data.dateDeath.toString()) {data.dateDeath   = APP.getDate(data.dateDeath)}
           else { data.dateDeath = null };
 
-        if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = profile.getDate(data.dateAdopted)}
+        if (nullDateAdopted.toString() != data.dateAdopted.toString()) {data.dateAdopted = APP.getDate(data.dateAdopted)}
           else { data.dateAdopted = null };
 
         if (data.favoriteTreats != "null") {

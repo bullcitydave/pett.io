@@ -57,6 +57,8 @@ function getDims(image) {
   });
 };
 
+
+
 function disable(el){
   $(el).prop("disabled",true);
 }
@@ -64,3 +66,10 @@ function disable(el){
 function enable(el){
   $(el).prop("disabled",false);
 }
+
+
+// Misc global variables
+
+    nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+    nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
+    nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
