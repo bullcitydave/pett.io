@@ -57,6 +57,8 @@ function getDims(image) {
   });
 };
 
+
+
 function disable(el){
   $(el).prop("disabled",true);
 }

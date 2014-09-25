@@ -65,21 +65,42 @@ var AccountView = Parse.View.extend({
     query.find({
       success: function(results) {
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
-        var thisPet = new Pet(results[0].attributes);
-        _.defaults(thisPet.attributes, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
+        var thisPet = results[0].attributes;
+        _.defaults(thisPet, {type: "unknown",dateBirth: "",dateDeath: "",dateAdopted: "",bio: "",favoriteTreats: "",colors: "",gender: "unknown",breeds: "",weight: "",bodyType: ""});
+
+        thisPet.dateBirth = APP.getDate(thisPet.dateBirth);
+        thisPet.dateDeath = APP.getDate(thisPet.dateDeath);
+        thisPet.dateAdopted = APP.getDate(thisPet.dateAdopted);
+
         console.log(thisPet.attributes);
         var editView = $("#edit-pet-template").html();
         $('#update-pet').show();
-        $('#update-pet').html(_.template(editView,thisPet.attributes));
-        x.editViewCleanup();
+        $('#update-pet').html(_.template(editView,thisPet));
+
+        x.getUiControls();
+        x.editDropdownCleanup("pet-gender");
+        x.editDropdownCleanup("pet-type");
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
       }
     });
+  },
+
+  // http://stackoverflow.com/questions/1875607/filter-duplicate-options-from-select-dropdown
+  editDropdownCleanup: function(dropdown) {
+    var usedNames = {};
+    $("select[id='" + dropdown + "'] > option").each(function () {
+        if(usedNames[this.text]) {
+            $(this).remove();
+        } else {
+            usedNames[this.text] = this.value;
+        }
+    });
+  },
 
 
-
+  getUiControls: function() {
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-dod' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
@@ -95,20 +116,7 @@ var AccountView = Parse.View.extend({
         }
       }
     });
-
   },
-
-  editViewCleanup: function() {
-    var usedNames = {};
-    $("select[id='pet-gender'] > option").each(function () {
-        if(usedNames[this.text]) {
-            $(this).remove();
-        } else {
-            usedNames[this.text] = this.value;
-        }
-    });
-  },
-
 
   submitPet: function(e) {
      e.preventDefault();
