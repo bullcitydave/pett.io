@@ -70,9 +70,14 @@ var AccountView = Parse.View.extend({
         x.petId = results[0].id;
         _.defaults(thisPet, {type: "unknown",dateBirth: "",dateDeath: "",dateAdopted: "",bio: "",favoriteTreats: "",colors: "",gender: "unknown",breeds: "",weight: "",bodyType: ""});
 
-        thisPet.dateBirth = APP.getDate(thisPet.dateBirth);
-        thisPet.dateDeath = APP.getDate(thisPet.dateDeath);
-        thisPet.dateAdopted = APP.getDate(thisPet.dateAdopted);
+        if (nullDateBirth.toString() != thisPet.dateBirth.toString()) {thisPet.dateBirth   = APP.getDate(thisPet.dateBirth)}
+          else { thisPet.dateBirth = null };
+
+        if (nullDateDeath.toString() != thisPet.dateDeath.toString()) {thisPet.dateDeath   = APP.getDate(thisPet.dateDeath)}
+          else { thisPet.dateDeath = null };
+
+        if (nullDateAdopted.toString() != thisPet.dateAdopted.toString()) {thisPet.dateAdopted = APP.getDate(thisPet.dateAdopted)}
+          else { thisPet.dateAdopted = null };
 
         console.log(thisPet.attributes);
         var editView = $("#edit-pet-template").html();
@@ -122,6 +127,8 @@ var AccountView = Parse.View.extend({
 
   submitPet: function(e) {
      e.preventDefault();
+     thisButton = this;
+     disable(thisButton);
      var newPet = new Pet ({
       name: $('input#pet-name').val(),
       uniqueName: $('input#pet-name').val().toLowerCase(),
@@ -145,6 +152,7 @@ var AccountView = Parse.View.extend({
      newPet.save();
      console.log('Pet added to database');
      alert('Information for pet saved');
+     enable(thisButton);
      x.cleanup();
      x.render();
 

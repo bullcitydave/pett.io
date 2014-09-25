@@ -25,7 +25,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.48</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.49</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -206,6 +206,40 @@
               <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY"></div>
             </div>
             <input id="p-submit" type="submit" value="Submit">
+          </form>
+
+      </script>
+
+      <script type="text/template" id="edit-pet-template">
+
+          <form id="edit-pet-form">
+            <div id="p-name"><span>Name</span><input type="text" id="pet-name" value="<%-name%>" required="required"></div>
+            <div id="p-gender"><span>Gender</span><select id="pet-gender">
+              <option selected label="<%-gender%>" value="<%-gender%>">
+              <option label="Female" value="Female">
+              <option label="Male" value="Male">
+            </select></div>
+            <div id="p-type"><span>Type</span><select id="pet-type">
+              <option selected label="<%-type%>" value="<%-type%>">
+              <option label="bird" value="bird">
+              <option label="cat" value="cat">
+              <option label="dog" value="dog">
+              <option label="fish" value="fish">
+              <option label="horse" value="horse">
+              <option label="reptile" value="reptile">
+            </select></div>
+            <div id="p-weight"><span id="weight-label">Weight (lb.)</span><input type="text" value="<%-weight%>" id="pet-weight"></div>
+            <div id="p-colors"><span>Colors</span><textarea rows="2" id="pet-colors" placeholder="Separate list w/ commas"><%-colors%></textarea></div>
+            <div id="p-breeds"><span>Breed</span><textarea rows="2" id="pet-breeds" placeholder="Separate list w/ commas"><%-breeds%></textarea></div>
+            <div id="p-body-type"><span>Body Type</span><textarea rows="2" id="pet-body-type" placeholder="List w/ commas (i.e. 'long, slender, athletic')"><%-bodyType%></textarea></div>
+            <div id="p-treats"><span>Favorite Treats</span><textarea rows="2" id="pet-treats" placeholder="Separate list w/ commas"><%-favoriteTreats%></textarea></div>
+            <div id="p-bio"><span>Bio</span><textarea rows="9" id="pet-bio"><%-bio%></textarea></div>
+            <div id="p-dates">
+              <div id="p-birth"><span>Birth Date</span><input type="text" id="pet-dob" placeholder="MM/DD/YYYY" value="<%-dateBirth%>"></div>
+              <div id="p-adoption"><span>Adoption Date</span><input type="text" id="pet-doa" placeholder="MM/DD/YYYY" value="<%-dateAdopted%>"></div>
+              <div id="p-passed"><span>Passed Date</span><input type="text" id="pet-dod" placeholder="MM/DD/YYYY" value="<%-dateDeath%>"></div>
+            </div>
+            <input id="p-update" type="submit" value="Save">
           </form>
 
       </script>
