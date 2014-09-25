@@ -66,16 +66,19 @@ var AccountView = Parse.View.extend({
       success: function(results) {
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
         var thisPet = new Pet(results[0].attributes);
-        // profile.render(results[0].attributes);  
-        console.log(results[0].attributes);
+        _.defaults(thisPet.attributes, {type: "null",dateBirth: "null",dateDeath: "null",dateAdopted: "null",bio: "null",favoriteTreats: "null",colors: "null",gender: "null",breeds: "null",weight: "null",bodyType: "null"});
+        console.log(thisPet.attributes);
+        var editView = $("#edit-pet-template").html();
+        $('#update-pet').show();
+        $('#update-pet').html(_.template(editView,thisPet.attributes));
+        x.editViewCleanup();
       },
       error: function(error) {
         console.log("Error: " + error.code + " " + error.message);
       }
     });
 
-    $('#update-pet').show();
-    $('#update-pet').html(_.template($("#edit-pet-template").html()));
+
 
     $( '#pet-dob' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
     $( '#pet-doa' ).datepicker({ minDate: "-40Y", maxDate: "+1M +10D", changeMonth: true, changeYear: true });
@@ -93,6 +96,17 @@ var AccountView = Parse.View.extend({
       }
     });
 
+  },
+
+  editViewCleanup: function() {
+    var usedNames = {};
+    $("select[id='pet-gender'] > option").each(function () {
+        if(usedNames[this.text]) {
+            $(this).remove();
+        } else {
+            usedNames[this.text] = this.value;
+        }
+    });
   },
 
 
