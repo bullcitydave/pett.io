@@ -11,11 +11,6 @@ var LinkView = Parse.View.extend({
     imgCount = 0;
 
 
-    // $( window ).resize(function() {
-    //   link.reMargin();
-    // });
-
-
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
@@ -25,25 +20,19 @@ var LinkView = Parse.View.extend({
 
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
-    // $('body').addClass('darkbg');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    // if (Parse.User.current() != null)  {
-      $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-
-      // }
-      //
-
-         $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
-    link.getAge(pet);
+    window.APP.getAge(pet);
 
     $('#main-container').append("<div class='pic-showcase'></div>");
 
@@ -60,22 +49,9 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry",
-    "click h1"  : "testHello"
-    // "click #account"  : "viewAccount"
+    "click h2" : "doMasonry"
   },
 
-  testHello: function() {
-    Parse.Cloud.run('hello', {}, {
-  success: function(result) {
-    console.log(result); // result is 'Hello world!'
-  },
-  error: function(error) {
-    console.log(error);
-  }
-});
-
-  },
 
   doMasonry: function() {
 
@@ -92,35 +68,6 @@ var LinkView = Parse.View.extend({
       });
 
   },
-
-
-  reMargin: function() {
-    $('.pic-showcase').css("margin-left",((window.innerWidth-$('.pic-showcase').width())/2));
-  },
-
-
-  getAge: function(pet) {
-    var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", pet);
-    query.first();
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + pet + ". Attempting to render...");
-        var thisPet = new Pet(results[0].attributes);
-        if (!(thisPet.isLiving())) {
-            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-        }
-        else {
-            age = thisPet.age();
-            $('#life-marker').html(age);
-        }
-      },
-      error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-      });
-    },
 
 
   render: function() {
@@ -290,6 +237,7 @@ var ParsePicListView = Parse.View.extend({
       ppQuery2.doesNotExist("size");
 
       var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
+      ppQuery.descending("createdAt");
 
       console.log('ppQuery: ',ppQuery);
 
