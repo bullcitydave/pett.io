@@ -32,7 +32,7 @@ var LinkView = Parse.View.extend({
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
-    window.APP.getAge(pet);
+    APP.getAge(pet);
 
     $('#main-container').append("<div class='pic-showcase'></div>");
 

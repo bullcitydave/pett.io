@@ -13,7 +13,6 @@ var AppRouter = Parse.Router.extend({
 
   });
 
-
     var app_router = new AppRouter();
 
     app_router.on('route:goSplash', function() {
