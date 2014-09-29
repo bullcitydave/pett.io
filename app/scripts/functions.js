@@ -22,7 +22,7 @@ function doesConnectionExist() {
 }
 
 function runningLocally() {
-  if (document.location.href === 'http://localhost:9000/') {
+  if (document.location.href.indexOf("localhost") > -1) {
     console.log('Running locally');
     return true;
   }

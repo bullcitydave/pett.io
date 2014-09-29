@@ -58,7 +58,7 @@ var BrowseView = Parse.View.extend({
   }
     var petsQuery = new Parse.Query(Pet);
     petsQuery.select("uniqueName");
-    petsQuery.ascending("uniqueName");
+    petsQuery.descending("updatedAt");
     petsQuery.find({
       success: function(results) {
 
