@@ -22,7 +22,7 @@ function doesConnectionExist() {
 }
 
 function runningLocally() {
-  if (document.location.href === 'http://localhost:9000/') {
+  if (document.location.href.indexOf("localhost") > -1) {
     console.log('Running locally');
     return true;
   }
@@ -575,7 +575,7 @@ var BrowseView = Parse.View.extend({
   }
     var petsQuery = new Parse.Query(Pet);
     petsQuery.select("uniqueName");
-    petsQuery.ascending("uniqueName");
+    petsQuery.descending("updatedAt");
     petsQuery.find({
       success: function(results) {
 
@@ -665,11 +665,6 @@ var LinkView = Parse.View.extend({
     imgCount = 0;
 
 
-    // $( window ).resize(function() {
-    //   link.reMargin();
-    // });
-
-
     if (Parse.User.current() != null)  {
       user=Parse.User.current().getUsername();
       }
@@ -679,25 +674,19 @@ var LinkView = Parse.View.extend({
 
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
-    // $('body').addClass('darkbg');
     $('#main-header').addClass('standard');
     $('#main-container').removeClass('splash');
     $('#main-container').addClass('standard');
     $('#main-container').removeClass('browse');
     $('#main-container').html('');
     $('.pic-showcase').html('');
-    // if (Parse.User.current() != null)  {
-      $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-
-      // }
-      //
-
-         $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
-    link.getAge(pet);
+    APP.getAge(pet);
 
     $('#main-container').append("<div class='pic-showcase'></div>");
 
@@ -714,22 +703,9 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"    : "showProfile",
     "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry",
-    "click h1"  : "testHello"
-    // "click #account"  : "viewAccount"
+    "click h2" : "doMasonry"
   },
 
-  testHello: function() {
-    Parse.Cloud.run('hello', {}, {
-  success: function(result) {
-    console.log(result); // result is 'Hello world!'
-  },
-  error: function(error) {
-    console.log(error);
-  }
-});
-
-  },
 
   doMasonry: function() {
 
@@ -746,35 +722,6 @@ var LinkView = Parse.View.extend({
       });
 
   },
-
-
-  reMargin: function() {
-    $('.pic-showcase').css("margin-left",((window.innerWidth-$('.pic-showcase').width())/2));
-  },
-
-
-  getAge: function(pet) {
-    var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", pet);
-    query.first();
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + pet + ". Attempting to render...");
-        var thisPet = new Pet(results[0].attributes);
-        if (!(thisPet.isLiving())) {
-            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-        }
-        else {
-            age = thisPet.age();
-            $('#life-marker').html(age);
-        }
-      },
-      error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-      });
-    },
 
 
   render: function() {
@@ -944,6 +891,7 @@ var ParsePicListView = Parse.View.extend({
       ppQuery2.doesNotExist("size");
 
       var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
+      ppQuery.descending("createdAt");
 
       console.log('ppQuery: ',ppQuery);
 
@@ -1537,7 +1485,6 @@ var AppRouter = Parse.Router.extend({
 
   });
 
-
     var app_router = new AppRouter();
 
     app_router.on('route:goSplash', function() {
@@ -1581,160 +1528,169 @@ var AppRouter = Parse.Router.extend({
 
 $(function() {
 
+
+  console.log('Starting app..');
+
   if (!(Parse)) { alert("oh no"); };
+
+  window.APP = new AppView;
 
   Parse.history.start({
     pushState: false,
     root: '/'
   });
 
-  var AppView = Parse.View.extend({
-
-    el: $("#main-header"),
 
 
-    events: {
-      "click #log-out"    : "logOut"
-
-      },
-
-
-    initialize: function() {
-      self = this;
-      body = $('body');
-      title = document.title;
-      title = 'pett.io - the ultimate pet showcase';
-      app_router = new AppRouter;
+console.log('Did I get ehre');
 
 
 
-    app_router.on('route:goSplash', function() {
-        console.log('Loading splash page');
-        loginView = new SplashView();
-      });
+});
 
-    app_router.on('route:goLogin', function() {
-        console.log('Loading login page');
-        if (!($('#main-container').hasClass("splash")))
-        {
-          splashView = new SplashView();
-        }
-        loginView = new LoginView();
-      });
 
-    app_router.on('route:goSignUp', function() {
-        console.log('Loading signup page');
-        if (!($('#main-container').hasClass("splash")))
-        {
-          splashView = new SplashView();
-        }
-        signUpView = new SignUpView();
-      });
+var AppView = Parse.View.extend({
 
-    app_router.on('route:updateAccount', function(user) {
-        console.log('Loading account page');
-        accountView = new AccountView(user);
-      });
+  el: $("#main-header"),
 
-    app_router.on('route:goBrowse', function() {
-        console.log('Loading browse view');
-        browseView = new BrowseView();
+
+  events: {
+    "click #log-out"    : "logOut"
+
+    },
+
+
+  initialize: function() {
+    self = this;
+    body = $('body');
+    title = document.title;
+    title = 'pett.io - the ultimate pet showcase';
+    app_router = new AppRouter;
+
+
+
+  app_router.on('route:goSplash', function() {
+      console.log('Loading splash page');
+      loginView = new SplashView();
     });
 
-    app_router.on('route:getPet', function(petName) {
-        console.log('Getting page for ',petName);
-
-        linkView = new LinkView(petName);
+  app_router.on('route:goLogin', function() {
+      console.log('Loading login page');
+      if (!($('#main-container').hasClass("splash")))
+      {
+        splashView = new SplashView();
+      }
+      loginView = new LoginView();
     });
+
+  app_router.on('route:goSignUp', function() {
+      console.log('Loading signup page');
+      if (!($('#main-container').hasClass("splash")))
+      {
+        splashView = new SplashView();
+      }
+      signUpView = new SignUpView();
+    });
+
+  app_router.on('route:updateAccount', function(user) {
+      console.log('Loading account page');
+      accountView = new AccountView(user);
+    });
+
+  app_router.on('route:goBrowse', function() {
+      console.log('Loading browse view');
+      browseView = new BrowseView();
+  });
+
+  app_router.on('route:getPet', function(petName) {
+      console.log('Getting page for ',petName);
+
+      linkView = new LinkView(petName);
+  });
 
 },
 
-    render: function() {
+  render: function() {
 
-      self.getDefaultPet(self.user);
+    self.getDefaultPet(self.user);
 
-    },
+  },
 
 
-    getDefaultPet: function() {
+  getDefaultPet: function() {
 
-      var userQuery = new Parse.Query(Parse.User);
-      userQuery.equalTo("username", Parse.User.current().get("username"));
-      userQuery.find({
+    var userQuery = new Parse.Query(Parse.User);
+    userQuery.equalTo("username", Parse.User.current().get("username"));
+    userQuery.find({
 
-        success: function(results) {
-          if (results[0].attributes.defaultPet) {
-            defaultPetId = results[0].attributes.defaultPet.id;
-            defaultPetQuery = new Parse.Query(Pet);
-            defaultPetQuery.get(defaultPetId, {
-              success: function(results) {
-                self.dp = results.attributes.uniqueName;
-                console.log('Default pet: ',self.dp);
-                app_router.navigate('/#/pet/' + self.dp);
-                },
-              error: function(myUser) {
-                console.log('Could not determine default pet value');
-                app_router.navigate('/#/account/'+self.user);
-              }
-            });
-          }
-          else {
-            app_router.navigate('/#/account/'+self.user);
-          }
-        },
-
-        error: function(error) {
-            alert('Could not determine default pet value');
-            app_router.navigate('/#/account/'+self.user);
-          }
-        });
-    },
-
-    getAge: function(pet) {
-      var query = new Parse.Query(Pet);
-      query.equalTo("uniqueName", pet);
-      query.first();
-      query.find({
-        success: function(results) {
-          console.log("Successfully retrieved " + pet + ". Attempting to render...");
-          var thisPet = new Pet(results[0].attributes);
-          if (!(thisPet.isLiving())) {
-              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-          }
-          else {
-              var age = thisPet.age();
-              $('#life-marker').html(age);
-              return age;
+      success: function(results) {
+        if (results[0].attributes.defaultPet) {
+          defaultPetId = results[0].attributes.defaultPet.id;
+          defaultPetQuery = new Parse.Query(Pet);
+          defaultPetQuery.get(defaultPetId, {
+            success: function(results) {
+              self.dp = results.attributes.uniqueName;
+              console.log('Default pet: ',self.dp);
+              app_router.navigate('/#/pet/' + self.dp);
+              },
+            error: function(myUser) {
+              console.log('Could not determine default pet value');
+              app_router.navigate('/#/account/'+self.user);
             }
-          },
-        error: function(collection, error) {
-              console.log("Error: " + error.code + " " + error.message);
-          }
-        });
+          });
+        }
+        else {
+          app_router.navigate('/#/account/'+self.user);
+        }
       },
 
-    getDate: function(parseDate) {
-      var parsedDate = moment(parseDate);
-      var pettioDate = (parsedDate.months()+1).toString() + '/' +  parsedDate.date().toString() + '/' +  parsedDate.year().toString();
-      return pettioDate;
+      error: function(error) {
+          alert('Could not determine default pet value');
+          app_router.navigate('/#/account/'+self.user);
+        }
+      });
+  },
+
+  getAge: function(pet) {
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.first();
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + pet + ". Attempting to render...");
+        var thisPet = new Pet(results[0].attributes);
+        if (!(thisPet.isLiving())) {
+            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+        }
+        else {
+            var age = thisPet.age();
+            $('#life-marker').html(age);
+            return age;
+          }
+        },
+      error: function(collection, error) {
+            console.log("Error: " + error.code + " " + error.message);
+        }
+      });
     },
 
-
-    logOut: function(e) {
-      e.preventDefault();
-      Parse.User.logOut();
-      console.log('Logging out and back to main login');
-
-      $('#main-header').removeClass('standard');
-      $('#main-container').removeClass('standard');
-       app_router.navigate('//');
-    }
+  getDate: function(parseDate) {
+    var parsedDate = moment(parseDate);
+    var pettioDate = (parsedDate.months()+1).toString() + '/' +  parsedDate.date().toString() + '/' +  parsedDate.year().toString();
+    return pettioDate;
+  },
 
 
-  });
+  logOut: function(e) {
+    e.preventDefault();
+    Parse.User.logOut();
+    console.log('Logging out and back to main login');
 
-  window.APP = new AppView;
+    $('#main-header').removeClass('standard');
+    $('#main-container').removeClass('standard');
+     app_router.navigate('//');
+  }
 
 
 });
