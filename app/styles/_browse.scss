@@ -1,4 +1,11 @@
-
+div#main-container.browse {
+  @include media($mobile-s) {
+    margin:55px 0 0 0 !important;
+  }
+  @include media($mobile-l) {
+    margin:180px 0 0 0;
+  }
+}
 
 div#browse-container {
   @include media($mobile-s) {
@@ -7,7 +14,7 @@ div#browse-container {
 
 
     div.pet-box {
-
+      width: calc(100% - 20px);
       display:inline-block;
       text-align:center;
       padding: 5px;
@@ -54,6 +61,23 @@ div#browse-container {
 
     }
 
+
+
+    .pet-box:last-child {
+      margin-bottom:40px;
+    }
+
+  }
+
+  @include media($mobile-m) {
+    margin: 12px 20px 0 5px;
+    div.pet-box {
+      width: initial;
+      img.pet-pic {
+        width: auto;
+        height: 150px;
+      }
+    }
     // .pet-box:hover,
     .pet-box.hovering {
       z-index:10;
@@ -80,20 +104,6 @@ div#browse-container {
     .pet-box.hovering-left {
       @extend .pet-box.hovering;
       transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-50px, 0px);
-    }
-
-    .pet-box:last-child {
-      margin-bottom:40px;
-    }
-
-  }
-
-  @include media($mobile-m) {
-    div.pet-box {
-      img.pet-pic {
-        width: auto;
-        height: 150px;
-      }
     }
   }
 
