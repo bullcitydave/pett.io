@@ -12,6 +12,7 @@ div.user-profile {
 
   width: 100%;
   background: $white;
+  margin-bottom:25px;
 
   section {
     padding: 10px;
@@ -32,8 +33,8 @@ div.user-profile {
   button#add-pet {
     @include media($mobile-s) {
       clear:both;
-      @include span-columns(2);
-      @include shift(5);
+      @include span-columns(3.5);
+      @include shift(4.25);
       margin-bottom: 10px;
       margin-top: 20px;
 
@@ -116,10 +117,6 @@ div.user-profile {
         float: left;
       }
 
-      p.help {
-          font-size: 0.8em;
-          padding: 0 20px 0 20px;
-        }
     }
 }
 
@@ -262,17 +259,24 @@ section#update-pet {
 
 
 section#add-media {
-
+    width: 50%;
+    min-width: 320px;
     h3 {
-      font-size: 1.5em;
+      font-size: 1.2em;
     }
+    padding-bottom:20px;
 
     span{
       float: left;
       padding: 0px 5px 0 5px;
       font-weight: bold;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
+
+    p.help {
+        font-size: 1.1em;
+        padding: 0 20px 0 20px;
+      }
 
 }
 
