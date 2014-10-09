@@ -57,6 +57,7 @@ var BrowseView = Parse.View.extend({
       $('.site-visitor').show();
   }
     var petsQuery = new Parse.Query(Pet);
+    petsQuery.limit(1000);
     petsQuery.select("uniqueName");
     petsQuery.descending("updatedAt");
     petsQuery.find({
@@ -66,7 +67,6 @@ var BrowseView = Parse.View.extend({
 
   for (var i = 0; i < results.length ; i++){
     var petUName = results[i].attributes.uniqueName;
-
     var ppQuery1 = new Parse.Query(ParsePic);
     ppQuery1.equalTo("petUniqueName",petUName);
     ppQuery1.containedIn("size",

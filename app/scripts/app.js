@@ -132,8 +132,14 @@ var AppView = Parse.View.extend({
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
         var thisPet = new Pet(results[0].attributes);
         if (!(thisPet.isLiving())) {
-            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            if(results[0].attributes.dateBirth == nullDateBirth) {
+              $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+            }
+            else {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            }
         }
         else {
             var age = thisPet.age();
