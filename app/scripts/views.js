@@ -5,6 +5,9 @@ var LinkView = Parse.View.extend({
 
 
   initialize: function(tag) {
+
+    document.title = 'pett.io - ' + tag;
+
     link = this;
     pet=tag;
     didMasonry=false;

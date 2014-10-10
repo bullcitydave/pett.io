@@ -24,8 +24,7 @@ console.log('Did I get ehre');
 var AppView = Parse.View.extend({
 
   el: $("#main-header"),
-
-
+  
   events: {
     "click #log-out"    : "logOut"
 

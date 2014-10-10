@@ -18,6 +18,9 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+
+    document.title = 'pett.io - manage account';
+
     $('body').css('background','none');
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
