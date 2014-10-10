@@ -333,6 +333,7 @@ el: "#tools",
 
   render: function(pet){
         $('#tools').show();
+        $('#upload-container').show();
         $('#upload-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
@@ -407,104 +408,12 @@ el: "#tools",
     if(e.lengthComputable){
         $('progress').attr({value:e.loaded,max:e.total});
     }
-},
+  },
 
-// from http://www.codeforest.net/html5-image-upload-resize-and-crop
-//   resizeAndUpload: function(file) {
-//     // var reader = new FileReader();
-//     // reader.onloadend = function() {
-//
-//       var tempImg = new Image();
-//       // tempImg.src = reader.result;
-//       tempImg.src = URL.createObjectURL(file); //THIS
-//       // tempImg = file;
-//       tempImg.onload = function() {
-//
-//           var MAX_WIDTH = 800;
-//           var MAX_HEIGHT = 600;
-//           var tempW = tempImg.width;
-//           var tempH = tempImg.height;
-//           if (tempW > tempH) {
-//               if (tempW > MAX_WIDTH) {
-//                  tempH *= MAX_WIDTH / tempW;
-//                  tempW = MAX_WIDTH;
-//               }
-//           } else {
-//               if (tempH > MAX_HEIGHT) {
-//                  tempW *= MAX_HEIGHT / tempH;
-//                  tempH = MAX_HEIGHT;
-//               }
-//           }
-//
-//
-//           var canvas = document.getElementById('uploadCanvas');
-//           canvas.width = tempW;
-//           canvas.height = tempH;
-//           var ctx = canvas.getContext("2d");
-//           ctx.drawImage(this, 0, 0, tempW, tempH);
-//
-//           var base64DataUri = canvas.toDataURL();
-//           var base64Data = base64DataUri.substring(base64DataUri.indexOf(',')+1);
-//
-//           var jsonData = { "base64":base64Data,"_ContentType":"image/png" };
-//
-//           var sendData = JSON.stringify(jsonData);
-//           var fSize = sendData.length;
-//           var fName = file.name;
-//           // var smallFilename = ((file.name).substr(0,((file.name).lastIndexOf('.'))).concat('_s.jpg'));
-//
-//           var serverUrl = 'https://api.parse.com/1/files/' + file.name;
-//
-//           $.ajax({
-//             type: "POST",
-//             beforeSend: function(request) {
-//               request.setRequestHeader("X-Parse-Application-Id", '9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC');
-//               request.setRequestHeader("X-Parse-REST-API-Key", 'qgbJ6fvbU3byB3RGgWVBsXlLSrqN96WMSrfgFK2n');
-//               request.setRequestHeader("Content-Type", "text/plain");
-//             },
-//             url: serverUrl,
-//             data: sendData,
-//
-//
-//             processData: false,
-//             contentType: false,
-//             success: function(data) {
-//               console.log("File available at: " + data.url);
-//
-//               var newPic = new ParsePic ({
-//                 url: data.url,
-//                 username: Parse.User.current().getUsername(),
-//                 petname: pet,
-//                 petUniqueName: pet,
-//                 size: data.size,
-//                 filesize: fSize,
-//                 filename: fName,
-//                 source: 'parse',
-//                 height: tempH,
-//                 width: tempW,
-//                 size: 'medium'
-//               });
-//               newPic.save();
-//               console.log('Medium photo has been successfully uploaded.');
-//
-//
-//             },
-//             error: function(data) {
-//               console.log('Error saving small photo')
-//             }
-//           });
-//
-//       }
-//
-// },
 
 
   closeUpload: function(e) {
     $('#upload-container').hide();
-//     $('.pic-showcase').masonry({
-//
-//
-// });
     return false;
   },
 
@@ -569,6 +478,7 @@ var BrowseView = Parse.View.extend({
       $('.site-visitor').show();
   }
     var petsQuery = new Parse.Query(Pet);
+    petsQuery.limit(1000);
     petsQuery.select("uniqueName");
     petsQuery.descending("updatedAt");
     petsQuery.find({
@@ -578,7 +488,6 @@ var BrowseView = Parse.View.extend({
 
   for (var i = 0; i < results.length ; i++){
     var petUName = results[i].attributes.uniqueName;
-
     var ppQuery1 = new Parse.Query(ParsePic);
     ppQuery1.equalTo("petUniqueName",petUName);
     ppQuery1.containedIn("size",
@@ -1655,8 +1564,14 @@ var AppView = Parse.View.extend({
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
         var thisPet = new Pet(results[0].attributes);
         if (!(thisPet.isLiving())) {
-            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            if(results[0].attributes.dateBirth == nullDateBirth) {
+              $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+            }
+            else {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            }
         }
         else {
             var age = thisPet.age();
