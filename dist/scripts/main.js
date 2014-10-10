@@ -478,6 +478,7 @@ var BrowseView = Parse.View.extend({
       $('.site-visitor').show();
   }
     var petsQuery = new Parse.Query(Pet);
+    petsQuery.limit(1000);
     petsQuery.select("uniqueName");
     petsQuery.descending("updatedAt");
     petsQuery.find({
@@ -487,7 +488,6 @@ var BrowseView = Parse.View.extend({
 
   for (var i = 0; i < results.length ; i++){
     var petUName = results[i].attributes.uniqueName;
-
     var ppQuery1 = new Parse.Query(ParsePic);
     ppQuery1.equalTo("petUniqueName",petUName);
     ppQuery1.containedIn("size",
@@ -1564,8 +1564,14 @@ var AppView = Parse.View.extend({
         console.log("Successfully retrieved " + pet + ". Attempting to render...");
         var thisPet = new Pet(results[0].attributes);
         if (!(thisPet.isLiving())) {
-            console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-            $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            if(results[0].attributes.dateBirth == nullDateBirth) {
+              $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+            }
+            else {
+              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+
+              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+            }
         }
         else {
             var age = thisPet.age();
