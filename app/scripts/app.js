@@ -3,28 +3,50 @@ $(function() {
 
   console.log('Starting app..');
 
-  if (!(Parse)) { alert("oh no"); };
-
-  window.APP = new AppView;
-
-  Parse.history.start({
-    pushState: false,
-    root: '/'
+  if (!(Parse)) { alert("Cloud storage for app unavailable. Please try again later."); };
+    $('#header-template').load("_browse.html", function() {
+    $('#splash-template').load("_splash.html", function() {
+    $('#browse-template').load("_browse.html", function() {
+    $('#image-upload-template').load("_upload.html", function() {
+    $('#add-pet-template').load("_addpet.html", function() {
+    $('#edit-pet-template').load("_editpet.html", function() {
+    $('#header-template').load("_header.html", function() {
+    $('#login-template').load("_login.html", function() {
+    $('#signup-template').load("_signup.html", function() {
+    $('#parse-pic-template').load("_parsepic.html", function() {
+    $('#flickr-template').load("_flickr.html", function() {
+    $('#account-template').load("_account.html", function() {
+    $('#pet-header-template').load("_petheader.html", function() {
+    $('#pet-list-template').load("_petlist.html", function() {
+    $('#profile-template').load("_profile.html", function() {
+        console.log('Templates loaded');
+        window.APP = new AppView;
+        Parse.history.start({
+          pushState: false,
+          root: '/'
+        });
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
   });
-
-
-
-console.log('Did I get ehre');
-
-
-
 });
 
 
 var AppView = Parse.View.extend({
 
   el: $("#main-header"),
-  
+
   events: {
     "click #log-out"    : "logOut"
 
@@ -34,8 +56,7 @@ var AppView = Parse.View.extend({
   initialize: function() {
     self = this;
     body = $('body');
-    title = document.title;
-    title = 'pett.io - the ultimate pet showcase';
+    document.title = document.title;
     app_router = new AppRouter;
 
 
