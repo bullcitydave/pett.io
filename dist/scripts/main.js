@@ -1,79 +1,3 @@
-// Initialize parse and support functions
-
-// This function is for me while I'm testing
-function doesConnectionExist() {
-    var xhr = new XMLHttpRequest();
-    var file = "http://i.imgur.com/rwWvcQk.png";
-    var randomNum = Math.round(Math.random() * 10000);
-
-    xhr.open('HEAD', file + "?rand=" + randomNum, false);
-
-    try {
-        xhr.send();
-
-        if (xhr.status >= 200 && xhr.status < 304) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (e) {
-        return false;
-    }
-}
-
-function runningLocally() {
-  if (document.location.href.indexOf("localhost") > -1) {
-    console.log('Running locally');
-    return true;
-  }
-}
-
-var local = runningLocally();
-console.log(local);
-
-
-if (!(doesConnectionExist()))  {
-    alert('It looks like there may be a problem with your internet connection.' );
-}
-
-
-try {
-  Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
-}  catch (exception)
-  {
-    alert('It looks like pett.io is having trouble connecting to its database server. We\'re quite sorry. Please try again shortly.' )
-  };
-
-
-
-function getDims(image) {
-  dimsPromise = Promise.resolve(function(image){
-    var dimsPromise = Promise.resolve($("<img/>").attr("src", url).load());
-    return dimsPromise.then(function(image) {
-        dims = {w:this.width, h:this.height};
-        console.log(dims);
-        return dims;
-    });
-  });
-};
-
-
-
-function disable(el){
-  $(el).prop("disabled",true);
-}
-
-function enable(el){
-  $(el).prop("disabled",false);
-}
-
-
-// Misc global variables
-
-    nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
-    nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
-    nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
-
 var flickrApiKey = "806745a8a5db2aff0b0cdb591b633726";
 var flickrUserId = 'toastie97';
 
@@ -432,6 +356,8 @@ var BrowseView = Parse.View.extend({
   },
 
   initialize: function(tag) {
+
+    document.title = 'pett.io - browse';
     if (Parse.User.current() != null) {
        user=Parse.User.current().get("username");
      }
@@ -563,6 +489,9 @@ var LinkView = Parse.View.extend({
 
 
   initialize: function(tag) {
+
+    document.title = 'pett.io - ' + tag;
+
     link = this;
     pet=tag;
     didMasonry=false;
@@ -905,6 +834,50 @@ var LoginView = Parse.View.extend({
   }
 });
 
+var MapView = Parse.View.extend ({
+
+  el: "body",
+
+  initialize: function() {
+    $(this.el).append($('#map-template'));
+
+    console.log('Getting map...');
+
+    map = this;
+
+    $('#main-container').css("opacity", .3);
+
+
+    var query = new Parse.Query(Pet);
+    var tempGeo = new Parse.GeoPoint(45,-45);
+    query.near("geoLocation",tempGeo );
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + results.length+ ". Attempting to render...");
+        map.render(results[0].attributes);
+        console.log(results[0].attributes);
+      },
+      error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+  },
+
+    events: {
+
+      'click .close'    : 'closeMap'
+
+    },
+
+    closeMap: function(e) {
+      map.el.fadeOut(750);
+    },
+
+    render: function(data){
+      console.log('render');
+    }
+});
+
 var SignUpView = Parse.View.extend({
   events: {
     "submit form.signup-form": "signUp"
@@ -970,6 +943,9 @@ var AccountView = Parse.View.extend({
 
   initialize: function() {
     this.user = Parse.User.current().getUsername();
+
+    document.title = 'pett.io - manage account';
+
     $('body').css('background','none');
     $('body').addClass('darkbg');
     $('body').removeClass('splash');
@@ -1383,6 +1359,7 @@ var AppRouter = Parse.Router.extend({
        'browse'          :     'goBrowse',
        ''                :     'goSplash',
        'pet/:petName'        :     'getPet',
+       'map'             :     'goMap',
        '*actions': 'goSplash'
         }
 
@@ -1424,39 +1401,149 @@ var AppRouter = Parse.Router.extend({
         browseView = new BrowseView();
     });
 
+    app_router.on('route:goMap', function() {
+        console.log('Loading map');
+        mapView = new MapView();
+    });
+
     app_router.on('route:getPet', function(petName) {
         console.log('Getting page for ',petName);
 
         linkView = new LinkView(petName);
     });
 
+// Initialize parse and support functions
+
+
+
+
+
+
+
+// This function is for me while I'm testing
+function doesConnectionExist() {
+    var xhr = new XMLHttpRequest();
+    var file = "http://i.imgur.com/rwWvcQk.png";
+    var randomNum = Math.round(Math.random() * 10000);
+
+    xhr.open('HEAD', file + "?rand=" + randomNum, false);
+
+    try {
+        xhr.send();
+
+        if (xhr.status >= 200 && xhr.status < 304) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+}
+
+function runningLocally() {
+  if (document.location.href.indexOf("localhost") > -1) {
+    console.log('Running locally');
+    return true;
+  }
+}
+
+var local = runningLocally();
+console.log(local);
+
+
+if (!(doesConnectionExist()))  {
+    alert('It looks like there may be a problem with your internet connection.' );
+}
+
+
+try {
+  Parse.initialize("9MAJwG541wijXBaba0UaiuGPrIwMQvLFm4aJhXBC", "DGHfzC6pvsu3P94CsFDReHIpwB3CUf7Pe0dP4WiP");
+}  catch (exception)
+  {
+    alert('It looks like pett.io is having trouble connecting to its database server. We\'re quite sorry. Please try again shortly.' )
+  };
+
+
+
+function getDims(image) {
+  dimsPromise = Promise.resolve(function(image){
+    var dimsPromise = Promise.resolve($("<img/>").attr("src", url).load());
+    return dimsPromise.then(function(image) {
+        dims = {w:this.width, h:this.height};
+        console.log(dims);
+        return dims;
+    });
+  });
+};
+
+
+
+function disable(el){
+  $(el).prop("disabled",true);
+}
+
+function enable(el){
+  $(el).prop("disabled",false);
+}
+
+
+// Misc global variables
+
+    nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+    nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
+    nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+
 $(function() {
 
 
   console.log('Starting app..');
 
-  if (!(Parse)) { alert("oh no"); };
-
-  window.APP = new AppView;
-
-  Parse.history.start({
-    pushState: false,
-    root: '/'
+  if (!(Parse)) { alert("Cloud storage for app unavailable. Please try again later."); };
+    $('#header-template').load("_browse.html", function() {
+    $('#splash-template').load("_splash.html", function() {
+    $('#browse-template').load("_browse.html", function() {
+    $('#image-upload-template').load("_upload.html", function() {
+    $('#add-pet-template').load("_addpet.html", function() {
+    $('#edit-pet-template').load("_editpet.html", function() {
+    $('#header-template').load("_header.html", function() {
+    $('#login-template').load("_login.html", function() {
+    $('#signup-template').load("_signup.html", function() {
+    $('#parse-pic-template').load("_parsepic.html", function() {
+    $('#flickr-template').load("_flickr.html", function() {
+    $('#account-template').load("_account.html", function() {
+    $('#pet-header-template').load("_petheader.html", function() {
+    $('#pet-list-template').load("_petlist.html", function() {
+    $('#map-template').load("_map.html", function() {
+    $('#profile-template').load("_profile.html", function() {
+        console.log('Templates loaded');
+        window.APP = new AppView;
+        Parse.history.start({
+          pushState: false,
+          root: '/'
+        });
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
+    })
   });
-
-
-
-console.log('Did I get ehre');
-
-
-
 });
 
 
 var AppView = Parse.View.extend({
 
   el: $("#main-header"),
-
 
   events: {
     "click #log-out"    : "logOut"
@@ -1467,8 +1554,7 @@ var AppView = Parse.View.extend({
   initialize: function() {
     self = this;
     body = $('body');
-    title = document.title;
-    title = 'pett.io - the ultimate pet showcase';
+    document.title = document.title;
     app_router = new AppRouter;
 
 
@@ -1512,6 +1598,10 @@ var AppView = Parse.View.extend({
       linkView = new LinkView(petName);
   });
 
+  app_router.on('route:goMap', function() {
+      console.log('Loading map');
+      mapView = new MapView();
+  });
 },
 
   render: function() {

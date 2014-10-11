@@ -7,6 +7,7 @@ var AppRouter = Parse.Router.extend({
        'browse'          :     'goBrowse',
        ''                :     'goSplash',
        'pet/:petName'        :     'getPet',
+       'map'             :     'goMap',
        '*actions': 'goSplash'
         }
 
@@ -46,6 +47,11 @@ var AppRouter = Parse.Router.extend({
     app_router.on('route:goBrowse', function() {
         console.log('Loading browse view');
         browseView = new BrowseView();
+    });
+
+    app_router.on('route:goMap', function() {
+        console.log('Loading map');
+        mapView = new MapView();
     });
 
     app_router.on('route:getPet', function(petName) {
