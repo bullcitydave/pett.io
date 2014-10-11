@@ -11,6 +11,8 @@ var BrowseView = Parse.View.extend({
   },
 
   initialize: function(tag) {
+
+    document.title = 'pett.io - browse';
     if (Parse.User.current() != null) {
        user=Parse.User.current().get("username");
      }

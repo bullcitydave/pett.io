@@ -1,5 +1,11 @@
 // Initialize parse and support functions
 
+
+
+
+
+
+
 // This function is for me while I'm testing
 function doesConnectionExist() {
     var xhr = new XMLHttpRequest();
