@@ -45,7 +45,7 @@ var MapView = Parse.View.extend ({
 
     render: function(data){
       var geocoder;
-      var map;
+      var myMap;
       var marker;
       this.mapInitialize();
       this.markLocation(data[0].attributes.geoLocation);
@@ -59,7 +59,13 @@ var MapView = Parse.View.extend ({
         center: latlng,
         mapTypeId: 'roadmap'
       }
-      petMap = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+      myMap = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+      marker = new google.maps.Marker({
+            map: myMap,
+            position: latlng,
+            title:"Hello World!",
+            visible: true
+      });
     },
 
 
@@ -67,18 +73,21 @@ var MapView = Parse.View.extend ({
       var lat = geoPoint.latitude;
       var lng = geoPoint.longitude;
       var infowindow = new google.maps.InfoWindow();
-      var latlng = new google.maps.LatLng(lat, lng);
-      geocoder.geocode({'latLng': latlng}, function(results, status) {
+      var markLatlng = new google.maps.LatLng(lat, lng);
+      var markImg = "http://i.imgur.com/khXNhWD.png";
+
+      geocoder.geocode({'latLng': markLatlng}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[1]) {
-            // petMap.setZoom(11);
-            marker = new google.maps.Marker({
-                map: petMap,
+            myMap.setCenter(markLatlng),
+            myMap.setZoom(11);
+            marker2 = new google.maps.Marker({
+                map: myMap,
                 position: results[1].geometry.location,
                 title: results[1].formatted_address
             });
-            // infowindow.setContent(results[1].formatted_address);
-            // infowindow.open(petMap, marker);
+            infowindow.setContent(results[1].formatted_address);
+            infowindow.open(myMap, marker2);
           } else {
             alert('No results found');
           }
