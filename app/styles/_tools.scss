@@ -16,9 +16,18 @@ div#tools {
   display:none;
 }
 
-div#map-container {
+div.map-outer {
   position: absolute;
-  height: 500px;
-  width: 500px;
-  background: white;
+  background: $white;
+  margin: 20px;
+  border-radius: 5px;
+  width: 90%;
+  height: 90%;
+  display: none;
+
+  div#map-container {
+    width: calc(100%-40px);
+    height: 100%;
+    margin:20px;
+  }
 }

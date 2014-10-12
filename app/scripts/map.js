@@ -5,8 +5,12 @@ var MapView = Parse.View.extend ({
   initialize: function() {
 
 
+    $('#main-header').addClass('standard');
+    $('#main-container').removeClass('splash');
+    $('#main-container').addClass('standard');
+    $('#main-container').removeClass('browse');
+    $('#main-container').html('');
 
-    $('body').append(_.template(($('#map-template').html())));
 
     console.log('Getting map...');
 
@@ -15,7 +19,8 @@ var MapView = Parse.View.extend ({
     defLat = 37.09024;
     defLng = -95.712891;
 
-    $('#main-container').css("opacity", .3);
+    $('#main-container').append(_.template($('#map-template').html()));
+    $('.map-outer').show();
 
     google.maps.event.addDomListener(window, 'load', this.mapInitialize);
 
@@ -97,3 +102,29 @@ var MapView = Parse.View.extend ({
       });
     }
 });
+
+
+//
+// var defLat = 19.09024;
+// var defLng = -99.712891;
+// var myMap;
+//
+//
+// function mapInitialize() {
+//   var latlng = new google.maps.LatLng(defLat,defLng);
+//   var mapOptions = {
+//     zoom: 4,
+//     center: latlng,
+//     mapTypeId: 'roadmap'
+//   }
+//   myMap = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+//   var marker = new google.maps.Marker({
+//         map: myMap,
+//         position: latlng,
+//         title:"Hello World!",
+//         visible: true
+//   });
+//   console.log(marker);
+// }
+//
+// google.maps.event.addDomListener(window, 'load', mapInitialize);

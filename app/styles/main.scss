@@ -468,3 +468,10 @@ button.close:hover{
   border: solid 2px white;
 
 }
+
+
+div[id^=map-canvas] {
+        height: 500px;
+        margin: 0px;
+        padding: 0px
+  }
