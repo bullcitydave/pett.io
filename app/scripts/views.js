@@ -24,20 +24,20 @@ var LinkView = Parse.View.extend({
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
     $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').removeClass('browse');
-    $('#main-container').html('');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.removeClass('browse');
+    APP.main.html('');
     $('.pic-showcase').html('');
     $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
     APP.getAge(pet);
 
-    $('#main-container').append("<div class='pic-showcase'></div>");
+    APP.main.append("<div class='pic-showcase'></div>");
 
 
     this.render();

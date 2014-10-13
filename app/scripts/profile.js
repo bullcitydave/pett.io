@@ -4,7 +4,7 @@ var ProfileView = Parse.View.extend ({
 
   initialize: function(tag) {
     $('#profile-container').remove();
-    $('#main-container').prepend('<div style="display:none" id="profile-container"></div>');
+    APP.main.prepend('<div style="display:none" id="profile-container"></div>');
     $('#profile-container').fadeIn(750, "swing");
     body.toggleClass('no-scrolling');
     pet = tag;
@@ -47,7 +47,7 @@ var ProfileView = Parse.View.extend ({
 
         $('#profile-container').remove();
         $('#about').show();
-        // $('#main-container').css('overflow', 'initial');
+        // APP.main.css('overflow', 'initial');
         body.toggleClass('no-scrolling');
         $(".pic-showcase").css("opacity", 1);
         return false;

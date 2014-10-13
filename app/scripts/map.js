@@ -7,10 +7,10 @@ var MapView = Parse.View.extend ({
 
 
     $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').removeClass('browse');
-    $('#main-container').html('');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.removeClass('browse');
+    APP.main.html('');
 
     console.log('Getting map...');
 
@@ -23,7 +23,7 @@ var MapView = Parse.View.extend ({
     defLat = 37.09024;
     defLng = -95.712891;
 
-    $('#main-container').append(_.template($('#map-template').html()));
+    APP.main.append(_.template($('#map-template').html()));
     $('#map-canvas').show();
 
     var query = new Parse.Query(Pet);
