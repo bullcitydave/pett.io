@@ -15,3 +15,19 @@ div#tools {
   z-index:8001;
   display:none;
 }
+
+div.map-outer {
+  position: absolute;
+  background: $white;
+  margin: 20px;
+  border-radius: 5px;
+  width: 90%;
+  height: 90%;
+  display: none;
+
+  div#map-container {
+    width: calc(100%-40px);
+    height: 100%;
+    margin:20px;
+  }
+}
