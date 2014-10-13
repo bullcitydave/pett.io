@@ -104,5 +104,33 @@ var ProfileView = Parse.View.extend ({
         $('#profile-container').html(_.template(profileView,data));
 
         // profile.getBackground();
+
+
+
+
+
+        var defLat = 19.09024;
+        var defLng = -99.712891;
+        var myMap;
+
+
+        function mapInitialize() {
+          var latlng = new google.maps.LatLng(defLat,defLng);
+          var mapOptions = {
+            zoom: 4,
+            center: latlng,
+            mapTypeId: 'roadmap'
+          }
+          myMap = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+          var marker = new google.maps.Marker({
+                map: myMap,
+                position: latlng,
+                title:"Hello World!",
+                visible: true
+          });
+          console.log(marker);
+        }
+
+        google.maps.event.addDomListener(window, 'load', mapInitialize);
       }
 });

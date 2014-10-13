@@ -427,10 +427,6 @@ footer {
   z-index:6000;
   }
 
-canvas {
-  display: none;
-}
-
 p.help {
   line-height: 1.2em;
   font-size: 1.1em;
@@ -468,3 +464,10 @@ button.close:hover{
   border: solid 2px white;
 
 }
+
+
+div[id^=map-canvas] {
+        height: 500px;
+        margin: 0px;
+        padding: 0px
+  }
