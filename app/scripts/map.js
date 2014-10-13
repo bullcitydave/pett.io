@@ -43,26 +43,28 @@ var MapView = Parse.View.extend ({
 
     render: function(data){
       this.mapInitialize();
-  
+
+      var petData = new Array;
+
       for (i = 0; i < data.length; i++) {
-        var petData = data[i].attributes;
+        petData = data[i].attributes;
 
-        var petUName = petData.uniqueName;
-        var tnQuery = new Parse.Query(ParsePic);
-        tnQuery.equalTo("petUniqueName",petUName);
-        tnQuery.select("thumbnail");
+        // var petUName = petData.uniqueName;
+        // var tnQuery = new Parse.Query(ParsePic);
+        // tnQuery.equalTo("petUniqueName",petUName);
+        // tnQuery.select("thumbnail");
+        //
+        // tnQuery.find({
+        //   success: function(results) {
+        //       if (results.length > 0) {
+        //         var randomImg = Math.floor(Math.random() * (results.length));
+        //         petData[i].thumbnail = results[randomImg].attributes.thumbnail._url;
+        //       };
+        //
+        //   }
+        // });
 
-        tnQuery.find({
-          success: function(results) {
-              if (results.length > 0) {
-                var randomImg = Math.floor(Math.random() * (results.length));
-                petData.thumbnail = results[randomImg].attributes.thumbnail._url;
-              };
-              map.markLocation(petData);
-          }
-        });
-
-
+        map.markLocation(petData);
 
       }
     },
@@ -96,10 +98,12 @@ var MapView = Parse.View.extend ({
                 position: results[0].geometry.location,
                 infoWindow: infoWindow,
                 name: petData.name,
-                uName: petData.uniqueName,
-                thumbnail: petData.thumbnail._url
+                uName: petData.uniqueName
+                // thumbnail: petData.thumbnail._url
             });
-            iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
+            // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
+            //
+            iwContent = "<strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
             marker.infoWindow.setContent(iwContent);
             map.gInfoWindows(marker);
 
