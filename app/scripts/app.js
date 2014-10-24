@@ -51,6 +51,8 @@ var AppView = Parse.View.extend({
 
   main : $('#main-container'),
 
+  header : $('#main-header'),
+
   events: {
     "click #log-out"    : "logOut"
 
@@ -194,7 +196,7 @@ var AppView = Parse.View.extend({
     Parse.User.logOut();
     console.log('Logging out and back to main login');
 
-    $('#main-header').removeClass('standard');
+    APP.header.removeClass('standard');
     APP.main.removeClass('standard');
      app_router.navigate('//');
   }

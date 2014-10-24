@@ -6,7 +6,7 @@ var MapView = Parse.View.extend ({
   initialize: function() {
 
 
-    $('#main-header').addClass('standard');
+    APP.header.addClass('standard');
     APP.main.removeClass('splash');
     APP.main.addClass('standard');
     APP.main.removeClass('browse');
@@ -19,6 +19,8 @@ var MapView = Parse.View.extend ({
     var geocoder;
     var myMap;
     var marker;
+    map.markers = [];
+    var mp;  // map positions array
 
     defLat = 37.09024;
     defLng = -95.712891;
@@ -67,6 +69,7 @@ var MapView = Parse.View.extend ({
         map.markLocation(petData);
 
       }
+
     },
 
     mapInitialize: function () {
@@ -89,29 +92,42 @@ var MapView = Parse.View.extend ({
       var markLatlng = new google.maps.LatLng(lat, lng);
 
       geocoder.geocode({'latLng': markLatlng}, function(results, status) {
+        var city;
         if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
+          for (var b=0;b<results.length;b++) {
+            if (_.contains(results[b].types,"locality")) {
+                    city= results[b];
+                    break;
+                }
+            }
+          if (city) {
             // myMap.setCenter(markLatlng),
             // myMap.setZoom(11);
-            marker = new google.maps.Marker({
-                map: myMap,
-                position: results[0].geometry.location,
-                infoWindow: infoWindow,
-                name: petData.name,
-                uName: petData.uniqueName
-                // thumbnail: petData.thumbnail._url
-            });
-            // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
-            //
-            iwContent = "<strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
-            marker.infoWindow.setContent(iwContent);
-            map.gInfoWindows(marker);
-
+            if (!(_.contains(map.mp,city.geometry.location))) {
+              marker = new google.maps.Marker({
+                  map: myMap,
+                  position: city.geometry.location,
+                  infoWindow: infoWindow,
+                  name: petData.name,
+                  uName: petData.uniqueName
+                  // thumbnail: petData.thumbnail._url
+              });
+              map.markers.push(marker);
+              map.mp = _.map(map.markers, function(marker){return marker.position});
+              // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
+              //
+              iwContent = "<strong>" + marker.name + "</strong><br/>" + city.formatted_address;
+              marker.infoWindow.setContent(iwContent);
+              map.gInfoWindows(marker);
+            }
+            else {
+              console.log('Found match');
+            }
           } else {
-            alert('No results found');
+            console.log('No results found');
           }
         } else {
-          alert('Geocoder failed due to: ' + status);
+          console.log('Geocoder failed for ' + lat + '/' + lng + ' due to: ' + status);
         }
       });
     },

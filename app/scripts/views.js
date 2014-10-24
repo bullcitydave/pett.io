@@ -23,13 +23,13 @@ var LinkView = Parse.View.extend({
 
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
-    $('#main-header').addClass('standard');
+    APP.header.addClass('standard');
     APP.main.removeClass('splash');
     APP.main.addClass('standard');
     APP.main.removeClass('browse');
     APP.main.html('');
     $('.pic-showcase').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    APP.header.html(_.template($('#header-template').html(),({"userName":user})));
     APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
