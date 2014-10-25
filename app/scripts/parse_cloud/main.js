@@ -5,9 +5,12 @@ Parse.Cloud.beforeSave("ParsePic", function(request, response) {
 
   var user = request.user;
 
+
   if  (user != null) {
 
+
     var pic = request.object;
+
 
     Parse.Cloud.httpRequest({
       url: pic.get("url")
@@ -16,15 +19,7 @@ Parse.Cloud.beforeSave("ParsePic", function(request, response) {
       var image = new Image();
       return image.setData(response.buffer);
 
-    }).then(medThumbnail(image));
-  }
-  else {
-    response.success();
-  }
-
-});
-
-function medThumbnail(image) {
+    }).then(function(image) {
           var MAX_WIDTH = 300;
           var MAX_HEIGHT = 400;
           var tempW = image.width();
@@ -44,7 +39,7 @@ function medThumbnail(image) {
          return image.scale({
                    width: tempW,
                    height: tempH
-
+                 });
 
     }).then(function(image) {
       console.log('width is ' + image.width());
@@ -75,7 +70,10 @@ function medThumbnail(image) {
       response.error();
     });
   }
-
+  else {
+    response.success();
+  }
+});
 
 
 
@@ -199,10 +197,24 @@ Parse.Cloud.job("mediumImages", function(request, status) {
 var Image = require("parse-image");
 
 var picsQuery = new Parse.Query("ParsePic");
-picsQuery.doesNotExist("medium");
+picsQuery.doesNotExist("thumbnail");
 
 picsQuery.each(function(pic) {
+  // var size = {width:1024, height:768, label:'large'};
+  // console.log(size);
+  // scalePic(pic,size);
+  //
+  // var size = {width:300, height:400, label:'medium'};
+  // console.log(size);
+  // scalePic(pic,size);
 
+  var size = {width:75, height:75, label:'thumbnail'};
+  console.log(size);
+  scalePic(pic,size);
+
+
+
+  function scalePic(pic,size) {
               Parse.Cloud.httpRequest({
                 url: pic.get("url")
               }).then(function(response) {
@@ -210,8 +222,8 @@ picsQuery.each(function(pic) {
                 return image.setData(response.buffer);
 
               }).then(function(image) {
-                    var MAX_WIDTH = 300;
-                    var MAX_HEIGHT = 400;
+                    var MAX_WIDTH = size.width;
+                    var MAX_HEIGHT = size.height;
                     var tempW = image.width();
                     var tempH = image.height();
                     if (tempW > tempH) {
@@ -244,16 +256,16 @@ picsQuery.each(function(pic) {
               }).then(function(buffer) {
                 // Save the image into a new file.
                 var base64 = buffer.toString("base64");
-                var file = new Parse.File("medium.jpg", { base64: base64});
+                var file = new Parse.File(size.label + ".jpg", { base64: base64});
                 return file.save();
 
               }).then(function(file) {
                 console.log(file.url());
-                pic.set("medium", file);
+                pic.set(size.label, file);
                 pic.save();
               })
-          });
-
+          }
+});
 
 });
 

@@ -20,27 +20,27 @@ var BrowseView = Parse.View.extend({
        user=null;
     }
 
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    APP.header.html(_.template($('#header-template').html(),({"userName":user})));
 
     browseSelf=this;
     console.log('Initializing browse view');
     $('body').css('background','none');
     $('body').addClass('darkBg');
     $('body').removeClass('splash');
-    $('#main-header').addClass('standard');
-    $('#main-header').removeClass('splash');
+    APP.header.addClass('standard');
+    APP.header.removeClass('splash');
     $('#header-nav').css("display","block");
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').addClass('browse');
-    $('#main-container').html('');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.addClass('browse');
+    APP.main.html('');
     $('.pic-showcase').html('');
     // $('#tools').html('');
-    if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
+    if (user != null) {APP.header.html(_.template($('#header-template').html(),({"userName":user})));};
     $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
-    $('#main-container').append("<div id='browse-container'></div>");
+    APP.main.append("<div id='browse-container'></div>");
     browseSelf.render();
   },
 

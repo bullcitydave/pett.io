@@ -6,11 +6,11 @@ var MapView = Parse.View.extend ({
   initialize: function() {
 
 
-    $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').removeClass('browse');
-    $('#main-container').html('');
+    APP.header.addClass('standard');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.removeClass('browse');
+    APP.main.html('');
 
     console.log('Getting map...');
 
@@ -19,11 +19,13 @@ var MapView = Parse.View.extend ({
     var geocoder;
     var myMap;
     var marker;
+    map.markers = [];
+    var mp;  // map positions array
 
     defLat = 37.09024;
     defLng = -95.712891;
 
-    $('#main-container').append(_.template($('#map-template').html()));
+    APP.main.append(_.template($('#map-template').html()));
     $('#map-canvas').show();
 
     var query = new Parse.Query(Pet);
@@ -43,10 +45,31 @@ var MapView = Parse.View.extend ({
 
     render: function(data){
       this.mapInitialize();
+
+      var petData = new Array;
+
       for (i = 0; i < data.length; i++) {
-        var petData = data[i].attributes;
-        this.markLocation(petData);
+        petData = data[i].attributes;
+
+        // var petUName = petData.uniqueName;
+        // var tnQuery = new Parse.Query(ParsePic);
+        // tnQuery.equalTo("petUniqueName",petUName);
+        // tnQuery.select("thumbnail");
+        //
+        // tnQuery.find({
+        //   success: function(results) {
+        //       if (results.length > 0) {
+        //         var randomImg = Math.floor(Math.random() * (results.length));
+        //         petData[i].thumbnail = results[randomImg].attributes.thumbnail._url;
+        //       };
+        //
+        //   }
+        // });
+
+        map.markLocation(petData);
+
       }
+
     },
 
     mapInitialize: function () {
@@ -69,26 +92,42 @@ var MapView = Parse.View.extend ({
       var markLatlng = new google.maps.LatLng(lat, lng);
 
       geocoder.geocode({'latLng': markLatlng}, function(results, status) {
+        var city;
         if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
+          for (var b=0;b<results.length;b++) {
+            if (_.contains(results[b].types,"locality")) {
+                    city= results[b];
+                    break;
+                }
+            }
+          if (city) {
             // myMap.setCenter(markLatlng),
             // myMap.setZoom(11);
-            marker = new google.maps.Marker({
-                map: myMap,
-                position: results[0].geometry.location,
-                infoWindow: infoWindow,
-                name: petData.name,
-                uName: petData.uniqueName
-            });
-            iwContent = "<strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
-            marker.infoWindow.setContent(iwContent);
-            map.gInfoWindows(marker);
-
+            if (!(_.contains(map.mp,city.geometry.location))) {
+              marker = new google.maps.Marker({
+                  map: myMap,
+                  position: city.geometry.location,
+                  infoWindow: infoWindow,
+                  name: petData.name,
+                  uName: petData.uniqueName
+                  // thumbnail: petData.thumbnail._url
+              });
+              map.markers.push(marker);
+              map.mp = _.map(map.markers, function(marker){return marker.position});
+              // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
+              //
+              iwContent = "<strong>" + marker.name + "</strong><br/>" + city.formatted_address;
+              marker.infoWindow.setContent(iwContent);
+              map.gInfoWindows(marker);
+            }
+            else {
+              console.log('Found match');
+            }
           } else {
-            alert('No results found');
+            console.log('No results found');
           }
         } else {
-          alert('Geocoder failed due to: ' + status);
+          console.log('Geocoder failed for ' + lat + '/' + lng + ' due to: ' + status);
         }
       });
     },

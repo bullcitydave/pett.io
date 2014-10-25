@@ -14,8 +14,8 @@ var SplashView = Parse.View.extend({
     $('body').addClass('splash');
     thisView.getSplashImgUrl();
     $('body').removeClass('darkbg');
-    $('#main-header').removeClass('standard');
-    $('#main-header').addClass('splash');
+    APP.header.removeClass('standard');
+    APP.header.addClass('splash');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');

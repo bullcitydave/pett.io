@@ -7,7 +7,7 @@ el: "#tools",
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
-    // $('#main-header').append("<div id='upload-container'></div>");
+    // APP.header.append("<div id='upload-container'></div>");
     this.render(pet);
   },
 

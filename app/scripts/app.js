@@ -49,6 +49,10 @@ var AppView = Parse.View.extend({
 
   el: $("#main-header"),
 
+  main : $('#main-container'),
+
+  header : $('#main-header'),
+
   events: {
     "click #log-out"    : "logOut"
 
@@ -58,6 +62,7 @@ var AppView = Parse.View.extend({
   initialize: function() {
     self = this;
     body = $('body');
+
     document.title = document.title;
     app_router = new AppRouter;
 
@@ -70,7 +75,7 @@ var AppView = Parse.View.extend({
 
   app_router.on('route:goLogin', function() {
       console.log('Loading login page');
-      if (!($('#main-container').hasClass("splash")))
+      if (!(APP.main.hasClass("splash")))
       {
         splashView = new SplashView();
       }
@@ -79,7 +84,7 @@ var AppView = Parse.View.extend({
 
   app_router.on('route:goSignUp', function() {
       console.log('Loading signup page');
-      if (!($('#main-container').hasClass("splash")))
+      if (!(APP.main.hasClass("splash")))
       {
         splashView = new SplashView();
       }
@@ -191,8 +196,8 @@ var AppView = Parse.View.extend({
     Parse.User.logOut();
     console.log('Logging out and back to main login');
 
-    $('#main-header').removeClass('standard');
-    $('#main-container').removeClass('standard');
+    APP.header.removeClass('standard');
+    APP.main.removeClass('standard');
      app_router.navigate('//');
   }
 

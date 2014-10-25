@@ -23,7 +23,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:goLogin', function() {
         console.log('Loading login page');
-        if (!($('#main-container').hasClass("splash")))
+        if (!(APP.main.hasClass("splash")))
         {
           splashView = new SplashView();
         }
@@ -32,7 +32,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:goSignUp', function() {
         console.log('Loading signup page');
-        if (!($('#main-container').hasClass("splash")))
+        if (!(APP.main.hasClass("splash")))
         {
           splashView = new SplashView();
         }
