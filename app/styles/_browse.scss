@@ -23,6 +23,10 @@ div#browse-container {
       position:relative;
       transition: transform .5s, z-index 0;
 
+      @media only screen and (max-device-width : 480px)
+      {
+         display: none;
+      }
 
       img.pet-pic {
         width: 100%;
@@ -61,10 +65,22 @@ div#browse-container {
 
     }
 
-
-
     .pet-box:last-child {
       margin-bottom:40px;
+    }
+
+    .pet-box:first-child {
+      @media only screen and (max-device-width : 480px)
+      {
+        display: inline-block;
+      }
+    }
+
+    .pet-box.visible {
+      display: inline-block;
+    }
+    .pet-box.hidden {
+      display: none;
     }
 
   }
