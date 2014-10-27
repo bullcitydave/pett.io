@@ -3,6 +3,18 @@ $(function() {
 
   console.log('Starting app..');
 
+
+  // $(document).bind("mobileinit", function () {
+  //     $.mobile.ajaxEnabled = false;
+  //     $.mobile.linkBindingEnabled = false;
+  //     $.mobile.hashListeningEnabled = false;
+  //     $.mobile.pushStateEnabled = false;
+  // });
+
+  // $('div[data-role="page"]').live('pagehide', function (event, ui) {
+  //     $(event.currentTarget).remove();
+  // });
+
   if (!(Parse)) { alert("Cloud storage for app unavailable. Please try again later."); };
     $('#header-template').load("_browse.html", function() {
     $('#splash-template').load("_splash.html", function() {
