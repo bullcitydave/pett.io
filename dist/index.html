@@ -25,7 +25,7 @@
       </div>
     </div>
     <footer>
-      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.58</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
+      <p><span id="copyright">@2014 <a href="http://daveseidman.me">Dave Seidman</a></span><span id="version">v 0.1.60</span><span id="disclaimer"><a href="https://github.com/bullcitydave/pett.io/wiki/Getting-started-on-pett.io">Proof-of-concept | Add pets, have fun!</a></span>
       </p>
     </footer>
     <div id="tools">
@@ -68,17 +68,28 @@
       </script>
 
     </div>
-
   </body>
 
 
 <script src="scripts/vendor.js"></script>
 
+
+<!-- disabling jQM routing so it does not prevent Backbone routing -->
+ <script type="text/javascript">
+      $(document).bind("mobileinit", function(){
+        $.mobile.ajaxEnabled = false;
+        $.mobile.hashListeningEnabled = false;
+      });
+    </script>
+
+
+<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+
+
+
 <!-- parse.js -->
 <script src="//www.parsecdn.com/js/parse-1.2.19.min.js"></script>
 
-<!-- google -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
 <script src="scripts/main.js"></script>
 

@@ -132,7 +132,7 @@ var ProfileView = Parse.View.extend ({
 
   initialize: function(tag) {
     $('#profile-container').remove();
-    $('#main-container').prepend('<div style="display:none" id="profile-container"></div>');
+    APP.main.prepend('<div style="display:none" id="profile-container"></div>');
     $('#profile-container').fadeIn(750, "swing");
     body.toggleClass('no-scrolling');
     pet = tag;
@@ -175,7 +175,7 @@ var ProfileView = Parse.View.extend ({
 
         $('#profile-container').remove();
         $('#about').show();
-        // $('#main-container').css('overflow', 'initial');
+        // APP.main.css('overflow', 'initial');
         body.toggleClass('no-scrolling');
         $(".pic-showcase").css("opacity", 1);
         return false;
@@ -272,7 +272,7 @@ el: "#tools",
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
-    // $('#main-header').append("<div id='upload-container'></div>");
+    // APP.header.append("<div id='upload-container'></div>");
     this.render(pet);
   },
 
@@ -379,7 +379,10 @@ var BrowseView = Parse.View.extend({
 
   events: {
     "mouseover .pet-pic"    : "hoverBox",
-    "mouseout  .pet-pic"    : "leaveBox"
+    "mouseout  .pet-pic"    : "leaveBox",
+    "swiperight    .pet-box"    : "swipeRight",
+    "swipeleft     .pet-box"    : "swipeLeft"
+
 
   },
 
@@ -393,27 +396,27 @@ var BrowseView = Parse.View.extend({
        user=null;
     }
 
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
+    APP.header.html(_.template($('#header-template').html(),({"userName":user})));
 
     browseSelf=this;
     console.log('Initializing browse view');
     $('body').css('background','none');
     $('body').addClass('darkBg');
     $('body').removeClass('splash');
-    $('#main-header').addClass('standard');
-    $('#main-header').removeClass('splash');
+    APP.header.addClass('standard');
+    APP.header.removeClass('splash');
     $('#header-nav').css("display","block");
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').addClass('browse');
-    $('#main-container').html('');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.addClass('browse');
+    APP.main.html('');
     $('.pic-showcase').html('');
     // $('#tools').html('');
-    if (user != null) {$('#main-header').html(_.template($('#header-template').html(),({"userName":user})));};
+    if (user != null) {APP.header.html(_.template($('#header-template').html(),({"userName":user})));};
     $('#browse').hide();
     $('#log-out').show();
     $('body').addClass('darkbg');
-    $('#main-container').append("<div id='browse-container'></div>");
+    APP.main.append("<div id='browse-container'></div>");
     browseSelf.render();
   },
 
@@ -464,6 +467,8 @@ var BrowseView = Parse.View.extend({
             var randomImg = Math.floor(Math.random() * (results.length));
             browseSelf.showPics(results[randomImg]);
         };
+
+
       }
     });
   }
@@ -506,7 +511,45 @@ leaveBox: function(event) {
     var targetBox = $(event.target).parent().parent();
     // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
     targetBox.removeClass('hovering hovering-up hovering-down');
-}
+},
+
+swipeRight: function(event) {
+    event.stopImmediatePropagation();
+    $('body').bind('touchmove', function(e){e.preventDefault()})
+    console.log('hello');
+    var thisBox = $(event.target).closest('.pet-box');
+    var boxIndex = $('.pet-box').index(thisBox);
+    if ((boxIndex !== $('.pet-box').length - 1)) {
+      var next = $('.pet-box').eq($('.pet-box').index(thisBox) + 1);
+    }
+    else {
+      var next = $('.pet-box').eq(0);
+    }
+
+    $(thisBox).switchClass("visible","hidden");
+    $(next).switchClass("hidden","visible");
+    $('body').unbind('touchmove');
+    return false;
+  },
+
+swipeLeft: function(event) {
+    event.stopImmediatePropagation();
+    $('body').bind('touchmove', function(e){e.preventDefault()})
+    console.log('hello');
+    var thisBox = $(event.target).closest('.pet-box');
+    var boxIndex = $('.pet-box').index(thisBox);
+    if (boxIndex !== 0) {
+      var prev = $('.pet-box').eq($('.pet-box').index(thisBox) - 1);
+    }
+    else {
+      var prev = $('.pet-box').eq(($('.pet-box').length)-1);
+    }
+    $(thisBox).switchClass("visible","hidden");
+    $(prev).switchClass("hidden","visible");
+    $('body').unbind('touchmove');
+    return false;
+  },
+
 
 });
 
@@ -535,21 +578,21 @@ var LinkView = Parse.View.extend({
 
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
-    $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').removeClass('browse');
-    $('#main-container').html('');
+    APP.header.addClass('standard');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.removeClass('browse');
+    APP.main.html('');
     $('.pic-showcase').html('');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":user})));
-    $('#main-container').append(_.template($('#pet-header-template').html(),({"petName":tag})));
+    APP.header.html(_.template($('#header-template').html(),({"userName":user})));
+    APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
 
     APP.getAge(pet);
 
-    $('#main-container').append("<div class='pic-showcase'></div>");
+    APP.main.append("<div class='pic-showcase'></div>");
 
 
     this.render();
@@ -870,11 +913,11 @@ var MapView = Parse.View.extend ({
   initialize: function() {
 
 
-    $('#main-header').addClass('standard');
-    $('#main-container').removeClass('splash');
-    $('#main-container').addClass('standard');
-    $('#main-container').removeClass('browse');
-    $('#main-container').html('');
+    APP.header.addClass('standard');
+    APP.main.removeClass('splash');
+    APP.main.addClass('standard');
+    APP.main.removeClass('browse');
+    APP.main.html('');
 
     console.log('Getting map...');
 
@@ -883,11 +926,13 @@ var MapView = Parse.View.extend ({
     var geocoder;
     var myMap;
     var marker;
+    map.markers = [];
+    var mp;  // map positions array
 
     defLat = 37.09024;
     defLng = -95.712891;
 
-    $('#main-container').append(_.template($('#map-template').html()));
+    APP.main.append(_.template($('#map-template').html()));
     $('#map-canvas').show();
 
     var query = new Parse.Query(Pet);
@@ -907,10 +952,31 @@ var MapView = Parse.View.extend ({
 
     render: function(data){
       this.mapInitialize();
+
+      var petData = new Array;
+
       for (i = 0; i < data.length; i++) {
-        var petData = data[i].attributes;
-        this.markLocation(petData);
+        petData = data[i].attributes;
+
+        // var petUName = petData.uniqueName;
+        // var tnQuery = new Parse.Query(ParsePic);
+        // tnQuery.equalTo("petUniqueName",petUName);
+        // tnQuery.select("thumbnail");
+        //
+        // tnQuery.find({
+        //   success: function(results) {
+        //       if (results.length > 0) {
+        //         var randomImg = Math.floor(Math.random() * (results.length));
+        //         petData[i].thumbnail = results[randomImg].attributes.thumbnail._url;
+        //       };
+        //
+        //   }
+        // });
+
+        map.markLocation(petData);
+
       }
+
     },
 
     mapInitialize: function () {
@@ -933,26 +999,42 @@ var MapView = Parse.View.extend ({
       var markLatlng = new google.maps.LatLng(lat, lng);
 
       geocoder.geocode({'latLng': markLatlng}, function(results, status) {
+        var city;
         if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
+          for (var b=0;b<results.length;b++) {
+            if (_.contains(results[b].types,"locality")) {
+                    city= results[b];
+                    break;
+                }
+            }
+          if (city) {
             // myMap.setCenter(markLatlng),
             // myMap.setZoom(11);
-            marker = new google.maps.Marker({
-                map: myMap,
-                position: results[0].geometry.location,
-                infoWindow: infoWindow,
-                name: petData.name,
-                uName: petData.uniqueName
-            });
-            iwContent = "<strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
-            marker.infoWindow.setContent(iwContent);
-            map.gInfoWindows(marker);
-
+            if (!(_.contains(map.mp,city.geometry.location))) {
+              marker = new google.maps.Marker({
+                  map: myMap,
+                  position: city.geometry.location,
+                  infoWindow: infoWindow,
+                  name: petData.name,
+                  uName: petData.uniqueName
+                  // thumbnail: petData.thumbnail._url
+              });
+              map.markers.push(marker);
+              map.mp = _.map(map.markers, function(marker){return marker.position});
+              // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
+              //
+              iwContent = "<strong>" + marker.name + "</strong><br/>" + city.formatted_address;
+              marker.infoWindow.setContent(iwContent);
+              map.gInfoWindows(marker);
+            }
+            else {
+              console.log('Found match');
+            }
           } else {
-            alert('No results found');
+            console.log('No results found');
           }
         } else {
-          alert('Geocoder failed due to: ' + status);
+          console.log('Geocoder failed for ' + lat + '/' + lng + ' due to: ' + status);
         }
       });
     },
@@ -1075,8 +1157,8 @@ var AccountView = Parse.View.extend({
     $(this.el).removeClass('splash');
     $(this.el).removeClass('browse');
     $(this.el).addClass('standard');
-    $('#main-header').html(_.template($('#header-template').html(),({"userName":this.user})));
-    $('#main-header').addClass('standard');
+    APP.header.html(_.template($('#header-template').html(),({"userName":this.user})));
+    APP.header.addClass('standard');
     $('body').addClass('darkbg');
     x=this;
     _.bindAll(this, "createPet");
@@ -1455,8 +1537,8 @@ var SplashView = Parse.View.extend({
     $('body').addClass('splash');
     thisView.getSplashImgUrl();
     $('body').removeClass('darkbg');
-    $('#main-header').removeClass('standard');
-    $('#main-header').addClass('splash');
+    APP.header.removeClass('standard');
+    APP.header.addClass('splash');
     $(this.splashHead).html(_.template($("#header-template").html(),({"userName":''})));
     this.$el.html(_.template($("#splash-template").html()));
     this.$el.addClass('splash');
@@ -1497,7 +1579,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:goLogin', function() {
         console.log('Loading login page');
-        if (!($('#main-container').hasClass("splash")))
+        if (!(APP.main.hasClass("splash")))
         {
           splashView = new SplashView();
         }
@@ -1506,7 +1588,7 @@ var AppRouter = Parse.Router.extend({
 
     app_router.on('route:goSignUp', function() {
         console.log('Loading signup page');
-        if (!($('#main-container').hasClass("splash")))
+        if (!(APP.main.hasClass("splash")))
         {
           splashView = new SplashView();
         }
@@ -1621,6 +1703,18 @@ $(function() {
 
   console.log('Starting app..');
 
+
+  // $(document).bind("mobileinit", function () {
+  //     $.mobile.ajaxEnabled = false;
+  //     $.mobile.linkBindingEnabled = false;
+  //     $.mobile.hashListeningEnabled = false;
+  //     $.mobile.pushStateEnabled = false;
+  // });
+
+  // $('div[data-role="page"]').live('pagehide', function (event, ui) {
+  //     $(event.currentTarget).remove();
+  // });
+
   if (!(Parse)) { alert("Cloud storage for app unavailable. Please try again later."); };
     $('#header-template').load("_browse.html", function() {
     $('#splash-template').load("_splash.html", function() {
@@ -1667,6 +1761,10 @@ var AppView = Parse.View.extend({
 
   el: $("#main-header"),
 
+  main : $('#main-container'),
+
+  header : $('#main-header'),
+
   events: {
     "click #log-out"    : "logOut"
 
@@ -1676,6 +1774,7 @@ var AppView = Parse.View.extend({
   initialize: function() {
     self = this;
     body = $('body');
+
     document.title = document.title;
     app_router = new AppRouter;
 
@@ -1688,7 +1787,7 @@ var AppView = Parse.View.extend({
 
   app_router.on('route:goLogin', function() {
       console.log('Loading login page');
-      if (!($('#main-container').hasClass("splash")))
+      if (!(APP.main.hasClass("splash")))
       {
         splashView = new SplashView();
       }
@@ -1697,7 +1796,7 @@ var AppView = Parse.View.extend({
 
   app_router.on('route:goSignUp', function() {
       console.log('Loading signup page');
-      if (!($('#main-container').hasClass("splash")))
+      if (!(APP.main.hasClass("splash")))
       {
         splashView = new SplashView();
       }
@@ -1809,8 +1908,8 @@ var AppView = Parse.View.extend({
     Parse.User.logOut();
     console.log('Logging out and back to main login');
 
-    $('#main-header').removeClass('standard');
-    $('#main-container').removeClass('standard');
+    APP.header.removeClass('standard');
+    APP.main.removeClass('standard');
      app_router.navigate('//');
   }
 
