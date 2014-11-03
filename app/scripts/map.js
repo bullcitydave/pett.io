@@ -21,6 +21,7 @@ var MapView = Parse.View.extend ({
     var marker;
     map.markers = [];
     var mp;  // map positions array
+    var bounds;
 
     defLat = 37.09024;
     defLng = -95.712891;
@@ -81,6 +82,7 @@ var MapView = Parse.View.extend ({
         mapTypeId: 'roadmap'
       }
       myMap = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      bounds = new google.maps.LatLngBounds();
 
     },
 
@@ -103,7 +105,7 @@ var MapView = Parse.View.extend ({
           if (city) {
             // myMap.setCenter(markLatlng),
             // myMap.setZoom(11);
-            if (!(_.contains(map.mp,city.geometry.location))) {
+            if (!(_.contains(map.mp,city.geometry.location.toString()))) {
               marker = new google.maps.Marker({
                   map: myMap,
                   position: city.geometry.location,
@@ -112,8 +114,12 @@ var MapView = Parse.View.extend ({
                   uName: petData.uniqueName
                   // thumbnail: petData.thumbnail._url
               });
+
+              bounds.extend(marker.position);
+	            myMap.fitBounds(bounds);
+
               map.markers.push(marker);
-              map.mp = _.map(map.markers, function(marker){return marker.position});
+              map.mp = _.map(map.markers, function(marker){return marker.position.toString()});
               // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
               //
               iwContent = "<strong>" + marker.name + "</strong><br/>" + city.formatted_address;
