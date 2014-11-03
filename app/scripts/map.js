@@ -47,10 +47,10 @@ var MapView = Parse.View.extend ({
     render: function(data){
       this.mapInitialize();
 
-      var petData = new Array;
+      var mapPet = new Pet;
 
       for (i = 0; i < data.length; i++) {
-        petData = data[i].attributes;
+        mapPet = data[i].attributes;
 
         // var petUName = petData.uniqueName;
         // var tnQuery = new Parse.Query(ParsePic);
@@ -67,7 +67,7 @@ var MapView = Parse.View.extend ({
         //   }
         // });
 
-        map.markLocation(petData);
+        map.markLocation(mapPet);
 
       }
 
@@ -86,9 +86,9 @@ var MapView = Parse.View.extend ({
 
     },
 
-    markLocation: function(petData) {
-      var lat = petData.geoLocation.latitude;
-      var lng = petData.geoLocation.longitude;
+    markLocation: function(pet) {
+      var lat = pet.geoLocation.latitude;
+      var lng = pet.geoLocation.longitude;
       var infoWindow = new google.maps.InfoWindow();
       var iwContent;
       var markLatlng = new google.maps.LatLng(lat, lng);
@@ -109,9 +109,9 @@ var MapView = Parse.View.extend ({
               marker = new google.maps.Marker({
                   map: myMap,
                   position: city.geometry.location,
+                  positionString: city.geometry.location.toString(),
                   infoWindow: infoWindow,
-                  name: petData.name,
-                  uName: petData.uniqueName
+                  pets: [pet]
                   // thumbnail: petData.thumbnail._url
               });
 
@@ -122,12 +122,16 @@ var MapView = Parse.View.extend ({
               map.mp = _.map(map.markers, function(marker){return marker.position.toString()});
               // iwContent = "<img src='" + marker.thumbnail + "'><strong>" + marker.name + "</strong><br/>" + results[1].formatted_address;
               //
-              iwContent = "<strong>" + marker.name + "</strong><br/>" + city.formatted_address;
+              iwContent = "<p>" + city.formatted_address + "</p><p><strong>" + pet.name  + "</strong></p>";
               marker.infoWindow.setContent(iwContent);
               map.gInfoWindows(marker);
             }
             else {
               console.log('Found match');
+              marker = _.findWhere(map.markers, {positionString: city.geometry.location.toString()});
+              marker.pets.push(pet);
+              iwContent = marker.infoWindow.getContent() + "<p><strong>" + pet.name  + "</strong></p>";
+              marker.infoWindow.setContent(iwContent);
             }
           } else {
             console.log('No results found');
@@ -149,7 +153,7 @@ var MapView = Parse.View.extend ({
 
       google.maps.event.addListener(marker, 'click', function() {
         marker.infoWindow.close();
-        app_router.navigate('//pet/'+ marker.uName);
+        app_router.navigate('//pet/'+ marker.pet.uniqueName);
       });
     }
 
