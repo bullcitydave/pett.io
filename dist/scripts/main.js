@@ -379,10 +379,7 @@ var BrowseView = Parse.View.extend({
 
   events: {
     "mouseover .pet-pic"    : "hoverBox",
-    "mouseout  .pet-pic"    : "leaveBox",
-    "swiperight    .pet-box"    : "swipeRight",
-    "swipeleft     .pet-box"    : "swipeLeft"
-
+    "mouseout  .pet-pic"    : "leaveBox"
 
   },
 
@@ -467,8 +464,6 @@ var BrowseView = Parse.View.extend({
             var randomImg = Math.floor(Math.random() * (results.length));
             browseSelf.showPics(results[randomImg]);
         };
-
-
       }
     });
   }
@@ -511,45 +506,7 @@ leaveBox: function(event) {
     var targetBox = $(event.target).parent().parent();
     // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
     targetBox.removeClass('hovering hovering-up hovering-down');
-},
-
-swipeRight: function(event) {
-    event.stopImmediatePropagation();
-    $('body').bind('touchmove', function(e){e.preventDefault()})
-    console.log('hello');
-    var thisBox = $(event.target).closest('.pet-box');
-    var boxIndex = $('.pet-box').index(thisBox);
-    if ((boxIndex !== $('.pet-box').length - 1)) {
-      var next = $('.pet-box').eq($('.pet-box').index(thisBox) + 1);
-    }
-    else {
-      var next = $('.pet-box').eq(0);
-    }
-
-    $(thisBox).switchClass("visible","hidden");
-    $(next).switchClass("hidden","visible");
-    $('body').unbind('touchmove');
-    return false;
-  },
-
-swipeLeft: function(event) {
-    event.stopImmediatePropagation();
-    $('body').bind('touchmove', function(e){e.preventDefault()})
-    console.log('hello');
-    var thisBox = $(event.target).closest('.pet-box');
-    var boxIndex = $('.pet-box').index(thisBox);
-    if (boxIndex !== 0) {
-      var prev = $('.pet-box').eq($('.pet-box').index(thisBox) - 1);
-    }
-    else {
-      var prev = $('.pet-box').eq(($('.pet-box').length)-1);
-    }
-    $(thisBox).switchClass("visible","hidden");
-    $(prev).switchClass("hidden","visible");
-    $('body').unbind('touchmove');
-    return false;
-  },
-
+}
 
 });
 
@@ -1702,18 +1659,6 @@ $(function() {
 
 
   console.log('Starting app..');
-
-
-  // $(document).bind("mobileinit", function () {
-  //     $.mobile.ajaxEnabled = false;
-  //     $.mobile.linkBindingEnabled = false;
-  //     $.mobile.hashListeningEnabled = false;
-  //     $.mobile.pushStateEnabled = false;
-  // });
-
-  // $('div[data-role="page"]').live('pagehide', function (event, ui) {
-  //     $(event.currentTarget).remove();
-  // });
 
   if (!(Parse)) { alert("Cloud storage for app unavailable. Please try again later."); };
     $('#header-template').load("_browse.html", function() {
