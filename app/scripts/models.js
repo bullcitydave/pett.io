@@ -62,6 +62,12 @@
     });
 
 
+    var ParsePicCollection = Parse.Collection.extend({
+      model: ParsePic
+    });
+
+
+
     var FlickrPicList = Parse.Collection.extend({
         model: FlickrPic,
         url: 'https://api.parse.com/1/classes/',

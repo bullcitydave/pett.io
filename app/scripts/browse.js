@@ -22,7 +22,10 @@ var BrowseView = Parse.View.extend({
 
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
 
+
+
     browseSelf=this;
+    browseSelf.checkUserStatus();
     console.log('Initializing browse view');
     $('body').css('background','none');
     $('body').addClass('darkBg');
@@ -41,67 +44,106 @@ var BrowseView = Parse.View.extend({
     $('#log-out').show();
     $('body').addClass('darkbg');
     APP.main.append("<div id='browse-container'></div>");
-    browseSelf.render().squeeze();
+
+    var parsePicQuery = new Parse.Query("ParsePic");
+    parsePicQuery.limit(1000);
+    parsePicQuery.descending('createdAt');
+    parsePics = parsePicQuery.collection();
+
+
+
+    browseSelf.render();
   },
 
   render: function() {
 
-      if (Parse.User.current() !== null)
-        {
-          $('.site-visitor').hide();
-          $('.site-user').show();
-        }
-      else {
-          $('.site-user').hide();
-          $('.site-visitor').show();
-      }
-        var petsQuery = new Parse.Query(Pet);
-        petsQuery.limit(1000);
-        petsQuery.select("uniqueName");
-        petsQuery.descending("updatedAt");
-        petsQuery.find({
-          success: function(results) {
-              browseSelf.getPics(results);
-              return this;
+      parsePics.fetch({
+          success: function(collection) {
+              browseSelf.getPics(collection);
             },
-          error: function(error) {
-              console.log("Error: " + error.code + " " + error.message);
-          }
+          error: function(collection, error) {
+                console.error(error);
+            }
       });
+
+        // var petsQuery = new Parse.Query(Pet);
+        // petsQuery.limit(1000);
+        // petsQuery.select("uniqueName");
+        // petsQuery.descending("updatedAt");
+        // petsQuery.find({
+        //   success: function(results) {
+
+      //         return this;
+      //       },
+      //     error: function(error) {
+      //         console.log("Error: " + error.code + " " + error.message);
+      //     }
+      // });
       return this;
   },
 
-  getPics: function(results) {
-      for (var i = 0; i < results.length ; i++){
-          var petUName = results[i].attributes.uniqueName;
-          var ppQuery1 = new Parse.Query(ParsePic);
-          ppQuery1.equalTo("petUniqueName",petUName);
-          ppQuery1.containedIn("size",
-                      ["original", "undefined"]);
+  getPics: function(collection) {
 
-          var ppQuery2 = new Parse.Query(ParsePic);
-          ppQuery2.equalTo("petUniqueName",petUName);
-          ppQuery2.doesNotExist("size");
 
-          var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
+      var names = collection.pluck('petUniqueName');
+      var uniqueNames = _.countBy(names);
+      var petPics = collection.models;
 
-          ppQuery.ascending("petname");
+      _.each(Object.keys(uniqueNames), function(name){
+        console.log(name + "--" + uniqueNames[name]);
+        // var petPhotos = _.where(collection)
+        var petPics = collection.filter(function(petPic) {
+          return petPic.get('petUniqueName') === name; });
+        var numPics = uniqueNames[name];
+        var randomPic = Math.floor(Math.random() * numPics);
+        browseSelf.showPics(petPics[randomPic]);
+      })
 
-          ppQuery.find({
-            success: function(results) {
-                if (results.length > 0) {
-                  var randomImg = Math.floor(Math.random() * (results.length));
-                  browseSelf.showPics(results[randomImg], i);
-              };
-            }
-          });
-      }
+      //
+      // var randomImg = Math.floor(Math.random() * (results.length));
+
+
+
+      //
+      // d1 = new $.Deferred();
+      // $.when(d1).done(function () {
+      //   browseSelf.squeeze();
+      // });
+      // var petsWithPicsCount = 0;
+      // for (var i = 0; i < results.length ; i++){
+          // var petUName = results[i].attributes.uniqueName;
+          // var ppQuery = new Parse.Query(ParsePic);
+          // ppQuery1.matchesKeyInQuery("hometown", "uniqueName", results);
+          // ppQuery1.equalTo("petUniqueName",petUName);
+          // ppQuery1.containedIn("size",
+          //             ["original", "undefined"]);
+          //
+          // var ppQuery2 = new Parse.Query(ParsePic);
+          // ppQuery2.equalTo("petUniqueName",petUName);
+          // ppQuery2.doesNotExist("size");
+          //
+          // var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
+          //
+          // ppQuery.ascending("petname");
+
+          // ppQuery.find({
+          //   success: function(results) {
+          //       if (results.length > 0) {
+          //         // petsWithPicsCount +=1;
+          //         var randomImg = Math.floor(Math.random() * (results.length));
+          //         browseSelf.showPics(results[randomImg], petsWithPicsCount);
+          //     };
+          //   }
+          // });
+      // };
+      return this;
   },
 
 
   showPics: function(results) {
-      var browseView = $('#browse-template').html();
-      $('#browse-container').append(_.template(browseView,results.attributes));
+      var browseTemplate = $('#browse-template').html();
+      $('#browse-container').append(_.template(browseTemplate,results.attributes));
+      // if (petCount === 10) { d1.resolve(); };
   },
 
 
@@ -126,6 +168,18 @@ var BrowseView = Parse.View.extend({
       var targetBox = $(event.target).parent().parent();
       // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
       targetBox.removeClass('hovering hovering-up hovering-down');
+  },
+
+  checkUserStatus: function() {
+      if (Parse.User.current() !== null)
+        {
+          $('.site-visitor').hide();
+          $('.site-user').show();
+        }
+      else {
+          $('.site-user').hide();
+          $('.site-visitor').show();
+      }
   },
 
   squeeze: function() {
