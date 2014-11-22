@@ -385,7 +385,7 @@ var BrowseView = Parse.View.extend({
 
   events: {
     "mouseover .pet-pic"    : "hoverBox",
-    "mouseout  .pet-pic"    : "leaveBox",
+    "mouseout  .pet-pic"    : "leaveBox"
   },
 
   initialize: function(tag) {
@@ -546,26 +546,33 @@ var BrowseView = Parse.View.extend({
 
 
   hoverBox: function(event) {
-      // $('.hovering').removeClass('hovering');
-      var targetBox = $(event.target).parent().parent();
+      $('.hovering').removeClass('hovering');
+      console.log('Hover');
+      var targetBox = $(event.target).closest('.pet-box');
       targetBox.addClass('hovering');
       // need separate for 1st el, top x els, last of row 1
       // bottom left, bottom, bottom-right
       // left, right
       // everything else
       if ((targetBox.position().top < 100)) {
-        targetBox.switchClass('hovering','hovering-down');
+        targetBox.addClass('hovering-down');
       }
       if ((targetBox.parent().height() - targetBox.position().top) < 300) {
-        targetBox.switchClass('hovering','hovering-up');
+        targetBox.addClass('hovering-up');
+      }
+      if ((targetBox.position().left < 100)) {
+        targetBox.addClass('hovering-right');
+      }
+      if ((targetBox.parent().width() - targetBox.position().left) < 300) {
+        targetBox.addClass('hovering-left');
       }
 
   },
 
   leaveBox: function(event) {
-      var targetBox = $(event.target).parent().parent();
+      var targetBox = $(event.target).closest('.pet-box');
       // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
-      targetBox.removeClass('hovering hovering-up hovering-down');
+      targetBox.removeClass('hovering hovering-up hovering-down hovering-left hovering-right');
   },
 
   checkUserStatus: function() {
@@ -593,7 +600,6 @@ var BrowseView = Parse.View.extend({
         if ((rowWidth + A[i]) > width) {
           insertAfter = (i-1);
           var extraSpace = width - rowWidth;
-          // console.log('extraspace ', extraSpace);
           for (j = i; j < $('.pet-box').length; j++) {
             if (($('.pet-box').eq(j).width()+38) < extraSpace) {
               // console.log(j + ' ' + $('.pet-box').eq(j).width());
