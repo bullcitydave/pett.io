@@ -16,6 +16,7 @@ function squeeze() {
             console.log(j + ' ' + $('.pet-box').eq(j).width());
             insertThis = j;
             $('.pet-box').eq(insertThis).insertAfter($('.pet-box').eq(insertAfter));
+            $(insertThis).before(" ");
             squeeze();
             return false;
            }

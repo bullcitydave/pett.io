@@ -6,7 +6,8 @@ var BrowseView = Parse.View.extend({
 
   events: {
     "mouseover .pet-pic"    : "hoverBox",
-    "mouseout  .pet-pic"    : "leaveBox"
+    "mouseout  .pet-pic"    : "leaveBox",
+
   },
 
   initialize: function(tag) {
@@ -20,8 +21,6 @@ var BrowseView = Parse.View.extend({
     }
 
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
-
-
 
     browseSelf=this;
     browseSelf.checkUserStatus();
@@ -52,6 +51,11 @@ var BrowseView = Parse.View.extend({
 
     d = new $.Deferred();
     browseSelf.render();
+    $(window).on("resize", this, function(){
+      browseSelf.squeeze();
+      })
+
+
 
   },
 
@@ -168,7 +172,6 @@ var BrowseView = Parse.View.extend({
 
   hoverBox: function(event) {
       $('.hovering').removeClass('hovering');
-      console.log('Hover');
       var targetBox = $(event.target).closest('.pet-box');
       targetBox.addClass('hovering');
       // need separate for 1st el, top x els, last of row 1
@@ -209,7 +212,7 @@ var BrowseView = Parse.View.extend({
   },
 
   squeeze: function() {
-    // console.log('Squeezing...');
+    console.log('Squeezing...');
     var rowWidth = 0;
     var A = [];
     var width = window.innerWidth;
@@ -219,13 +222,13 @@ var BrowseView = Parse.View.extend({
         A[i] = ($('.pet-box').eq(i).width())+38;
 
         if ((rowWidth + A[i]) > width) {
-          insertAfter = (i-1);
+          var insertAfter = $('.pet-box').eq(i-1);
           var extraSpace = width - rowWidth;
           for (j = i; j < $('.pet-box').length; j++) {
             if (($('.pet-box').eq(j).width()+38) < extraSpace) {
               // console.log(j + ' ' + $('.pet-box').eq(j).width());
-              insertThis = j;
-              $('.pet-box').eq(insertThis).insertAfter($('.pet-box').eq(insertAfter));
+              var insertThis = $('.pet-box').eq(j);
+              insertThis.insertAfter(insertAfter).before(" ");
               browseSelf.squeeze();
               return false;
              }
