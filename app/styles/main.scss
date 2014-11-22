@@ -12,8 +12,6 @@ $mobile-m: new-breakpoint(min-width 480px 5);
 $mobile-l: new-breakpoint(min-width 768px 12);
 $desktop: new-breakpoint(min-width 960px 12);
 
-
-
 @mixin if-brightness($amt: 1.1) {
   -o-filter: brightness($amt);
   -ms-filter: brightness($amt);

@@ -43,8 +43,8 @@ div#browse-container {
             clear: both;
             text-align: center;
             color: $darker-orange;
-            font-size: 1.0em;
-            font-weight: 600;
+            font-size: 0.8em;
+            font-weight: 400;
           }
           .pet-name {
             text-align: center;
@@ -91,19 +91,31 @@ div#browse-container {
 
     .pet-box.hovering-down {
       @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 50px);
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 55px);
     }
     .pet-box.hovering-up {
       @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -50px);
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -55px);
     }
     .pet-box.hovering-right {
       @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(50px, 0px);
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 0px);
     }
     .pet-box.hovering-left {
       @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-50px, 0px);
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 0px);
+    }
+    .pet-box.hovering-down.hovering-right {
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 55px);
+    }
+    .pet-box.hovering-down.hovering-left {
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 55px);
+    }
+    .pet-box.hovering-up.hovering-right {
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, -55px);
+    }
+    .pet-box.hovering-up.hovering-left {
+      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, -55px);
     }
   }
 
