@@ -42,6 +42,10 @@ var LinkView = Parse.View.extend({
 
     this.render();
 
+    $(window).on("resize", this, function(){
+      link.squeeze($('.pic-showcase a'));
+      })
+
 
 
   },
@@ -99,13 +103,13 @@ var LinkView = Parse.View.extend({
 
     var complete = 0;
 
-    // var buildingImages = setInterval(function(){
-    //     complete = imageLoadCheck();
-    //     // console.log('Percent loaded: ', (complete/imgCount)*100);
-    //     link.squeeze()},750);
+    var buildingImages = setInterval(function(){
+        complete = imageLoadCheck();
+        // console.log('Percent loaded: ', (complete/imgCount)*100);
+        link.squeeze($('.pic-showcase a'))},1250);
 
-    // setTimeout(function(){
-    //   clearInterval(buildingImages)},15000);
+    setTimeout(function(){
+      clearInterval(buildingImages)},12500);
 
 
 },

@@ -234,8 +234,8 @@ body {
         }
 
         #about {
-          margin: -40px 0 0 20px;
-          position: static;
+          margin: 20px 0 0 0;
+          position:absolute;
         }
         #about:hover {
           color: $darker-orange;
