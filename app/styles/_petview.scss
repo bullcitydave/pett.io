@@ -1,0 +1,112 @@
+div.pic-showcase {
+
+    margin: 0 auto;
+    transition: opacity .8s;
+    width: 100%;
+    text-align: justify;
+
+    a {
+
+
+      display:inline-block;
+
+    .montageSquare {
+      @include media($mobile-s) {
+
+        width:100%;
+        @include if-brightness(1);
+        float:left;
+        padding:0;
+        margin-bottom:10px;
+      }
+      @include media($mobile-m) {
+        height: 300px;
+        width:auto;
+        @include if-brightness(1);
+        float:left;
+        padding: 20px;
+      }
+      @include media($mobile-l) {
+
+
+      }
+    }
+}
+
+
+    .flickr {
+
+      // border-left: solid 2px #0063dc;
+      // border-top: solid 2px #0063dc;
+      // border-right: solid 2px #ff0084;
+      // border: solid 4px $flickr;
+    }
+
+    iframe.vine-embed-small {
+      width:400px;
+      html {
+        body {
+          div.embed-simple {
+            position: relative;
+            // height: 100%;
+            // width: 150%;
+ overflow: hidden;
+ color: #464646;
+ background: #000;
+
+      .embed .video-container {
+        position: relative;
+ //        height: 100%;
+ // width: 100%;
+
+text-align: inherit;
+
+
+            .embed video {
+      height: auto;
+      width: auto;
+        }
+          }
+          }
+
+        }
+      }
+}
+
+
+    .montageSquare:hover {
+
+      @include if-brightness(1.25);
+      border: solid 2px $orange;
+
+    }
+
+    .flickr:hover {
+
+      @include if-brightness(1.25);
+      border: solid 4px $flickr;
+      // @include size(250px 250px);
+      // width: 100%;
+      // margin:0 6.25% 0 -6.25%;
+      // border-top: solid 4px #0063dc;
+      // border-left: solid 4px #0063dc;
+      // border-right: solid 4px #ff0084;
+      // border-bottom: solid 4px #ff0084;
+    }
+  // div.pic-container.w2 { width:  120px; }
+
+  // div.pic-container:nth-child(1) {
+  //   width: 100px;
+  //   }
+  //
+  div.pic-container:nth-child(1n) {
+    // width: 10%;
+    // float:left;
+    // padding-left:10%;
+    }
+  div.pic-container:nth-child(2n) {
+    // width: 20%;
+    // float:right;
+    // padding-right:10%;
+    }
+  }

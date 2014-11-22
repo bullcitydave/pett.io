@@ -51,26 +51,26 @@ var LinkView = Parse.View.extend({
 
   events: {
     "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm",
-    "click h2" : "doMasonry"
+    "click #upload"   : "imageUploadForm"
+    // "click h2" : "doMasonry"
   },
 
 
-  doMasonry: function() {
-
-    $('.pic-showcase').imagesLoaded( function() {
-      $('.pic-showcase').masonry({
-                      columnwidth: 200,
-                      gutter: 10,
-                      itemSelector: '.montageSquare',
-                      isFitWidth: true,
-                      transitionDuration: 0
-                });
-      // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
-
-      });
-
-  },
+  // doMasonry: function() {
+  //
+  //   $('.pic-showcase').imagesLoaded( function() {
+  //     $('.pic-showcase').masonry({
+  //                     columnwidth: 200,
+  //                     gutter: 10,
+  //                     itemSelector: '.montageSquare',
+  //                     isFitWidth: true,
+  //                     transitionDuration: 0
+  //               });
+  //     // console.log('Total images rendered: ' + $('img').length + ' out of ' + imgCount);
+  //
+  //     });
+  //
+  // },
 
 
   render: function() {
@@ -99,13 +99,13 @@ var LinkView = Parse.View.extend({
 
     var complete = 0;
 
-    var buildingImages = setInterval(function(){
-        complete = imageLoadCheck();
-        // console.log('Percent loaded: ', (complete/imgCount)*100);
-        link.doMasonry()},750);
+    // var buildingImages = setInterval(function(){
+    //     complete = imageLoadCheck();
+    //     // console.log('Percent loaded: ', (complete/imgCount)*100);
+    //     link.squeeze()},750);
 
-    setTimeout(function(){
-      clearInterval(buildingImages)},15000);
+    // setTimeout(function(){
+    //   clearInterval(buildingImages)},15000);
 
 
 },
@@ -126,6 +126,38 @@ var LinkView = Parse.View.extend({
   viewAccount: function(e) {
     app_router.navigate('//account/'+Parse.User.current().getUsername());
     return false;
+  },
+
+  squeeze: function(el) {
+    console.log('Squeezing...');
+    var rowWidth = 0;
+    var A = [];
+    var width = window.innerWidth;
+    var insertAfter;
+    var insertThis;
+    for (i = 0; i < $(el).length; i++ ) {
+        A[i] = ($(el).eq(i).width())+8;
+
+        if ((rowWidth + A[i]) > width) {
+          var insertAfter = $(el).eq(i-1);
+          var extraSpace = width - rowWidth;
+          for (j = i; j < $('.pic-showcase a').length; j++) {
+            if (($(el).eq(j).width()+8) < extraSpace) {
+              // console.log(j + ' ' + $('.pet-box').eq(j).width());
+              var insertThis = $(el).eq(j);
+              insertThis.insertAfter(insertAfter).before(" ");
+              link.squeeze($('.pic-showcase a'));
+              return false;
+             }
+           }
+           rowWidth = A[i];
+          //  console.log('rowWidth: ', rowWidth);
+        }
+        else {
+          rowWidth += A[i];
+          // console.log('rowWidth: ', rowWidth);
+        }
+    }
   }
 
 
