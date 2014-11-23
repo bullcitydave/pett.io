@@ -196,7 +196,7 @@ body {
         }
         #about {
           width: 120px;
-          border: none;
+          border: 2px solid $orange;
           text-decoration: none;
           border-radius: 0;
           text-shadow: none;
@@ -205,10 +205,10 @@ body {
           text-align: center;
           margin:-20px 0 0 0;
           text-transform: uppercase;
-          color: $black;
-          background: $orange;
+          color: $orange;
+          background: transparent;
           padding: 10px;
-          font-weight: 600;
+          font-weight: 400;
           position: relative;
           left: calc(50% - 60px);
         }
@@ -223,7 +223,7 @@ body {
         h2 {
           font-size: 4.5em;
           text-align: center;
-          margin: 0;
+          margin: 20px 0 0 0;
           }
 
 
@@ -233,7 +233,7 @@ body {
         }
 
         #about {
-          margin: 20px 0 0 0;
+          margin: 5px 0 0 0;
           position:absolute;
         }
         #about:hover {
@@ -293,7 +293,7 @@ footer {
   position: fixed;
   bottom: 0;
   text-align: center;
-  background: #eaeaea;
+  background: $black;
   width: 100%;
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
@@ -306,13 +306,14 @@ footer {
         margin: 0;
       }
       span#copyright {
+        color: $white;
       }
       span#version {
         font-style: italic;
         color: $orange;
       }
       span#disclaimer {
-        color: $black;
+        color: $white;
       }
     }
   z-index:6000;
