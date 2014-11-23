@@ -65,7 +65,7 @@ body {
 
 
   header#main-header.standard{
-    height: $std-header-height;
+    height: 35px;
     margin: 0;
     top: 0;
     width: 100%;
@@ -81,14 +81,14 @@ body {
       color: $black;
 
       @include media($mobile-s) {
-        font-size: 2.2em;
+        font-size: 1.8em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
         margin: 0 0 0 10px;
       }
       @include media($mobile-l) {
-        font-size: 2.8em;
+        font-size: 1.8em;
         margin: 0 0 0 15px;
       }
     }
@@ -117,8 +117,7 @@ body {
 
           }
 
-          height: 50px;
-          margin-top: -5px;
+          margin-top: 3px;
 
         }
 
@@ -135,7 +134,7 @@ body {
       }
 
       @include media($mobile-m) {
-        top: 25px;
+        top: 0;
         ul {
           li {
             padding: 4px 10px 4px;
@@ -174,9 +173,9 @@ body {
       header#pet-header {
         position: fixed;
         z-index: 50;
-        background: $white;
+        background: $black;
         width: 100%;
-        top: $std-header-height;
+        top: 35px;
         text-align: center;
 
         h2 {
@@ -187,12 +186,12 @@ body {
           opacity: 1;
           z-index: 100;
           text-transform: capitalize;
-          color: $black;
+          color: $white;
           margin: 0 0 -50px 0;
           }
         p#life-marker {
           font-size: 1.5em;
-          color: $black;
+          color: $white;
           font-weight: 400;
         }
         #about {
