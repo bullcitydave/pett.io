@@ -63,7 +63,7 @@ header#main-header{
         text-shadow: 1px 1px 0px $black;
         font-weight: 300;
         font-family: $primary-font;
-        margin: 20px 0 -15px 0;
+        margin: 20px 0 -15px 0 !important;
       }
       @include media($mobile-m) {
         font-size: 7.0em;
