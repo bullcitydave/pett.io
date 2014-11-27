@@ -1,9 +1,15 @@
 body.splash {
-
-  background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat top center fixed;
-  background-size: cover;
-  transition: all .5s;
+  @include media($mobile-s) {
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat top center fixed;
+    background-size: initial;
+    transition: all .5s;
+  }
+  @include media($mobile-m) {
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat top center fixed;
+    background-size: cover !important;
+  }
 }
+
 
 header#main-header{
   // position: fixed;
@@ -57,9 +63,11 @@ header#main-header{
         text-shadow: 1px 1px 0px $black;
         font-weight: 300;
         font-family: $primary-font;
+        margin: 20px 0 -15px 0;
       }
       @include media($mobile-m) {
         font-size: 7.0em;
+        margin: initial;
       }
       @include media($mobile-l) {
         font-size: 9.0em;
