@@ -21,7 +21,7 @@ div#browse-container {
       background-color: white;
       box-shadow: 5px 5px 10px $black;
       position:relative;
-      transition: transform .5s, z-index 0;
+      transition: transform .5s;
 
 
       img.pet-pic {
