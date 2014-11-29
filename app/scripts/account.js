@@ -37,7 +37,7 @@ var AccountView = Parse.View.extend({
   },
 
 
-  createPet: function(e) {
+  createPet: function(ev) {
 
     $('#update-pet').show();
     $('#update-pet').html(_.template($("#add-pet-template").html()));
@@ -61,8 +61,8 @@ var AccountView = Parse.View.extend({
   },
 
 
-  editPet: function(e) {
-    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
+  editPet: function(ev) {
+    pet = $(ev.target).prevAll('.pet-list-name:first').html().toLowerCase();
     var query = new Parse.Query(Pet);
     query.equalTo("uniqueName", pet);
     query.first();
@@ -128,8 +128,8 @@ var AccountView = Parse.View.extend({
     });
   },
 
-  submitPet: function(e) {
-     e.preventDefault();
+  submitPet: function(ev) {
+     ev.preventDefault();
      thisButton = this;
      disable(thisButton);
      var newPet = new Pet ({
@@ -162,8 +162,8 @@ var AccountView = Parse.View.extend({
      return false;
     },
 
-  updatePet: function(e) {
-     e.preventDefault();
+  updatePet: function(ev) {
+     ev.preventDefault();
      var query = new Parse.Query(Pet);
      query.get(x.petId, {
         success: function(pet) {
@@ -190,22 +190,21 @@ var AccountView = Parse.View.extend({
     },
 
 
-  imageUploadForm: function(e) {
-    console.log($(e.toElement).prev().prev().prev().html());
-    pet = $(e.toElement).prev().prev().prev().html().toLowerCase();
+  imageUploadForm: function(ev) {
+    pet = $(ev.target).prevAll('.pet-list-name:first').html().toLowerCase();
     new ImageUploadView(pet);
   },
 
 
-  viewPet: function(e) {
-    pet = $(e.toElement).prev().html().toLowerCase();
+  viewPet: function(ev) {
+    pet = $(ev.target).prevAll('.pet-list-name:first').html().toLowerCase();
     app_router.navigate('/#/pet/' + pet);
     return false;
   },
 
 
-  setDefault: function(e) {
-    pet = $(e.toElement).prevAll('.pet-list-name:first').html().toLowerCase();
+  setDefault: function(ev) {
+    pet = $(ev.target).prevAll('.pet-list-name:first').html().toLowerCase();
 
     x.pet = pet;
 
@@ -237,12 +236,12 @@ var AccountView = Parse.View.extend({
 
             results.save();
             console.log('Results: ',results);
-            $(e.toElement).siblings('#set-default').addClass('not-default');
-            $(e.toElement).siblings('#set-default').removeClass('default');
-            $(e.toElement).siblings('#set-default').html("Set as default");
-            $(e.toElement).addClass('default');
-            $(e.toElement).removeClass('not-default');
-            $(e.toElement).html("Default Pet");
+            $(ev.target).siblings('#set-default').addClass('not-default');
+            $(ev.target).siblings('#set-default').removeClass('default');
+            $(ev.target).siblings('#set-default').html("Set as default");
+            $(ev.target).addClass('default');
+            $(ev.target).removeClass('not-default');
+            $(ev.target).html("Default Pet");
             },
 
           error: function(myUser) {
@@ -321,16 +320,16 @@ var AccountView = Parse.View.extend({
   },
 
 
-  highlightPet: function(event) {
-    $(event.target).prevAll('.pet-list-name:first').addClass('pet-selected');
+  highlightPet: function(ev) {
+    $(ev.target).prevAll('.pet-list-name:first').addClass('pet-selected');
   },
 
-  unhighlightPet: function(event) {
-    $(event.target).prevAll('.pet-list-name:first').removeClass('pet-selected');
+  unhighlightPet: function(ev) {
+    $(ev.target).prevAll('.pet-list-name:first').removeClass('pet-selected');
   },
 
 
-    //  e.preventDefault();
+    //  ev.preventDefault();
     //  var pptQuery = new Parse.Query(PersonPetTags);
     //  user = Parse.User.current();
     //  console.log('user: ', user);
@@ -350,7 +349,7 @@ var AccountView = Parse.View.extend({
     //         console.log('Could not set Flickr account');
     //       }
     //   });
-    setFlickr: function(e) {
+    setFlickr: function(ev) {
       var newPetPersonTag = new PersonPetTags ({
        username: Parse.User.current().getUsername(),
        pet: $("select#pet-names").val().toLowerCase(),
@@ -367,7 +366,7 @@ var AccountView = Parse.View.extend({
    },
 
 
-  getFlickr: function(e) {
+  getFlickr: function(ev) {
 // this is only get first tag listed for now until UI is reconfigured;
     var flickrUser = '';
     var fQuery = new Parse.Query(PersonPetTags);
