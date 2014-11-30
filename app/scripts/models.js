@@ -8,7 +8,7 @@
 
 
         isLiving: function () {
-          return (this.get("dateDeath") == "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)" || this.get("dateDeath") == undefined);
+          return (this.get("dateDeath").toISOString() == new Date(nullDateDeath).toISOString() || this.get("dateDeath") == undefined);
         },
 
         age: function() {
