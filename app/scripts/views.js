@@ -54,9 +54,15 @@ var LinkView = Parse.View.extend({
 
 
   events: {
-    "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm"
-    // "click h2" : "doMasonry"
+    "click #about"         : "showProfile",
+    "click #upload"        : "imageUploadForm",
+    "mouseover .fa-close"  : "highlightImageOn",
+    "mouseout .fa-close"   : "highlightImageOff",
+    "click .fa-close"      : "removeImage"
+
+
+
+
   },
 
 
@@ -162,6 +168,19 @@ var LinkView = Parse.View.extend({
           // console.log('rowWidth: ', rowWidth);
         }
     }
+  },
+
+  highlightImageOn: function(e) {
+      $(e.target).siblings('img').addClass('hover');
+  },
+
+  highlightImageOff: function(e) {
+      $(e.target).siblings('img').removeClass('hover');
+  },
+
+  removeImage: function(e) {
+    e.preventDefault();
+    $(e.target).parent().remove();
   }
 
 

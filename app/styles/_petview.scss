@@ -10,6 +10,7 @@ div.pic-showcase {
 
 
       display:inline-block;
+      position:relative;
 
     .montageSquare {
       @include media($mobile-s) {
@@ -32,7 +33,17 @@ div.pic-showcase {
 
       }
     }
-}
+  }
+
+  i.fa-close {
+    color: white;
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    padding: 10px;
+    background: #000;
+    border: 1px solid #fff;
+  }
 
 
     .flickr {
@@ -75,10 +86,11 @@ text-align: inherit;
 }
 
 
-    .montageSquare:hover {
+    .montageSquare:hover, .montageSquare.hover {
 
       @include if-brightness(1.25);
       border: solid 2px $orange;
+      padding: 18px;
 
     }
 

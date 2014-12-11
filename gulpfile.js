@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 var prompt = require('gulp-prompt');
 
 gulp.task('styles', function () {
-  return gulp.src('app/styles/*.scss')
+  return gulp.src('app/styles/**/*.scss')
     .pipe($.plumber())
     .pipe($.rubySass({
       style: 'compressed',
@@ -86,7 +86,7 @@ gulp.task('serve', ['connect', 'styles'], function () {
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
 
-  gulp.src('app/styles/*.scss')
+  gulp.src('app/styles/**/*.scss')
     .pipe(wiredep({directory: 'bower_components'}))
     .pipe(gulp.dest('app/styles'));
 
