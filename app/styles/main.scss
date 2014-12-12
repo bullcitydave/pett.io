@@ -108,6 +108,12 @@ body {
             padding: 0 5px 0 0;
             font-size: 0.8em;
             letter-spacing: -0.08em;
+            ul {
+              list-style-type: none;
+              li {
+                float: none;
+              }
+            }
           }
           li .active {
             color: $white;
@@ -139,6 +145,12 @@ body {
           li {
             padding: 4px 10px 4px;
             float: right;
+            ul {
+              list-style-type: none;
+              li {
+                float: none;
+              }
+            }
           }
           li:first-child {
             padding-right: 4px;

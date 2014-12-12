@@ -56,12 +56,10 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"         : "showProfile",
     "click #upload"        : "imageUploadForm",
+    "click #remove"        : "removeImages",
     "mouseover .fa-close"  : "highlightImageOn",
     "mouseout .fa-close"   : "highlightImageOff",
     "click .fa-close"      : "removeImage"
-
-
-
 
   },
 
@@ -130,6 +128,15 @@ var LinkView = Parse.View.extend({
   imageUploadForm: function(e) {
     e.preventDefault();
     new ImageUploadView(pet);
+    return false;
+  },
+
+  removeImages: function(e){
+    e.preventDefault();
+    $('i.fa-close').show();
+    $('#tools').show();
+    $('#upload-container').show();
+    $('#upload-container').html($('#modals-template').html());
     return false;
   },
 
