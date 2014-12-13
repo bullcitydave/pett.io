@@ -1,7 +1,7 @@
 
 div#tools {
   position: absolute;
-  top: 75px;
+  top: 50px;
   width: 300px;
   left: calc(45% - 150px);
   #upload-container {
@@ -14,6 +14,9 @@ div#tools {
   }
   z-index:8001;
   display:none;
+  form {
+    padding: 20px;
+  }
 }
 
 div.map-outer {
