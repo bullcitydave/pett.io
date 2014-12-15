@@ -25,21 +25,26 @@ var MapView = Parse.View.extend ({
     defLat = 37.09024;
     defLng = -95.712891;
 
-    APP.main.append(_.template($('#map-template').html()));
-    $('#map-canvas').show();
-
-    var query = new Parse.Query(Pet);
-    var tempGeo = new Parse.GeoPoint(45,-45);
-    query.near("geoLocation",tempGeo );
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + results.length+ ". Attempting to render...");
-        map.render(results);
-      },
-      error: function(error) {
-        console.log("Error: " + error.code + " " + error.message);
-      }
+    $('#map-template').load("_map.html", function() {
+      APP.main.append(_.template($('#map-template').html()));
+      $('#map-canvas').show();
+      var query = new Parse.Query(Pet);
+      var tempGeo = new Parse.GeoPoint(45,-45);
+      query.near("geoLocation",tempGeo );
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length+ ". Attempting to render...");
+          map.render(results);
+        },
+        error: function(error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
     });
+
+
+
+
 
   },
 

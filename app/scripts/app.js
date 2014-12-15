@@ -19,7 +19,7 @@ $(function() {
     $('#account-template').load("_account.html", function() {
     $('#pet-header-template').load("_petheader.html", function() {
     $('#pet-list-template').load("_petlist.html", function() {
-    $('#map-template').load("_map.html", function() {
+
     $('#profile-template').load("_profile.html", function() {
         console.log('Templates loaded');
         window.APP = new AppView;
@@ -33,7 +33,7 @@ $(function() {
     })
     })
     })
-    })
+  
     })
     })
     })

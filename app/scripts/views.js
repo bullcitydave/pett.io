@@ -133,6 +133,7 @@ var LinkView = Parse.View.extend({
 
   removeImages: function(e){
     e.preventDefault();
+    $('.pic-showcase').css('padding-top','150px');
     $('i.fa-close').show();
     $('#tools').show();
     $('#upload-container').show();
@@ -187,7 +188,19 @@ var LinkView = Parse.View.extend({
 
   removeImage: function(e) {
     e.preventDefault();
+    var imgId = $(e.target).parent().attr('id');
     $(e.target).parent().remove();
+    var rQuery = new Parse.Query(ParsePic);
+    rQuery.get(imgId, {
+      success:function(results) {
+        results.set("archived", true);
+        results.save();
+        alert('Image archived');
+      },
+      error:function(error) {
+        console.log('Problem getting photo');
+      }
+    });
   }
 
 
@@ -295,10 +308,12 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
+      ppQuery1.notEqualTo("archived", true);
       ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
+      ppQuery2.notEqualTo("archived", true);
       ppQuery2.doesNotExist("size");
 
       var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
@@ -324,10 +339,7 @@ var ParsePicListView = Parse.View.extend({
       //  console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
-          // console.log(results[i]);
-          // console.log(results[i].attributes.url);
-          // console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url})));
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url,"picID":results[i].id})));
        };
 
 
