@@ -8,42 +8,49 @@ div.pic-showcase {
 
     a {
 
-
       display:inline-block;
       position:relative;
 
-    .montageSquare {
-      @include media($mobile-s) {
+      .montageSquare {
+        @include media($mobile-s) {
 
-        width:100%;
-        @include if-brightness(1);
-        float:left;
-        padding:0;
-        margin-bottom:10px;
-      }
-      @include media($mobile-m) {
-        height: 300px;
-        width:auto;
-        @include if-brightness(1);
-        float:left;
-        padding: 20px;
-      }
-      @include media($mobile-l) {
+          width:100%;
+          @include if-brightness(1);
+          float:left;
+          padding:0;
+          margin-bottom:10px;
+        }
+        @include media($mobile-m) {
+          height: 300px;
+          width:auto;
+          @include if-brightness(1);
+          float:left;
+          padding: 20px;
+        }
+        @include media($mobile-l) {
 
-
+        }
       }
-    }
   }
 
+  a.selected > .montageSquare {
+    opacity: 0.4;
+  }
+
+
   i.fa-close {
-    color: white;
     position: absolute;
     bottom: 30px;
     right: 20px;
     padding: 10px;
-    background: #000;
+    background: $black;
+    color: $black;
     border: 1px solid #fff;
     display: none;
+  }
+
+  a.selected > i.fa-close {
+    color: $white;
   }
 
 

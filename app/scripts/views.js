@@ -29,6 +29,7 @@ var LinkView = Parse.View.extend({
     APP.main.removeClass('browse');
     APP.main.html('');
     $('.pic-showcase').html('');
+
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
     APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
@@ -56,10 +57,12 @@ var LinkView = Parse.View.extend({
   events: {
     "click #about"         : "showProfile",
     "click #upload"        : "imageUploadForm",
-    "click #remove"        : "removeImages",
+    "click #remove"        : "removeImagesOptions",
     "mouseover .fa-close"  : "highlightImageOn",
     "mouseout .fa-close"   : "highlightImageOff",
-    "click .fa-close"      : "removeImage"
+    "click .fa-close"      : "selectImageToRemove",
+    "click .pic-showcase a": "selectImage",
+    "click #remove-images #done": "removeImages"
 
   },
 
@@ -131,13 +134,15 @@ var LinkView = Parse.View.extend({
     return false;
   },
 
-  removeImages: function(e){
+  removeImagesOptions: function(e){
     e.preventDefault();
     $('.pic-showcase').css('padding-top','150px');
     $('i.fa-close').show();
     $('#tools').show();
     $('#upload-container').show();
-    $('#upload-container').html($('#modals-template').html());
+    $('#modals-template').load("_modals.html", function () {
+      $('#upload-container').html($('#modals-template').html());
+    });
     return false;
   },
 
@@ -186,22 +191,46 @@ var LinkView = Parse.View.extend({
       $(e.target).siblings('img').removeClass('hover');
   },
 
-  removeImage: function(e) {
+  selectImage: function(e) {
+    if (document.querySelector('#remove-images') != null) {
+      e.preventDefault();
+      $(e.target).parent().toggleClass('selected');
+    }
+  },
+
+  selectImageToRemove: function(e) {
     e.preventDefault();
-    var imgId = $(e.target).parent().attr('id');
-    $(e.target).parent().remove();
-    var rQuery = new Parse.Query(ParsePic);
-    rQuery.get(imgId, {
-      success:function(results) {
-        results.set("archived", true);
-        results.save();
-        alert('Image archived');
-      },
-      error:function(error) {
-        console.log('Problem getting photo');
-      }
-    });
+    $(e.target).siblings('a').toggleClass('selected');
+  },
+
+  removeImages: function(e) {
+    e.preventDefault();
+    var selected = [];
+    $('.pic-showcase a.selected').each(function() {
+      selected.push(this.id);
+      $(this).remove();
+    })
+
+
+
+    if ($('#remove-images input[name=archive]:checked').val() === "true") {
+
+      var imgId = $(e.target).parent().attr('id');
+      $(e.target).parent().remove();
+      var rQuery = new Parse.Query(ParsePic);
+      rQuery.containedIn("objectId", selected);
+      rQuery.each(function(result) {
+        result.set("archived", true);
+        return result.save();
+      }).then(function() {
+          alert('Images archived');
+        }, function(err) {
+            console.log(err);
+            alert('Problem archiving images. No images have been lost. Refresh to try again.');
+      })
+    }
   }
+
 
 
 });

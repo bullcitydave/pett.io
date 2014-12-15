@@ -8,7 +8,7 @@ $(function() {
     $('#splash-template').load("_splash.html", function() {
     $('#browse-template').load("_browse.html", function() {
     $('#image-upload-template').load("_upload.html", function() {
-    $('#modals-template').load("_modals.html", function() {
+
     $('#add-pet-template').load("_addpet.html", function() {
     $('#edit-pet-template').load("_editpet.html", function() {
     $('#header-template').load("_header.html", function() {
@@ -33,11 +33,11 @@ $(function() {
     })
     })
     })
+
+    })
+    })
+    })
   
-    })
-    })
-    })
-    })
     })
     })
     })

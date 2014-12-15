@@ -3,13 +3,14 @@
 <p class="display-message">
   Selected images to delete.
 </p>
-  <input name="archive" type="radio" value="yes">Archive</input>
+  <input name="archive" type="radio" value=true checked>Archive</input>
     <p class="selection-description">
-      Images selected for removal will be remain available in your account for download or future inclusion in profiles.
+      Images removed will remain available in your account for download or future inclusion in profiles.
     </p>
-  <input name="archive" type="radio" value="no">Permanently Delete</input>
+  <input name="archive" type="radio" value=false>Permanently Delete</input>
     <p class="selection-description">
-      Images selected for removal will be permanently deleted from your account. 
+      Images removed will be permanently deleted from your account.
     </p>
-<button class="close">&#x2715</button>
+<!-- <button class="close">&#x2715</button> -->
+  <button id="done">Done</button>
 </form>
