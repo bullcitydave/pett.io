@@ -13,7 +13,6 @@ div.pic-showcase {
 
       .montageSquare {
         @include media($mobile-s) {
-
           width:100%;
           @include if-brightness(1);
           float:left;
@@ -28,30 +27,39 @@ div.pic-showcase {
           padding: 20px;
         }
         @include media($mobile-l) {
-
+          &:hover {
+            @include if-brightness(1.25);
+            border: solid 2px $orange;
+            padding: 18px;
+          }
         }
       }
-  }
+    }
 
-  a.selected > .montageSquare {
-    opacity: 0.4;
-  }
+    a.selected > .montageSquare {
+      opacity: 0.4;
+      &:hover {
+        @include if-brightness(1);
+        border: none;
+        padding: 20px;
+      }
+    }
 
 
-  i.fa-close {
-    position: absolute;
-    bottom: 30px;
-    right: 20px;
-    padding: 10px;
-    background: $black;
-    color: $black;
-    border: 1px solid #fff;
-    display: none;
-  }
+    i.fa-close {
+      position: absolute;
+      bottom: 30px;
+      right: 20px;
+      padding: 10px;
+      background: $black;
+      color: $black;
+      border: 1px solid #fff;
+      display: none;
+    }
 
-  a.selected > i.fa-close {
-    color: $white;
-  }
+    a.selected > i.fa-close {
+      color: $white;
+    }
 
 
     .flickr {
@@ -70,42 +78,33 @@ div.pic-showcase {
             position: relative;
             // height: 100%;
             // width: 150%;
- overflow: hidden;
- color: #464646;
- background: #000;
+       overflow: hidden;
+       color: #464646;
+       background: #000;
 
-      .embed .video-container {
-        position: relative;
- //        height: 100%;
- // width: 100%;
+            .embed .video-container {
+              position: relative;
+       //        height: 100%;
+       // width: 100%;
 
-text-align: inherit;
+      text-align: inherit;
 
 
-            .embed video {
-      height: auto;
-      width: auto;
-        }
+                  .embed video {
+            height: auto;
+            width: auto;
+              }
+                }
+                }
+
+              }
+            }
           }
-          }
-
-        }
-      }
-}
-
-
-    .montageSquare:hover, .montageSquare.hover {
-
-      @include if-brightness(1.25);
-      border: solid 2px $orange;
-      padding: 18px;
-
-    }
 
     .flickr:hover {
 
       @include if-brightness(1.25);
-      border: solid 4px $flickr;
+      border: solid 2px $flickr;
       // @include size(250px 250px);
       // width: 100%;
       // margin:0 6.25% 0 -6.25%;
