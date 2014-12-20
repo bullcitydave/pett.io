@@ -278,7 +278,7 @@ el: "#tools",
     this.pet = pet;
 
     console.log('Loading upload form for', this.pet);
-    // APP.header.append("<div id='upload-container'></div>");
+    // APP.header.append("<div id='tools-container'></div>");
     this.render(pet);
   },
 
@@ -291,8 +291,8 @@ el: "#tools",
 
   render: function(pet){
         $('#tools').show();
-        $('#upload-container').show();
-        $('#upload-container').html($('#image-upload-template').html());
+        $('#tools-container').show();
+        $('#tools-container').html($('#image-upload-template').html());
 
 // from: https://parse.com/questions/uploading-files-to-parse-using-javascript-and-the-rest-api
 
@@ -371,7 +371,7 @@ el: "#tools",
 
 
   closeUpload: function(e) {
-    $('#upload-container').hide();
+    $('#tools-container').hide();
     return false;
   },
 

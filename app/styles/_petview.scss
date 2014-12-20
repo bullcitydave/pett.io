@@ -6,6 +6,10 @@ div.pic-showcase {
     text-align: center;
     padding: 45px 25px 25px 25px;
 
+    &.edit {
+      padding-top: 150px;
+    }
+
     a {
 
       display:inline-block;
@@ -36,8 +40,7 @@ div.pic-showcase {
       }
     }
 
-    a.selected > .montageSquare {
-      opacity: 0.4;
+    &.edit a > .montageSquare {
       &:hover {
         @include if-brightness(1);
         border: none;
@@ -45,10 +48,14 @@ div.pic-showcase {
       }
     }
 
+    a.selected > .montageSquare {
+      opacity: 0.4;
+    }
+
 
     i.fa-close {
       position: absolute;
-      bottom: 30px;
+      top: 20px;
       right: 20px;
       padding: 10px;
       background: $black;

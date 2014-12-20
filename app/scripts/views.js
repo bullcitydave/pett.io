@@ -136,14 +136,24 @@ var LinkView = Parse.View.extend({
 
   removeImagesOptions: function(e){
     e.preventDefault();
-    $('.pic-showcase').css('padding-top','150px');
+    $('.pic-showcase').addClass('edit');
     $('i.fa-close').show();
     $('#tools').show();
-    $('#upload-container').show();
+    $('#tools-container').show();
     $('#modals-template').load("_modals.html", function () {
-      $('#upload-container').html($('#modals-template').html());
+      $('#tools-container').html($('#modals-template').html());
     });
     return false;
+  },
+
+  removeImagesOptionsDone: function(){
+    $('.pic-showcase').removeClass('edit');
+    $('i.fa-close').hide();
+    $('#tools').hide();
+    $('#tools-container').hide();
+    $('#modals-template').load("_modals.html", function () {
+      $('#tools-container').html($('#modals-template').html());
+    });
   },
 
   viewAccount: function(e) {
@@ -205,30 +215,32 @@ var LinkView = Parse.View.extend({
 
   removeImages: function(e) {
     e.preventDefault();
-    var selected = [];
-    $('.pic-showcase a.selected').each(function() {
-      selected.push(this.id);
-      $(this).remove();
-    })
-
-
-
-    if ($('#remove-images input[name=archive]:checked').val() === "true") {
-
-      var imgId = $(e.target).parent().attr('id');
-      $(e.target).parent().remove();
-      var rQuery = new Parse.Query(ParsePic);
-      rQuery.containedIn("objectId", selected);
-      rQuery.each(function(result) {
-        result.set("archived", true);
-        return result.save();
-      }).then(function() {
-          alert('Images archived');
-        }, function(err) {
-            console.log(err);
-            alert('Problem archiving images. No images have been lost. Refresh to try again.');
+    var numSelected = $('.pic-showcase a.selected').length;
+    if (numSelected > 0) {
+      var selected = [];
+      $('.pic-showcase a.selected').each(function() {
+        selected.push(this.id);
+        $(this).remove();
       })
+
+      if ($('#remove-images input[name=archive]:checked').val() === "true") {
+
+        var imgId = $(e.target).parent().attr('id');
+        $(e.target).parent().remove();
+        var rQuery = new Parse.Query(ParsePic);
+        rQuery.containedIn("objectId", selected);
+        rQuery.each(function(result) {
+          result.set("archived", true);
+          return result.save();
+        }).then(function() {
+            alert(numSelected > 1 ? numSelected + ' images archived' : numSelected + ' image archived');
+          }, function(err) {
+              console.log(err);
+              alert('Problem archiving images. No images have been lost. Refresh to try again.');
+        })
+      }
     }
+    link.removeImagesOptionsDone();
   }
 
 

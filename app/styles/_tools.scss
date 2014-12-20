@@ -4,13 +4,16 @@ div#tools {
   top: 50px;
   width: 300px;
   left: calc(45% - 150px);
-  #upload-container {
+  #tools-container {
     background: $white;
     border:2px black solid;
     button.close {
       top: -10px;
       right: -10px;
     }
+    position: fixed;
+    top: 10px;
+    left: calc(50% - 160px);
   }
   z-index:8001;
   display:none;
