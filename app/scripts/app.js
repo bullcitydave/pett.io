@@ -37,7 +37,7 @@ $(function() {
     })
     })
     })
-  
+
     })
     })
     })
@@ -154,6 +154,21 @@ var AppView = Parse.View.extend({
           app_router.navigate('/#/account/'+self.user);
         }
       });
+  },
+
+  getPet: function(petName) {
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", petName);
+    query.find({
+      success: function(result) {
+        // return result;
+      },
+      error: function(collection, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    }).then(function(result) {
+      return result;
+    })
   },
 
   getAge: function(pet) {

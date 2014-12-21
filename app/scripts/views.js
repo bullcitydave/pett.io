@@ -2,6 +2,8 @@ var LinkView = Parse.View.extend({
 
   el: "body",
 
+  model: Pet,
+
 
 
   initialize: function(tag) {
@@ -20,6 +22,8 @@ var LinkView = Parse.View.extend({
     else {
       user='';
     }
+
+
 
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
@@ -40,8 +44,29 @@ var LinkView = Parse.View.extend({
 
     APP.main.append("<div class='pic-showcase'></div>");
 
+    // this.pet = new Pet();
 
-    this.render();
+    // this.collection.fetch({reset: true}); // NEW
+    // this.render();
+
+    // myPetPromise = APP.getPet(pet);
+    // APP.getPet(pet).then(function(r) {
+    //   link.render();
+    // });
+    // this.render();
+
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.find().then(function(result) {
+      link.pet = new Pet(result[0].attributes);
+      link.navbarSetup();
+      link.render();
+    });
+
+
+    // myPet = APP.getPet(tag);
+    //
+    // this.render();
 
     $(window).on("resize", this, function(){
       link.squeeze($('.pic-showcase a'));
@@ -66,6 +91,25 @@ var LinkView = Parse.View.extend({
 
   },
 
+  navbarSetup : function() {
+    if (Parse.User.current() !== null) {
+        $('.site-visitor').hide();
+        $('.site-user').show();
+      }
+    else {
+        $('.site-user').hide();
+        $('.site-visitor').show();
+    }
+    if (Parse.User.current().get("username") != (link.pet).get("person").id) {
+        $('#header-nav #account').hide();
+        $('#header-nav #manage-images').hide();
+    }
+    else {
+      $('#header-nav #account').show();
+      $('#header-nav #manage-images').show();
+    }
+  },
+
 
   // doMasonry: function() {
   //
@@ -85,15 +129,7 @@ var LinkView = Parse.View.extend({
 
 
   render: function() {
-    if (Parse.User.current() !== null)
-      {
-        $('.site-visitor').hide();
-        $('.site-user').show();
-      }
-    else {
-        $('.site-user').hide();
-        $('.site-visitor').show();
-    }
+
     $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);
@@ -205,6 +241,7 @@ var LinkView = Parse.View.extend({
     if (document.querySelector('#remove-images') != null) {
       e.preventDefault();
       $(e.target).parent().toggleClass('selected');
+      return false;
     }
   },
 
