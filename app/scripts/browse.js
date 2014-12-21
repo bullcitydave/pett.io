@@ -50,6 +50,7 @@ var BrowseView = Parse.View.extend({
 
 
     d = new $.Deferred();
+    browseSelf.navbarSetup();
     browseSelf.render();
     $(window).on("resize", this, function(){
       browseSelf.squeeze();
@@ -84,6 +85,17 @@ var BrowseView = Parse.View.extend({
       //     }
       // });
       return this;
+  },
+
+  navbarSetup : function() {
+    if (Parse.User.current() !== null) {
+      $('.site-visitor').hide();
+      $('.site-user').show();
+    }
+    else {
+      $('.site-user').hide();
+      $('.site-visitor').show();
+    }
   },
 
   getPics: function(collection) {

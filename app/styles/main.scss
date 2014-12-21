@@ -114,17 +114,11 @@ body {
                 float: none;
               }
             }
+            &.active {
+              color: $white;
+            }
           }
-          li .active {
-            color: $white;
-          }
-          li:hover {
-            border: 1px solid black;
-
-          }
-
           margin-top: 3px;
-
         }
 
         #header-username {
@@ -145,20 +139,32 @@ body {
           li {
             padding: 4px 10px 4px;
             float: right;
+            transition: 0;
+            &:first-child {
+              padding-right: 4px;
+            }
+            &:hover {
+              color: white;
+              padding-bottom: 5px;
+              transition: 0.3s;
+            }
             ul {
               list-style-type: none;
               li {
                 float: none;
+                font-size: 1.0em;
+                padding-right: 0;
+                &:first-child {
+                  padding-right: 0;
+                  padding-top: 8px;
+                }
+                &:hover {
+                  border: none;
+                  color: $orange;
+                  padding-bottom: 4px;
+                }
               }
             }
-          }
-          li:first-child {
-            padding-right: 4px;
-          }
-          li:hover {
-            color: white;
-            border: 1px solid white;
-            padding-bottom: 5px;
           }
         }
         #header-username {
