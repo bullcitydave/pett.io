@@ -1,6 +1,33 @@
 
 var Image = require("parse-image");
 
+
+Parse.Cloud.afterSave("ParsePic", function(request, response) {
+  var pic = request.object;
+  var status = pic.get("status");
+  var user = request.user;
+
+  console.log(pic);
+  console.log(status);
+  console.log(user);
+
+  if (status === 9) {
+    pic.destroy({
+      success: function(pic) {
+        // The object was deleted from the Parse Cloud.
+      },
+      error: function(pic, error) {
+        // The delete failed.
+        // error is a Parse.Error with an error code and message.
+        response.error();
+      }
+    });
+  }
+
+
+})
+
+
 Parse.Cloud.beforeSave("ParsePic", function(request, response) {
 
   var user = request.user;
@@ -20,26 +47,26 @@ Parse.Cloud.beforeSave("ParsePic", function(request, response) {
       return image.setData(response.buffer);
 
     }).then(function(image) {
-          var MAX_WIDTH = 300;
-          var MAX_HEIGHT = 400;
-          var tempW = image.width();
-          var tempH = image.height();
-          if (tempW > tempH) {
-              if (tempW > MAX_WIDTH) {
-                 tempH *= MAX_WIDTH / tempW;
-                 tempW = MAX_WIDTH;
-              }
-          } else {
-              if (tempH > MAX_HEIGHT) {
-                 tempW *= MAX_HEIGHT / tempH;
-                 tempH = MAX_HEIGHT;
-              }
-          }
+      var MAX_WIDTH = 300;
+      var MAX_HEIGHT = 400;
+      var tempW = image.width();
+      var tempH = image.height();
+      if (tempW > tempH) {
+        if (tempW > MAX_WIDTH) {
+          tempH *= MAX_WIDTH / tempW;
+          tempW = MAX_WIDTH;
+        }
+      } else {
+        if (tempH > MAX_HEIGHT) {
+          tempW *= MAX_HEIGHT / tempH;
+          tempH = MAX_HEIGHT;
+        }
+      }
 
-         return image.scale({
-                   width: tempW,
-                   height: tempH
-                 });
+      return image.scale({
+        width: tempW,
+        height: tempH
+      });
 
     }).then(function(image) {
       console.log('width is ' + image.width());
@@ -193,143 +220,143 @@ Parse.Cloud.beforeSave("ParsePic", function(request, response) {
 
 Parse.Cloud.job("mediumImages", function(request, status) {
 
- Parse.Cloud.useMasterKey();
-var Image = require("parse-image");
+  Parse.Cloud.useMasterKey();
+  var Image = require("parse-image");
 
-var picsQuery = new Parse.Query("ParsePic");
-picsQuery.doesNotExist("thumbnail");
+  var picsQuery = new Parse.Query("ParsePic");
+  picsQuery.doesNotExist("thumbnail");
 
-picsQuery.each(function(pic) {
-  // var size = {width:1024, height:768, label:'large'};
-  // console.log(size);
-  // scalePic(pic,size);
-  //
-  // var size = {width:300, height:400, label:'medium'};
-  // console.log(size);
-  // scalePic(pic,size);
+  picsQuery.each(function(pic) {
+    // var size = {width:1024, height:768, label:'large'};
+    // console.log(size);
+    // scalePic(pic,size);
+    //
+    // var size = {width:300, height:400, label:'medium'};
+    // console.log(size);
+    // scalePic(pic,size);
 
-  var size = {width:75, height:75, label:'thumbnail'};
-  console.log(size);
-  scalePic(pic,size);
+    var size = {width:75, height:75, label:'thumbnail'};
+    console.log(size);
+    scalePic(pic,size);
 
 
 
-  function scalePic(pic,size) {
-              Parse.Cloud.httpRequest({
-                url: pic.get("url")
-              }).then(function(response) {
-                var image = new Image();
-                return image.setData(response.buffer);
+    function scalePic(pic,size) {
+      Parse.Cloud.httpRequest({
+        url: pic.get("url")
+      }).then(function(response) {
+        var image = new Image();
+        return image.setData(response.buffer);
 
-              }).then(function(image) {
-                    var MAX_WIDTH = size.width;
-                    var MAX_HEIGHT = size.height;
-                    var tempW = image.width();
-                    var tempH = image.height();
-                    if (tempW > tempH) {
-                        if (tempW > MAX_WIDTH) {
-                           tempH *= MAX_WIDTH / tempW;
-                           tempW = MAX_WIDTH;
-                        }
-                    } else {
-                        if (tempH > MAX_HEIGHT) {
-                           tempW *= MAX_HEIGHT / tempH;
-                           tempH = MAX_HEIGHT;
-                        }
-                    }
-
-                   return image.scale({
-                             width: tempW,
-                             height: tempH
-                           });
-
-              }).then(function(image) {
-                // Make sure it's a JPEG to save disk space and bandwidth.
-                image.setFormat("JPEG");
-                return image;
-
-              }).then(function(image) {
-                // Get the image data in a Buffer.
-                var buffer =  image.data();
-                return buffer;
-
-              }).then(function(buffer) {
-                // Save the image into a new file.
-                var base64 = buffer.toString("base64");
-                var file = new Parse.File(size.label + ".jpg", { base64: base64});
-                return file.save();
-
-              }).then(function(file) {
-                console.log(file.url());
-                pic.set(size.label, file);
-                pic.save();
-              })
+      }).then(function(image) {
+        var MAX_WIDTH = size.width;
+        var MAX_HEIGHT = size.height;
+        var tempW = image.width();
+        var tempH = image.height();
+        if (tempW > tempH) {
+          if (tempW > MAX_WIDTH) {
+            tempH *= MAX_WIDTH / tempW;
+            tempW = MAX_WIDTH;
           }
-});
+        } else {
+          if (tempH > MAX_HEIGHT) {
+            tempW *= MAX_HEIGHT / tempH;
+            tempH = MAX_HEIGHT;
+          }
+        }
+
+        return image.scale({
+          width: tempW,
+          height: tempH
+        });
+
+      }).then(function(image) {
+        // Make sure it's a JPEG to save disk space and bandwidth.
+        image.setFormat("JPEG");
+        return image;
+
+      }).then(function(image) {
+        // Get the image data in a Buffer.
+        var buffer =  image.data();
+        return buffer;
+
+      }).then(function(buffer) {
+        // Save the image into a new file.
+        var base64 = buffer.toString("base64");
+        var file = new Parse.File(size.label + ".jpg", { base64: base64});
+        return file.save();
+
+      }).then(function(file) {
+        console.log(file.url());
+        pic.set(size.label, file);
+        pic.save();
+      })
+    }
+  });
 
 });
 
 
 Parse.Cloud.job("largeImages", function(request, status) {
 
- Parse.Cloud.useMasterKey();
-var Image = require("parse-image");
+  Parse.Cloud.useMasterKey();
+  var Image = require("parse-image");
 
-var picsQuery = new Parse.Query("ParsePic");
-picsQuery.doesNotExist("large");
+  var picsQuery = new Parse.Query("ParsePic");
+  picsQuery.doesNotExist("large");
 
-picsQuery.each(function(pic) {
+  picsQuery.each(function(pic) {
 
-              Parse.Cloud.httpRequest({
-                url: pic.get("url")
-              }).then(function(response) {
-                var image = new Image();
-                return image.setData(response.buffer);
+    Parse.Cloud.httpRequest({
+      url: pic.get("url")
+    }).then(function(response) {
+      var image = new Image();
+      return image.setData(response.buffer);
 
-              }).then(function(image) {
-                    var MAX_WIDTH = 1024;
-                    var MAX_HEIGHT = 1024;
-                    var tempW = image.width();
-                    var tempH = image.height();
-                    if (tempW > tempH) {
-                        if (tempW > MAX_WIDTH) {
-                           tempH *= MAX_WIDTH / tempW;
-                           tempW = MAX_WIDTH;
-                        }
-                    } else {
-                        if (tempH > MAX_HEIGHT) {
-                           tempW *= MAX_HEIGHT / tempH;
-                           tempH = MAX_HEIGHT;
-                        }
-                    }
+    }).then(function(image) {
+      var MAX_WIDTH = 1024;
+      var MAX_HEIGHT = 1024;
+      var tempW = image.width();
+      var tempH = image.height();
+      if (tempW > tempH) {
+        if (tempW > MAX_WIDTH) {
+          tempH *= MAX_WIDTH / tempW;
+          tempW = MAX_WIDTH;
+        }
+      } else {
+        if (tempH > MAX_HEIGHT) {
+          tempW *= MAX_HEIGHT / tempH;
+          tempH = MAX_HEIGHT;
+        }
+      }
 
-                   return image.scale({
-                             width: tempW,
-                             height: tempH
-                           });
+      return image.scale({
+        width: tempW,
+        height: tempH
+      });
 
-              }).then(function(image) {
-                // Make sure it's a JPEG to save disk space and bandwidth.
-                image.setFormat("JPEG");
-                return image;
+    }).then(function(image) {
+      // Make sure it's a JPEG to save disk space and bandwidth.
+      image.setFormat("JPEG");
+      return image;
 
-              }).then(function(image) {
-                // Get the image data in a Buffer.
-                var buffer =  image.data();
-                return buffer;
+    }).then(function(image) {
+      // Get the image data in a Buffer.
+      var buffer =  image.data();
+      return buffer;
 
-              }).then(function(buffer) {
-                // Save the image into a new file.
-                var base64 = buffer.toString("base64");
-                var file = new Parse.File("large.jpg", { base64: base64});
-                return file.save();
+    }).then(function(buffer) {
+      // Save the image into a new file.
+      var base64 = buffer.toString("base64");
+      var file = new Parse.File("large.jpg", { base64: base64});
+      return file.save();
 
-              }).then(function(file) {
-                console.log(file.url());
-                pic.set("large", file);
-                pic.save();
-              })
-          });
+    }).then(function(file) {
+      console.log(file.url());
+      pic.set("large", file);
+      pic.save();
+    })
+  });
 
 
 });
