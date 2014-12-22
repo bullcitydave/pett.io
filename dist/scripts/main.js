@@ -723,18 +723,18 @@ var LinkView = Parse.View.extend({
     if (Parse.User.current() !== null) {
         $('.site-visitor').hide();
         $('.site-user').show();
+        if (Parse.User.current().get("username") != (link.pet).get("person").id) {
+          $('#header-nav #account').hide();
+          $('#header-nav #manage-images').hide();
+        }
+        else {
+          $('#header-nav #account').show();
+          $('#header-nav #manage-images').show();
+        }
       }
     else {
         $('.site-user').hide();
         $('.site-visitor').show();
-    }
-    if (Parse.User.current().get("username") != (link.pet).get("person").id) {
-        $('#header-nav #account').hide();
-        $('#header-nav #manage-images').hide();
-    }
-    else {
-      $('#header-nav #account').show();
-      $('#header-nav #manage-images').show();
     }
   },
 
