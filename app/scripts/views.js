@@ -260,25 +260,25 @@ var LinkView = Parse.View.extend({
         $(this).remove();
       })
 
-      if ($('#remove-images input[name=archive]:checked').val() === "true") {
+      var status =  ($('#remove-images input[name=archive]:checked').val() === "true") ? 3 : 9;
 
-        var imgId = $(e.target).parent().attr('id');
-        $(e.target).parent().remove();
-        var rQuery = new Parse.Query(ParsePic);
-        rQuery.containedIn("objectId", selected);
-        rQuery.each(function(result) {
-          result.set("archived", true);
-          return result.save();
-        }).then(function() {
-            alert(numSelected > 1 ? numSelected + ' images archived' : numSelected + ' image archived');
-          }, function(err) {
-              console.log(err);
-              alert('Problem archiving images. No images have been lost. Refresh to try again.');
-        })
-      }
+      var imgId = $(e.target).parent().attr('id');
+      $(e.target).parent().remove();
+      var rQuery = new Parse.Query(ParsePic);
+      rQuery.containedIn("objectId", selected);
+      rQuery.each(function(result) {
+        result.set("status",status);
+        return result.save();
+      }).then(function() {
+          alert(numSelected > 1 ? numSelected + ' images archived' : numSelected + ' image archived');
+        }, function(err) {
+            console.log(err);
+            alert('Problem archiving images. No images have been lost. Refresh to try again.');
+      })
     }
     link.removeImagesOptionsDone();
-  }
+  },
+
 
 
 
@@ -386,7 +386,7 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
-      ppQuery1.notEqualTo("archived", true);
+      ppQuery1.notEqualTo("status", 3);
       ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);

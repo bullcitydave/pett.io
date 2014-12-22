@@ -71,19 +71,6 @@ var BrowseView = Parse.View.extend({
             }
       });
 
-        // var petsQuery = new Parse.Query(Pet);
-        // petsQuery.limit(1000);
-        // petsQuery.select("uniqueName");
-        // petsQuery.descending("updatedAt");
-        // petsQuery.find({
-        //   success: function(results) {
-
-      //         return this;
-      //       },
-      //     error: function(error) {
-      //         console.log("Error: " + error.code + " " + error.message);
-      //     }
-      // });
       return this;
   },
 
@@ -224,7 +211,7 @@ var BrowseView = Parse.View.extend({
   },
 
   squeeze: function() {
-    console.log('Squeezing...');
+    // console.log('Squeezing...');
     var rowWidth = 0;
     var A = [];
     var width = window.innerWidth;
