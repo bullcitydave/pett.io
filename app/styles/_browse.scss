@@ -22,6 +22,7 @@ div#browse-container {
       box-shadow: 5px 5px 10px $black;
       position:relative;
       transition: transform .5s;
+      transition-delay: .2s;
 
 
       img.pet-pic {
@@ -87,6 +88,7 @@ div#browse-container {
       }
       transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
       box-shadow: 15px 15px 30px $black;
+      transition-delay: 0.2s;
     }
 
     .pet-box.hovering-down {

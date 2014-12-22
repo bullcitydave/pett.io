@@ -29,6 +29,8 @@ var AccountView = Parse.View.extend({
     $(this.el).removeClass('browse');
     $(this.el).addClass('standard');
     APP.header.html(_.template($('#header-template').html(),({"userName":this.user})));
+    $('#manage-images').hide();
+    $('#account').hide();
     APP.header.addClass('standard');
     $('body').addClass('darkbg');
     x=this;

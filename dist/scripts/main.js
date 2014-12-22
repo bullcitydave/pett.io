@@ -429,6 +429,7 @@ var BrowseView = Parse.View.extend({
 
 
     d = new $.Deferred();
+    browseSelf.navbarSetup();
     browseSelf.render();
     $(window).on("resize", this, function(){
       browseSelf.squeeze();
@@ -449,20 +450,19 @@ var BrowseView = Parse.View.extend({
             }
       });
 
-        // var petsQuery = new Parse.Query(Pet);
-        // petsQuery.limit(1000);
-        // petsQuery.select("uniqueName");
-        // petsQuery.descending("updatedAt");
-        // petsQuery.find({
-        //   success: function(results) {
-
-      //         return this;
-      //       },
-      //     error: function(error) {
-      //         console.log("Error: " + error.code + " " + error.message);
-      //     }
-      // });
       return this;
+  },
+
+  navbarSetup : function() {
+    if (Parse.User.current() !== null) {
+      $('.site-visitor').hide();
+      $('.site-user').show();
+    }
+    else {
+      $('.site-user').hide();
+      $('.site-visitor').show();
+    }
+    $('#manage-images').hide();
   },
 
   getPics: function(collection) {
@@ -591,7 +591,7 @@ var BrowseView = Parse.View.extend({
   },
 
   squeeze: function() {
-    console.log('Squeezing...');
+    // console.log('Squeezing...');
     var rowWidth = 0;
     var A = [];
     var width = window.innerWidth;
@@ -630,6 +630,8 @@ var LinkView = Parse.View.extend({
 
   el: "body",
 
+  model: Pet,
+
 
 
   initialize: function(tag) {
@@ -649,6 +651,8 @@ var LinkView = Parse.View.extend({
       user='';
     }
 
+
+
     console.log('Initializing LinkView. Tag:',tag);
     $('body').css('background','#111');
     APP.header.addClass('standard');
@@ -657,6 +661,7 @@ var LinkView = Parse.View.extend({
     APP.main.removeClass('browse');
     APP.main.html('');
     $('.pic-showcase').html('');
+
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
     APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
     $('#log-out').show();
@@ -667,8 +672,29 @@ var LinkView = Parse.View.extend({
 
     APP.main.append("<div class='pic-showcase'></div>");
 
+    // this.pet = new Pet();
 
-    this.render();
+    // this.collection.fetch({reset: true}); // NEW
+    // this.render();
+
+    // myPetPromise = APP.getPet(pet);
+    // APP.getPet(pet).then(function(r) {
+    //   link.render();
+    // });
+    // this.render();
+
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", pet);
+    query.find().then(function(result) {
+      link.pet = new Pet(result[0].attributes);
+      link.navbarSetup();
+      link.render();
+    });
+
+
+    // myPet = APP.getPet(tag);
+    //
+    // this.render();
 
     $(window).on("resize", this, function(){
       link.squeeze($('.pic-showcase a'));
@@ -682,9 +708,34 @@ var LinkView = Parse.View.extend({
 
 
   events: {
-    "click #about"    : "showProfile",
-    "click #upload"   : "imageUploadForm"
-    // "click h2" : "doMasonry"
+    "click #about"         : "showProfile",
+    "click #upload"        : "imageUploadForm",
+    "click #remove"        : "removeImagesOptions",
+    "mouseover .fa-close"  : "highlightImageOn",
+    "mouseout .fa-close"   : "highlightImageOff",
+    "click .fa-close"      : "selectImageToRemove",
+    "click .pic-showcase a": "selectImage",
+    "click #remove-images #done": "removeImages"
+
+  },
+
+  navbarSetup : function() {
+    if (Parse.User.current() !== null) {
+        $('.site-visitor').hide();
+        $('.site-user').show();
+      }
+    else {
+        $('.site-user').hide();
+        $('.site-visitor').show();
+    }
+    if (Parse.User.current().get("username") != (link.pet).get("person").id) {
+        $('#header-nav #account').hide();
+        $('#header-nav #manage-images').hide();
+    }
+    else {
+      $('#header-nav #account').show();
+      $('#header-nav #manage-images').show();
+    }
   },
 
 
@@ -706,15 +757,7 @@ var LinkView = Parse.View.extend({
 
 
   render: function() {
-    if (Parse.User.current() !== null)
-      {
-        $('.site-visitor').hide();
-        $('.site-user').show();
-      }
-    else {
-        $('.site-user').hide();
-        $('.site-visitor').show();
-    }
+
     $('#browse').css('display','block');
 
     var parsePicListView = new ParsePicListView(pet);
@@ -755,6 +798,28 @@ var LinkView = Parse.View.extend({
     return false;
   },
 
+  removeImagesOptions: function(e){
+    e.preventDefault();
+    $('.pic-showcase').addClass('edit');
+    $('i.fa-close').show();
+    $('#tools').show();
+    $('#tools-container').show();
+    $('#modals-template').load("_modals.html", function () {
+      $('#tools-container').html($('#modals-template').html());
+    });
+    return false;
+  },
+
+  removeImagesOptionsDone: function(){
+    $('.pic-showcase').removeClass('edit');
+    $('i.fa-close').hide();
+    $('#tools').hide();
+    $('#tools-container').hide();
+    $('#modals-template').load("_modals.html", function () {
+      $('#tools-container').html($('#modals-template').html());
+    });
+  },
+
   viewAccount: function(e) {
     app_router.navigate('//account/'+Parse.User.current().getUsername());
     return false;
@@ -790,7 +855,60 @@ var LinkView = Parse.View.extend({
           // console.log('rowWidth: ', rowWidth);
         }
     }
-  }
+  },
+
+  highlightImageOn: function(e) {
+      $(e.target).siblings('img').addClass('hover');
+  },
+
+  highlightImageOff: function(e) {
+      $(e.target).siblings('img').removeClass('hover');
+  },
+
+  selectImage: function(e) {
+    if (document.querySelector('#remove-images') != null) {
+      e.preventDefault();
+      $(e.target).parent().toggleClass('selected');
+      return false;
+    }
+  },
+
+  selectImageToRemove: function(e) {
+    e.preventDefault();
+    $(e.target).siblings('a').toggleClass('selected');
+  },
+
+  removeImages: function(e) {
+    e.preventDefault();
+    var numSelected = $('.pic-showcase a.selected').length;
+    if (numSelected > 0) {
+      var selected = [];
+      $('.pic-showcase a.selected').each(function() {
+        selected.push(this.id);
+        $(this).remove();
+      })
+
+      var status =  ($('#remove-images input[name=archive]:checked').val() === "true") ? 3 : 9;
+      var action =  ($('#remove-images input[name=archive]:checked').val() === "true") ? 'archive' : 'delete';
+
+      var imgId = $(e.target).parent().attr('id');
+      $(e.target).parent().remove();
+      var rQuery = new Parse.Query(ParsePic);
+      rQuery.containedIn("objectId", selected);
+      rQuery.each(function(result) {
+        result.set("status",status);
+        return result.save();
+      }).then(function() {
+          alert(numSelected > 1 ? numSelected + ' images ' + action + 'd' : numSelected + ' image ' + action + 'd');
+        }, function(err) {
+            console.log(err);
+            alert('Problem archiving images. No images have been lost. Refresh to try again.');
+      })
+    }
+    link.removeImagesOptionsDone();
+  },
+
+
 
 
 });
@@ -897,10 +1015,12 @@ var ParsePicListView = Parse.View.extend({
 
       var ppQuery1 = new Parse.Query(ParsePic);
       ppQuery1.equalTo("petname", tag);
+      ppQuery1.notEqualTo("status", 3);
       ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
       ppQuery2.equalTo("petname", tag);
+      ppQuery2.notEqualTo("archived", true);
       ppQuery2.doesNotExist("size");
 
       var ppQuery =  new Parse.Query.or(ppQuery1, ppQuery2);
@@ -926,10 +1046,7 @@ var ParsePicListView = Parse.View.extend({
       //  console.log('Parse images: ' + results.length + ' Total images rendered: ' + imgCount);
        this.parseView = $('#parse-pic-template').html();
        for (var i = 0; i < results.length ; i++) {
-          // console.log(results[i]);
-          // console.log(results[i].attributes.url);
-          // console.log(this.parseView);
-         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url})));
+         $('.pic-showcase').append(_.template(this.parseView,({"parseImg":results[i].attributes.medium._url,"fullURL":results[i].attributes.url,"picID":results[i].id})));
        };
 
 
@@ -1041,21 +1158,26 @@ var MapView = Parse.View.extend ({
     defLat = 37.09024;
     defLng = -95.712891;
 
-    APP.main.append(_.template($('#map-template').html()));
-    $('#map-canvas').show();
-
-    var query = new Parse.Query(Pet);
-    var tempGeo = new Parse.GeoPoint(45,-45);
-    query.near("geoLocation",tempGeo );
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + results.length+ ". Attempting to render...");
-        map.render(results);
-      },
-      error: function(error) {
-        console.log("Error: " + error.code + " " + error.message);
-      }
+    $('#map-template').load("_map.html", function() {
+      APP.main.append(_.template($('#map-template').html()));
+      $('#map-canvas').show();
+      var query = new Parse.Query(Pet);
+      var tempGeo = new Parse.GeoPoint(45,-45);
+      query.near("geoLocation",tempGeo );
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length+ ". Attempting to render...");
+          map.render(results);
+        },
+        error: function(error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
     });
+
+
+
+
 
   },
 
@@ -1267,6 +1389,8 @@ var AccountView = Parse.View.extend({
     $(this.el).removeClass('browse');
     $(this.el).addClass('standard');
     APP.header.html(_.template($('#header-template').html(),({"userName":this.user})));
+    $('#manage-images').hide();
+    $('#account').hide();
     APP.header.addClass('standard');
     $('body').addClass('darkbg');
     x=this;
@@ -1816,6 +1940,7 @@ $(function() {
     $('#splash-template').load("_splash.html", function() {
     $('#browse-template').load("_browse.html", function() {
     $('#image-upload-template').load("_upload.html", function() {
+
     $('#add-pet-template').load("_addpet.html", function() {
     $('#edit-pet-template').load("_editpet.html", function() {
     $('#header-template').load("_header.html", function() {
@@ -1826,7 +1951,7 @@ $(function() {
     $('#account-template').load("_account.html", function() {
     $('#pet-header-template').load("_petheader.html", function() {
     $('#pet-list-template').load("_petlist.html", function() {
-    $('#map-template').load("_map.html", function() {
+
     $('#profile-template').load("_profile.html", function() {
         console.log('Templates loaded');
         window.APP = new AppView;
@@ -1840,10 +1965,11 @@ $(function() {
     })
     })
     })
+
     })
     })
     })
-    })
+
     })
     })
     })
@@ -1960,6 +2086,21 @@ var AppView = Parse.View.extend({
           app_router.navigate('/#/account/'+self.user);
         }
       });
+  },
+
+  getPet: function(petName) {
+    var query = new Parse.Query(Pet);
+    query.equalTo("uniqueName", petName);
+    query.find({
+      success: function(result) {
+        // return result;
+      },
+      error: function(collection, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    }).then(function(result) {
+      return result;
+    })
   },
 
   getAge: function(pet) {

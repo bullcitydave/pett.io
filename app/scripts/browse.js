@@ -83,6 +83,7 @@ var BrowseView = Parse.View.extend({
       $('.site-user').hide();
       $('.site-visitor').show();
     }
+    $('#manage-images').hide();
   },
 
   getPics: function(collection) {

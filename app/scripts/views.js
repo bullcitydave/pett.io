@@ -261,6 +261,7 @@ var LinkView = Parse.View.extend({
       })
 
       var status =  ($('#remove-images input[name=archive]:checked').val() === "true") ? 3 : 9;
+      var action =  ($('#remove-images input[name=archive]:checked').val() === "true") ? 'archive' : 'delete';
 
       var imgId = $(e.target).parent().attr('id');
       $(e.target).parent().remove();
@@ -270,7 +271,7 @@ var LinkView = Parse.View.extend({
         result.set("status",status);
         return result.save();
       }).then(function() {
-          alert(numSelected > 1 ? numSelected + ' images archived' : numSelected + ' image archived');
+          alert(numSelected > 1 ? numSelected + ' images ' + action + 'd' : numSelected + ' image ' + action + 'd');
         }, function(err) {
             console.log(err);
             alert('Problem archiving images. No images have been lost. Refresh to try again.');
