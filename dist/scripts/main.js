@@ -663,12 +663,10 @@ var LinkView = Parse.View.extend({
     $('.pic-showcase').html('');
 
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
-    APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
+
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
-
-    APP.getAge(pet);
 
     APP.main.append("<div class='pic-showcase'></div>");
 
@@ -759,6 +757,10 @@ var LinkView = Parse.View.extend({
   render: function() {
 
     $('#browse').css('display','block');
+    var name = (link.pet).get("name");
+
+    APP.main.append(_.template($('#pet-header-template').html(),({"petName":name})));
+    APP.getAge(link.pet);
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
@@ -826,7 +828,7 @@ var LinkView = Parse.View.extend({
   },
 
   squeeze: function(el) {
-    console.log('Squeezing...');
+    // console.log('Squeezing...');
     var rowWidth = 0;
     var A = [];
     var width = window.innerWidth;
@@ -1014,12 +1016,12 @@ var ParsePicListView = Parse.View.extend({
 
 
       var ppQuery1 = new Parse.Query(ParsePic);
-      ppQuery1.equalTo("petname", tag);
+      ppQuery1.equalTo("petUniqueName", tag);
       ppQuery1.notEqualTo("status", 3);
       ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
-      ppQuery2.equalTo("petname", tag);
+      ppQuery2.equalTo("petUniqueName", tag);
       ppQuery2.notEqualTo("archived", true);
       ppQuery2.doesNotExist("size");
 
@@ -2103,34 +2105,54 @@ var AppView = Parse.View.extend({
     })
   },
 
-  getAge: function(pet) {
-    var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", pet);
-    query.first();
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + pet + ". Attempting to render...");
-        var thisPet = new Pet(results[0].attributes);
-        if (!(thisPet.isLiving())) {
-            if(results[0].attributes.dateBirth == nullDateBirth) {
-              $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+  // getAge: function(pet) {
+  //   var query = new Parse.Query(Pet);
+  //   query.equalTo("uniqueName", pet);
+  //   query.first();
+  //   query.find({
+  //     success: function(results) {
+  //       console.log("Successfully retrieved " + pet + ". Attempting to render...");
+  //       var thisPet = new Pet(results[0].attributes);
+  //       if (!(thisPet.isLiving())) {
+  //           if(results[0].attributes.dateBirth == nullDateBirth) {
+  //             $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+  //           }
+  //           else {
+  //             console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+  //
+  //             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+  //           }
+  //       }
+  //       else {
+  //           var age = thisPet.age();
+  //           $('#life-marker').html(age);
+  //           return age;
+  //         }
+  //       },
+  //     error: function(collection, error) {
+  //           console.log("Error: " + error.code + " " + error.message);
+  //       }
+  //     });
+  //   },
+  //
+
+    getAge: function(pet) {
+
+          if (!(pet.isLiving())) {
+            if(pet.get("dateBirth") == nullDateBirth) {
+              $('#life-marker').html('d. ' + moment(pet.get("dateDeath").year()));
             }
             else {
-              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-
-              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              //
+              $('#life-marker').html(moment(pet.get("dateBirth").year())+ ' - ' + moment(pet.get("dateDeath").year()));
             }
-        }
-        else {
-            var age = thisPet.age();
+          }
+          else {
+            var age = pet.age();
             $('#life-marker').html(age);
             return age;
           }
-        },
-      error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-      });
     },
 
   getDate: function(parseDate) {
