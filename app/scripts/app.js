@@ -171,34 +171,54 @@ var AppView = Parse.View.extend({
     })
   },
 
-  getAge: function(pet) {
-    var query = new Parse.Query(Pet);
-    query.equalTo("uniqueName", pet);
-    query.first();
-    query.find({
-      success: function(results) {
-        console.log("Successfully retrieved " + pet + ". Attempting to render...");
-        var thisPet = new Pet(results[0].attributes);
-        if (!(thisPet.isLiving())) {
-            if(results[0].attributes.dateBirth == nullDateBirth) {
-              $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+  // getAge: function(pet) {
+  //   var query = new Parse.Query(Pet);
+  //   query.equalTo("uniqueName", pet);
+  //   query.first();
+  //   query.find({
+  //     success: function(results) {
+  //       console.log("Successfully retrieved " + pet + ". Attempting to render...");
+  //       var thisPet = new Pet(results[0].attributes);
+  //       if (!(thisPet.isLiving())) {
+  //           if(results[0].attributes.dateBirth == nullDateBirth) {
+  //             $('#life-marker').html('d. ' + moment(results[0].attributes.dateDeath).year());
+  //           }
+  //           else {
+  //             console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+  //
+  //             $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+  //           }
+  //       }
+  //       else {
+  //           var age = thisPet.age();
+  //           $('#life-marker').html(age);
+  //           return age;
+  //         }
+  //       },
+  //     error: function(collection, error) {
+  //           console.log("Error: " + error.code + " " + error.message);
+  //       }
+  //     });
+  //   },
+  //
+
+    getAge: function(pet) {
+
+          if (!(pet.isLiving())) {
+            if(pet.get("dateBirth") == nullDateBirth) {
+              $('#life-marker').html('d. ' + moment(pet.get("dateDeath").year()));
             }
             else {
-              console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-
-              $('#life-marker').html(moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              // console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
+              //
+              $('#life-marker').html(moment(pet.get("dateBirth").year())+ ' - ' + moment(pet.get("dateDeath").year()));
             }
-        }
-        else {
-            var age = thisPet.age();
+          }
+          else {
+            var age = pet.age();
             $('#life-marker').html(age);
             return age;
           }
-        },
-      error: function(collection, error) {
-            console.log("Error: " + error.code + " " + error.message);
-        }
-      });
     },
 
   getDate: function(parseDate) {

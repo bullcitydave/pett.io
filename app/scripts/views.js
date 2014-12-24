@@ -35,12 +35,10 @@ var LinkView = Parse.View.extend({
     $('.pic-showcase').html('');
 
     APP.header.html(_.template($('#header-template').html(),({"userName":user})));
-    APP.main.append(_.template($('#pet-header-template').html(),({"petName":tag})));
+
     $('#log-out').show();
     $('body').addClass('whitebg');
     $('body').removeClass('splash');
-
-    APP.getAge(pet);
 
     APP.main.append("<div class='pic-showcase'></div>");
 
@@ -131,6 +129,10 @@ var LinkView = Parse.View.extend({
   render: function() {
 
     $('#browse').css('display','block');
+    var name = (link.pet).get("name");
+
+    APP.main.append(_.template($('#pet-header-template').html(),({"petName":name})));
+    APP.getAge(link.pet);
 
     var parsePicListView = new ParsePicListView(pet);
     var flickrPicListView = new FlickrPicListView(pet);
@@ -198,7 +200,7 @@ var LinkView = Parse.View.extend({
   },
 
   squeeze: function(el) {
-    console.log('Squeezing...');
+    // console.log('Squeezing...');
     var rowWidth = 0;
     var A = [];
     var width = window.innerWidth;
@@ -386,12 +388,12 @@ var ParsePicListView = Parse.View.extend({
 
 
       var ppQuery1 = new Parse.Query(ParsePic);
-      ppQuery1.equalTo("petname", tag);
+      ppQuery1.equalTo("petUniqueName", tag);
       ppQuery1.notEqualTo("status", 3);
       ppQuery1.equalTo("size","original");
 
       var ppQuery2 = new Parse.Query(ParsePic);
-      ppQuery2.equalTo("petname", tag);
+      ppQuery2.equalTo("petUniqueName", tag);
       ppQuery2.notEqualTo("archived", true);
       ppQuery2.doesNotExist("size");
 
