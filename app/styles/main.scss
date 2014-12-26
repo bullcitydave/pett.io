@@ -65,7 +65,12 @@ body {
 
 
   header#main-header.standard{
-    height: 35px;
+    @include media($mobile-s) {
+      height: 45px;
+    }
+    @include media($desktop) {
+      height: 35px;
+    }
     margin: 0;
     top: 0;
     width: 100%;
@@ -81,28 +86,44 @@ body {
       color: $black;
 
       @include media($mobile-s) {
-        font-size: 1.8em;
+        font-size: 2.45em;
         font-weight: 300;
         float: left;
         font-family: $primary-font;
         margin: 0 0 0 10px;
       }
-      @include media($mobile-l) {
+      @include media($desktop) {
         font-size: 1.8em;
         margin: 0 0 0 15px;
       }
     }
     nav#header-nav {
       @include media($mobile-s) {
-        position: absolute;
         right: 0;
         font-size: 0.9em;
         font-weight: 600;
         text-align: right;
         text-transform:uppercase;
         bottom: 0;
+        button.menu {
+          background: $black;
+          height: 40px;
+          margin-top: 2.5px;
+          margin: 2.5px 5px;
+          font-size: 0.85em;
+        }
         ul {
-          list-style-type: none;
+          display: none;
+          &.mobile-selected {
+            display: block;
+            list-style-type: none;
+            background: $orange;
+            text-align: center;
+            font-size: 1.5em;
+            list-style-type: none;
+            border-top: 1px groove black;
+            padding: 10px;
+
           li {
             display: inherit;
             padding: 0 5px 0 0;
@@ -120,26 +141,37 @@ body {
           }
           margin-top: 3px;
         }
-
-        #header-username {
-          position: absolute;
-          top: 0;
-          right: 0;
-          top: -87px;
-          padding: 0px 5px 0px 5px;
-          background: #333;
-          font-size: 1.1em;
-          color: #eaeaea;
-        }
       }
+      #header-username {
+        display: none;
+        //   position: absolute;
+        //   top: 0;
+        //   right: 0;
+        //   top: -87px;
+        //   padding: 0px 5px 0px 5px;
+        //   background: #333;
+        //   font-size: 1.1em;
+        //   color: #eaeaea;
+      }
+    }
 
       @include media($mobile-m) {
-        top: 0;
+
+      }
+      @include media($desktop) {
+        button.menu {
+          display: none;
+        }
+
         ul {
+          display: block;
+          top: 0;
           li {
             padding: 4px 10px 4px;
             float: right;
             transition: 0;
+            font-size: 1.2em;
+            letter-spacing: inherit;
             &:first-child {
               padding-right: 4px;
             }
@@ -167,21 +199,12 @@ body {
             }
           }
         }
-        #header-username {
-          top: -40px;
-        }
-      }
-      @include media($mobile-l) {
-        ul {
-          li {
-            font-size: 1.2em;
-            letter-spacing: inherit;
-          }
-        }
+        // #header-username {
+        //   top: -40px;
+        // }
       }
     }
   }
-
 
 
 
