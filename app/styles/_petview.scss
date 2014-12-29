@@ -1,10 +1,96 @@
-div.pic-showcase {
+div#main-container.standard {
+  @include media($mobile-s) {
+    margin: 180px 0 0 0;
+    div.pic-showcase {
+      padding-top: 0px;
+    }
+    header#pet-header {
+      position: fixed;
+      z-index: 50;
+      background: $black;
+      width: 100%;
+      top: 35px;
+      text-align: center;
+
+      h2 {
+        font-size: 2.5em;
+        font-family: $secondary-font;
+        font-weight: 300;
+        width: 100%;
+        opacity: 1;
+        z-index: 100;
+        text-transform: capitalize;
+        color: $white;
+        margin: 10px 0 -35px 0;
+      }
+      p#life-marker {
+        font-size: 1.5em;
+        color: $white;
+        font-weight: 400;
+      }
+      #about {
+        width: 90px;
+        border: 2px solid $orange;
+        text-decoration: none;
+        border-radius: 0;
+        text-shadow: none;
+        box-shadow: none;
+        font-size: 1.0em;
+        text-align: center;
+        margin:-20px 0 10px 0;
+        text-transform: uppercase;
+        color: $orange;
+        background: $black;
+        padding: 10px;
+        font-weight: 400;
+        position: relative;
+        left: calc(50% - 45px);
+      }
+    }
+  }
+
+
+  @include media($mobile-m) {
+    div.pic-showcase {
+      padding-top: 0px;
+    }
+    header#pet-header {
+      padding: 0 0 10px 0;
+
+      h2 {
+        font-family: $secondary-font;
+        font-size: 3.5em;
+        text-align: center;
+        margin: 20px 0 20px 0;
+      }
+
+
+      p#life-marker {
+        text-align: center;
+        margin: -35px 0 0 5px;
+      }
+
+      #about {
+        margin: 5px 0 0 0;
+        position:absolute;
+      }
+      #about:hover {
+        color: $darker-orange;
+        background: $white;
+        border: 1px solid $black;
+      }
+
+    }
+  }
+
+
+  div.pic-showcase {
 
     margin: 0 auto;
     transition: opacity .8s;
     width: 100%;
     text-align: center;
-    padding: 45px 25px 25px 25px;
+    padding: 10px 25px 25px 25px;
 
     &.edit {
       padding-top: 150px;
@@ -137,3 +223,4 @@ div.pic-showcase {
     // padding-right:10%;
     }
   }
+}
