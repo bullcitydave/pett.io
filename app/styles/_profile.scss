@@ -19,15 +19,20 @@
       background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.45098), rgba($darker-orange, 0.45098));
 
       p {
-        border: solid 2px #333;
-        margin: 15px auto;
-        font-weight: 300;
-        font-size: 1.0em;
-        opacity: .8;
-        background: #eaeaea;
-        text-align: center;
-        border-radius: 2px;
-        min-width: 100px;
+        @include media($mobile-s) {
+          border: solid 2px #333;
+          margin: 0;
+          font-weight: 300;
+          font-size: 1.0em;
+          opacity: .8;
+          background: #eaeaea;
+          text-align: center;
+          border-radius: 2px;
+          min-width: 100px;
+        }
+        @include media($mobile-l) {
+          margin: 15px auto;
+        }
 
 
         span.profile-label {
@@ -48,30 +53,47 @@
         }
       }
       p#bio {
-        @include span-columns(12);
-        @include omega();
-        line-height: 25px;
-        opacity: 1;
-        font-size: 1.3em;
-        line-height: 1.6em;
-        text-align: justify;
-        padding: 15px;
-        background: white;
-        font-weight: 700;
-        border-radius: 4px;
+        @include media($mobile-s) {
+          @include span-columns(12);
+          @include omega();
+          line-height: 25px;
+          opacity: 1;
+          font-size: 1.0em;
+          line-height: 1.4em;
+          text-align: left;
+          padding: 15px;
+          background: white;
+          font-weight: 700;
+          border-radius: 4px;
 
-        span.profile-value {
-          letter-spacing: 0.02em
+          span.profile-value {
+            letter-spacing: 0.02em
+          }
+        }
+        @include media($mobile-l) {
+          font-size: 1.3em;
+          line-height: 1.6em;
+          text-align: justify;
         }
       }
 
       p.small-field {
-        @include span-columns(2);
+        @include media($mobile-s) {
+          @include span-columns(12);
+        }
+        @include media($mobile-l) {
+          @include span-columns(2);
+        }
 
       }
 
       p.med-field {
-        @include span-columns(3);
+        @include media($mobile-s) {
+          @include span-columns(12);
+        }
+        @include media($mobile-l) {
+          @include span-columns(3);
+        }
 
       }
       // p#treats {
@@ -96,17 +118,24 @@
       //   @include span-columns(2.5);
       // }
       p#born, p#died, p#adopted {
-        @include span-columns(2);
+        @include media($mobile-s) {
+          @include span-columns(12);
+        }
+        @include media($mobile-l) {
+          @include span-columns(2);
+          p.date-field {
+            clear:left;
+          }
+          p.date-field ~ .date-field {
+            clear:none;
+          }
+        }
       }
-      p.date-field {
-        clear:left;
-      }
-      p.date-field ~ .date-field {
-        clear:none;
-      }
+
+
 
 
     }
 
-    
+
   }
