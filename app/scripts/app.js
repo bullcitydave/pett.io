@@ -56,7 +56,8 @@ var AppView = Parse.View.extend({
   header : $('#main-header'),
 
   events: {
-    "click #log-out"    : "logOut"
+    "click #log-out"    : "logOut",
+    "click button.menu" : "mobileNavShow"
 
     },
 
@@ -209,9 +210,7 @@ var AppView = Parse.View.extend({
               $('#life-marker').html('d. ' + moment(pet.get("dateDeath").year()));
             }
             else {
-              // console.log(results[0].attributes.name + ': ' + moment(results[0].attributes.dateBirth).year()+ ' - ' + moment(results[0].attributes.dateDeath).year());
-              //
-              $('#life-marker').html(moment(pet.get("dateBirth").year())+ ' - ' + moment(pet.get("dateDeath").year()));
+              $('#life-marker').html((moment(pet.get("dateBirth")).year())+ ' - ' + (moment(pet.get("dateDeath")).year()));
             }
           }
           else {
@@ -236,6 +235,11 @@ var AppView = Parse.View.extend({
     APP.header.removeClass('standard');
     APP.main.removeClass('standard');
      app_router.navigate('//');
+  },
+
+  mobileNavShow: function(e) {
+    e.preventDefault();
+    $('ul#menu').toggleClass('mobile-selected');
   }
 
 

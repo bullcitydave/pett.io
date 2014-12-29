@@ -105,6 +105,8 @@ body {
         text-align: right;
         text-transform:uppercase;
         bottom: 0;
+        letter-spacing: 0.08em;
+      }
         button.menu {
           background: $black;
           height: 40px;
@@ -129,6 +131,10 @@ body {
             padding: 0 5px 0 0;
             font-size: 0.8em;
             letter-spacing: -0.08em;
+            &:hover {
+              color: white;
+              transition: 0.3s;
+            }
             ul {
               list-style-type: none;
               li {
@@ -139,7 +145,6 @@ body {
               color: $white;
             }
           }
-          margin-top: 3px;
         }
       }
       #header-username {
@@ -171,14 +176,12 @@ body {
             float: right;
             transition: 0;
             font-size: 1.2em;
-            letter-spacing: inherit;
+            letter-spacing: initial;
             &:first-child {
               padding-right: 4px;
             }
             &:hover {
-              color: white;
               padding-bottom: 5px;
-              transition: 0.3s;
             }
             ul {
               list-style-type: none;
@@ -204,7 +207,7 @@ body {
         // }
       }
     }
-  }
+  
 
 
 
