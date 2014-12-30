@@ -106,7 +106,7 @@ body {
         text-transform:uppercase;
         bottom: 0;
         letter-spacing: 0.08em;
-      }
+
         button.menu {
           background: $black;
           height: 40px;
@@ -126,23 +126,24 @@ body {
             border-top: 1px groove black;
             padding: 10px;
 
-          li {
-            display: inherit;
-            padding: 0 5px 0 0;
-            font-size: 0.8em;
-            letter-spacing: -0.08em;
-            &:hover {
-              color: white;
-              transition: 0.3s;
-            }
-            ul {
-              list-style-type: none;
-              li {
-                float: none;
+            li {
+              display: inherit;
+              padding: 0 5px 0 0;
+              font-size: 0.8em;
+              letter-spacing: -0.08em;
+              &:hover {
+                color: white;
+                transition: 0.3s;
               }
-            }
-            &.active {
-              color: $white;
+              ul {
+                list-style-type: none;
+                li {
+                  float: none;
+                }
+              }
+              &.active {
+                color: $white;
+              }
             }
           }
         }
@@ -160,7 +161,7 @@ body {
       }
     }
 
-      @include media($mobile-m) {
+      @include media($mobile-l) {
 
       }
       @include media($desktop) {
@@ -168,7 +169,7 @@ body {
           display: none;
         }
 
-        ul {
+        nav#header-nav ul {
           display: block;
           top: 0;
           li {
