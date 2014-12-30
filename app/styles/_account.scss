@@ -7,18 +7,26 @@
 
 div.user-profile {
 
-  position: absolute;
-  top: $std-header-height;
+  @include media($mobile-s) {
+    font-size: 0.8em;
+    position: absolute;
+    top: $std-header-height;
 
-  width: 100%;
-  background: $white;
-  margin-bottom:25px;
+    width: 100%;
+    background: $white;
+    margin-bottom:25px;
 
-  section {
-    padding: 10px;
-    border: 2px solid $med-gray;
-    margin: 10px;
+    section {
+      padding: 10px;
+      border: 2px solid $med-gray;
+      margin: 10px;
+    }
   }
+  @include media($mobile-l) {
+    font-size: 1.0em;
+  }
+
+
 
 
   // h2 {
@@ -127,34 +135,35 @@ section#update-pet {
 }
 
   form#add-pet-form, form#edit-pet-form {
-    @include span-columns(12);
+    @include media($mobile-s) {
+      @include span-columns(12);
 
-    input, label, select {
-      clear: left;
-    }
+      input, label, select {
+        clear: left;
+      }
 
 
-    span{
-      float: left;
-      padding: 0px 0px 0 5px;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
+      span{
+        float: left;
+        padding: 0px 0px 0 5px;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
 
-    #p-name {
-      @include span-columns(3.5);
-      float:left;
+      #p-name {
+        @include span-columns(12);
+        float:left;
 
-      ::-webkit-input-placeholder {
+        ::-webkit-input-placeholder {
           color: $darker-orange;
         }
-      :-moz-placeholder { /* Firefox 18- */
+        :-moz-placeholder { /* Firefox 18- */
           color: $darker-orange;
         }
-      ::-moz-placeholder {  /* Firefox 19+ */
+        ::-moz-placeholder {  /* Firefox 19+ */
           color: $darker-orange;
         }
-      :-ms-input-placeholder {
+        :-ms-input-placeholder {
           color: $darker-orange;
         }
         #pet-name, #p-name {
@@ -163,32 +172,32 @@ section#update-pet {
 
 
 
-    }
-
-    #p-gender {
-      @include span-columns(2);
-      float:left;
-    }
-
-    #p-type {
-      @include span-columns(2);
-      float:left;
-    }
-
-    #p-weight {
-      @include span-columns(4.5);
-      float:left;
-      @include omega;
-      span#weight-label {
-        @include span-columns(1 of 4.5);
       }
-      span.ui-widget {
-        @include span-columns(3.5 of 4.5);
+
+      #p-gender {
+        @include span-columns(12);
+        float:left;
+      }
+
+      #p-type {
+        @include span-columns(12);
+        float:left;
+      }
+
+      #p-weight {
+        @include span-columns(12);
+        float:left;
+        @include omega;
+        span#weight-label {
+          @include span-columns(5 of 12);
+        }
+        span.ui-widget {
+          @include span-columns(7 of 12);
           input {
-            @include span-columns(1.5 of 3.5);
+            @include span-columns(4 of 12);
           }
           a {
-            @include span-columns(1 of 3.5);
+            @include span-columns(3 of 12);
             @include omega;
             span {
               padding:4px;
@@ -197,68 +206,199 @@ section#update-pet {
         }
       }
 
-    #p-colors {
-      @include span-columns(6);
-      float:left;
-      clear:left;
-
-    }
-
-    #p-breeds {
-      @include span-columns(6);
-      float:left;
-      @include omega();
-    }
-
-    #p-body-type {
-      @include span-columns(6);
-      float:left;
-
-    }
-
-    #p-treats {
-      @include span-columns(6);
-      float:left;
-      @include omega();
-    }
-    #p-bio {
-      @include span-columns(6);
-      float:left;
-      clear:left;
-
-    }
-    #p-dates {
-      @include span-columns(6);
-      float:left;
-      @include omega();
-      #p-birth {
-        color: $darker-orange;
-      }
-      #p-dob {
+      #p-colors {
+        @include span-columns(12);
+        float:left;
         clear:left;
-        color: $darker-orange;
-        input {
+
+      }
+
+      #p-breeds {
+        @include span-columns(12);
+        float:left;
+        @include omega();
+      }
+
+      #p-body-type {
+        @include span-columns(12);
+        float:left;
+
+      }
+
+      #p-treats {
+        @include span-columns(12);
+        float:left;
+        @include omega();
+      }
+      #p-bio {
+        @include span-columns(12);
+        float:left;
+        clear:left;
+
+      }
+      #p-dates {
+        @include span-columns(12);
+        float:left;
+        @include omega();
+        #p-birth {
           color: $darker-orange;
         }
-      }
+        #p-dob {
+          clear:left;
+          color: $darker-orange;
+          input {
+            color: $darker-orange;
+          }
+        }
 
-      #p-doa {
-        clear:left;
-      }
+        #p-doa {
+          clear:left;
+        }
 
-      #p-dod {
-        clear:left;
+        #p-dod {
+          clear:left;
+        }
+      }
+      #p-submit, #p-update {
+        @include span-columns(3);
+        @include shift(4.5);
       }
     }
-    #p-submit, #p-update {
-      @include span-columns(3);
-      @include shift(4.5);
+    @include media($mobile-l) {
+      @include span-columns(12);
+
+      input, label, select {
+        clear: left;
+      }
+
+
+      span{
+        float: left;
+        padding: 0px 0px 0 5px;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      #p-name {
+        @include span-columns(3.5);
+        float:left;
+
+        ::-webkit-input-placeholder {
+            color: $darker-orange;
+          }
+        :-moz-placeholder { /* Firefox 18- */
+            color: $darker-orange;
+          }
+        ::-moz-placeholder {  /* Firefox 19+ */
+            color: $darker-orange;
+          }
+        :-ms-input-placeholder {
+            color: $darker-orange;
+          }
+          #pet-name, #p-name {
+            color: $darker-orange;
+          }
+
+
+
+      }
+
+      #p-gender {
+        @include span-columns(2);
+        float:left;
+      }
+
+      #p-type {
+        @include span-columns(2);
+        float:left;
+      }
+
+      #p-weight {
+        @include span-columns(4.5);
+        float:left;
+        @include omega;
+        span#weight-label {
+          @include span-columns(1 of 4.5);
+        }
+        span.ui-widget {
+          @include span-columns(3.5 of 4.5);
+            input {
+              @include span-columns(1.5 of 3.5);
+            }
+            a {
+              @include span-columns(1 of 3.5);
+              @include omega;
+              span {
+                padding:4px;
+              }
+            }
+          }
+        }
+
+      #p-colors {
+        @include span-columns(6);
+        float:left;
+        clear:left;
+
+      }
+
+      #p-breeds {
+        @include span-columns(6);
+        float:left;
+        @include omega();
+      }
+
+      #p-body-type {
+        @include span-columns(6);
+        float:left;
+
+      }
+
+      #p-treats {
+        @include span-columns(6);
+        float:left;
+        @include omega();
+      }
+      #p-bio {
+        @include span-columns(6);
+        float:left;
+        clear:left;
+
+      }
+      #p-dates {
+        @include span-columns(6);
+        float:left;
+        @include omega();
+        #p-birth {
+          color: $darker-orange;
+        }
+        #p-dob {
+          clear:left;
+          color: $darker-orange;
+          input {
+            color: $darker-orange;
+          }
+        }
+
+        #p-doa {
+          clear:left;
+        }
+
+        #p-dod {
+          clear:left;
+        }
+      }
+      #p-submit, #p-update {
+        @include span-columns(3);
+        @include shift(4.5);
+      }
     }
   }
 }
 
 
 section#add-media {
+  @include media($mobile-s) {
     width: 50%;
     min-width: 320px;
     h3 {
@@ -277,7 +417,11 @@ section#add-media {
         font-size: 1.1em;
         padding: 0 20px 0 20px;
       }
-
+    }
+    font-size: 0.8em;
+  @include media($mobile-l) {
+    font-size: 1.0em;
+  }
 }
 
 #tools {

@@ -2,7 +2,8 @@
   <div id="p-name"><span>Name</span><input type="text" id="pet-name" value="<%-name%>" required="required"></div>
   <div id="p-gender"><span>Gender</span>
     <select  name="pet-gender" id="pet-gender">
-      <option selected label="-" value="Unk">Unknown</option>
+      <option selected label="<%-gender%>" value="<%-gender%>"><%-gender%></option>
+      <option label="Unknown" value="Unk">Unknown</option>
       <option label="Female" value="Female">Female</option>
       <option label="Male" value="Male">Male</option>
     </select>

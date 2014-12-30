@@ -134,11 +134,22 @@ body {
               &:hover {
                 color: white;
                 transition: 0.3s;
+                &#manage-images {
+                  color: black;
+                }
+              }
+              // hack to approximate centering of first item; unsure why it is being indented
+              &:first-child {
+                padding-right: 25%;
               }
               ul {
                 list-style-type: none;
+                display: block;
                 li {
                   float: none;
+                  &:first-child {
+                    padding-right: initial;
+                  }
                 }
               }
               &.active {
@@ -183,6 +194,8 @@ body {
             }
             &:hover {
               padding-bottom: 5px;
+              color: white;
+              transition: 0.3s;
             }
             ul {
               list-style-type: none;
