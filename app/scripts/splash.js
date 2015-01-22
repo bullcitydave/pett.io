@@ -23,10 +23,10 @@ var SplashView = Parse.View.extend({
   },
 
   getSplashImgUrl: function(){
-    var randomImg = Math.floor(Math.random() * 6);
+    var randomImg = Math.floor(Math.random() * 10);
     var imagePath = '../images/splash/splash';
-    var bgImgAttrib = 'no-repeat center top fixed';
+    var bgImgAttrib = 'no-repeat 50% 25% fixed';
     $('body.splash').css('background',('linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),url("' + imagePath + randomImg + '.jpg")' + bgImgAttrib));
-    // $('body.splash').css('background-size',('cover'));
+    $('body.splash').css('background-size',('cover'));
   }
 });

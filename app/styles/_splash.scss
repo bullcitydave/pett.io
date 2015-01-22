@@ -1,11 +1,11 @@
 body.splash {
   @include media($mobile-s) {
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat top center fixed;
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat 50% 25% fixed;
     background-size: initial;
     transition: all .5s;
   }
   @include media($mobile-m) {
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat top center fixed;
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat 50% 25% fixed;
     background-size: cover !important;
   }
 }
