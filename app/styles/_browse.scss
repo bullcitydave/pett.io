@@ -105,9 +105,12 @@ div#browse-container {
     }
 
     .pet-box.leaving {
-      animation-duration: 1s;
+      // how to get scale to inherit from where it is right now?
+      // animation-duration: 1s;
+      animation-duration: 0;
       animation-iteration-count: 1;
       animation-name: default-state;
+      animation-fill-mode: forwards;
 
     }
 

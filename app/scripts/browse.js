@@ -171,6 +171,7 @@ var BrowseView = Parse.View.extend({
 
 
   hoverBox: function(event) {
+      $('.leaving').removeClass('leaving');
       $('.animated').removeClass('animated');
 
       var targetBox = $(event.target).closest('.pet-box');
@@ -199,7 +200,7 @@ var BrowseView = Parse.View.extend({
       // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
       targetBox.removeClass('hovering hovering-up hovering-down hovering-left hovering-right');
       targetBox.addClass('leaving');
-      targetBox.removeClass('animated');
+      // targetBox.removeClass('animated');
   },
 
   checkUserStatus: function() {
