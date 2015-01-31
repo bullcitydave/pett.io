@@ -80,3 +80,13 @@ function enable(el){
     nullDateBirth = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
     nullDateDeath = "Mon Dec 31 2029 00:00:00 GMT-0500 (EST)";
     nullDateAdopted = "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)";
+
+
+/*** To test out splash images ***/
+
+var changeImage = function (n) {
+  if (!n) {
+    n = prompt("Which image?");
+  }
+  $('body').css('background-image', "linear-gradient(rgba(0, 0, 0, 0.0980392), rgba(0, 0, 0, 0.0980392)), url(http://www.pett.io/images/splash/splash" + n + ".jpg)")
+}

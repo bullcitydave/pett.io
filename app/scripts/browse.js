@@ -6,7 +6,7 @@ var BrowseView = Parse.View.extend({
 
   events: {
     "mouseover .pet-pic"    : "hoverBox",
-    "mouseout  .pet-pic"    : "leaveBox",
+    "mouseout  .pet-pic"    : "leaveBox"
 
   },
 
@@ -171,9 +171,10 @@ var BrowseView = Parse.View.extend({
 
 
   hoverBox: function(event) {
-      $('.hovering').removeClass('hovering');
+      $('.animated').removeClass('animated');
+
       var targetBox = $(event.target).closest('.pet-box');
-      targetBox.addClass('hovering');
+      targetBox.addClass('animated');
       // need separate for 1st el, top x els, last of row 1
       // bottom left, bottom, bottom-right
       // left, right
@@ -197,6 +198,8 @@ var BrowseView = Parse.View.extend({
       var targetBox = $(event.target).closest('.pet-box');
       // $('*[class*="hovering"]').removeClass('hovering hovering-up hovering-down');
       targetBox.removeClass('hovering hovering-up hovering-down hovering-left hovering-right');
+      targetBox.addClass('leaving');
+      targetBox.removeClass('animated');
   },
 
   checkUserStatus: function() {
@@ -245,4 +248,21 @@ var BrowseView = Parse.View.extend({
 
 
 
+});
+
+
+
+// $(".pet-box").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
+//   $(this).removeClass("animated")
+// })
+
+// $(".pet-box").hover(function(){
+//   $(this).addClass("animated");
+// })
+
+
+$("#stop").click(function() {
+  $(".rotate").one('animationiteration webkitAnimationIteration', function() {
+    $(this).removeClass("anim");
+  });
 });

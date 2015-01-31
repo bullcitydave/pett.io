@@ -78,52 +78,96 @@ div#browse-container {
         width: auto;
         height: 150px;
       }
+
+      animation-duration: 0;
+      animation-name: default-state;
+      animation-iteration-count: 1;
+
     }
     // .pet-box:hover,
-    .pet-box.hovering {
+    .pet-box.animated {
       z-index:10;
       background-color: #FFF;
       img.pet-pic {
         @include if-brightness(1.25);
       }
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
-      box-shadow: 15px 15px 30px $black;
-      transition-delay: 0.2s;
+      // transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
+      // transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
+      // box-shadow: 15px 15px 30px $black;
+
+
+      animation-duration: 1s;
+      animation-direction: alternate;
+      animation-name: testing;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+
     }
 
-    .pet-box.hovering-down {
-      @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 55px);
+    .pet-box.leaving {
+      animation-duration: 1s;
+      animation-iteration-count: 1;
+      animation-name: default-state;
+
     }
-    .pet-box.hovering-up {
-      @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -55px);
-    }
-    .pet-box.hovering-right {
-      @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 0px);
-    }
-    .pet-box.hovering-left {
-      @extend .pet-box.hovering;
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 0px);
-    }
-    .pet-box.hovering-down.hovering-right {
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 55px);
-    }
-    .pet-box.hovering-down.hovering-left {
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 55px);
-    }
-    .pet-box.hovering-up.hovering-right {
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, -55px);
-    }
-    .pet-box.hovering-up.hovering-left {
-      transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, -55px);
-    }
+
+    // .pet-box.hovering-down {
+    //   @extend .pet-box.hovering;
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 55px);
+    // }
+    // .pet-box.hovering-up {
+    //   @extend .pet-box.hovering;
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -55px);
+    // }
+    // .pet-box.hovering-right {
+    //   @extend .pet-box.hovering;
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 0px);
+    // }
+    // .pet-box.hovering-left {
+    //   @extend .pet-box.hovering;
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 0px);
+    // }
+    // .pet-box.hovering-down.hovering-right {
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 55px);
+    // }
+    // .pet-box.hovering-down.hovering-left {
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 55px);
+    // }
+    // .pet-box.hovering-up.hovering-right {
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, -55px);
+    // }
+    // .pet-box.hovering-up.hovering-left {
+    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, -55px);
+    // }
   }
 
   @include media($desktop) {
     text-align:justify;
   }
 
+
+}
+
+@keyframes testing {
+  0% {
+    transform: skew(0) scale(1, 1) rotate(0deg) translate(0px, 0px);
+  }
+  // 50% {
+  //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
+  // }
+  75% {
+    transform: skew(0) scale(2.25, 2.25) rotate(0) translate(0px, 0px);
+  }
+  100% {
+    transform: skew(0) scale(2, 2) rotate(0deg) translate(0px, 0px);
+  }
+}
+
+@keyframes default-state {
+  to {
+    transform: skew(0) scale(1, 1) rotate(0deg) translate(0px, 0px);
+  }
+  // 50% {
+  //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
 
 }
