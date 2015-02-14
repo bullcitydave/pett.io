@@ -93,11 +93,12 @@ div#browse-container {
       img.pet-pic {
         @include if-brightness(1.25);
       }
-      animation-duration: 1s;
+      animation-duration: .7s;
       animation-name: enlarge;
       animation-iteration-count: 1;
+      animation-timing-function: ease;
       animation-fill-mode: forwards;
-      -webkit-transform-origin: 0 0;
+      -webkit-transform-origin: 50% 50%;
       &.down {
         -webkit-transform-origin: 50% 0;
         &.right {
@@ -117,10 +118,10 @@ div#browse-container {
         }
       }
       &.right {
-        -webkit-transform-origin: 0px 0px;
+        -webkit-transform-origin: 0px 50%;
       }
       &.left {
-        -webkit-transform-origin: 100% 0px;
+        -webkit-transform-origin: 100% 50%;
       }
     }
 
@@ -150,8 +151,8 @@ div#browse-container {
   // 50% {
   //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
   // }
-  75% {
-    transform: scale(2.25, 2.25);
+  70% {
+    transform: scale(2.5, 2.5);
   }
   100% {
     transform: scale(2, 2);
