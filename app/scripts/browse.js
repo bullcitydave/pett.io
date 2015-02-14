@@ -45,6 +45,7 @@ var BrowseView = Parse.View.extend({
     var parsePicQuery = new Parse.Query("ParsePic");
     parsePicQuery.limit(1000);
     parsePicQuery.descending('createdAt');
+    parsePicQuery.notEqualTo('status', 3);
     parsePics = parsePicQuery.collection();
 
 

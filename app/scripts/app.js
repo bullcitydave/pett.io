@@ -207,7 +207,8 @@ var AppView = Parse.View.extend({
 
           if (!(pet.isLiving())) {
             if(pet.get("dateBirth") == nullDateBirth) {
-              $('#life-marker').html('d. ' + moment(pet.get("dateDeath").year()));
+              // $('#life-marker').html('d. ' + moment(pet.get("dateDeath").year()));
+                 $('#life-marker').html('d. ' + moment(pet.get("dateDeath")).year());
             }
             else {
               $('#life-marker').html((moment(pet.get("dateBirth")).year())+ ' - ' + (moment(pet.get("dateDeath")).year()));

@@ -99,29 +99,43 @@ div#browse-container {
       animation-timing-function: ease;
       animation-fill-mode: forwards;
       -webkit-transform-origin: 50% 50%;
+      -moz-transform-origin: 50% 50%;
       &.down {
         -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
         &.right {
-          -webkit-transform-origin: 0 0;
+          -webkit-transform-origin: 50% 0;
+          -moz-transform-origin: 50% 0;
         }
         &.left {
           -webkit-transform-origin: 100% 0;
+          -moz-transform-origin: 100% 0;
+
         }
       }
       &.up {
         -webkit-transform-origin: 0px 100%;
+        -moz-transform-origin: 0px 100%;
+
         &.right {
           -webkit-transform-origin: 0px 100%;
+          -moz-transform-origin: 0px 100%;
+
         }
         &.left {
           -webkit-transform-origin: 0px 100%;
+          -moz-transform-origin: 0px 100%;
         }
       }
       &.right {
         -webkit-transform-origin: 0px 50%;
+        -moz-transform-origin: 0px 50%;
+
       }
       &.left {
         -webkit-transform-origin: 100% 50%;
+        -moz-transform-origin: 100% 50%;
+
       }
     }
 
