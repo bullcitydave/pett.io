@@ -254,20 +254,25 @@ var BrowseView = Parse.View.extend({
 
 
 
-// $(".pet-box").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
-//   $(this).removeClass("animated")
-// })
+// How do I get this within Backbone //
 
 $('body').on('mouseover', ".pet-box", function(){
-  $(this).addClass("animated");
+  if (($(this).position().top < 100)) {
+    $(this).addClass('down');
+  }
+  if (($(this).parent().height() - $(this).position().top) < 300) {
+    $(this).addClass('up');
+  }
+  if (($(this).position().left < 100)) {
+    $(this).addClass('right');
+  }
+  if (($(this).parent().width() - $(this).position().left) < 300) {
+    $(this).addClass('left');
+  }
+  $(this).addClass('hover');
 })
 
 $('body').on('mouseleave', ".pet-box", function(){
   $(this).removeClass("animated");
+  $(this).alterClass("down up left right hover");
 })
-
-$("#stop").click(function() {
-  $(".rotate").one('animationiteration webkitAnimationIteration', function() {
-    $(this).removeClass("anim");
-  });
-});

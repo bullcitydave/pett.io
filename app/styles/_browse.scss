@@ -1,3 +1,5 @@
+$hoveradjust: 100px;
+
 div#main-container.browse {
   @include media($mobile-s) {
     margin:55px 0 0 0 !important;
@@ -85,24 +87,43 @@ div#browse-container {
 
     }
     // .pet-box:hover,
-    .pet-box.animated {
+    .pet-box.hover {
       z-index:10;
       background-color: #FFF;
       img.pet-pic {
         @include if-brightness(1.25);
       }
-      // transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
-      // transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
-      // box-shadow: 15px 15px 30px $black;
-
-
       animation-duration: 1s;
-      animation-direction: alternate;
-      animation-name: testing;
+      animation-name: enlarge;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
-
+      -webkit-transform-origin: 0 0;
+      &.down {
+        -webkit-transform-origin: 0 $hoveradjust;
+        &.right {
+          -webkit-transform-origin: $hoveradjust $hoveradjust;
+        }
+        &.left {
+          -webkit-transform-origin: -$hoveradjust $hoveradjust;
+        }
+      }
+      &.up {
+        -webkit-transform-origin: 0 -$hoveradjust;
+        &.right {
+          -webkit-transform-origin: $hoveradjust -$hoveradjust;
+        }
+        &.left {
+          -webkit-transform-origin: -$hoveradjust -$hoveradjust;
+        }
+      }
+      &.right {
+        -webkit-transform-origin: $hoveradjust 0;
+      }
+      &.left {
+        -webkit-transform-origin: -$hoveradjust 0;
+      }
     }
+
 
     .pet-box.leaving {
       // how to get scale to inherit from where it is right now?
@@ -113,35 +134,6 @@ div#browse-container {
       animation-fill-mode: forwards;
 
     }
-
-    // .pet-box.hovering-down {
-    //   @extend .pet-box.hovering;
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 55px);
-    // }
-    // .pet-box.hovering-up {
-    //   @extend .pet-box.hovering;
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, -55px);
-    // }
-    // .pet-box.hovering-right {
-    //   @extend .pet-box.hovering;
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 0px);
-    // }
-    // .pet-box.hovering-left {
-    //   @extend .pet-box.hovering;
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 0px);
-    // }
-    // .pet-box.hovering-down.hovering-right {
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, 55px);
-    // }
-    // .pet-box.hovering-down.hovering-left {
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, 55px);
-    // }
-    // .pet-box.hovering-up.hovering-right {
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(55px, -55px);
-    // }
-    // .pet-box.hovering-up.hovering-left {
-    //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(-55px, -55px);
-    // }
   }
 
   @include media($desktop) {
@@ -151,18 +143,18 @@ div#browse-container {
 
 }
 
-@keyframes testing {
+@keyframes enlarge {
   0% {
-    transform: skew(0) scale(1, 1) rotate(0deg) translate(0px, 0px);
+    transform: scale(1, 1);
   }
   // 50% {
   //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
   // }
   75% {
-    transform: skew(0) scale(2.25, 2.25) rotate(0) translate(0px, 0px);
+    transform: scale(2.25, 2.25);
   }
   100% {
-    transform: skew(0) scale(2, 2) rotate(0deg) translate(0px, 0px);
+    transform: scale(2, 2);
   }
 }
 
@@ -173,4 +165,14 @@ div#browse-container {
   // 50% {
   //   transform: skew(-2deg) scale(2, 2) rotate(2deg) translate(0px, 0px);
 
+}
+
+@keyframes down {
+  0% {transform:translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  100% {transform:translate(0px, 100px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
+}
+
+@keyframes downright {
+  0% {transform:translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  100% {transform:translate(100px, 100px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
 }
