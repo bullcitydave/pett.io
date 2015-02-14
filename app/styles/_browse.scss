@@ -97,15 +97,16 @@ div#browse-container {
       animation-name: enlarge;
       animation-iteration-count: 1;
       animation-timing-function: ease;
-      animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -moz-animation-fill-mode: forwards;
       -webkit-transform-origin: 50% 50%;
       -moz-transform-origin: 50% 50%;
       &.down {
         -webkit-transform-origin: 50% 0;
         -moz-transform-origin: 50% 0;
         &.right {
-          -webkit-transform-origin: 50% 0;
-          -moz-transform-origin: 50% 0;
+          -webkit-transform-origin: 0 0;
+          -moz-transform-origin: 0 0;
         }
         &.left {
           -webkit-transform-origin: 100% 0;
