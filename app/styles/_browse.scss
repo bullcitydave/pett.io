@@ -99,28 +99,28 @@ div#browse-container {
       animation-fill-mode: forwards;
       -webkit-transform-origin: 0 0;
       &.down {
-        -webkit-transform-origin: 0 $hoveradjust;
+        -webkit-transform-origin: 50% 0;
         &.right {
-          -webkit-transform-origin: $hoveradjust $hoveradjust;
+          -webkit-transform-origin: 0 0;
         }
         &.left {
-          -webkit-transform-origin: -$hoveradjust $hoveradjust;
+          -webkit-transform-origin: 100% 0;
         }
       }
       &.up {
-        -webkit-transform-origin: 0 -$hoveradjust;
+        -webkit-transform-origin: 0px 100%;
         &.right {
-          -webkit-transform-origin: $hoveradjust -$hoveradjust;
+          -webkit-transform-origin: 0px 100%;
         }
         &.left {
-          -webkit-transform-origin: -$hoveradjust -$hoveradjust;
+          -webkit-transform-origin: 0px 100%;
         }
       }
       &.right {
-        -webkit-transform-origin: $hoveradjust 0;
+        -webkit-transform-origin: 0px 0px;
       }
       &.left {
-        -webkit-transform-origin: -$hoveradjust 0;
+        -webkit-transform-origin: 100% 0px;
       }
     }
 
