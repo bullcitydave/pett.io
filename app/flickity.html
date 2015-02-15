@@ -7,7 +7,7 @@
 <script src="scripts/flickity.pkgd.min.js"></script>
 <style>
 #main-gallery {
-
+display: none;
 }
 .gallery-cell {
  width: 100%;
@@ -19,7 +19,8 @@
 </head>
 <html>
 <body style="background:#fff">
-<h1>Flickity</h1>
+<h1>Herman</h1>
+<h3>2000 - 2014</h3>
 <div id="main-gallery">
   <div class="gallery-cell"><img src="images/tfss-1a431899-7915-4315-ab6f-908203b3f181-2493428429_2266145d2d_o.jpg"></div>
   <div class="gallery-cell"><img src="images/5431615801_c267c0507c_o.jpg"></div>
@@ -38,7 +39,9 @@ $(function galleryInit() {
     cellAlign: 'center',
     freeScroll: false,
     contain: false,
-    wrapAround: true
+    wrapAround: true,
+    // autoPlay: true,
+    // autoPlay: 3000
   });
 });
 
