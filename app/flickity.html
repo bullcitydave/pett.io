@@ -1,26 +1,28 @@
 <head>
 <link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/flickity.css">
 
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/parse/parse.min.js"></script>
 <script src="scripts/flickity.pkgd.min.js"></script>
 <style>
 #main-gallery {
-  width: 100%;
-  display: none;
+
+}
+.gallery-cell {
+ width: 100%;
 }
 .gallery-cell img
- { max-height: 700px;}
+ { width: 100%
+}
 </style>
 </head>
 <html>
 <body style="background:#fff">
 <h1>Flickity</h1>
 <div id="main-gallery">
-  <div class="gallery-cell"><img src="http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-1a431899-7915-4315-ab6f-908203b3f181-2493428429_2266145d2d_o.jpg
-    "></div>
-  <div class="gallery-cell"><img src="http://files.parsetfss.com/4fe73d2c-e2d1-42d1-bb33-657c49af4605/tfss-f8f906ca-3e75-4b79-a2f1-8c32d2983a7b-2297852450_0248dbae02_o.jpg
-    "></div>
+  <div class="gallery-cell"><img src="images/tfss-1a431899-7915-4315-ab6f-908203b3f181-2493428429_2266145d2d_o.jpg"></div>
+  <div class="gallery-cell"><img src="images/5431615801_c267c0507c_o.jpg"></div>
   <div class="gallery-cell"><img src="images/5874486707_fae54744da_o.jpg"></div>
   <div class="gallery-cell"><img src="images/5651490493_5a099d53e3_b.jpg"></div>
 </div>
@@ -32,8 +34,11 @@
 $(function galleryInit() {
   $('#main-gallery').css('display','block').flickity({
     // options
-    cellAlign: 'left',
-    contain: true
+    initialIndex: 2,
+    cellAlign: 'center',
+    freeScroll: false,
+    contain: false,
+    wrapAround: true
   });
 });
 
