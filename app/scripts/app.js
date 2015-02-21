@@ -215,6 +215,9 @@ var AppView = Parse.View.extend({
             }
           }
           else {
+            if(pet.get("dateBirth") == nullDateBirth) {
+              return null;
+            }
             var age = pet.age();
             $('#life-marker').html(age);
             return age;

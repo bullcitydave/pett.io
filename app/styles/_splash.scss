@@ -1,7 +1,7 @@
 body.splash {
   @include media($mobile-s) {
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") no-repeat 50% 25% fixed;
-    background-size: initial;
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)) , url("../images/splash/splash0.jpg") 50% 0% no-repeat fixed;
+    background-size: 200%;
     transition: all .5s;
   }
   @include media($mobile-m) {
@@ -57,7 +57,6 @@ header#main-header{
 
     h1.site-logo {
       color: $orange;
-
       @include media($mobile-s) {
         font-size: 5.0em;
         text-shadow: 1px 1px 0px $black;
@@ -77,6 +76,9 @@ header#main-header{
         font-size: 10.0em;
       }
 
+      @media screen and (max-height: 480px) {
+        font-size: 4.0em;
+      }
 
 
     }

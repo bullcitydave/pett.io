@@ -301,9 +301,15 @@ footer {
         }
       }
     z-index:9000;
+    opacity: 0.4;
+    transition: all 0.5s;
   }
   @include media($mobile-l) {
     font-size:0.8em;
+  }
+  &:hover {
+    opacity: 1;
+    transition: all 0.5s;
   }
 }
 

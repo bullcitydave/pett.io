@@ -93,7 +93,7 @@ div#browse-container {
       img.pet-pic {
         @include if-brightness(1.25);
       }
-      animation-duration: .7s;
+      animation-duration: 1s;
       animation-name: enlarge;
       animation-iteration-count: 1;
       animation-timing-function: ease;
