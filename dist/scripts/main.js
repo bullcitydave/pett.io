@@ -730,19 +730,21 @@ var BrowseView = Parse.View.extend({
 // How do I get this within Backbone //
 
 $('body').on('mouseover', ".pet-box", function(){
-  if (($(this).position().top < 100)) {
-    $(this).addClass('down');
+  if (!($(this).hasClass('hover'))) {
+    if (($(this).position().top < 100)) {
+      $(this).addClass('down');
+    }
+    if (($(this).parent().height() - $(this).position().top) < 300) {
+      $(this).addClass('up');
+    }
+    if (($(this).position().left < 100)) {
+      $(this).addClass('right');
+    }
+    if (($(this).parent().width() - $(this).position().left) < 300) {
+      $(this).addClass('left');
+    }
+    $(this).addClass('hover');
   }
-  if (($(this).parent().height() - $(this).position().top) < 300) {
-    $(this).addClass('up');
-  }
-  if (($(this).position().left < 100)) {
-    $(this).addClass('right');
-  }
-  if (($(this).parent().width() - $(this).position().left) < 300) {
-    $(this).addClass('left');
-  }
-  $(this).addClass('hover');
 })
 
 $('body').on('mouseleave', ".pet-box", function(){
@@ -2191,6 +2193,9 @@ var AppView = Parse.View.extend({
             }
           }
           else {
+            if(pet.get("dateBirth") == nullDateBirth) {
+              return null;
+            }
             var age = pet.age();
             $('#life-marker').html(age);
             return age;
