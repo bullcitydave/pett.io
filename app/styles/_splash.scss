@@ -85,6 +85,12 @@ header#main-header{
 
     h2 {
       color: #eaeaea;
+      text-shadow:
+         1px 1px 0 #000,
+       -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+         1px 1px 0 #000;
       @include media($mobile-s) {
         font-size: 1.1em;
         margin-top: -5px;
